@@ -1,0 +1,37 @@
+{
+  "name": "poi-plugin-navy-album",
+  "version": "0.0.1",
+  "description": "Show illustration album of ships and items.",
+  "main": "index",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "babel-core": "^6.9.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015-node4": "^2.1.0",
+    "babel-preset-react": "^6.5.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/poooi/plugin-navy-album.git"
+  },
+  "author": {
+    "name":"Dazzy Ding",
+    "link": "https://github.com/yukixz"
+  },
+  "contributors": [],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/poooi/plugin-battle-detail/issues"
+  },
+  "homepage": "https://github.com/poooi/plugin-battle-detail",
+  "poiPlugin": {
+    "title": "Navy Album",
+    "description": "Show illustration album of ships and items.",
+    "icon": "fa/th-list",
+    "priority": 51
+  }
+}
