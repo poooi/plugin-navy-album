@@ -1,0 +1,8 @@
+html, body {
+  height: 100%;
+}
+
+.list-group {
+  height: 610px;
+  overflow-y: auto;
+}
