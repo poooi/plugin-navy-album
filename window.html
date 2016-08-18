@@ -11,6 +11,11 @@
 <body>
   <main />
   <script>
+w = remote.getCurrentWindow()
+w.show()
+w.openDevTools({detach: true})
+  </script>
+  <script>
     require('babel-register')
     require('coffee-script/register')
     require('./window')

@@ -35,11 +35,3 @@ $('#font-awesome').setAttribute('href', require.resolve('font-awesome/css/font-a
 
 const MainArea = require('./views')
 ReactDOM.render(<MainArea />, $('main'))
-
-
-// Debug
-// w = remote.getCurrentWindow()
-// w.show()
-// w.openDevTools({
-//   detach: true,
-// })
