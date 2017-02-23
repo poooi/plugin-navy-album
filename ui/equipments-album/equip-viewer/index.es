@@ -15,6 +15,7 @@ import {
 } from '../selectors'
 
 import { PTyp } from '../../../ptyp'
+import { ErrorBoundary } from '../../error-boundary'
 import { Header } from './header'
 import { IntroView } from './intro-view'
 import { StatsView } from './stats-view'
@@ -44,45 +45,47 @@ class EquipViewerImpl extends PureComponent {
         }}
       >
         <Panel.Body>
-          <div
-            style={{flex: 1, height: 0, overflowY: 'auto'}}
-          >
-            <Header {...infoProps} />
-            {
-              mstId < 501 && (
-                <IntroView style={{}} />
-              )
-            }
-            <div style={{
-              display: 'flex',
-            }}>
-              <div style={{
-                flex: 1,
-                display: 'flex',
-                justifyContent: 'space-around',
-              }}>
-                <StatsView
-                  style={{maxWidth: 380}}
-                  {...infoProps}
-                />
-              </div>
+          <ErrorBoundary>
+            <div
+              style={{flex: 1, height: 0, overflowY: 'auto'}}
+            >
+              <Header {...infoProps} />
               {
                 mstId < 501 && (
-                  <div style={{
-                    flex: 1,
-                    display: 'flex',
-                    justifyContent: 'space-around',
-                    marginLeft: '1em',
-                  }}>
-                    <ExtraInfoView
-                      style={{}}
-                      {...infoProps}
-                    />
-                  </div>
+                  <IntroView style={{}} />
                 )
               }
+              <div style={{
+                display: 'flex',
+              }}>
+                <div style={{
+                  flex: 1,
+                  display: 'flex',
+                  justifyContent: 'space-around',
+                }}>
+                  <StatsView
+                    style={{maxWidth: 380}}
+                    {...infoProps}
+                  />
+                </div>
+                {
+                  mstId < 501 && (
+                    <div style={{
+                      flex: 1,
+                      display: 'flex',
+                      justifyContent: 'space-around',
+                      marginLeft: '1em',
+                    }}>
+                      <ExtraInfoView
+                        style={{}}
+                        {...infoProps}
+                      />
+                    </div>
+                  )
+                }
+              </div>
             </div>
-          </div>
+          </ErrorBoundary>
         </Panel.Body>
       </Panel>
     )

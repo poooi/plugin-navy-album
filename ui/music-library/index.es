@@ -9,6 +9,7 @@ import {
 } from 'react-bootstrap'
 import { PTyp } from '../../ptyp'
 import { mapDispatchToProps } from '../../store'
+import { ErrorBoundary } from '../error-boundary'
 import { activeTabSelector } from './selectors'
 import { PortBgmViewer } from './port-bgm-viewer'
 import { MapBgmViewer } from './map-bgm-viewer'
@@ -43,51 +44,53 @@ class MusicLibraryImpl extends PureComponent {
             padding: 10,
           }}
         >
-          <Tab.Container
-            style={{
-              flex: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              height: '100%',
-            }}
-            activeKey={activeTab}
-            onSelect={this.handleSwitchTab}
-          >
-            <div>
-              <div style={{marginBottom: 8}}>
-                <Nav
-                  bsStyle="tabs"
-                  justified
-                >
-                  <NavItem eventKey="port">
-                    {__('MusicLibraryTab.PortBGM')}
-                  </NavItem>
-                  <NavItem eventKey="map">
-                    {__('MusicLibraryTab.MapBGM')}
-                  </NavItem>
-                </Nav>
-              </div>
-              <div style={{flex: 1, height: 0, overflowY: 'auto'}}>
-                <Tab.Content
-                  style={{height: '100%'}}
-                  animation={false}
-                >
-                  <Tab.Pane
-                    style={{height: '100%'}}
-                    eventKey="port"
+          <ErrorBoundary>
+            <Tab.Container
+              style={{
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                height: '100%',
+              }}
+              activeKey={activeTab}
+              onSelect={this.handleSwitchTab}
+            >
+              <div>
+                <div style={{marginBottom: 8}}>
+                  <Nav
+                    bsStyle="tabs"
+                    justified
                   >
-                    <PortBgmViewer />
-                  </Tab.Pane>
-                  <Tab.Pane
+                    <NavItem eventKey="port">
+                      {__('MusicLibraryTab.PortBGM')}
+                    </NavItem>
+                    <NavItem eventKey="map">
+                      {__('MusicLibraryTab.MapBGM')}
+                    </NavItem>
+                  </Nav>
+                </div>
+                <div style={{flex: 1, height: 0, overflowY: 'auto'}}>
+                  <Tab.Content
                     style={{height: '100%'}}
-                    eventKey="map"
+                    animation={false}
                   >
-                    <MapBgmViewer />
-                  </Tab.Pane>
-                </Tab.Content>
+                    <Tab.Pane
+                      style={{height: '100%'}}
+                      eventKey="port"
+                    >
+                      <PortBgmViewer />
+                    </Tab.Pane>
+                    <Tab.Pane
+                      style={{height: '100%'}}
+                      eventKey="map"
+                    >
+                      <MapBgmViewer />
+                    </Tab.Pane>
+                  </Tab.Content>
+                </div>
               </div>
-            </div>
-          </Tab.Container>
+            </Tab.Container>
+          </ErrorBoundary>
         </Panel.Body>
       </Panel>
     )

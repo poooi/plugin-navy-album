@@ -20,7 +20,7 @@ import {
   reorganizedSummarySelector,
 } from './selectors'
 import { PTyp } from '../../ptyp'
-// import { ShipGraphView } from '../ship-graph-view'
+import { ErrorBoundary } from '../error-boundary'
 import { ShipGraphViewWithCG } from './ship-graph-view-with-cg'
 import { mapDispatchToProps } from '../../store'
 
@@ -212,23 +212,25 @@ class GameUpdateViewerImpl extends PureComponent {
       <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
         <Panel className="game-update-viewer" style={{marginBottom: 8, flex: 1}}>
           <Panel.Body>
-            <div
-              style={{
-                overflowX: 'hidden',
-                overflowY: 'auto',
-                height: 0,
-                flex: 1,
-              }}
-            >
-              {
-                summaryAvailable && _.concat(
-                  this.renderNewShipsPart(),
-                  this.renderNewEquipsPart(),
-                  this.renderUpdatedCGsPart()
-                )
-              }
-              {digest && this.renderGeneralInfoPart()}
-            </div>
+            <ErrorBoundary>
+              <div
+                style={{
+                  overflowX: 'hidden',
+                  overflowY: 'auto',
+                  height: 0,
+                  flex: 1,
+                }}
+              >
+                {
+                  summaryAvailable && _.concat(
+                    this.renderNewShipsPart(),
+                    this.renderNewEquipsPart(),
+                    this.renderUpdatedCGsPart()
+                  )
+                }
+                {digest && this.renderGeneralInfoPart()}
+              </div>
+            </ErrorBoundary>
           </Panel.Body>
         </Panel>
       </div>

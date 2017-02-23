@@ -24,6 +24,7 @@ import { AbyssalInfoView } from './abyssal-info-view'
 import { ShipInfoView } from './ship-info-view'
 import { GalleryView } from './gallery-view'
 import { QuotesView } from './quotes-view'
+import { ErrorBoundary } from '../../error-boundary'
 
 class ShipViewerImpl extends Component {
   static propTypes = {
@@ -68,70 +69,72 @@ class ShipViewerImpl extends Component {
         style={style}
       >
         <Panel.Body>
-          <Header isSpecialCG={isSpecialCG} />
-          <AltFormSwitcher />
-          {
-            isSpecialCG ? (
-              <GalleryView style={{flex: 1, height: 0, overflowY: 'auto'}} />
-            ) : (
-              <Tab.Container
-                style={{flex: 1, display: 'flex', flexDirection: 'column'}}
-                id="na-ship-viewer-tab"
-                onSelect={this.handleSwitchTab}
-                activeKey={activeTab}>
-                <div>
-                  <div style={{marginBottom: 8}}>
-                    <Nav
-                      bsStyle="tabs"
-                      justified className="main-nav">
-                      <NavItem eventKey="info">
-                        {__('ShipsTab.Info')}
-                      </NavItem>
-                      <NavItem eventKey="image">
-                        {__('ShipsTab.Gallery')}
-                      </NavItem>
-                      {
-                        !isAbyssalShip && (
-                          <NavItem eventKey="voice">
-                            {__('ShipsTab.Voice')}
-                          </NavItem>
-                        )
-                      }
-                    </Nav>
-                  </div>
-                  <div style={{flex: 1, height: 0, overflowY: 'auto'}}>
-                    <Tab.Content animation={false}>
-                      <Tab.Pane eventKey="info">
+          <ErrorBoundary>
+            <Header isSpecialCG={isSpecialCG} />
+            <AltFormSwitcher />
+            {
+              isSpecialCG ? (
+                <GalleryView style={{flex: 1, height: 0, overflowY: 'auto'}} />
+              ) : (
+                <Tab.Container
+                  style={{flex: 1, display: 'flex', flexDirection: 'column'}}
+                  id="na-ship-viewer-tab"
+                  onSelect={this.handleSwitchTab}
+                  activeKey={activeTab}>
+                  <div>
+                    <div style={{marginBottom: 8}}>
+                      <Nav
+                        bsStyle="tabs"
+                        justified className="main-nav">
+                        <NavItem eventKey="info">
+                          {__('ShipsTab.Info')}
+                        </NavItem>
+                        <NavItem eventKey="image">
+                          {__('ShipsTab.Gallery')}
+                        </NavItem>
                         {
-                          isAbyssalShip ? (
-                            <AbyssalInfoView
-                              mstId={mstId}
-                              shipGraphSource={shipGraphSource}
-                              lastFetch={lastFetch}
-                              $ship={$ship}
-                            />
-                          ) : (
-                            <ShipInfoView
-                              mstId={mstId}
-                              shipGraphSource={shipGraphSource}
-                              lastFetch={lastFetch}
-                              $ship={$ship}
-                            />
+                          !isAbyssalShip && (
+                            <NavItem eventKey="voice">
+                              {__('ShipsTab.Voice')}
+                            </NavItem>
                           )
                         }
-                      </Tab.Pane>
-                      <Tab.Pane eventKey="image">
-                        <GalleryView style={{}} />
-                      </Tab.Pane>
-                      <Tab.Pane eventKey="voice">
-                        <QuotesView />
-                      </Tab.Pane>
-                    </Tab.Content>
+                      </Nav>
+                    </div>
+                    <div style={{flex: 1, height: 0, overflowY: 'auto'}}>
+                      <Tab.Content animation={false}>
+                        <Tab.Pane eventKey="info">
+                          {
+                            isAbyssalShip ? (
+                              <AbyssalInfoView
+                                mstId={mstId}
+                                shipGraphSource={shipGraphSource}
+                                lastFetch={lastFetch}
+                                $ship={$ship}
+                              />
+                            ) : (
+                              <ShipInfoView
+                                mstId={mstId}
+                                shipGraphSource={shipGraphSource}
+                                lastFetch={lastFetch}
+                                $ship={$ship}
+                              />
+                            )
+                          }
+                        </Tab.Pane>
+                        <Tab.Pane eventKey="image">
+                          <GalleryView style={{}} />
+                        </Tab.Pane>
+                        <Tab.Pane eventKey="voice">
+                          <QuotesView />
+                        </Tab.Pane>
+                      </Tab.Content>
+                    </div>
                   </div>
-                </div>
-              </Tab.Container>
-            )
-          }
+                </Tab.Container>
+              )
+            }
+          </ErrorBoundary>
         </Panel.Body>
       </Panel>
     )
