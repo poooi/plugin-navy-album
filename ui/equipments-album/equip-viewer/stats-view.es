@@ -30,10 +30,6 @@ class StatsView extends PureComponent {
 
   render() {
     const {style, $equip} = this.props
-    if (_.isEmpty($equip)) {
-      return <div style={{display: 'none'}} />
-    }
-
     const tdStyle = {
       textAlign: 'center',
       verticalAlign: 'middle',
