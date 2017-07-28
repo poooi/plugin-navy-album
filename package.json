@@ -2,36 +2,46 @@
   "name": "poi-plugin-navy-album",
   "version": "0.0.1",
   "description": "Show illustration album of ships and items.",
-  "main": "index",
-  "dependencies": {
-  },
-  "devDependencies": {
-    "babel-core": "^6.9.0",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-preset-es2015-node4": "^2.1.0",
-    "babel-preset-react": "^6.5.0"
-  },
+  "main": "index.es",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint '*.es' 'ui/**.es'"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/poooi/plugin-navy-album.git"
   },
   "author": {
-    "name":"Dazzy Ding",
+    "name": "Dazzy Ding",
     "link": "https://github.com/yukixz"
   },
   "contributors": [],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/poooi/plugin-battle-detail/issues"
+    "url": "https://github.com/poooi/plugin-navy-album/issues"
   },
-  "homepage": "https://github.com/poooi/plugin-battle-detail",
+  "homepage": "https://github.com/poooi/plugin-navy-album",
   "poiPlugin": {
     "title": "Navy Album",
     "description": "Show illustration album of ships and items.",
-    "icon": "fa/th-list",
+    "icon": "th-list",
     "priority": 51
+  },
+  "keywords": [
+    "kancolle"
+  ],
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015-node6": "^0.4.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.0.0",
+    "mocha": "^3.3.0"
   }
 }
