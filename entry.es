@@ -1,9 +1,10 @@
 import 'views/env'
 
 import i18n2 from 'i18n-2'
-import path from 'path-extra'
+import { join } from 'path-extra'
 import { remote } from 'electron'
-import { debounce } from 'lodash'
+import _ from 'lodash'
+import { readJSONSync } from 'fs-extra'
 
 const { config } = window
 
@@ -11,7 +12,7 @@ const { config } = window
 const i18n = new i18n2({
   locales: ['en-US', 'ja-JP', 'zh-CN', 'zh-TW', 'ko-KR'],
   defaultLocale: 'zh-CN',
-  directory: path.join(__dirname, 'assets', 'i18n'),
+  directory: join(__dirname, 'assets', 'i18n'),
   devMode: false,
   extension: '.json',
 })
@@ -51,12 +52,23 @@ remote.getCurrentWindow().webContents.on('dom-ready', () => {
 // remember window size
 window.navyAlbumWindow = remote.getCurrentWindow()
 
-const rememberSize = debounce(() => {
+const rememberSize = _.debounce(() => {
   const b = window.navyAlbumWindow.getBounds()
   config.set('plugin.navyAlbumWindow.bounds', b)
 }, 5000)
 
 window.navyAlbumWindow.on('move', rememberSize)
 window.navyAlbumWindow.on('resize', rememberSize)
+
+{
+  // determine serverIp
+  const rawServerId = new URL(location).searchParams.get('server_id')
+  const servers = readJSONSync(join(__dirname, 'assets', 'servers.json'))
+
+  window.serverIp =
+    (rawServerId in servers) ?
+      servers[rawServerId] :
+      _.sample(Object.values(servers))
+}
 
 require('./ui')
