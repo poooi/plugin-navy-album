@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import {
-  Tabs, Tab, Row, Col,
-  Nav, NavItem,
+  Tab, Nav, NavItem,
 } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import {
@@ -14,6 +13,7 @@ import { uiSelector } from '../selectors'
 import { Placeholder } from './placeholer'
 import { PTyp } from '../ptyp'
 import { mapDispatchToProps } from '../store'
+import { ShipsAlbum } from './ships-album'
 
 class NavyAlbumImpl extends Component {
   static propTypes = {
@@ -33,7 +33,7 @@ class NavyAlbumImpl extends Component {
         onSelect={this.handleSwitchTab}
         activeKey={activeTab}>
         <div>
-          <div style={{marginBottom: 5}}>
+          <div style={{marginBottom: 8}}>
             <Nav
               bsStyle="tabs"
               justified className="main-nav">
@@ -48,7 +48,7 @@ class NavyAlbumImpl extends Component {
           <div>
             <Tab.Content>
               <Tab.Pane eventKey="ships">
-                <Placeholder />
+                <ShipsAlbum />
               </Tab.Pane>
               <Tab.Pane eventKey="equipments">
                 <Placeholder />
