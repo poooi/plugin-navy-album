@@ -15,7 +15,7 @@ extendReducer('poi-plugin-navy-album', reducer)
 ReactDOM.render(
   <Provider store={store}>
     <div
-      style={{margin: "0 1%"}}
+      style={{margin: "0 1%", minWidth: 600}}
       className="navy-album-main">
       <NavyAlbum />
     </div>

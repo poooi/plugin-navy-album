@@ -9,19 +9,14 @@ const initState = {
     listOptions: {
       // bool
       expanded: false,
-      /*
-         used as a set.
-         possible elements: friendly / abyssal
-       */
-      sides: ['friendly','abyssal'],
-      /*
-         - stype: group by ship type.
-         - mstId: no grouping
-       */
-      grouping: 'stype',
+      showSides: {
+        friendly: true,
+        abyssal: true,
+      },
+      groupShipTypes: true,
       // when true, ships who are remodeled from
       // the same ship is sorted close to each other in that order.
-      respectRemodelChain: true,
+      groupRemodels: true,
     },
   },
   // state for EquipmentsAlbum
