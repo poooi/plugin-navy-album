@@ -3,9 +3,9 @@ import { bindActionCreators } from 'redux'
 import { store } from 'views/create-store'
 
 const actionCreator = {
-  sendMsg: msg => ({
-    type: '@poi-plugin-navy-album@Msg',
-    msg,
+  uiModify: modifier => ({
+    type: '@poi-plugin-navy-album@ui@Modify',
+    modifier,
   }),
 }
 

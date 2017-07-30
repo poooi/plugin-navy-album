@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { store, extendReducer } from 'views/create-store'
 
 import { reducer } from '../store'
-import { NavyAlbumMain } from './navy-album-main'
+import { NavyAlbum } from './navy-album'
 
 const {$} = window
 $('#fontawesome-css')
@@ -14,6 +14,10 @@ extendReducer('poi-plugin-navy-album', reducer)
 
 ReactDOM.render(
   <Provider store={store}>
-    <NavyAlbumMain />
+    <div
+      style={{margin: "0 1%"}}
+      className="navy-album-main">
+      <NavyAlbum />
+    </div>
   </Provider>,
   $("#content-root"))

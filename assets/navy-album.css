@@ -2,3 +2,13 @@
     font-family: "Ubuntu", "Helvetica Neue", "Helvetica", "Arial",
       "WenQuanYi Micro Hei", "Microsoft YaHei", "Droid Sans Fallback", sans-serif;
 }
+
+@media (min-width: 600px) {
+  #na-main-tab .nav-tabs.nav-justified > li {
+    display: table-cell;
+    width: 1%;
+  }
+  #na-main-tab .nav-tabs.nav-justified > li > a {
+    margin-bottom: 0;
+  }
+}

@@ -10,6 +10,12 @@ const extSelector = createSelector(
   extensionSelectorFactory('poi-plugin-navy-album'),
   ext => _.isEmpty(ext) ? [] : ext)
 
+const mkExtPropSelector = _.memoize(propName =>
+  createSelector(extSelector, ext => ext[propName]))
+
+const uiSelector =
+  mkExtPropSelector('ui')
+
 const indexedShipGraphsSelector = createSelector(
   constSelector,
   ({$shipgraph}) => _.keyBy($shipgraph, 'api_id'))
@@ -36,4 +42,8 @@ const shipGraphInfoSelector = createSelector(
   }
 )
 
-export { extSelector, shipGraphInfoSelector }
+export {
+  extSelector,
+  uiSelector,
+  shipGraphInfoSelector,
+}
