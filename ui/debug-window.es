@@ -14,9 +14,6 @@ import { readFromBufferP, codeToTag, extractImages } from 'swf-extract'
 const initiateFetch = async setState => {
   const fetched =
     await fetch('https://raw.githubusercontent.com/Javran/swf-extract/master/samples/sample1.swf')
-    // await fetch('http://203.104.248.135/kcs/resources/swf/ships/bfsrsnqivpms.swf?VERSION=10')
-    // await fetch('http://203.104.248.135/kcs/scenes/SallyMain.swf?version=3.2.2')
-    // await fetch('http://203.104.248.135/kcs/resources/swf/commonAssets.swf?version=3.2.4')
   if (! fetched.ok)
     return console.error('fetch failed.')
   const ab = await fetched.arrayBuffer()
