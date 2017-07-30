@@ -43,5 +43,8 @@
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.1.0",
     "mocha": "^3.3.0"
+  },
+  "dependencies": {
+    "swf-extract": "^1.0.1"
   }
 }
