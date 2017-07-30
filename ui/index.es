@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { DropdownButton, MenuItem, ListGroup, ListGroupItem } from 'react-bootstrap'
@@ -10,44 +9,19 @@ import { readFromBufferP, extractImages } from 'swf-extract'
 import { reducer } from '../store'
 import {shipGraphInfoSelector} from '../selectors'
 
-
-const {$} = window
+const {$, serverIp} = window
 $('#fontawesome-css')
   .setAttribute('href', require.resolve('font-awesome/css/font-awesome.css'))
 
-const SERVERS = [
-  '203.104.209.71',
-  '203.104.209.87',
-  '125.6.184.16',
-  '125.6.187.205',
-  '125.6.187.229',
-  '125.6.187.253',
-  '125.6.188.25',
-  '203.104.248.135',
-  '125.6.189.7',
-  '125.6.189.39',
-  '125.6.189.71',
-  '125.6.189.103',
-  '125.6.189.135',
-  '125.6.189.167',
-  '125.6.189.215',
-  '125.6.189.247',
-  '203.104.209.23',
-  '203.104.209.39',
-  '203.104.209.55',
-  '203.104.209.102',
-]
-
 const initiateFetch = async (shipInfo, token, setState) => {
-  const server = _.sample(SERVERS)
   const {graphInfo} = shipInfo
   const {fileName, versionStr} = graphInfo
   const fetched =
-    await fetch(`http://${server}/kcs/resources/swf/ships/${fileName}.swf?VERSION=${versionStr}`)
+    await fetch(`http://${serverIp}/kcs/resources/swf/ships/${fileName}.swf?VERSION=${versionStr}`)
   if (! fetched.ok)
-    return console.error('fetch failed.')
-  const ab = await fetched.arrayBuffer()
+    throw new Error('fetch failed.')
 
+  const ab = await fetched.arrayBuffer()
   const swfData = await readFromBufferP(new Buffer(ab))
   extractImages(swfData.tags).map(p => p.then(imgData => {
     setState(state => {
@@ -97,7 +71,7 @@ class NavyAlbumMainImpl extends Component {
             ))
           }
         </DropdownButton>
-        <ListGroup>
+        <ListGroup style={{marginLeft: 200}}>
           {
             this.state.images.map(msg =>
               msg && (
