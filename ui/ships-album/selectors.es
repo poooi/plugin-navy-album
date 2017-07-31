@@ -6,7 +6,11 @@ import {
 import { createSelector } from 'reselect'
 import { constSelector } from 'views/utils/selectors'
 
-import { uiSelector, shipsInfoSelector } from '../../selectors'
+import {
+  uiSelector,
+  shipsInfoSelector,
+  sortByRemodelFuncSelector,
+} from '../../selectors'
 
 const shipAlbumSelector = createSelector(
   uiSelector,
@@ -58,18 +62,30 @@ const shipsInfoStage2Selector = createSelector(
       shipsInfo
 )
 
-// TODO: stage3 is supposed to take into account ship remodel info
-// which is not yet implemented.
-// for now we always sort according to mstId
+/*
+   stage3 takes into account ship remodel info:
+
+   - when groupRemodels is true, "sortByRemodelFunc" is used to sort the array
+   - otherwise simply use mstId to sort
+
+ */
 const shipsInfoStage3Selector = createSelector(
   shipsInfoStage2Selector,
   listOptionsSelector,
   constSelector,
-  (shipsInfoObjOrArr, {groupRemodels: _ignored}, {$shipTypes}) => {
+  sortByRemodelFuncSelector,
+  (
+    shipsInfoObjOrArr,
+    {groupRemodels},
+    {$shipTypes},
+    sortByRemodelFunc,
+  ) => {
     // in-place sort should be fine, nothing except this
     // selector would take stage2 results.
     const sortArray =
-      xs => xs.sort(projectorToComparator(s => s.mstId))
+      groupRemodels ?
+        sortByRemodelFunc :
+        xs => xs.sort(projectorToComparator(s => s.mstId))
 
     /*
        unify two different structures in stage2 to get the
