@@ -64,16 +64,22 @@ class ShipViewerImpl extends Component {
     )
 
   render() {
-    const {style, activeTab, mstId, shipGraphSources} = this.props
+    const {
+      style, activeTab, mstId,
+      shipGraphSources,
+    } = this.props
     const characterIds =
       Object.keys(shipGraphSources).map(Number).sort(generalComparator)
     return (
       <Panel
-        style={style}>
+        className="ship-viewer"
+        style={style}
+      >
         <Header />
         <Tab.Container
-          id="na-main-tab"
+          id="na-ship-viewer-tab"
           onSelect={this.handleSwitchTab}
+          style={{flex: 1, overflowY: 'scroll'}}
           activeKey={activeTab}>
           <div>
             <div style={{marginBottom: 8}}>
@@ -91,7 +97,7 @@ class ShipViewerImpl extends Component {
                 </NavItem>
               </Nav>
             </div>
-            <div>
+            <div style={{flex: 1}}>
               <Tab.Content>
                 <Tab.Pane eventKey="info">
                   <img

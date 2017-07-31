@@ -116,7 +116,10 @@ class ShipsAlbumImpl extends Component {
             </Button>
             <ShipPicker />
           </div>
-          <ShipViewer style={{flex: 1, marginLeft: 8}} />
+          <ShipViewer style={{
+            flex: 1, marginLeft: 8,
+            height: expanded ? '86vh' : '92.6vh',
+          }} />
         </div>
       </div>
     )
