@@ -1,6 +1,13 @@
+import _ from 'lodash'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { mergeMapStateToProps } from 'subtender'
+import { createStructuredSelector } from 'reselect'
+
 import { headerInfoSelector } from './selectors'
+import {
+  shipGraphSourcesSelector,
+} from '../selectors'
 
 import { PTyp } from '../../../ptyp'
 
@@ -9,39 +16,58 @@ class HeaderImpl extends PureComponent {
     mstId: PTyp.number.isRequired,
     shipName: PTyp.string.isRequired,
     typeName: PTyp.string.isRequired,
+    shipGraphSources: PTyp.object.isRequired,
   }
   render() {
-    const {mstId, shipName, typeName} = this.props
+    const {mstId, shipName, typeName, shipGraphSources} = this.props
+    const headerSource = _.get(shipGraphSources,1)
     return (
-      <div style={{display: 'flex', alignItems: 'baseline'}}>
-        <div
+      <div style={{display: 'flex', alignItems: 'center'}}>
+        <div style={{display: 'flex', alignItems: 'baseline', flex: 1}}>
+          <div
+            style={{
+              fontSize: '1.2em',
+              alignSelf: 'flex-start',
+            }}
+          >
+            {typeName}
+          </div>
+          <div
+            style={{
+              marginLeft: '.4em',
+              fontSize: '1.8em',
+              fontWeight: 'bold',
+            }}>
+            {shipName}
+          </div>
+          <div
+            style={{
+              marginLeft: '.6em',
+              fontSize: '1em',
+            }}>
+            ({mstId})
+          </div>
+        </div>
+        <img
           style={{
-            fontSize: '1.2em',
-            alignSelf: 'flex-start',
+            width: 160,
+            height: 40,
+            ...(headerSource ? {} : {display: 'none'}),
           }}
-        >
-          {typeName}
-        </div>
-        <div
-          style={{
-            marginLeft: '.4em',
-            fontSize: '1.8em',
-            fontWeight: 'bold',
-          }}>
-          {shipName}
-        </div>
-        <div
-          style={{
-            marginLeft: '.6em',
-            fontSize: '1em',
-          }}>
-          ({mstId})
-        </div>
+          alt={`mstId: ${mstId}`}
+          src={headerSource}
+        />
       </div>
     )
   }
 }
 
-const Header = connect(headerInfoSelector)(HeaderImpl)
+const Header = connect(
+  mergeMapStateToProps(
+    headerInfoSelector,
+    createStructuredSelector({
+      shipGraphSources: shipGraphSourcesSelector,
+    }))
+)(HeaderImpl)
 
 export { Header }
