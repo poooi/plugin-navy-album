@@ -64,7 +64,6 @@ window.navyAlbumWindow.on('resize', rememberSize)
   // determine serverIp
   const rawServerId = new URL(location).searchParams.get('server_id')
   const servers = readJSONSync(join(__dirname, 'assets', 'servers.json'))
-
   window.serverIp =
     (rawServerId in servers) ?
       servers[rawServerId] :
