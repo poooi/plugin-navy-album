@@ -103,7 +103,7 @@ class ShipsAlbumImpl extends Component {
           </ButtonToolbar>
         </Panel>
         <div style={{display: 'flex'}}>
-          <div style={{width: '30%'}}>
+          <div style={{width: '25%'}}>
             <Button
               onClick={this.handleToggle('expanded')}
               style={{
@@ -114,9 +114,7 @@ class ShipsAlbumImpl extends Component {
               }}>
               Show options
             </Button>
-            <Panel>
-              <ShipPicker />
-            </Panel>
+            <ShipPicker />
           </div>
           <Panel style={{flex: 1, marginLeft: 8}}>
             <Placeholder />
