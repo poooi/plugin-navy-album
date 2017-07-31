@@ -16,6 +16,9 @@ const mkExtPropSelector = _.memoize(propName =>
 const uiSelector =
   mkExtPropSelector('ui')
 
+const swfDatabaseSelector =
+  mkExtPropSelector('swfDatabase')
+
 const indexedShipGraphsSelector = createSelector(
   constSelector,
   ({$shipgraph}) => _.keyBy($shipgraph, 'api_id'))
@@ -64,4 +67,5 @@ export {
   uiSelector,
   shipGraphInfoSelector,
   shipsInfoSelector,
+  swfDatabaseSelector,
 }
