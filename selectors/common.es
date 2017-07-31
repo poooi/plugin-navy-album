@@ -45,6 +45,11 @@ const shipGraphInfoSelector = createSelector(
   }
 )
 
+const indexedShipGraphInfoSelector = createSelector(
+  shipGraphInfoSelector,
+  shipGraphInfo => _.keyBy(shipGraphInfo, 'mstId')
+)
+
 // returns an Array of ShipInfo, order is unspecified.
 const shipsInfoSelector = createSelector(
   constSelector,
@@ -68,4 +73,5 @@ export {
   shipGraphInfoSelector,
   shipsInfoSelector,
   swfDatabaseSelector,
+  indexedShipGraphInfoSelector,
 }

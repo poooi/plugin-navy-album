@@ -2,6 +2,8 @@ import { mkSimpleReducer } from './common'
 
 const initState = {
   /*
+     NOTE: all paths should begin with '/'
+
      - key: path
      - value: Object
 

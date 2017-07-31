@@ -10,6 +10,8 @@ import {
   uiSelector,
   shipsInfoSelector,
   sortByRemodelFuncSelector,
+  indexedShipGraphInfoSelector,
+  swfDatabaseSelector,
 } from '../../selectors'
 
 const shipAlbumSelector = createSelector(
@@ -136,6 +138,8 @@ const shipsInfoStage3Selector = createSelector(
   }
 )
 
+const shipsInfoSelectorForView = shipsInfoStage3Selector
+
 const shipViewerSelector = createSelector(
   shipAlbumSelector,
   sa => sa.shipViewer
@@ -146,7 +150,24 @@ const mstIdSelector = createSelector(
   sv => sv.mstId
 )
 
-const shipsInfoSelectorForView = shipsInfoStage3Selector
+const shipGraphPathSelector = createSelector(
+  indexedShipGraphInfoSelector,
+  mstIdSelector,
+  (indexedShipGraphInfo, mstId) => {
+    const graphInfo = _.get(indexedShipGraphInfo,[mstId, 'graphInfo'])
+    if (!graphInfo)
+      return null
+    const {fileName, versionStr} = graphInfo
+    return `/kcs/resources/swf/ships/${fileName}.swf?VERSION=${versionStr}`
+  }
+)
+
+const shipGraphSourcesSelector = createSelector(
+  shipGraphPathSelector,
+  swfDatabaseSelector,
+  (shipGraphPath, swfDatabase) =>
+    shipGraphPath ? _.get(swfDatabase.db,shipGraphPath,{}) : {}
+)
 
 export {
   shipAlbumSelector,
@@ -154,4 +175,6 @@ export {
   shipsInfoSelectorForView,
   shipViewerSelector,
   mstIdSelector,
+  shipGraphPathSelector,
+  shipGraphSourcesSelector,
 }
