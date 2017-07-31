@@ -1,13 +1,18 @@
+import _ from 'lodash'
 import React, { Component } from 'react'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import {
   Panel, Tab, Nav, NavItem,
 } from 'react-bootstrap'
-import { modifyObject } from 'subtender'
+import { mergeMapStateToProps, modifyObject } from 'subtender'
 
 import { PTyp } from '../../../ptyp'
-import { activeTabSelector } from './selectors'
+import {
+  shipViewerSelector,
+  shipGraphPathSelector,
+  shipGraphSourcesSelector,
+} from '../selectors'
 import { Header } from './header'
 import { mapDispatchToProps } from '../../../store'
 
@@ -15,7 +20,33 @@ class ShipViewerImpl extends Component {
   static propTypes = {
     style: PTyp.object.isRequired,
     activeTab: PTyp.string.isRequired,
+    mstId: PTyp.number.isRequired,
+    shipGraphPath: PTyp.string,
+    shipGraphSources: PTyp.object.isRequired,
     uiModify: PTyp.func.isRequired,
+    requestSwf: PTyp.func.isRequired,
+  }
+
+  static defaultProps = {
+    shipGraphPath: null,
+  }
+
+  componentDidMount() {
+    this.requestShipGraph()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // TODO: observer
+    if (this.props.shipGraphPath !== nextProps.shipGraphPath) {
+      this.requestShipGraph(nextProps.shipGraphPath)
+    }
+  }
+
+  requestShipGraph = (path = this.props.shipGraphPath) => {
+    const {requestSwf} = this.props
+    if (path) {
+      requestSwf(path)
+    }
   }
 
   handleSwitchTab = activeTab =>
@@ -32,7 +63,7 @@ class ShipViewerImpl extends Component {
     )
 
   render() {
-    const {style, activeTab} = this.props
+    const {style, activeTab, mstId, shipGraphSources} = this.props
     return (
       <Panel
         style={style}>
@@ -60,7 +91,14 @@ class ShipViewerImpl extends Component {
             <div>
               <Tab.Content>
                 <Tab.Pane eventKey="info">
-                  TODO: general info
+                  <img
+                    style={{
+                      width: 218,
+                      height: 300,
+                    }}
+                    src={_.get(shipGraphSources,5,'')}
+                    alt={`Data not yet available for ${mstId}`}
+                  />
                 </Tab.Pane>
                 <Tab.Pane eventKey="image">
                   TODO: image viewer
@@ -78,9 +116,13 @@ class ShipViewerImpl extends Component {
 }
 
 const ShipViewer = connect(
-  createStructuredSelector({
-    activeTab: activeTabSelector,
-  }),
+  mergeMapStateToProps(
+    shipViewerSelector,
+    createStructuredSelector({
+      shipGraphPath: shipGraphPathSelector,
+      shipGraphSources: shipGraphSourcesSelector,
+    })
+  ),
   mapDispatchToProps,
 )(ShipViewerImpl)
 
