@@ -136,10 +136,22 @@ const shipsInfoStage3Selector = createSelector(
   }
 )
 
+const shipViewerSelector = createSelector(
+  shipAlbumSelector,
+  sa => sa.shipViewer
+)
+
+const mstIdSelector = createSelector(
+  shipViewerSelector,
+  sv => sv.mstId
+)
+
 const shipsInfoSelectorForView = shipsInfoStage3Selector
 
 export {
   shipAlbumSelector,
   listOptionsSelector,
   shipsInfoSelectorForView,
+  shipViewerSelector,
+  mstIdSelector,
 }

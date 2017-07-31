@@ -18,6 +18,18 @@ const initState = {
       // the same ship is sorted close to each other in that order.
       groupRemodels: true,
     },
+    shipViewer: {
+      mstId: 185,
+      /*
+         plan to have 3 tabs:
+
+         - info: general info
+         - image: image viewer
+         - voice: voice player, might also include subtitles
+
+       */
+      activeTab: 'info',
+    },
   },
   // state for EquipmentsAlbum
   equipmentsAlbum: 'TODO',
