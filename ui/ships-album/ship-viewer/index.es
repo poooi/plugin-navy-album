@@ -4,8 +4,9 @@ import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import {
   Panel, Tab, Nav, NavItem,
+  ListGroupItem, ListGroup,
 } from 'react-bootstrap'
-import { mergeMapStateToProps, modifyObject } from 'subtender'
+import { mergeMapStateToProps, modifyObject, generalComparator } from 'subtender'
 
 import { PTyp } from '../../../ptyp'
 import {
@@ -64,6 +65,8 @@ class ShipViewerImpl extends Component {
 
   render() {
     const {style, activeTab, mstId, shipGraphSources} = this.props
+    const characterIds =
+      Object.keys(shipGraphSources).map(Number).sort(generalComparator)
     return (
       <Panel
         style={style}>
@@ -101,7 +104,18 @@ class ShipViewerImpl extends Component {
                   />
                 </Tab.Pane>
                 <Tab.Pane eventKey="image">
-                  TODO: image viewer
+                  <ListGroup>
+                    {
+                      characterIds.map(chId => (
+                        <ListGroupItem key={chId}>
+                          <img
+                            src={_.get(shipGraphSources,chId,'')}
+                            alt={`ship=${mstId}, chId=${chId}`}
+                          />
+                        </ListGroupItem>
+                      ))
+                    }
+                  </ListGroup>
                 </Tab.Pane>
                 <Tab.Pane eventKey="voice">
                   TODO: voice player & subtitles
