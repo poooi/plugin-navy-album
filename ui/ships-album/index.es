@@ -6,12 +6,17 @@ import {
   ButtonToolbar,
   Panel,
 } from 'react-bootstrap'
-import { modifyObject, not } from 'subtender'
+import {
+  modifyObject,
+  not,
+} from 'subtender'
 
 import { Placeholder } from '../placeholer'
 import { listOptionsSelector } from './selectors'
 import { mapDispatchToProps } from '../../store'
 import { PTyp } from '../../ptyp'
+
+import { ShipPicker } from './ship-picker'
 
 class ShipsAlbumImpl extends Component {
   static propTypes = {
@@ -110,7 +115,7 @@ class ShipsAlbumImpl extends Component {
               Show options
             </Button>
             <Panel>
-              <Placeholder />
+              <ShipPicker />
             </Panel>
           </div>
           <Panel style={{flex: 1, marginLeft: 8}}>
