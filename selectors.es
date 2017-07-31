@@ -42,8 +42,26 @@ const shipGraphInfoSelector = createSelector(
   }
 )
 
+// returns an Array of ShipInfo, order is unspecified.
+const shipsInfoSelector = createSelector(
+  constSelector,
+  ({$ships}) => Object.values($ships).map($ship => {
+    const mstId = $ship.api_id
+    const sortNo = $ship.api_sortno
+    const name = $ship.api_name
+    const stype = $ship.api_stype
+    return {
+      mstId,
+      name,
+      sortNo,
+      stype,
+    }
+  })
+)
+
 export {
   extSelector,
   uiSelector,
   shipGraphInfoSelector,
+  shipsInfoSelector,
 }
