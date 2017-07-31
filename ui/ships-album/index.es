@@ -11,12 +11,12 @@ import {
   not,
 } from 'subtender'
 
-import { Placeholder } from '../placeholer'
 import { listOptionsSelector } from './selectors'
 import { mapDispatchToProps } from '../../store'
 import { PTyp } from '../../ptyp'
 
 import { ShipPicker } from './ship-picker'
+import { ShipViewer } from './ship-viewer'
 
 class ShipsAlbumImpl extends Component {
   static propTypes = {
@@ -116,9 +116,7 @@ class ShipsAlbumImpl extends Component {
             </Button>
             <ShipPicker />
           </div>
-          <Panel style={{flex: 1, marginLeft: 8}}>
-            <Placeholder />
-          </Panel>
+          <ShipViewer style={{flex: 1, marginLeft: 8}} />
         </div>
       </div>
     )
