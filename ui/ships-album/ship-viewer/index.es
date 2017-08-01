@@ -101,11 +101,14 @@ class ShipViewerImpl extends Component {
               <Tab.Content>
                 <Tab.Pane eventKey="info">
                   <img
-                    style={{
-                      width: 218,
-                      height: 300,
-                    }}
-                    src={_.get(shipGraphSources,5,'')}
+                    style={
+                      mstId > 1500 ? {
+                        width: '100%', height: 'auto',
+                      } : {
+                        width: 218, height: 300,
+                      }
+                    }
+                    src={_.get(shipGraphSources, mstId > 1500 ? 3 : 5, '')}
                     alt={`Data not yet available for ${mstId}`}
                   />
                 </Tab.Pane>
