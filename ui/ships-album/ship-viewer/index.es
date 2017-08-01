@@ -32,17 +32,6 @@ class ShipViewerImpl extends Component {
     shipGraphPath: null,
   }
 
-  componentDidMount() {
-    this.requestShipGraph()
-  }
-
-  componentWillReceiveProps(nextProps) {
-    // TODO: observer
-    if (this.props.shipGraphPath !== nextProps.shipGraphPath) {
-      this.requestShipGraph(nextProps.shipGraphPath)
-    }
-  }
-
   requestShipGraph = (path = this.props.shipGraphPath) => {
     const {requestSwf} = this.props
     if (path) {
