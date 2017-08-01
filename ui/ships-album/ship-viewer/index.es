@@ -17,6 +17,38 @@ import {
 import { Header } from './header'
 import { mapDispatchToProps } from '../../../store'
 
+
+/*
+   draft:
+
+   # info viewer
+
+   (following game UI)
+
+   <RemodelChain>
+
+   <StockEquipments>     <ShipGraph>
+
+   <Level Slider> // allow hp, asw, los, evs to be changed accordingly
+
+   <ShipStats>  <ShipStatsExtra>
+
+   // might need a separated viewer for abyssal ships
+   - might try to fetch debuffed img if it's available
+   - should be some other databases around about abyssal equipments
+
+   # image viewer
+
+   - perhaps: (1) centerize imgs, (2) allow exporting them.
+
+   # voice player
+
+   - ListGroup of <VoiceView>
+
+   <VoiceView> should render play button, situation, and subtitles if it's available
+
+ */
+
 class ShipViewerImpl extends Component {
   static propTypes = {
     style: PTyp.object.isRequired,
