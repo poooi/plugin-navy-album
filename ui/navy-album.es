@@ -14,11 +14,26 @@ import { Placeholder } from './placeholer'
 import { PTyp } from '../ptyp'
 import { mapDispatchToProps } from '../store'
 import { ShipsAlbum } from './ships-album'
+import { observeAll } from '../observers'
 
 class NavyAlbumImpl extends Component {
   static propTypes = {
     activeTab: PTyp.ActiveTab.isRequired,
     uiModify: PTyp.func.isRequired,
+  }
+
+  constructor(props) {
+    super(props)
+    this.unsubscribe = observeAll()
+  }
+
+  componentWillUnmount() {
+    if (typeof this.unsubscribe !== 'function') {
+      console.warn(`unsubscribe is not a function`)
+    } else {
+      this.unsubscribe()
+      this.unsubscribe = null
+    }
   }
 
   handleSwitchTab = activeTab =>
