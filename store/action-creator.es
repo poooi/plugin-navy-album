@@ -60,19 +60,21 @@ const actionCreator = {
           throw new Error('fetch failed.')
         const ab = await fetched.arrayBuffer()
         const swfData = await readFromBufferP(new Buffer(ab))
-        extractImages(swfData.tags).map(p => p.then(data => {
-          if (
-            'characterId' in data &&
-            ['jpeg', 'png', 'gif'].includes(data.imgType)
-          ) {
-            const {characterId, imgType, imgData} = data
-            const encoded =
-              `data:image/${imgType};base64,${imgData.toString('base64')}`
-            dispatch(
-              actionCreator.swfDatabaseInsertImage(path, characterId, encoded)
-            )
-          }
-        }))
+        await Promise.all(
+          extractImages(swfData.tags).map(async p => {
+            const data = await p
+            if (
+              'characterId' in data &&
+              ['jpeg', 'png', 'gif'].includes(data.imgType)
+            ) {
+              const {characterId, imgType, imgData} = data
+              const encoded = `data:image/${imgType};base64,${imgData.toString('base64')}`
+              dispatch(
+                actionCreator.swfDatabaseInsertImage(path, characterId, encoded)
+              )
+            }
+          })
+        )
       } catch (e) {
         console.error(`error while processing ${path}`,e)
       } finally {
