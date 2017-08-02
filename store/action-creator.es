@@ -52,7 +52,6 @@ const actionCreator = {
         return
 
       dispatch(actionCreator.swfDatabaseLockPath(path))
-
       try {
         const {serverIp} = window
         const fetched = await fetch(`http://${serverIp}${path}`)
