@@ -14,23 +14,30 @@ const actionCreator = {
     type: '@poi-plugin-navy-album@swfDatabase@Modify',
     modifier,
   }),
+  swfDatabaseLockPath: path =>
+    actionCreator.swfDatabaseModify(
+      modifyObject(
+        'fetchLocks', fl => [...fl, path]
+      )
+    ),
+  swfDatabaseUnlockPath: path =>
+    actionCreator.swfDatabaseModify(
+      modifyObject(
+        'fetchLocks', fl => fl.filter(p => p !== path)
+      )
+    ),
   requestSwf: path =>
     (dispatch, getState) => (async () => {
       const {db, fetchLocks} = swfDatabaseSelector(getState())
-      if (
-        // either it's already in db
-        path in db ||
-        // or some other process is fetching it
-        path in fetchLocks
-      )
+      // either it's already in db
+      if (path in db)
         return
 
-      // register a lock
-      dispatch(actionCreator.swfDatabaseModify(
-        modifyObject(
-          'fetchLocks', fl => [...fl, path]
-        )
-      ))
+      // or some other process is fetching it
+      if (path in fetchLocks)
+        return
+
+      dispatch(actionCreator.swfDatabaseLockPath(path))
 
       try {
         const {serverIp} = window
@@ -67,11 +74,7 @@ const actionCreator = {
         console.error(`error while processing ${path}`,e)
       } finally {
         // release lock
-        dispatch(actionCreator.swfDatabaseModify(
-          modifyObject(
-            'fetchLocks', fl => fl.filter(p => p !== path)
-          )
-        ))
+        dispatch(actionCreator.swfDatabaseUnlockPath(path))
       }
     })(),
 }
