@@ -26,6 +26,20 @@ const actionCreator = {
         'fetchLocks', fl => fl.filter(p => p !== path)
       )
     ),
+  swfDatabaseInsertImage: (path, characterId, img) =>
+    actionCreator.swfDatabaseModify(
+      modifyObject(
+        'db',
+        modifyObject(
+          path,
+          (record = {}) =>
+            modifyObject(
+              characterId,
+              () => img
+            )(record)
+        )
+      )
+    ),
   requestSwf: path =>
     (dispatch, getState) => (async () => {
       const {db, fetchLocks} = swfDatabaseSelector(getState())
@@ -54,20 +68,9 @@ const actionCreator = {
             const {characterId, imgType, imgData} = data
             const encoded =
               `data:image/${imgType};base64,${imgData.toString('base64')}`
-
-            dispatch(actionCreator.swfDatabaseModify(
-              modifyObject(
-                'db',
-                modifyObject(
-                  path,
-                  (record = {}) =>
-                    modifyObject(
-                      characterId,
-                      () => encoded
-                    )(record)
-                )
-              )
-            ))
+            dispatch(
+              actionCreator.swfDatabaseInsertImage(path, characterId, encoded)
+            )
           }
         }))
       } catch (e) {
