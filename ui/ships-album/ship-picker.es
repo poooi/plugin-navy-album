@@ -18,8 +18,6 @@ class ShipPickerImpl extends Component {
   static propTypes = {
     groupped: PTyp.bool.isRequired,
     wrappedShipsInfo: PTyp.array.isRequired,
-    expanded: PTyp.bool.isRequired,
-    mstId: PTyp.number.isRequired,
     uiModify: PTyp.func.isRequired,
   }
 
@@ -29,15 +27,21 @@ class ShipPickerImpl extends Component {
         'shipsAlbum',
         modifyObject(
           'shipViewer',
-          modifyObject(
-            'mstId', () => mstId
-          )
+          sv => {
+            if (sv.mstId === mstId)
+              return sv
+            return {
+              ...sv,
+              mstId,
+              level: 99,
+            }
+          }
         )
       )
     )
 
   render() {
-    const {groupped, wrappedShipsInfo, expanded} = this.props
+    const {groupped, wrappedShipsInfo} = this.props
     return (
       <Panel
         className="ship-picker"

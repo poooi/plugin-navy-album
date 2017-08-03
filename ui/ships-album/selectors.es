@@ -150,6 +150,11 @@ const mstIdSelector = createSelector(
   sv => sv.mstId
 )
 
+const levelSelector = createSelector(
+  shipViewerSelector,
+  sv => sv.level
+)
+
 const shipGraphPathSelector = createSelector(
   indexedShipGraphInfoSelector,
   mstIdSelector,
@@ -181,6 +186,7 @@ export {
   shipsInfoSelectorForView,
   shipViewerSelector,
   mstIdSelector,
+  levelSelector,
   shipGraphPathSelector,
   shipGraphSourcesSelector,
   shipMasterDataSelector,

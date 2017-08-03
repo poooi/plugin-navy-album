@@ -51,6 +51,7 @@
     "request-promise-native": "^1.0.4"
   },
   "dependencies": {
+    "rc-slider": "^8.3.1",
     "subtender": "^0.8.0",
     "swf-extract": "^1.0.1"
   }
