@@ -27,7 +27,7 @@ import { mapDispatchToProps } from '../../../store'
 
    <RemodelChain>
 
-   <StockEquipments>     <ShipGraph>
+   <ShipGraph> <StockEquipments>
 
    <Level Slider> // allow hp, asw, los, evs to be changed accordingly
 
@@ -124,7 +124,7 @@ class ShipViewerImpl extends Component {
                   <img
                     style={
                       mstId > 1500 ? {
-                        width: '100%', height: 'auto',
+                        maxWidth: '100%', height: 'auto',
                       } : {
                         width: 218, height: 300,
                       }
