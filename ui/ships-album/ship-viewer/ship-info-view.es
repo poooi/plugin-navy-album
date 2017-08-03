@@ -6,6 +6,7 @@ import { ships as wctfShips } from '../../../wctf'
 
 import { EquipmentsView } from './equipments-view'
 import { StatsView } from './stats-view'
+import { LevelSlider } from './level-slider'
 
 const mkStats = ($ship, wctfShip) => {
   const ranged = propName => {
@@ -49,34 +50,45 @@ class ShipInfoView extends PureComponent {
     const equips = _.zip($ship.api_maxeq, equipIds).map(([slotNum,mstIdRaw]) =>
       ({cap: slotNum, mstId: _.isInteger(mstIdRaw) ? mstIdRaw : null}))
     return (
-      <div style={{display: 'flex', margin: '.2em', justifyContent: 'space-around'}}>
-        <div style={{flex: 3, display: 'flex', justifyContent: 'space-around'}}>
-          <img
-            style={{width: 218, height: 300}}
-            src={shipGraphSource}
-            alt={`Data not yet available for ${mstId}`}
-          />
-        </div>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        margin: '.2em',
+      }}>
         <div style={{
-          flex: 5,
-          marginLeft: '1em',
+          width: '100%',
           display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          justifyContent: 'space-around',
         }}>
-          <EquipmentsView
-            slotCount={$ship.api_slot_num}
-            equips={equips}
-            style={{
-              width: '100%',
-              maxWidth: 270,
-            }}
-          />
-          <StatsView
-            stats={mkStats($ship, wctfShip)}
-            style={{marginTop: '.8em'}}
-          />
+          <div style={{flex: 3, display: 'flex', justifyContent: 'space-around'}}>
+            <img
+              style={{width: 218, height: 300}}
+              src={shipGraphSource}
+              alt={`Data not yet available for ${mstId}`}
+            />
+          </div>
+          <div style={{
+            flex: 5,
+            marginLeft: '1em',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}>
+            <EquipmentsView
+              slotCount={$ship.api_slot_num}
+              equips={equips}
+              style={{
+                width: '100%',
+                maxWidth: 270,
+              }}
+            />
+            <StatsView
+              stats={mkStats($ship, wctfShip)}
+              style={{marginTop: '.8em'}}
+            />
+          </div>
         </div>
+        <LevelSlider />
       </div>
     )
   }

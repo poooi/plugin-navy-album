@@ -7,8 +7,11 @@ import { reducer } from '../store'
 import { NavyAlbum } from './navy-album'
 
 const {$} = window
+
 $('#fontawesome-css')
   .setAttribute('href', require.resolve('font-awesome/css/font-awesome.css'))
+$('#rc-slider-css')
+  .setAttribute('href', require.resolve('rc-slider/assets/index.css'))
 
 extendReducer('poi-plugin-navy-album', reducer)
 
