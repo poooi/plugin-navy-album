@@ -53,3 +53,8 @@
 #na-main-tab .equipments-view .slotitem-img.svg {
     height: 1.2em;
 }
+
+
+#na-main-tab .ship-info-view .custom {
+    font-weight: bold;
+}

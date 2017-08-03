@@ -1,23 +1,30 @@
 import _ from 'lodash'
+import { createStructuredSelector } from 'reselect'
 import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
 
 import { PTyp } from '../../../ptyp'
 import { ships as wctfShips } from '../../../wctf'
+import { statsAtCurrentLevelSelector } from './selectors'
+import { levelSelector } from '../selectors'
 
 import { EquipmentsView } from './equipments-view'
 import { StatsView } from './stats-view'
 import { LevelSlider } from './level-slider'
 
-const mkStats = ($ship, wctfShip) => {
+const mkStats = ($ship, _wctfShip, statsL, level) => {
   const ranged = propName => {
     const [x,y] = $ship[`api_${propName}`]
     return x === y ? `${x}` : `${x}~${y}`
   }
 
-  // TODO: ev & los & asw are level-dependent
-  const tmp = path => {
-    const v = _.get(wctfShip, path)
-    return _.isInteger(v) ? `${v} (at Lv. 99)` : '???'
+  const mkLvlDpdStatView = value => {
+    const text = _.isInteger(value) ? String(value) : '???'
+    return (
+      <div className={level === 99 ? '' : 'custom text-primary'}>
+        {text}
+      </div>
+    )
   }
 
   return {
@@ -25,36 +32,43 @@ const mkStats = ($ship, wctfShip) => {
     fire: ranged('houg'),
     armor: ranged('souk'),
     torpedo: ranged('souk'),
-    evasion: tmp('stat.evasion_max'),
+    evasion: mkLvlDpdStatView(statsL.evasion),
     antiair: ranged('tyku'),
     cap: _.sum($ship.api_maxeq.filter(x => _.isInteger(x) && x > 0)),
-    asw: tmp('stat.asw_max'),
+    asw: mkLvlDpdStatView(statsL.asw),
     speed: String($ship.api_soku),
-    los: tmp('stat.los_max'),
+    los: mkLvlDpdStatView(statsL.los),
     range: String($ship.api_leng),
     luck: ranged('luck'),
   }
 }
 
-class ShipInfoView extends PureComponent {
+class ShipInfoViewImpl extends PureComponent {
   static propTypes = {
     mstId: PTyp.number.isRequired,
     shipGraphSource: PTyp.string.isRequired,
     $ship: PTyp.object.isRequired,
+    level: PTyp.number.isRequired,
+    statsL: PTyp.object.isRequired,
   }
 
   render() {
-    const {mstId, shipGraphSource, $ship} = this.props
+    const {
+      mstId, shipGraphSource, $ship,
+      statsL, level,
+    } = this.props
     const wctfShip = wctfShips[mstId]
     const equipIds = _.get(wctfShip,'equip',[])
     const equips = _.zip($ship.api_maxeq, equipIds).map(([slotNum,mstIdRaw]) =>
       ({cap: slotNum, mstId: _.isInteger(mstIdRaw) ? mstIdRaw : null}))
     return (
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        margin: '.2em',
-      }}>
+      <div
+        className="ship-info-view"
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          margin: '.2em',
+        }}>
         <div style={{
           width: '100%',
           display: 'flex',
@@ -83,7 +97,7 @@ class ShipInfoView extends PureComponent {
               }}
             />
             <StatsView
-              stats={mkStats($ship, wctfShip)}
+              stats={mkStats($ship, wctfShip, statsL, level)}
               style={{marginTop: '.8em'}}
             />
           </div>
@@ -93,5 +107,13 @@ class ShipInfoView extends PureComponent {
     )
   }
 }
+
+const ShipInfoView = connect(
+  createStructuredSelector({
+    level: levelSelector,
+    // Level-dependent stats
+    statsL: statsAtCurrentLevelSelector,
+  })
+)(ShipInfoViewImpl)
 
 export { ShipInfoView }
