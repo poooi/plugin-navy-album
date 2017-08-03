@@ -60,7 +60,7 @@ class ShipsAlbumImpl extends Component {
     } = this.props
     const boolToBsStyle = v => v ? 'primary' : 'default'
     return (
-      <div>
+      <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
         <Panel
           style={{
             marginBottom: 8,
@@ -102,8 +102,8 @@ class ShipsAlbumImpl extends Component {
             </ButtonGroup>
           </ButtonToolbar>
         </Panel>
-        <div style={{display: 'flex'}}>
-          <div style={{width: '25%'}}>
+        <div style={{display: 'flex', flex: 1}}>
+          <div style={{width: '25%', display: 'flex', flexDirection: 'column'}}>
             <Button
               onClick={this.handleToggle('expanded')}
               style={{
@@ -117,8 +117,7 @@ class ShipsAlbumImpl extends Component {
             <ShipPicker />
           </div>
           <ShipViewer style={{
-            flex: 1, marginLeft: 8,
-            height: expanded ? '86vh' : '92.6vh',
+            flex: 1, marginLeft: 8, marginBottom: 8,
           }} />
         </div>
       </div>

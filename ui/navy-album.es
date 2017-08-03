@@ -48,12 +48,23 @@ class NavyAlbumImpl extends Component {
         id="na-main-tab"
         className={`theme-${theme}`}
         onSelect={this.handleSwitchTab}
+        style={{
+          height: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
         activeKey={activeTab}>
         <div>
-          <div style={{marginBottom: 8}}>
+          <div style={{
+            marginBottom: 8,
+          }}>
             <Nav
+              style={{
+                // left & right margin = 1%
+                width: '98vw',
+              }}
               bsStyle="tabs"
-              justified className="main-nav">
+              className="main-nav">
               <NavItem eventKey="ships">
                 Ships
               </NavItem>
@@ -62,12 +73,12 @@ class NavyAlbumImpl extends Component {
               </NavItem>
             </Nav>
           </div>
-          <div>
-            <Tab.Content>
-              <Tab.Pane eventKey="ships">
+          <div style={{flex: 1}}>
+            <Tab.Content style={{height: '100%'}}>
+              <Tab.Pane eventKey="ships" style={{height: '100%'}}>
                 <ShipsAlbum />
               </Tab.Pane>
-              <Tab.Pane eventKey="equipments">
+              <Tab.Pane eventKey="equipments" style={{height: '100%'}}>
                 <Placeholder />
               </Tab.Pane>
             </Tab.Content>

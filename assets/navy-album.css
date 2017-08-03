@@ -32,3 +32,14 @@
     width: 8px;
     height: 8px;
 }
+
+#na-main-tab ul[role="tablist"].nav.nav-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+#na-main-tab ul[role="tablist"].nav.nav-tabs > li {
+    flex: 1;
+    text-align: center;
+}

@@ -98,9 +98,9 @@ class ShipViewerImpl extends Component {
       >
         <Header />
         <Tab.Container
+          style={{flex: 1, display: 'flex', flexDirection: 'column'}}
           id="na-ship-viewer-tab"
           onSelect={this.handleSwitchTab}
-          style={{flex: 1, overflowY: 'scroll'}}
           activeKey={activeTab}>
           <div>
             <div style={{marginBottom: 8}}>
@@ -118,7 +118,7 @@ class ShipViewerImpl extends Component {
                 </NavItem>
               </Nav>
             </div>
-            <div style={{flex: 1}}>
+            <div style={{flex: 1, height: 0, overflowY: 'scroll'}}>
               <Tab.Content>
                 <Tab.Pane eventKey="info">
                   <img

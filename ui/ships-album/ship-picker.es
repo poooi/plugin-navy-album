@@ -42,7 +42,9 @@ class ShipPickerImpl extends Component {
       <Panel
         className="ship-picker"
         style={{
-          height: expanded ? '86vh' : '89vh',
+          height: 0,
+          flex: 1,
+          marginBottom: 8,
         }}>
         <ListGroup style={{
           height: '100%',
