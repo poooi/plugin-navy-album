@@ -1,4 +1,4 @@
-// NOTE: use `npm run update-db` instead of executing this file.
+// NOTE: use `npm run update-wctf` instead of executing this file.
 const fs = require('fs-extra')
 const request = require('request-promise-native')
 

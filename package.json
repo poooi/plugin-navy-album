@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint '*.es' 'ui/**.es'",
-    "update-db": "node scripts/update-wctf-db.js"
+    "update-wctf": "node scripts/update-wctf-db.js",
+    "update-kcreplay": "node scripts/update-kcreplay-db.js"
   },
   "repository": {
     "type": "git",
@@ -44,6 +45,7 @@
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.1.0",
     "fs-extra": "^4.0.1",
+    "localeval": "^15.2.3",
     "mocha": "^3.3.0",
     "request": "^2.81.0",
     "request-promise-native": "^1.0.4"
