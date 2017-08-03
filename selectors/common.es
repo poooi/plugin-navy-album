@@ -4,6 +4,7 @@ import { generalComparator } from 'subtender'
 import {
   constSelector,
   extensionSelectorFactory,
+  configSelector as poiConfigSelector,
 } from 'views/utils/selectors'
 
 const extSelector = createSelector(
@@ -67,6 +68,10 @@ const shipsInfoSelector = createSelector(
   })
 )
 
+const themeSelector = createSelector(
+  poiConfigSelector,
+  pc => _.get(pc, 'poi.theme', 'paperdark'))
+
 export {
   extSelector,
   uiSelector,
@@ -74,4 +79,5 @@ export {
   shipsInfoSelector,
   swfDatabaseSelector,
   indexedShipGraphInfoSelector,
+  themeSelector,
 }
