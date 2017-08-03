@@ -9,7 +9,7 @@ import {
 } from 'reselect'
 import { modifyObject } from 'subtender'
 
-import { uiSelector } from '../selectors'
+import { uiSelector, themeSelector } from '../selectors'
 import { Placeholder } from './placeholer'
 import { PTyp } from '../ptyp'
 import { mapDispatchToProps } from '../store'
@@ -19,6 +19,7 @@ import { observeAll } from '../observers'
 class NavyAlbumImpl extends Component {
   static propTypes = {
     activeTab: PTyp.ActiveTab.isRequired,
+    theme: PTyp.string.isRequired,
     uiModify: PTyp.func.isRequired,
   }
 
@@ -41,10 +42,11 @@ class NavyAlbumImpl extends Component {
       modifyObject('activeTab', () => activeTab))
 
   render() {
-    const {activeTab} = this.props
+    const {activeTab, theme} = this.props
     return (
       <Tab.Container
         id="na-main-tab"
+        className={`theme-${theme}`}
         onSelect={this.handleSwitchTab}
         activeKey={activeTab}>
         <div>
@@ -81,6 +83,7 @@ const NavyAlbum = connect(
     activeTab: createSelector(
       uiSelector,
       ui => ui.activeTab),
+    theme: themeSelector,
   }),
   mapDispatchToProps,
 )(NavyAlbumImpl)
