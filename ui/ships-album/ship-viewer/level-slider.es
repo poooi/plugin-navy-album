@@ -36,7 +36,7 @@ class LevelSliderImpl extends PureComponent {
           alignItems: 'baseline',
           width: '100%',
           height: '4em',
-          marginBottom: '1.8em',
+          marginBottom: '.4em',
           overflowX: 'hidden',
         }}>
         <span

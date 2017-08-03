@@ -32,14 +32,12 @@ const mkStats = ($ship, _wctfShip, statsL, level) => {
     fire: ranged('houg'),
     armor: ranged('souk'),
     torpedo: ranged('souk'),
-    evasion: mkLvlDpdStatView(statsL.evasion),
     antiair: ranged('tyku'),
     cap: _.sum($ship.api_maxeq.filter(x => _.isInteger(x) && x > 0)),
-    asw: mkLvlDpdStatView(statsL.asw),
     speed: String($ship.api_soku),
-    los: mkLvlDpdStatView(statsL.los),
     range: String($ship.api_leng),
     luck: ranged('luck'),
+    ..._.mapValues(statsL, mkLvlDpdStatView),
   }
 }
 
