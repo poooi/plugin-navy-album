@@ -43,3 +43,11 @@
     flex: 1;
     text-align: center;
 }
+
+#na-main-tab .equipments-view .slotitem-img.png {
+    height: 1.6em;
+}
+
+#na-main-tab .equipments-view .slotitem-img.svg {
+    height: 1.2em;
+}

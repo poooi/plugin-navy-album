@@ -124,7 +124,7 @@ class ShipViewerImpl extends Component {
                 </NavItem>
               </Nav>
             </div>
-            <div style={{flex: 1, height: 0, overflowY: 'scroll'}}>
+            <div style={{flex: 1, height: 0, overflowY: 'auto'}}>
               <Tab.Content>
                 <Tab.Pane eventKey="info">
                   {
