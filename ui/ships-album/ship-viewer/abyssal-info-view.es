@@ -59,6 +59,7 @@ class AbyssalInfoView extends PureComponent {
         <div style={{
           display: 'flex',
           marginTop: '1.2em',
+          width: '100%',
         }}>
           {
             hasAbyssalEquipsInfo && (
