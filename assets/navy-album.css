@@ -58,3 +58,10 @@
 #na-main-tab .ship-info-view .custom {
     font-weight: bold;
 }
+
+#na-main-tab .ship-info-view .extra-info-view .material-icon.png,
+#na-main-tab .ship-info-view .extra-info-view .material-icon.svg {
+    height: 1.4em;
+    width: 1.4em;
+    margin-right: .2em;
+}

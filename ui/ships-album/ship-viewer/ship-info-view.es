@@ -11,6 +11,9 @@ import { levelSelector } from '../selectors'
 import { EquipmentsView } from './equipments-view'
 import { StatsView } from './stats-view'
 import { LevelSlider } from './level-slider'
+import { ExtraInfoView } from './extra-info-view'
+
+// TODO: hp is level-dependent, a bit complicated though.
 
 const mkStats = ($ship, _wctfShip, statsL, level) => {
   const ranged = propName => {
@@ -96,11 +99,26 @@ class ShipInfoViewImpl extends PureComponent {
             />
             <StatsView
               stats={mkStats($ship, wctfShip, statsL, level)}
-              style={{marginTop: '.8em'}}
+              style={{
+                marginTop: '.8em',
+                maxWidth: 450,
+                width: '100%',
+              }}
             />
           </div>
         </div>
         <LevelSlider />
+        <div style={{
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'space-around',
+        }}>
+          <ExtraInfoView
+            style={{maxWidth: 850, width: '100%'}}
+            $ship={$ship}
+            level={level}
+          />
+        </div>
       </div>
     )
   }
