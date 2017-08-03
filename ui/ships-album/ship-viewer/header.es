@@ -22,7 +22,7 @@ class HeaderImpl extends PureComponent {
     const {mstId, shipName, typeName, shipGraphSources} = this.props
     const headerSource = _.get(shipGraphSources,1)
     return (
-      <div style={{display: 'flex', alignItems: 'center'}}>
+      <div style={{display: 'flex', alignItems: 'center', height: 40}}>
         <div style={{display: 'flex', alignItems: 'baseline', flex: 1}}>
           <div
             style={{
