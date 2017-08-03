@@ -169,6 +169,12 @@ const shipGraphSourcesSelector = createSelector(
     shipGraphPath ? _.get(swfDatabase.db,shipGraphPath,{}) : {}
 )
 
+const shipMasterDataSelector = createSelector(
+  mstIdSelector,
+  constSelector,
+  (mstId, {$ships}) => $ships[mstId]
+)
+
 export {
   shipAlbumSelector,
   listOptionsSelector,
@@ -177,4 +183,5 @@ export {
   mstIdSelector,
   shipGraphPathSelector,
   shipGraphSourcesSelector,
+  shipMasterDataSelector,
 }

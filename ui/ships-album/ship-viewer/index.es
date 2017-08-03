@@ -13,9 +13,12 @@ import {
   shipViewerSelector,
   shipGraphPathSelector,
   shipGraphSourcesSelector,
+  shipMasterDataSelector,
 } from '../selectors'
 import { Header } from './header'
 import { mapDispatchToProps } from '../../../store'
+import { AbyssalInfoView } from './abyssal-info-view'
+import { ShipInfoView } from './ship-info-view'
 
 
 /*
@@ -56,6 +59,7 @@ class ShipViewerImpl extends Component {
     mstId: PTyp.number.isRequired,
     shipGraphPath: PTyp.string,
     shipGraphSources: PTyp.object.isRequired,
+    $ship: PTyp.object.isRequired,
     uiModify: PTyp.func.isRequired,
     requestSwf: PTyp.func.isRequired,
   }
@@ -86,11 +90,13 @@ class ShipViewerImpl extends Component {
 
   render() {
     const {
-      style, activeTab, mstId,
+      style, activeTab, mstId, $ship,
       shipGraphSources,
     } = this.props
     const characterIds =
       Object.keys(shipGraphSources).map(Number).sort(generalComparator)
+    const shipGraphSource =
+      _.get(shipGraphSources, mstId > 1500 ? 3 : 5, '')
     return (
       <Panel
         className="ship-viewer"
@@ -121,17 +127,21 @@ class ShipViewerImpl extends Component {
             <div style={{flex: 1, height: 0, overflowY: 'scroll'}}>
               <Tab.Content>
                 <Tab.Pane eventKey="info">
-                  <img
-                    style={
-                      mstId > 1500 ? {
-                        maxWidth: '100%', height: 'auto',
-                      } : {
-                        width: 218, height: 300,
-                      }
-                    }
-                    src={_.get(shipGraphSources, mstId > 1500 ? 3 : 5, '')}
-                    alt={`Data not yet available for ${mstId}`}
-                  />
+                  {
+                    mstId > 1500 ? (
+                      <AbyssalInfoView
+                        mstId={mstId}
+                        shipGraphSource={shipGraphSource}
+                        $ship={$ship}
+                      />
+                    ) : (
+                      <ShipInfoView
+                        mstId={mstId}
+                        shipGraphSource={shipGraphSource}
+                        $ship={$ship}
+                      />
+                    )
+                  }
                 </Tab.Pane>
                 <Tab.Pane eventKey="image">
                   <ListGroup>
@@ -166,6 +176,7 @@ const ShipViewer = connect(
     createStructuredSelector({
       shipGraphPath: shipGraphPathSelector,
       shipGraphSources: shipGraphSourcesSelector,
+      $ship: shipMasterDataSelector,
     })
   ),
   mapDispatchToProps,
