@@ -137,8 +137,9 @@ class ShipViewerImpl extends Component {
                   <ListGroup>
                     {
                       characterIds.map(chId => (
-                        <ListGroupItem key={chId}>
+                        <ListGroupItem key={chId} style={{textAlign: 'center'}}>
                           <img
+                            style={{maxWidth: '100%', height: 'auto'}}
                             src={_.get(shipGraphSources,chId,'')}
                             alt={`ship=${mstId}, chId=${chId}`}
                           />
