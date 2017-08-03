@@ -19,7 +19,7 @@ const initState = {
       groupRemodels: true,
     },
     shipViewer: {
-      mstId: 185,
+      mstId: 1631, //185,
       /*
          plan to have 3 tabs:
 
