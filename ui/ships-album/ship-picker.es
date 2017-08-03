@@ -48,7 +48,7 @@ class ShipPickerImpl extends Component {
         }}>
         <ListGroup style={{
           height: '100%',
-          overflowY: 'scroll',
+          overflowY: 'auto',
         }}>
           {
             wrappedShipsInfo.map(wrapped => {
