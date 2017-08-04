@@ -42,6 +42,9 @@ const initState = {
       },
       groupEquipTypes: true,
     },
+    equipViewer: {
+      mstId: 116,
+    },
   },
 }
 
