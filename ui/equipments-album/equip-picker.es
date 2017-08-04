@@ -55,7 +55,7 @@ class EquipPickerImpl extends Component {
                       className="slotitem-img"
                       slotitemId={icon}
                     />
-                    <span style={{marginLeft: '.4em'}}>
+                    <span style={{marginLeft: '.2em'}}>
                       {name} ({mstId})
                     </span>
                   </div>
