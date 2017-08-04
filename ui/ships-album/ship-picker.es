@@ -18,27 +18,11 @@ class ShipPickerImpl extends Component {
   static propTypes = {
     groupped: PTyp.bool.isRequired,
     wrappedShipsInfo: PTyp.array.isRequired,
-    uiModify: PTyp.func.isRequired,
+    uiSwitchShip: PTyp.func.isRequired,
   }
 
   handleSelectMstId = mstId => () =>
-    this.props.uiModify(
-      modifyObject(
-        'shipsAlbum',
-        modifyObject(
-          'shipViewer',
-          sv => {
-            if (sv.mstId === mstId)
-              return sv
-            return {
-              ...sv,
-              mstId,
-              level: 99,
-            }
-          }
-        )
-      )
-    )
+    this.props.uiSwitchShip(mstId)
 
   render() {
     const {groupped, wrappedShipsInfo} = this.props
