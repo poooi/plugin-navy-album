@@ -21,7 +21,7 @@ import {
 
 import { PTyp } from '../../../ptyp'
 import { mapDispatchToProps } from '../../../store'
-import { Icon } from './icon'
+import { Icon } from '../../icon'
 
 const prepareMstIdToDesc = ($ships, $shipTypes) => mstId => {
   const $ship = $ships[mstId]
