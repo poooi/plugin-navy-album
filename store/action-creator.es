@@ -33,6 +33,18 @@ const actionCreator = {
         )
       )
     ),
+  uiSwitchEquip: mstId =>
+    actionCreator.uiModify(
+      modifyObject(
+        'equipmentsAlbum',
+        modifyObject(
+          'equipViewer',
+          modifyObject(
+            'mstId', () => mstId
+          )
+        )
+      )
+    ),
 
   swfDatabaseLockPath: path =>
     actionCreator.swfDatabaseModify(

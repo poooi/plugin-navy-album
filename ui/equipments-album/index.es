@@ -13,6 +13,8 @@ import {
 import { listOptionsSelector } from './selectors'
 import { mapDispatchToProps } from '../../store'
 import { PTyp } from '../../ptyp'
+import { EquipPicker } from './equip-picker'
+import { EquipViewer } from './equip-viewer'
 
 class EquipmentsAlbumImpl extends Component {
   static propTypes = {
@@ -91,8 +93,8 @@ class EquipmentsAlbumImpl extends Component {
         </Panel>
         <div style={{display: 'flex', flex: 1}}>
           <div style={{
-            width: '25%',
-            minWidth: '14em', maxWidth: '21em',
+            width: '30%',
+            minWidth: '14em', maxWidth: '25em',
             display: 'flex',
             flexDirection: 'column',
           }}>
@@ -106,21 +108,12 @@ class EquipmentsAlbumImpl extends Component {
               }}>
               Show options
             </Button>
-            <Panel
-              style={{
-                height: 0,
-                flex: 1,
-                marginBottom: 8,
-              }}>
-              TODO: picker
-            </Panel>
+            <EquipPicker />
           </div>
-          <Panel style={{
+          <EquipViewer style={{
             minWidth: 500,
             flex: 1, marginLeft: 8, marginBottom: 8,
-          }}>
-            TODO: viewer
-          </Panel>
+          }} />
         </div>
       </div>
     )
