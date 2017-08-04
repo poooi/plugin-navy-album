@@ -7,10 +7,12 @@ import { modifyObject } from 'subtender'
 import { PTyp } from '../../../ptyp'
 import { mapDispatchToProps } from '../../../store'
 import { levelSelector } from '../selectors'
+import { minLevelSelector } from './selectors'
 
 class LevelSliderImpl extends PureComponent {
   static propTypes = {
     level: PTyp.number.isRequired,
+    minLevel: PTyp.number.isRequired,
     uiModify: PTyp.func.isRequired,
   }
 
@@ -28,7 +30,7 @@ class LevelSliderImpl extends PureComponent {
     )
 
   render() {
-    const {level} = this.props
+    const {level,minLevel} = this.props
     return (
       <div
         style={{
@@ -53,11 +55,10 @@ class LevelSliderImpl extends PureComponent {
           }}
           value={level}
           onChange={this.handleChangeLevel}
-          min={1 /* TODO minimum possible level */}
+          min={minLevel}
           max={165}
           marks={{
-            // TODO
-            1: 'Lv. 1',
+            [minLevel]: `Lv. ${minLevel}`,
             99: 'Lv. 99',
             165: 'Lv. 165',
           }}
@@ -70,6 +71,7 @@ class LevelSliderImpl extends PureComponent {
 const LevelSlider = connect(
   createStructuredSelector({
     level: levelSelector,
+    minLevel: minLevelSelector,
   }),
   mapDispatchToProps
 )(LevelSliderImpl)

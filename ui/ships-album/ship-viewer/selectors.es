@@ -7,6 +7,7 @@ import {
   levelSelector,
   shipViewerSelector,
 } from '../selectors'
+import { remodelInfoSelector } from '../../../selectors'
 import { ships } from '../../../wctf'
 
 const headerInfoSelector = createSelector(
@@ -48,8 +49,29 @@ const statsAtCurrentLevelSelector = createSelector(
   }
 )
 
+const minLevelSelector = createSelector(
+  mstIdSelector,
+  remodelInfoSelector,
+  constSelector,
+  (mstId, {remodelChains, originMstIdOf}, {$ships}) => {
+    const originMstId = originMstIdOf[mstId]
+    if (! originMstId)
+      return 1
+    const remodelChain = remodelChains[originMstId]
+    if (! remodelChain || mstId === originMstId)
+      return 1
+    const curInd = remodelChain.findIndex(x => x === mstId)
+    const prevMstId = remodelChain[curInd-1]
+    const afterLevel = _.get($ships,[prevMstId,'api_afterlv'])
+    if (! _.isInteger(afterLevel) || afterLevel <= 0)
+      return 1
+    return afterLevel
+  }
+)
+
 export {
   headerInfoSelector,
   activeTabSelector,
   statsAtCurrentLevelSelector,
+  minLevelSelector,
 }
