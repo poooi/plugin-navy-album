@@ -12,6 +12,7 @@ import { EquipmentsView } from './equipments-view'
 import { StatsView } from './stats-view'
 import { LevelSlider } from './level-slider'
 import { ExtraInfoView } from './extra-info-view'
+import { RemodelInfoView } from './remodel-info-view'
 
 // TODO: hp is level-dependent, a bit complicated though.
 
@@ -117,6 +118,15 @@ class ShipInfoViewImpl extends PureComponent {
             style={{maxWidth: 850, width: '100%'}}
             $ship={$ship}
             level={level}
+          />
+        </div>
+        <div style={{
+          width: '100%',
+          display: 'flex',
+        }}>
+          <RemodelInfoView
+            style={{}}
+            mstId={mstId}
           />
         </div>
       </div>

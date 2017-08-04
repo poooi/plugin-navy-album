@@ -5,8 +5,7 @@ import { Table } from 'react-bootstrap'
 import { MaterialIcon } from 'views/components/etc/icon'
 
 import { PTyp } from '../../../ptyp'
-import { StatIcon } from './stat-icon'
-
+import { Icon } from './icon'
 
 class ExtraInfoView extends PureComponent {
   static propTypes = {
@@ -87,7 +86,7 @@ class ExtraInfoView extends PureComponent {
               ).map(([v, statName]) => (
                 <td key={statName}>
                   <div style={{display: 'flex', alignItems: 'center'}}>
-                    <StatIcon
+                    <Icon
                       style={{
                         height: '1.4em',
                         width: '1.4em',

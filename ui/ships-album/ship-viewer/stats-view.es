@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react'
 import { Table } from 'react-bootstrap'
 
 import { PTyp } from '../../../ptyp'
-import { StatIcon } from './stat-icon'
+import { Icon } from './icon'
 
 class StatsView extends PureComponent {
   static propTypes = {
@@ -46,7 +46,7 @@ class StatsView extends PureComponent {
                         ...tdStyle,
                       }}
                       key={`icon-${id(ind2)}`}>
-                      <StatIcon
+                      <Icon
                         style={{height: '1.2em', width: 'auto'}}
                         name={iconName}
                       />

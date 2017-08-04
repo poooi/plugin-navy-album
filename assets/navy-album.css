@@ -65,3 +65,13 @@
     width: 1.4em;
     margin-right: .2em;
 }
+
+#na-main-tab .ship-info-view .remodel-info-view > .panel-heading {
+    padding: 10px;
+}
+
+#na-main-tab .ship-info-view .remodel-info-view .material-icon.png,
+#na-main-tab .ship-info-view .remodel-info-view .material-icon.svg {
+    height: 1.4em;
+    width: 1.4em;
+}
