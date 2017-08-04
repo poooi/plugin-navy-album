@@ -6,7 +6,7 @@ import {
 import React, { PureComponent } from 'react'
 import FontAwesome from 'react-fontawesome'
 import { connect } from 'react-redux'
-import { Well, Label } from 'react-bootstrap'
+import { Label } from 'react-bootstrap'
 import { SlotitemIcon } from 'views/components/etc/icon'
 import { constSelector } from 'views/utils/selectors'
 import { PTyp } from '../../../ptyp'

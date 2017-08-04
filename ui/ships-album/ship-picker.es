@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { mergeMapStateToProps, modifyObject } from 'subtender'
+import { mergeMapStateToProps } from 'subtender'
 import { connect } from 'react-redux'
 import {
   ListGroup, ListGroupItem,

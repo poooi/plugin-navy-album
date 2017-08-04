@@ -10,7 +10,6 @@ import {
 import { modifyObject } from 'subtender'
 
 import { uiSelector, themeSelector } from '../selectors'
-import { Placeholder } from './placeholer'
 import { PTyp } from '../ptyp'
 import { mapDispatchToProps } from '../store'
 import { ShipsAlbum } from './ships-album'

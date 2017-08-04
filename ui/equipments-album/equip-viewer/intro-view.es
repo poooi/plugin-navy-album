@@ -1,8 +1,5 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import {
-  Panel,
-} from 'react-bootstrap'
 
 import {
   equipRawInfoSelector,
@@ -14,7 +11,6 @@ class IntroViewImpl extends PureComponent {
   static propTypes = {
     style: PTyp.object.isRequired,
     $equip: PTyp.object.isRequired,
-    $equipType: PTyp.object.isRequired,
   }
 
   render() {
