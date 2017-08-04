@@ -5,10 +5,13 @@ import {
   Panel,
 } from 'react-bootstrap'
 
-import { mstIdSelector } from '../selectors'
+import {
+  mstIdSelector,
+} from '../selectors'
 
 import { PTyp } from '../../../ptyp'
-import { mapDispatchToProps } from '../../../store'
+import { Header } from './header'
+import { IntroView } from './intro-view'
 
 class EquipViewerImpl extends Component {
   static propTypes = {
@@ -18,33 +21,24 @@ class EquipViewerImpl extends Component {
 
   render() {
     const {style, mstId} = this.props
-    const id = x => x
-    const {serverIp} = window
-    const mstIdStr = String(mstId).padStart(3,'0')
-    const prefix = `http://${serverIp}/kcs/resources/image/slotitem/`
     return (
       <Panel
         className="equip-viewer"
-        style={style}
+        style={{
+          ...style,
+        }}
       >
-        {
-          mstId >= 500 ? (
-            <div>Abyssal equipment</div>
-          ) : (
-            <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}>
-              {
-                [
-                  `card/${mstIdStr}.png`,
-                  `item_character/${mstIdStr}.png`,
-                  `item_up/${mstIdStr}.png`,
-                  `item_on/${mstIdStr}.png`,
-                ].map((src, ind) => (
-                  <img src={`${prefix}${src}`} style={{width: '20%', height: 'auto'}} alt={`img-${ind}`} key={id(ind)} />
-                ))
-              }
-            </div>
-          )
-        }
+        <div
+          style={{flex: 1, height: 0, overflowY: 'auto'}}
+        >
+          <Header />
+          {
+            mstId < 501 && (
+              <IntroView style={{}} />
+            )
+          }
+          <div>StatsView</div>
+        </div>
       </Panel>
     )
   }
@@ -53,8 +47,7 @@ class EquipViewerImpl extends Component {
 const EquipViewer = connect(
   createStructuredSelector({
     mstId: mstIdSelector,
-  }),
-  mapDispatchToProps,
+  })
 )(EquipViewerImpl)
 
 export { EquipViewer }
