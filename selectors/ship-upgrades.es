@@ -39,7 +39,7 @@ const computeInstantBuildCount = mstIdAfter =>
   groupA.includes(mstIdAfter) ? 20 : 0
 
 /*
-   remodelDetails[mstIdAfter] = {
+   remodelDetails[mstIdBefore] = {
      mstIdBefore,
      mstIdAfter,
      level,
@@ -79,7 +79,7 @@ const remodelDetailsSelector = createSelector(
         }
       }
 
-      remodelDetails[mstIdAfter] = {
+      remodelDetails[mstIdBefore] = {
         mstIdBefore, mstIdAfter,
         level: $ship.api_afterlv,
         ammo, steel,

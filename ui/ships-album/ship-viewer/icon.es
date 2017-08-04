@@ -3,7 +3,7 @@ import { join } from 'path-extra'
 
 import { PTyp } from '../../../ptyp'
 
-class StatIcon extends PureComponent {
+class Icon extends PureComponent {
   static propTypes = {
     style: PTyp.object.isRequired,
     name: PTyp.string.isRequired,
@@ -17,10 +17,10 @@ class StatIcon extends PureComponent {
         src={
           join(__dirname,'..','..','..','assets','icons',`${name}.png`)
         }
-        alt={`stat-name`}
+        alt={`icon-${name}`}
       />
     )
   }
 }
 
-export { StatIcon }
+export { Icon }
