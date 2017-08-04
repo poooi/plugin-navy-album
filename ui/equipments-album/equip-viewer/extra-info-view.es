@@ -4,9 +4,6 @@ import { Table } from 'react-bootstrap'
 import { MaterialIcon } from 'views/components/etc/icon'
 
 import { PTyp } from '../../../ptyp'
-import { Icon } from '../../icon'
-
-const id = _.identity
 
 class ExtraInfoView extends PureComponent {
   static propTypes = {

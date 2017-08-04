@@ -5,7 +5,7 @@
   "main": "index.es",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint '*.es' 'ui/**.es'",
+    "lint": "eslint '**/*.es'",
     "update-wctf": "node scripts/update-wctf-db.js",
     "update-kcreplay": "node scripts/update-kcreplay-db.js"
   },

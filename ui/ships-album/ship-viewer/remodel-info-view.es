@@ -39,7 +39,6 @@ class RemodelInfoViewImpl extends PureComponent {
     remodelInfo: PTyp.object.isRequired,
     $ships: PTyp.object.isRequired,
     $shipTypes: PTyp.object.isRequired,
-    uiSwitchShip: PTyp.func.isRequired,
   }
 
   render() {
