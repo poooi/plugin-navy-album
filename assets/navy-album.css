@@ -94,4 +94,12 @@
 #na-main-tab .equip-viewer .header .slotitem-img.svg {
     height: 1.4em;
     width: 1.4em;
+    margin-bottom: .4em;
+}
+
+#na-main-tab .equip-viewer .extra-info-view .material-icon.png,
+#na-main-tab .equip-viewer .extra-info-view .material-icon.svg {
+    height: 1.4em;
+    width: 1.4em;
+    margin-right: .2em;
 }

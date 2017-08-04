@@ -1,16 +1,11 @@
 import React, { PureComponent } from 'react'
-import { connect } from 'react-redux'
 import { SlotitemIcon } from 'views/components/etc/icon'
 import { enumFromTo } from 'subtender'
-
-import {
-  equipRawInfoSelector,
-} from '../selectors'
 
 import { PTyp } from '../../../ptyp'
 import { Icon } from '../../icon'
 
-class HeaderImpl extends PureComponent {
+class Header extends PureComponent {
   static propTypes = {
     $equip: PTyp.object.isRequired,
     $equipType: PTyp.object.isRequired,
@@ -59,7 +54,7 @@ class HeaderImpl extends PureComponent {
             className="slotitem-img"
             slotitemId={$equip.api_type[3]}
           />
-          <div style={{display: 'flex', alignItems: 'center'}}>
+          <div style={{display: 'flex', alignItems: 'center', height: '1em'}}>
             {
               enumFromTo(1,$equip.api_rare).map(x => (
                 <Icon
@@ -75,7 +70,5 @@ class HeaderImpl extends PureComponent {
     )
   }
 }
-
-const Header = connect(equipRawInfoSelector)(HeaderImpl)
 
 export { Header }

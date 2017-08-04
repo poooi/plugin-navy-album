@@ -4,6 +4,7 @@ import { Table } from 'react-bootstrap'
 
 import { PTyp } from '../../../ptyp'
 import { Icon } from '../../icon'
+import { interpretRange, interpretSpeed } from '../../../game-misc'
 
 class StatsView extends PureComponent {
   static propTypes = {
@@ -18,10 +19,21 @@ class StatsView extends PureComponent {
   render() {
     const {style, stats} = this.props
     const id = x => x
+
+    const decorateValue = (value, statName) => {
+      if (statName === 'range')
+        return interpretRange(Number(value))
+      if (statName === 'speed')
+        return interpretSpeed(Number(value))
+      return value
+    }
+
     const displayStats =
       'hp fire armor torpedo evasion antiair cap asw speed los range luck'
-        .split(' ').map(name =>
-          ({iconName: name, value: stats[name]}))
+        .split(' ').map(name => ({
+          statName: name,
+          value: decorateValue(stats[name], name),
+        }))
 
     const tdStyle = {
       textAlign: 'center',
@@ -39,7 +51,7 @@ class StatsView extends PureComponent {
             _.chunk(displayStats,2).map((rowStats,ind) => (
               <tr key={id(ind)}>
                 {
-                  _.flatMap(rowStats, ({iconName,value}, ind2) => [
+                  _.flatMap(rowStats, ({statName,value}, ind2) => [
                     <td
                       style={{
                         width: '20%',
@@ -48,7 +60,7 @@ class StatsView extends PureComponent {
                       key={`icon-${id(ind2)}`}>
                       <Icon
                         style={{height: '1.2em', width: 'auto'}}
-                        name={iconName}
+                        name={statName}
                       />
                     </td>,
                     <td
