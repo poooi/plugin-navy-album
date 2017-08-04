@@ -16,6 +16,7 @@ import {
   shipMasterDataSelector,
 } from '../selectors'
 import { Header } from './header'
+import { AltFormSwitcher } from './alt-form-switcher'
 import { mapDispatchToProps } from '../../../store'
 import { AbyssalInfoView } from './abyssal-info-view'
 import { ShipInfoView } from './ship-info-view'
@@ -103,6 +104,7 @@ class ShipViewerImpl extends Component {
         style={style}
       >
         <Header />
+        <AltFormSwitcher />
         <Tab.Container
           style={{flex: 1, display: 'flex', flexDirection: 'column'}}
           id="na-ship-viewer-tab"

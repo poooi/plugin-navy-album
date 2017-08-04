@@ -14,6 +14,26 @@ const actionCreator = {
     type: '@poi-plugin-navy-album@swfDatabase@Modify',
     modifier,
   }),
+
+  uiSwitchShip: mstId =>
+    actionCreator.uiModify(
+      modifyObject(
+        'shipsAlbum',
+        modifyObject(
+          'shipViewer',
+          sv => {
+            if (sv.mstId === mstId)
+              return sv
+            return {
+              ...sv,
+              mstId,
+              level: 99,
+            }
+          }
+        )
+      )
+    ),
+
   swfDatabaseLockPath: path =>
     actionCreator.swfDatabaseModify(
       modifyObject(
