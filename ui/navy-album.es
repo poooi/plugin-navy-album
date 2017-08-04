@@ -14,6 +14,7 @@ import { Placeholder } from './placeholer'
 import { PTyp } from '../ptyp'
 import { mapDispatchToProps } from '../store'
 import { ShipsAlbum } from './ships-album'
+import { EquipmentsAlbum } from './equipments-album'
 import { observeAll } from '../observers'
 
 class NavyAlbumImpl extends Component {
@@ -79,7 +80,7 @@ class NavyAlbumImpl extends Component {
                 <ShipsAlbum />
               </Tab.Pane>
               <Tab.Pane eventKey="equipments" style={{height: '100%'}}>
-                <Placeholder />
+                <EquipmentsAlbum />
               </Tab.Pane>
             </Tab.Content>
           </div>
