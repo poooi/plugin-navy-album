@@ -27,6 +27,7 @@ module.exports = {
     }],
     'no-lonely-if': 'off',
     'no-floating-decimal': 'off',
+    'indent': ['error',2 , {'flatTernaryExpressions': true}],
     'no-underscore-dangle': ['error', { 'allowAfterThis': true }],
     'import/extensions': ['error', { 'es': 'never' }],
     'import/no-extraneous-dependencies': 'off',
