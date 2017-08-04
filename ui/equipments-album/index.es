@@ -111,7 +111,7 @@ class EquipmentsAlbumImpl extends Component {
             <EquipPicker />
           </div>
           <EquipViewer style={{
-            minWidth: 500,
+            minWidth: 400,
             flex: 1, marginLeft: 8, marginBottom: 8,
           }} />
         </div>

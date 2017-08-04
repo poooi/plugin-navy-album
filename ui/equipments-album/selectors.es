@@ -115,9 +115,21 @@ const mstIdSelector = createSelector(
   ev => ev.mstId
 )
 
+const equipRawInfoSelector = createSelector(
+  mstIdSelector,
+  constSelector,
+  (mstId, {$equips, $equipTypes}) => {
+    const $equip = $equips[mstId]
+    const etype = $equip.api_type[2]
+    const $equipType = $equipTypes[etype]
+    return {$equip, $equipType}
+  }
+)
+
 export {
   listOptionsSelector,
   equipsRawSelectorForView,
   equipViewerSelector,
   mstIdSelector,
+  equipRawInfoSelector,
 }
