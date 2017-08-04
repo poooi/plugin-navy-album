@@ -57,7 +57,8 @@
 }
 
 #na-main-tab .equip-picker .slotitem-img.png {
-    height: 1.6em;
+    height: 2em;
+    margin-right: -0.2em;
 }
 
 #na-main-tab .equip-picker .slotitem-img.svg {
@@ -81,6 +82,16 @@
 
 #na-main-tab .ship-info-view .remodel-info-view .material-icon.png,
 #na-main-tab .ship-info-view .remodel-info-view .material-icon.svg {
+    height: 1.4em;
+    width: 1.4em;
+}
+
+#na-main-tab .equip-viewer .header .slotitem-img.png {
+    height: 2.5em;
+    width: 2.5em;
+}
+
+#na-main-tab .equip-viewer .header .slotitem-img.svg {
     height: 1.4em;
     width: 1.4em;
 }

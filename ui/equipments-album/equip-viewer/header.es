@@ -1,12 +1,14 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { SlotitemIcon } from 'views/components/etc/icon'
+import { enumFromTo } from 'subtender'
 
 import {
   equipRawInfoSelector,
 } from '../selectors'
 
 import { PTyp } from '../../../ptyp'
+import { Icon } from '../../icon'
 
 class HeaderImpl extends PureComponent {
   static propTypes = {
@@ -19,6 +21,7 @@ class HeaderImpl extends PureComponent {
     const mstId = $equip.api_id
     return (
       <div
+        className="header"
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -46,11 +49,27 @@ class HeaderImpl extends PureComponent {
             ({mstId})
           </div>
         </div>
-        <div>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+          }}>
           <SlotitemIcon
             className="slotitem-img"
             slotitemId={$equip.api_type[3]}
           />
+          <div style={{display: 'flex', alignItems: 'center'}}>
+            {
+              enumFromTo(1,$equip.api_rare).map(x => (
+                <Icon
+                  key={x}
+                  style={{height: '1em', width: 'auto'}}
+                  name="star"
+                />
+              ))
+            }
+          </div>
         </div>
       </div>
     )
