@@ -2,7 +2,7 @@ import { mkSimpleReducer } from './common'
 
 const initState = {
   // activeTab: ships / equipments
-  activeTab: 'ships',
+  activeTab: 'equipments',
   // state for ShipsAlbum
   shipsAlbum: {
     // controls how the ship list appears
@@ -33,7 +33,16 @@ const initState = {
     },
   },
   // state for EquipmentsAlbum
-  equipmentsAlbum: 'TODO',
+  equipmentsAlbum: {
+    listOptions: {
+      expanded: false,
+      showSides: {
+        friendly: true,
+        abyssal: true,
+      },
+      groupEquipTypes: true,
+    },
+  },
 }
 
 const reducer = mkSimpleReducer(

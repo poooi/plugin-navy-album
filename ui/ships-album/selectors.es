@@ -14,12 +14,12 @@ import {
   swfDatabaseSelector,
 } from '../../selectors'
 
-const shipAlbumSelector = createSelector(
+const shipsAlbumSelector = createSelector(
   uiSelector,
   ui => ui.shipsAlbum)
 
 const listOptionsSelector = createSelector(
-  shipAlbumSelector,
+  shipsAlbumSelector,
   sa => sa.listOptions)
 
 const isAbyssal = s => s.mstId > 1500
@@ -141,7 +141,7 @@ const shipsInfoStage3Selector = createSelector(
 const shipsInfoSelectorForView = shipsInfoStage3Selector
 
 const shipViewerSelector = createSelector(
-  shipAlbumSelector,
+  shipsAlbumSelector,
   sa => sa.shipViewer
 )
 
@@ -181,7 +181,7 @@ const shipMasterDataSelector = createSelector(
 )
 
 export {
-  shipAlbumSelector,
+  shipsAlbumSelector,
   listOptionsSelector,
   shipsInfoSelectorForView,
   shipViewerSelector,
