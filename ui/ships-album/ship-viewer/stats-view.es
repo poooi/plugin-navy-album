@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react'
 import { Table } from 'react-bootstrap'
 
 import { PTyp } from '../../../ptyp'
-import { Icon } from './icon'
+import { Icon } from '../../icon'
 
 class StatsView extends PureComponent {
   static propTypes = {
