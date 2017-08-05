@@ -35,6 +35,7 @@ module.exports = {
     'no-confusing-arrow': ['error', {'allowParens': true}],
     'import/prefer-default-export': 'off',
     'jsx-a11y/no-static-element-interactions': 'off',
+    'jsx-a11y/media-has-caption': 'off',
     'arrow-parens': ['error', 'as-needed'],
     'no-underscore-dangle': ['error', { 'allow': ['__','__r','__n'] }],
     'no-console': ['error', { 'allow': ['warn', 'error', 'info'] }],

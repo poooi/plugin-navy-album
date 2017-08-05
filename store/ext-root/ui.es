@@ -21,6 +21,10 @@ const initState = {
     shipViewer: {
       mstId: 185,
       level: 99,
+      quotesOptions: {
+        showWedding: false,
+        showSunk: false,
+      },
       /*
          plan to have 3 tabs:
 
@@ -29,7 +33,7 @@ const initState = {
          - voice: voice player, might also include subtitles
 
        */
-      activeTab: 'info',
+      activeTab: 'voice',
     },
   },
   // state for EquipmentsAlbum

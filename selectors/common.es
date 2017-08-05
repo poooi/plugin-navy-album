@@ -97,4 +97,5 @@ export {
   indexedShipGraphInfoSelector,
   themeSelector,
   serverIpSelector,
+  poiConfigSelector,
 }
