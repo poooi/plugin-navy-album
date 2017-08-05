@@ -2,7 +2,7 @@ import { mkSimpleReducer } from './common'
 
 const initState = {
   // activeTab: ships / equipments
-  activeTab: 'equipments',
+  activeTab: 'ships',
   // state for ShipsAlbum
   shipsAlbum: {
     // controls how the ship list appears

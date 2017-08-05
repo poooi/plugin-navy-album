@@ -122,9 +122,13 @@ class ShipViewerImpl extends Component {
                 <NavItem eventKey="image">
                   Image
                 </NavItem>
-                <NavItem eventKey="voice">
-                  Voice
-                </NavItem>
+                {
+                  mstId <= 1500 && (
+                    <NavItem eventKey="voice">
+                      Voice
+                    </NavItem>
+                  )
+                }
               </Nav>
             </div>
             <div style={{flex: 1, height: 0, overflowY: 'auto'}}>

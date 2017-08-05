@@ -24,10 +24,17 @@ const actionCreator = {
           sv => {
             if (sv.mstId === mstId)
               return sv
+
+            // disallow voice tab for abyssal ships
+            const newActiveTab =
+              (mstId > 1500 && sv.activeTab === 'voice') ?
+                'info' : sv.activeTab
+
             return {
               ...sv,
               mstId,
               level: 99,
+              activeTab: newActiveTab,
             }
           }
         )
