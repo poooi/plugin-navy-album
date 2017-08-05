@@ -4,6 +4,7 @@ import {
   swfDatabaseSelector,
   indexedShipGraphInfoSelector,
 } from '../selectors'
+import { readCacheFile } from '../swf-cache'
 
 const mayExtractWithLock = async context => {
   const {
@@ -53,6 +54,36 @@ const mayExtractWithLock = async context => {
   }
 }
 
+// return false only we have failed to load the file.
+const mayReadCacheFileWithLock = context => {
+  const {
+    actionCreator,
+    getState, path, mstId,
+    dataReady, dispatch,
+  } = context
+
+  const reduxState = getState()
+  const {fetchLocks} = swfDatabaseSelector(reduxState)
+
+  // some other process is already fetching that data
+  if (path in fetchLocks)
+    return true
+
+  let success = false
+  // start fetching & parsing
+  dispatch(actionCreator.swfDatabaseLockPath(path))
+  try {
+    dataReady(readCacheFile(mstId))
+    success = true
+  } catch (e) {
+    console.error(`error while loading cache for ${path}`,e)
+  } finally {
+    // release lock
+    dispatch(actionCreator.swfDatabaseUnlockPath(path))
+  }
+  return success
+}
+
 const mkRequestShipGraph = actionCreator => mstId =>
   (dispatch, getState) => setTimeout(() => {
     const reduxState = getState()
@@ -62,13 +93,6 @@ const mkRequestShipGraph = actionCreator => mstId =>
     if (!_.isEmpty(shipDb[mstId]))
       return
 
-    // we don't need to check diskFilesReady,
-    // assuming it's always an empty Object when diskFilesReady === false
-    if (!_.isEmpty(diskFiles[mstId])) {
-      // TODO should load files from disk
-      return
-    }
-
     const indexedShipGraphInfo = indexedShipGraphInfoSelector(reduxState)
     // figure out path
     const graphInfo = _.get(indexedShipGraphInfo,[mstId, 'graphInfo'])
@@ -76,6 +100,38 @@ const mkRequestShipGraph = actionCreator => mstId =>
       return
     const {fileName, versionStr} = graphInfo
     const path = `/kcs/resources/swf/ships/${fileName}.swf?VERSION=${versionStr}`
+
+    // we don't need to check diskFilesReady,
+    // assuming it's always an empty Object when diskFilesReady === false
+    if (!_.isEmpty(diskFiles[mstId])) {
+      const diskFile = diskFiles[mstId]
+      if (
+        diskFile.sgFileName === fileName &&
+        diskFile.sgVersion === versionStr
+      ) {
+        // load files from disk
+        const cacheLoadContext = {
+          actionCreator,
+          getState, path, mstId,
+          dispatch,
+          dataReady: cacheData =>
+            dispatch(
+              actionCreator.swfDatabaseDiskFileLoaded(
+                mstId, cacheData)),
+        }
+
+        const loaded = mayReadCacheFileWithLock(cacheLoadContext)
+        if (loaded) {
+          return
+        }
+        /*
+           if we have failed to load a cache file,
+           it will fall back to use network fetch & parse method,
+           after which index.json will be kept in sync (at least
+           with that specific part), so there is no need of invalidation
+         */
+      }
+    }
 
     {
       const extractContext = {

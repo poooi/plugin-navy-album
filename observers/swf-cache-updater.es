@@ -46,9 +46,13 @@ const swfCacheUpdater = observer(
 
     const curDb = cur.shipDb
     const prevDb = prev.shipDb
-    // detect shipDb changes
+    // detect shipDb changes (without considering diskFiles)
     const addedMstIds = []
-    const removedMstIds = []
+    /*
+       no handling for individual removals,
+       this should happen only when there is a shipDb wipe.
+     */
+    // const removedMstIds = []
     const modifiedMstIds = []
 
     Object.keys(curDb).map(mstIdStr => {
@@ -61,19 +65,34 @@ const swfCacheUpdater = observer(
         addedMstIds.push(mstId)
       }
     })
-    Object.keys(prevDb).map(mstIdStr => {
-      if (!(mstIdStr in curDb)) {
-        removedMstIds.push(Number(mstIdStr))
-      }
-    })
+
+    /*
+      Object.keys(prevDb).map(mstIdStr => {
+        if (!(mstIdStr in curDb)) {
+          removedMstIds.push(Number(mstIdStr))
+        }
+      })
+    */
 
     const debouncedWrite = debouncedWriteCacheFile(dispatch);
     // xxxMstIds prepared.
-    [...addedMstIds, ...modifiedMstIds].map(mstId =>
-      debouncedWrite(mstId)(curDb[mstId])
-    )
-
-    // TODO: removal
+    [...addedMstIds, ...modifiedMstIds].map(mstId => {
+      // check if writing is really necessary by comparing against diskFiles
+      const shipRecord = curDb[mstId]
+      const diskFile = cur.diskFiles[mstId]
+      if (
+        // no disk file
+        ! diskFile ||
+        (
+          // meta mismatch
+          diskFile.sgFileName !== shipRecord.sgFileName ||
+          diskFile.version !== shipRecord.version ||
+          // having a newer record
+          diskFile.lastFetch < shipRecord.lastFetch
+        )
+      )
+        debouncedWrite(mstId)(curDb[mstId])
+    })
   }
 )
 

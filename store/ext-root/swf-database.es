@@ -15,8 +15,7 @@ const initState = {
   shipDb: {},
   fetchLocks: [],
   diskFiles: {},
-  // TODO: false
-  diskFilesReady: true,
+  diskFilesReady: false,
 }
 
 const reducer = mkSimpleReducer(

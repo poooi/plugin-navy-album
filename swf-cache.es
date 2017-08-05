@@ -40,9 +40,29 @@ const writeIndexFile = diskFiles => {
   )
 }
 
+const updateIndexFile = oldIndexContent => {
+  if (oldIndexContent.version === 'initial')
+    return oldIndexContent
+  throw new Error('failed to update the cache index file')
+}
+
+const readIndexFile = () => {
+  const base = getCacheDirPath()
+  const filePath = join(base,'index.json')
+  try {
+    return updateIndexFile(readJsonSync(filePath))
+  } catch (err) {
+    if (err.syscall !== 'open' || err.code !== 'ENOENT') {
+      console.error('Error while loading cache index file', err)
+    }
+  }
+  return null
+}
+
 export {
   writeCacheFile,
   readCacheFile,
 
   writeIndexFile,
+  readIndexFile,
 }
