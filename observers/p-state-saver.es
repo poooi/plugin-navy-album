@@ -22,8 +22,8 @@ const readySelector = createSelector(
 )
 
 const debouncedSavePState = _.debounce(
-  async pState => savePState(pState),
-  1000
+  pState => setTimeout(() => savePState(pState)),
+  500
 )
 
 const pStateSaver = observer(
