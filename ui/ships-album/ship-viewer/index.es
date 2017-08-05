@@ -11,7 +11,6 @@ import { mergeMapStateToProps, modifyObject, generalComparator } from 'subtender
 import { PTyp } from '../../../ptyp'
 import {
   shipViewerSelector,
-  shipGraphPathSelector,
   shipGraphSourcesSelector,
   shipMasterDataSelector,
 } from '../selectors'
@@ -59,22 +58,9 @@ class ShipViewerImpl extends Component {
     style: PTyp.object.isRequired,
     activeTab: PTyp.string.isRequired,
     mstId: PTyp.number.isRequired,
-    shipGraphPath: PTyp.string,
     shipGraphSources: PTyp.object.isRequired,
     $ship: PTyp.object.isRequired,
     uiModify: PTyp.func.isRequired,
-    requestSwf: PTyp.func.isRequired,
-  }
-
-  static defaultProps = {
-    shipGraphPath: null,
-  }
-
-  requestShipGraph = (path = this.props.shipGraphPath) => {
-    const {requestSwf} = this.props
-    if (path) {
-      requestSwf(path)
-    }
   }
 
   handleSwitchTab = activeTab =>
@@ -181,7 +167,6 @@ const ShipViewer = connect(
   mergeMapStateToProps(
     shipViewerSelector,
     createStructuredSelector({
-      shipGraphPath: shipGraphPathSelector,
       shipGraphSources: shipGraphSourcesSelector,
       $ship: shipMasterDataSelector,
     })

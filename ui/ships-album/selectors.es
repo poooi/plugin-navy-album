@@ -163,23 +163,11 @@ const shipGraphSelector = createSelector(
     _.get(indexedShipGraphs,mstId)
 )
 
-const shipGraphPathSelector = createSelector(
-  indexedShipGraphInfoSelector,
-  mstIdSelector,
-  (indexedShipGraphInfo, mstId) => {
-    const graphInfo = _.get(indexedShipGraphInfo,[mstId, 'graphInfo'])
-    if (!graphInfo)
-      return null
-    const {fileName, versionStr} = graphInfo
-    return `/kcs/resources/swf/ships/${fileName}.swf?VERSION=${versionStr}`
-  }
-)
-
 const shipGraphSourcesSelector = createSelector(
-  shipGraphPathSelector,
+  mstIdSelector,
   swfDatabaseSelector,
-  (shipGraphPath, swfDatabase) =>
-    shipGraphPath ? _.get(swfDatabase.db,shipGraphPath,{}) : {}
+  (mstId, swfDatabase) =>
+    _.get(swfDatabase,['shipDb',mstId,'images']) || {}
 )
 
 const shipMasterDataSelector = createSelector(
@@ -196,7 +184,6 @@ export {
   mstIdSelector,
   levelSelector,
   shipGraphSelector,
-  shipGraphPathSelector,
   shipGraphSourcesSelector,
   shipMasterDataSelector,
 }

@@ -11,8 +11,13 @@ const initState = {
        - value: srcString
 
    */
+  // TODO: remove 'db'
   db: {},
+
+  // see ../../docs/swf-caching.md for details
+  shipDb: {},
   fetchLocks: [],
+  diskFiles: {},
 }
 
 const reducer = mkSimpleReducer(
