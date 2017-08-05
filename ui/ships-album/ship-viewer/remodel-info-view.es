@@ -69,7 +69,7 @@ class RemodelInfoViewImpl extends PureComponent {
       const {shipName, typeName} = mstIdToDesc(curMstId)
       const className = curMstId === mstId ? 'text-primary' : ''
       return (
-        <div>
+        <div style={{width: '30%'}}>
           <div className={className}>{typeName}</div>
           <div
             className={className}
