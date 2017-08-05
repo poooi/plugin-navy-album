@@ -95,7 +95,7 @@ class ShipInfoViewImpl extends PureComponent {
               equips={equips}
               style={{
                 width: '100%',
-                maxWidth: 270,
+                maxWidth: 300,
               }}
             />
             <StatsView

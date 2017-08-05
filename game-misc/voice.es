@@ -57,7 +57,7 @@ const situationsCommon = [
   ['MVP',23],
   ['Damaged(1)',19],['Damaged(2)',20],['Damaged(3)',21],
   ['Sunk',22],
-  ['Repair',6],
+  // ['Repair',6],
 ]
 
 const situationsIdle = [['Idle',29]]
