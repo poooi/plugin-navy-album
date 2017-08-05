@@ -71,7 +71,7 @@ class QuotesViewImpl extends Component {
         </ListGroupItem>
         {
           voiceList.map(voice => {
-            const {voiceId, situation, url, mstId} = voice
+            const {voiceId, situation, url, mstId, line} = voice
             return (
               <ListGroupItem
                 style={{
@@ -90,6 +90,9 @@ class QuotesViewImpl extends Component {
                     {situation}
                   </Label>
                 </div>
+                {
+                  line && <p style={{marginTop: '.8em'}}>{line}</p>
+                }
                 <audio
                   className="play-control"
                   style={{width: '100%', marginTop: '.5em'}}
