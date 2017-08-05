@@ -33,7 +33,7 @@ const initState = {
          - voice: voice player, might also include subtitles
 
        */
-      activeTab: 'voice',
+      activeTab: 'info',
     },
   },
   // state for EquipmentsAlbum

@@ -5,7 +5,9 @@ import { connect } from 'react-redux'
 
 import { PTyp } from '../../../ptyp'
 import { ships as wctfShips } from '../../../wctf'
-import { statsAtCurrentLevelSelector } from './selectors'
+import {
+  statsAtCurrentLevelSelector,
+} from './selectors'
 import { levelSelector } from '../selectors'
 
 import { EquipmentsView } from './equipments-view'
@@ -15,6 +17,8 @@ import { ExtraInfoView } from './extra-info-view'
 import { RemodelInfoView } from './remodel-info-view'
 
 // TODO: hp is level-dependent, a bit complicated though.
+
+const id = _.identity
 
 const mkStats = ($ship, _wctfShip, statsL, level) => {
   const ranged = propName => {
@@ -45,6 +49,11 @@ const mkStats = ($ship, _wctfShip, statsL, level) => {
   }
 }
 
+const normalizeIntro = text =>
+  _.compact(
+    text.split('<br>').map(xs => xs.trim())
+  )
+
 class ShipInfoViewImpl extends PureComponent {
   static propTypes = {
     mstId: PTyp.number.isRequired,
@@ -63,6 +72,9 @@ class ShipInfoViewImpl extends PureComponent {
     const equipIds = _.get(wctfShip,'equip',[])
     const equips = _.zip($ship.api_maxeq, equipIds).map(([slotNum,mstIdRaw]) =>
       ({cap: slotNum, mstId: _.isInteger(mstIdRaw) ? mstIdRaw : null}))
+
+    const introMessaage = normalizeIntro($ship.api_getmes)
+
     return (
       <div
         className="ship-info-view"
@@ -108,6 +120,21 @@ class ShipInfoViewImpl extends PureComponent {
             />
           </div>
         </div>
+        {
+          introMessaage && (
+            <div style={{alignSelf: 'center'}}>
+              {
+                introMessaage.map((m,ind) => (
+                  <p
+                    style={{marginBottom: '.4em', fontSize: '1.2em'}}
+                    key={id(ind)}>
+                    {m}
+                  </p>
+                ))
+              }
+            </div>
+          )
+        }
         <LevelSlider />
         <div style={{
           width: '100%',
@@ -125,7 +152,7 @@ class ShipInfoViewImpl extends PureComponent {
           display: 'flex',
         }}>
           <RemodelInfoView
-            style={{}}
+            style={{width: '60%'}}
             mstId={mstId}
           />
         </div>
