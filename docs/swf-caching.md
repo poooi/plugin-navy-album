@@ -1,4 +1,3 @@
-(TODO: draft)
 This document describes caching mechanism of processed SWF files.
 
 # Runtime representation
@@ -35,6 +34,8 @@ which is an `Object` that has the following shape:
 
 - `diskFiles`: `files` of `index.json` (See below)
 
+- `diskFilesReady`: indicates whether `diskFiles` is initialized.
+
 # Representation on Disk
 
 - Directory: `<config>/navy-album/cache`.
@@ -48,14 +49,17 @@ which is an `Object` that has the following shape:
         - key: `masterId`
         - value: `{sgFileName,sgVersion,lastFetch}`
 
-    This file is to be loaded when initializing the plugin and is designed to
-    have everything except `images` and `imagesDebuffed`, which might be expensive
-    to load upon initialization.
-    When a resource is being queried, `diskFiles` (runtime-representation of this part)
-    is checked first, start loading process of the actual file on a cache hit.
+      This file is to be loaded when initializing the plugin and is designed to
+      have everything except `images` and `imagesDebuffed`, which might be expensive
+      to load upon initialization.
+      When a resource is being queried, `diskFiles` (runtime-representation of this part)
+      is checked first, start loading process of the actual file on a cache hit.
+
+    - `version`: for now always `initial` (TODO to keep sync with package version on release)
 
 # Cache Lookup Behavior
 
+(TODO: impl)
 (TODO: impl data invalidation & cache limit after other stuff are implemented)
 
 Upon requesting a resource:
