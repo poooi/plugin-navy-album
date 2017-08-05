@@ -24,11 +24,16 @@ class GalleryViewImpl extends Component {
     mstId: PTyp.number.isRequired,
     shipGraphSources: PTyp.object.isRequired,
     lastFetch: PTyp.number,
-    uiModify: PTyp.func.isRequired,
+    requestShipGraph: PTyp.func.isRequired,
   }
 
   static defaultProps = {
     lastFetch: null,
+  }
+
+  handleRequestUpdate = () => {
+    const {mstId, requestShipGraph} = this.props
+    requestShipGraph(mstId, true)
   }
 
   render() {
@@ -53,7 +58,9 @@ class GalleryViewImpl extends Component {
               <span style={{flex: 1}}>
                 Last Update: {String(new Date(lastFetch))}
               </span>
-              <Button bsSize="small" bsStyle="warning">
+              <Button
+                onClick={this.handleRequestUpdate}
+                bsSize="small" bsStyle="warning">
                 <FontAwesome name="refresh" />
               </Button>
             </ListGroupItem>

@@ -84,13 +84,13 @@ const mayReadCacheFileWithLock = context => {
   return success
 }
 
-const mkRequestShipGraph = actionCreator => mstId =>
+const mkRequestShipGraph = actionCreator => (mstId, forced = false) =>
   (dispatch, getState) => setTimeout(() => {
     const reduxState = getState()
     const {shipDb, diskFiles} =
       swfDatabaseSelector(reduxState)
 
-    if (!_.isEmpty(shipDb[mstId]))
+    if (!forced && !_.isEmpty(shipDb[mstId]))
       return
 
     const indexedShipGraphInfo = indexedShipGraphInfoSelector(reduxState)
@@ -103,7 +103,7 @@ const mkRequestShipGraph = actionCreator => mstId =>
 
     // we don't need to check diskFilesReady,
     // assuming it's always an empty Object when diskFilesReady === false
-    if (!_.isEmpty(diskFiles[mstId])) {
+    if (!forced && !_.isEmpty(diskFiles[mstId])) {
       const diskFile = diskFiles[mstId]
       if (
         diskFile.sgFileName === fileName &&
