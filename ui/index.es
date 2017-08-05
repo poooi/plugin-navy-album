@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { store, extendReducer } from 'views/create-store'
 
-import { reducer } from '../store'
+import { reducer, withBoundActionCreator } from '../store'
 import { NavyAlbum } from './navy-album'
+import { loadPState } from '../p-state'
 
 const {$} = window
 
@@ -13,7 +14,22 @@ $('#fontawesome-css')
 $('#rc-slider-css')
   .setAttribute('href', require.resolve('rc-slider/assets/index.css'))
 
-extendReducer('poi-plugin-navy-album', reducer)
+extendReducer('poi-plugin-navy-album', reducer);
+
+(async () => {
+  let newUiState = {}
+  try {
+    const pState = loadPState()
+    if (pState !== null)
+      newUiState = pState.ui
+  } catch (e) {
+    console.error('error while initializing', e)
+  } finally {
+    withBoundActionCreator(
+      ({uiReady}) => uiReady(newUiState)
+    )
+  }
+})()
 
 ReactDOM.render(
   <Provider store={store}>

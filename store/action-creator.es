@@ -6,6 +6,10 @@ import { readFromBufferP, extractImages } from 'swf-extract'
 import { swfDatabaseSelector } from '../selectors'
 
 const actionCreator = {
+  uiReady: newState => ({
+    type: '@poi-plugin-navy-album@ui@Ready',
+    newState,
+  }),
   uiModify: modifier => ({
     type: '@poi-plugin-navy-album@ui@Modify',
     modifier,

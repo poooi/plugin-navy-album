@@ -1,6 +1,5 @@
-import { mkSimpleReducer } from './common'
-
 const initState = {
+  ready: false,
   // activeTab: ships / equipments
   activeTab: 'ships',
   // state for ShipsAlbum
@@ -52,8 +51,24 @@ const initState = {
   },
 }
 
-const reducer = mkSimpleReducer(
-  initState,
-  '@poi-plugin-navy-album@ui@Modify')
+const reducer = (state = initState, action) => {
+  if (action.type === '@poi-plugin-navy-album@ui@Ready') {
+    const {newState} = action
+    return {
+      ...state,
+      ...newState,
+      ready: true,
+    }
+  }
+
+  if (! state.ready)
+    return state
+
+  if (action.type === '@poi-plugin-navy-album@ui@Modify') {
+    const {modifier} = action
+    return modifier(state)
+  }
+  return state
+}
 
 export { reducer }
