@@ -1,9 +1,8 @@
 import _ from 'lodash'
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import {
-  Panel, Tab, Nav, NavItem,
   ListGroupItem, ListGroup, Button,
 } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
@@ -16,14 +15,16 @@ import {
 } from '../selectors'
 import {
   shipGraphLastFetchSelector,
+  isFetchingGraphSelector,
 } from './selectors'
 import { mapDispatchToProps } from '../../../store'
 
-class GalleryViewImpl extends Component {
+class GalleryViewImpl extends PureComponent {
   static propTypes = {
     mstId: PTyp.number.isRequired,
     shipGraphSources: PTyp.object.isRequired,
     lastFetch: PTyp.number,
+    isFetching: PTyp.bool.isRequired,
     requestShipGraph: PTyp.func.isRequired,
   }
 
@@ -38,7 +39,8 @@ class GalleryViewImpl extends Component {
 
   render() {
     const {
-      mstId, shipGraphSources, lastFetch,
+      mstId, shipGraphSources,
+      lastFetch, isFetching,
     } = this.props
     const characterIds =
       Object.keys(shipGraphSources).map(Number).sort(generalComparator)
@@ -59,6 +61,7 @@ class GalleryViewImpl extends Component {
                 Last Update: {String(new Date(lastFetch))}
               </span>
               <Button
+                disabled={isFetching}
                 onClick={this.handleRequestUpdate}
                 bsSize="small" bsStyle="warning">
                 <FontAwesome name="refresh" />
@@ -91,6 +94,7 @@ const GalleryView = connect(
     shipGraphSources: shipGraphSourcesSelector,
     mstId: mstIdSelector,
     lastFetch: shipGraphLastFetchSelector,
+    isFetching: isFetchingGraphSelector,
   }),
   mapDispatchToProps,
 )(GalleryViewImpl)
