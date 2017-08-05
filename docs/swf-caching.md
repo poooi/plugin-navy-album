@@ -59,8 +59,6 @@ which is an `Object` that has the following shape:
 
 # Cache Lookup Behavior
 
-(TODO: impl data invalidation & cache limit after other stuff are implemented)
-
 Upon requesting a resource:
 
 1. attempt accessing `swfDatabase.shipDb[mstId]`, return on success.
