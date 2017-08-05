@@ -10,6 +10,7 @@ import {
   uiSelector,
   shipsInfoSelector,
   sortByRemodelFuncSelector,
+  indexedShipGraphsSelector,
   indexedShipGraphInfoSelector,
   swfDatabaseSelector,
 } from '../../selectors'
@@ -155,6 +156,13 @@ const levelSelector = createSelector(
   sv => sv.level
 )
 
+const shipGraphSelector = createSelector(
+  indexedShipGraphsSelector,
+  mstIdSelector,
+  (indexedShipGraphs, mstId) =>
+    _.get(indexedShipGraphs,mstId)
+)
+
 const shipGraphPathSelector = createSelector(
   indexedShipGraphInfoSelector,
   mstIdSelector,
@@ -187,6 +195,7 @@ export {
   shipViewerSelector,
   mstIdSelector,
   levelSelector,
+  shipGraphSelector,
   shipGraphPathSelector,
   shipGraphSourcesSelector,
   shipMasterDataSelector,

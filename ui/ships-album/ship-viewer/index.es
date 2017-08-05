@@ -20,6 +20,7 @@ import { AltFormSwitcher } from './alt-form-switcher'
 import { mapDispatchToProps } from '../../../store'
 import { AbyssalInfoView } from './abyssal-info-view'
 import { ShipInfoView } from './ship-info-view'
+import { QuotesView } from './quotes-view'
 
 
 /*
@@ -161,7 +162,7 @@ class ShipViewerImpl extends Component {
                   </ListGroup>
                 </Tab.Pane>
                 <Tab.Pane eventKey="voice">
-                  TODO: voice player & subtitles
+                  <QuotesView />
                 </Tab.Pane>
               </Tab.Content>
             </div>
