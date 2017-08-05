@@ -4,9 +4,8 @@ import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import {
   Panel, Tab, Nav, NavItem,
-  ListGroupItem, ListGroup,
 } from 'react-bootstrap'
-import { mergeMapStateToProps, modifyObject, generalComparator } from 'subtender'
+import { mergeMapStateToProps, modifyObject } from 'subtender'
 
 import { PTyp } from '../../../ptyp'
 import {
@@ -19,37 +18,17 @@ import { AltFormSwitcher } from './alt-form-switcher'
 import { mapDispatchToProps } from '../../../store'
 import { AbyssalInfoView } from './abyssal-info-view'
 import { ShipInfoView } from './ship-info-view'
+import { GalleryView } from './gallery-view'
 import { QuotesView } from './quotes-view'
 
 
 /*
+   TODO
    draft:
-
-   # info viewer
-
-   (following game UI)
-
-   <RemodelChain>
-
-   <ShipGraph> <StockEquipments>
-
-   <Level Slider> // allow hp, asw, los, evs to be changed accordingly
-
-   <ShipStats>  <ShipStatsExtra>
-
-   // might need a separated viewer for abyssal ships
-   - might try to fetch debuffed img if it's available
-   - should be some other databases around about abyssal equipments
 
    # image viewer
 
-   - perhaps: (1) centerize imgs, (2) allow exporting them.
-
-   # voice player
-
-   - ListGroup of <VoiceView>
-
-   <VoiceView> should render play button, situation, and subtitles if it's available
+   - perhaps: allow exporting images
 
  */
 
@@ -81,8 +60,6 @@ class ShipViewerImpl extends Component {
       style, activeTab, mstId, $ship,
       shipGraphSources,
     } = this.props
-    const characterIds =
-      Object.keys(shipGraphSources).map(Number).sort(generalComparator)
     const shipGraphSource =
       _.get(shipGraphSources, mstId > 1500 ? 3 : 5, '')
     return (
@@ -106,7 +83,7 @@ class ShipViewerImpl extends Component {
                   Info
                 </NavItem>
                 <NavItem eventKey="image">
-                  Image
+                  Gallery
                 </NavItem>
                 {
                   mstId <= 1500 && (
@@ -137,19 +114,7 @@ class ShipViewerImpl extends Component {
                   }
                 </Tab.Pane>
                 <Tab.Pane eventKey="image">
-                  <ListGroup>
-                    {
-                      characterIds.map(chId => (
-                        <ListGroupItem key={chId} style={{textAlign: 'center'}}>
-                          <img
-                            style={{maxWidth: '100%', height: 'auto'}}
-                            src={_.get(shipGraphSources,chId,'')}
-                            alt={`ship=${mstId}, chId=${chId}`}
-                          />
-                        </ListGroupItem>
-                      ))
-                    }
-                  </ListGroup>
+                  <GalleryView />
                 </Tab.Pane>
                 <Tab.Pane eventKey="voice">
                   <QuotesView />
