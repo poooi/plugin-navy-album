@@ -61,7 +61,10 @@ const mkRequestShipGraph = actionCreator => mstId =>
 
     if (!_.isEmpty(shipDb[mstId]))
       return
-    if (!_.isEmpty(diskFiles)) {
+
+    // we don't need to check diskFilesReady,
+    // assuming it's always an empty Object when diskFilesReady === false
+    if (!_.isEmpty(diskFiles[mstId])) {
       // TODO should load files from disk
       return
     }
