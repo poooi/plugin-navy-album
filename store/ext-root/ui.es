@@ -20,6 +20,7 @@ const initState = {
     shipViewer: {
       mstId: 185,
       level: 99,
+      debuffFlag: false,
       quotesOptions: {
         showWedding: false,
         showSunk: false,

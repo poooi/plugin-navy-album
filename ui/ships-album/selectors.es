@@ -163,11 +163,35 @@ const shipGraphSelector = createSelector(
     _.get(indexedShipGraphs,mstId)
 )
 
+const debuffFlagSelector = createSelector(
+  shipViewerSelector,
+  sv => sv.debuffFlag
+)
+
 const shipGraphSourcesSelector = createSelector(
   mstIdSelector,
   swfDatabaseSelector,
+  debuffFlagSelector,
+  (mstId, swfDatabase, debuffFlag) =>
+    _.get(
+      swfDatabase,
+      [
+        'shipDb',
+        mstId,
+        (mstId > 1500 && debuffFlag) ?
+          'imagesDebuffed' :
+          'images',
+      ]) || {}
+)
+
+const hasDebuffedGraphsSelector = createSelector(
+  mstIdSelector,
+  swfDatabaseSelector,
   (mstId, swfDatabase) =>
-    _.get(swfDatabase,['shipDb',mstId,'images']) || {}
+    mstId > 1500 &&
+    ! _.isEmpty(
+      _.get(swfDatabase,['shipDb',mstId,'imagesDebuffed'])
+    )
 )
 
 const shipMasterDataSelector = createSelector(
@@ -186,4 +210,6 @@ export {
   shipGraphSelector,
   shipGraphSourcesSelector,
   shipMasterDataSelector,
+  hasDebuffedGraphsSelector,
+  debuffFlagSelector,
 }
