@@ -10,6 +10,7 @@ import {
 import {
   remodelInfoSelector,
   swfDatabaseSelector,
+  indexedShipGraphInfoSelector,
 } from '../../../selectors'
 import { ships } from '../../../wctf'
 
@@ -85,10 +86,30 @@ const shipGraphLastFetchSelector = createSelector(
       ]) || null
 )
 
+const shipGraphPathSelector = createSelector(
+  mstIdSelector,
+  indexedShipGraphInfoSelector,
+  (mstId, indexedShipGraphInfo) => {
+    const graphInfo = _.get(indexedShipGraphInfo,[mstId, 'graphInfo'])
+    if (!graphInfo)
+      return null
+    const {fileName, versionStr} = graphInfo
+    return `/kcs/resources/swf/ships/${fileName}.swf?VERSION=${versionStr}`
+  }
+)
+
+const isFetchingGraphSelector = createSelector(
+  shipGraphPathSelector,
+  swfDatabaseSelector,
+  (path, swfDatabase) =>
+    path && swfDatabase.fetchLocks.includes(path)
+)
+
 export {
   headerInfoSelector,
   activeTabSelector,
   statsAtCurrentLevelSelector,
   minLevelSelector,
   shipGraphLastFetchSelector,
+  isFetchingGraphSelector,
 }
