@@ -2,11 +2,7 @@ import _ from 'lodash'
 import { bindActionCreators } from 'redux'
 import { store } from 'views/create-store'
 import { modifyObject } from 'subtender'
-import { readFromBufferP, extractImages } from 'swf-extract'
-import {
-  swfDatabaseSelector,
-  indexedShipGraphInfoSelector,
-} from '../selectors'
+import { mkRequestShipGraph } from './request-ship-graph'
 
 const actionCreator = {
   uiReady: newState => ({
@@ -21,7 +17,6 @@ const actionCreator = {
     type: '@poi-plugin-navy-album@swfDatabase@Modify',
     modifier,
   }),
-
   uiSwitchShip: mstId =>
     actionCreator.uiModify(
       modifyObject(
@@ -41,6 +36,7 @@ const actionCreator = {
               ...sv,
               mstId,
               level: 99,
+              debuffFlag: false,
               activeTab: newActiveTab,
             }
           }
@@ -146,73 +142,14 @@ const actionCreator = {
       )
     )
   },
-  requestShipGraph: mstId =>
-    (dispatch, getState) => (async () => {
-      const reduxState = getState()
-      const {shipDb, diskFiles, fetchLocks} =
-        swfDatabaseSelector(reduxState)
-
-      if (!_.isEmpty(shipDb[mstId]))
-        return
-      if (!_.isEmpty(diskFiles)) {
-        // TODO should load files from disk
-        return
-      }
-
-      const indexedShipGraphInfo = indexedShipGraphInfoSelector(reduxState)
-      // figure out path
-      const graphInfo = _.get(indexedShipGraphInfo,[mstId, 'graphInfo'])
-      if (!graphInfo)
-        return
-      const {fileName, versionStr} = graphInfo
-      const path = `/kcs/resources/swf/ships/${fileName}.swf?VERSION=${versionStr}`
-      // some other process is already fetching that data
-      if (path in fetchLocks)
-        return
-      // start fetching & parsing
-      dispatch(actionCreator.swfDatabaseLockPath(path))
-      try {
-        // TODO: use selector
-        const {serverIp} = window
-        const fetched = await fetch(`http://${serverIp}${path}`)
-        if (! fetched.ok)
-          throw new Error('fetch failed.')
-        const ab = await fetched.arrayBuffer()
-        const swfData = await readFromBufferP(new Buffer(ab))
-        await Promise.all(
-          extractImages(swfData.tags).map(async p => {
-            const data = await p
-            if (
-              'characterId' in data &&
-              ['jpeg', 'png', 'gif'].includes(data.imgType)
-            ) {
-              const {characterId, imgType, imgData} = data
-              const encoded = `data:image/${imgType};base64,${imgData.toString('base64')}`
-              dispatch(
-                actionCreator.swfDatabaseInsertShipGraph({
-                  mstId,
-                  sgFileName: fileName,
-                  sgVersion: versionStr,
-                  characterId,
-                  debuffFlag: false, img: encoded,
-                })
-              )
-            }
-          })
-        )
-      } catch (e) {
-        console.error(`error while processing ${path}`,e)
-      } finally {
-        // release lock
-        dispatch(actionCreator.swfDatabaseUnlockPath(path))
-      }
-      // TODO: try fetching debuffed
-    })(),
   subtitleModify: modifier => ({
     type: '@poi-plugin-navy-album@subtitle@Modify',
     modifier,
   }),
 }
+
+actionCreator.requestShipGraph =
+  mkRequestShipGraph(actionCreator)
 
 const mapDispatchToProps = _.memoize(dispatch =>
   bindActionCreators(actionCreator, dispatch))

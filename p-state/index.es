@@ -1,10 +1,11 @@
+import _ from 'lodash'
 import { ensureDirSync, readJsonSync, writeJsonSync } from 'fs-extra'
 import { join } from 'path-extra'
 
 // state persistence: for now only extStore.ui is kept and restored at runtime.
 const stateToPState = ({ui}) => ({
   ui,
-  $dataVersion: 'initial',
+  $dataVersion: 'initial-a',
 })
 
 const getPStateFilePath = () => {
@@ -24,8 +25,17 @@ const savePState = pState => {
 }
 
 const updatePState = oldPState => {
-  if (oldPState.$dataVersion === 'initial')
+  if (oldPState.$dataVersion === 'initial-a')
     return oldPState
+
+  if (oldPState.$dataVersion === 'initial') {
+    const newPState = oldPState
+    _.set(newPState,'ui.shipsAlbum.shipViewer.debuffFlag', false);
+    (async () => {
+      savePState(newPState)
+    })()
+    return newPState
+  }
 
   throw new Error('failed to update the config')
 }
