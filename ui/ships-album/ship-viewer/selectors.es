@@ -7,7 +7,10 @@ import {
   levelSelector,
   shipViewerSelector,
 } from '../selectors'
-import { remodelInfoSelector } from '../../../selectors'
+import {
+  remodelInfoSelector,
+  swfDatabaseSelector,
+} from '../../../selectors'
 import { ships } from '../../../wctf'
 
 const headerInfoSelector = createSelector(
@@ -69,9 +72,23 @@ const minLevelSelector = createSelector(
   }
 )
 
+const shipGraphLastFetchSelector = createSelector(
+  mstIdSelector,
+  swfDatabaseSelector,
+  (mstId, swfDatabase) =>
+    _.get(
+      swfDatabase,
+      [
+        'shipDb',
+        mstId,
+        'lastFetch',
+      ]) || null
+)
+
 export {
   headerInfoSelector,
   activeTabSelector,
   statsAtCurrentLevelSelector,
   minLevelSelector,
+  shipGraphLastFetchSelector,
 }
