@@ -1,9 +1,9 @@
 import { observer } from 'redux-observers'
-import { shipGraphPathSelector } from '../ui/ships-album/selectors'
+import { mstIdSelector } from '../ui/ships-album/selectors'
 import { asyncBoundActionCreator } from '../store'
 
-const swfRequester = observer(
-  shipGraphPathSelector,
+const shipGraphRequester = observer(
+  mstIdSelector,
   (dispatch, cur, prev) => {
     if (
       cur && (
@@ -12,7 +12,7 @@ const swfRequester = observer(
       )
     ) {
       asyncBoundActionCreator(
-        ({requestSwf}) => requestSwf(cur),
+        ({requestShipGraph}) => requestShipGraph(cur),
         dispatch
       )
     }
@@ -20,4 +20,4 @@ const swfRequester = observer(
   {skipInitialCall: false}
 )
 
-export { swfRequester }
+export { shipGraphRequester }
