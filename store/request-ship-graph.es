@@ -19,7 +19,7 @@ const mayExtractWithLock = async context => {
   const {fetchLocks} = swfDatabaseSelector(reduxState)
 
   // some other process is already fetching that data
-  if (path in fetchLocks)
+  if (fetchLocks.includes(path))
     return
 
   // start fetching & parsing
@@ -66,7 +66,7 @@ const mayReadCacheFileWithLock = context => {
   const {fetchLocks} = swfDatabaseSelector(reduxState)
 
   // some other process is already fetching that data
-  if (path in fetchLocks)
+  if (fetchLocks.includes(path))
     return true
 
   let success = false
