@@ -33,7 +33,7 @@ which is an `Object` that has the following shape:
 - `fetchLocks`: an Array of paths that we are currently fetching.
   Before actually initiate a `fetch` this lock must be checked.
 
-- `diskFiles`: `files` of `index.json` (See above)
+- `diskFiles`: `files` of `index.json` (See below)
 
 # Representation on Disk
 

@@ -68,20 +68,6 @@ const actionCreator = {
         'fetchLocks', fl => fl.filter(p => p !== path)
       )
     ),
-  swfDatabaseInsertImage: (path, characterId, img) =>
-    actionCreator.swfDatabaseModify(
-      modifyObject(
-        'db',
-        modifyObject(
-          path,
-          (record = {}) =>
-            modifyObject(
-              characterId,
-              () => img
-            )(record)
-        )
-      )
-    ),
   /*
      sgInfo is {mstId, sgFileName, sgVersion, characterId, debuffFlag, img}
      where 'debuffFlag' is required to be a boolean if mstId suggests an abyssal ship
