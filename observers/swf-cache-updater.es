@@ -15,24 +15,22 @@ import { swfDatabaseSelector } from '../selectors'
 import { withBoundActionCreator } from '../store'
 import { writeCacheFile, writeIndexFile } from '../swf-cache'
 
-const debouncedWriteCacheFile =
-  _.memoize(dispatch =>
-    _.memoize(mstId =>
-      _.debounce(
-        async shipRecord => {
-          try {
-            writeCacheFile(mstId,shipRecord)
-            withBoundActionCreator(
-              ({swfDatabaseDiskFileUpdate}) =>
-                swfDatabaseDiskFileUpdate(mstId,shipRecord),
-              dispatch
-            )
-          } catch (e) {
-            console.error('failed while writing cache file', e)
-          }
-        },
-        1000
-      )
+const debouncedWriteCacheFile = dispatch =>
+  _.memoize(mstId =>
+    _.debounce(
+      shipRecord => setTimeout(() => {
+        try {
+          writeCacheFile(mstId,shipRecord)
+          withBoundActionCreator(
+            ({swfDatabaseDiskFileUpdate}) =>
+              swfDatabaseDiskFileUpdate(mstId,shipRecord),
+            dispatch
+          )
+        } catch (e) {
+          console.error('failed while writing cache file', e)
+        }
+      }),
+      1000
     )
   )
 

@@ -30,10 +30,8 @@ const updatePState = oldPState => {
 
   if (oldPState.$dataVersion === 'initial') {
     const newPState = oldPState
-    _.set(newPState,'ui.shipsAlbum.shipViewer.debuffFlag', false);
-    (async () => {
-      savePState(newPState)
-    })()
+    _.set(newPState,'ui.shipsAlbum.shipViewer.debuffFlag', false)
+    setTimeout(() => savePState(newPState))
     return newPState
   }
 

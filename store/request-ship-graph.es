@@ -54,7 +54,7 @@ const mayExtractWithLock = async context => {
 }
 
 const mkRequestShipGraph = actionCreator => mstId =>
-  (dispatch, getState) => (async () => {
+  (dispatch, getState) => setTimeout(() => {
     const reduxState = getState()
     const {shipDb, diskFiles} =
       swfDatabaseSelector(reduxState)
@@ -121,6 +121,6 @@ const mkRequestShipGraph = actionCreator => mstId =>
       }
       mayExtractWithLock(extractContext)
     }
-  })()
+  })
 
 export { mkRequestShipGraph }

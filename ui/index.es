@@ -14,9 +14,9 @@ $('#fontawesome-css')
 $('#rc-slider-css')
   .setAttribute('href', require.resolve('rc-slider/assets/index.css'))
 
-extendReducer('poi-plugin-navy-album', reducer);
+extendReducer('poi-plugin-navy-album', reducer)
 
-(async () => {
+setTimeout(() => {
   let newUiState = {}
   try {
     const pState = loadPState()
@@ -29,7 +29,7 @@ extendReducer('poi-plugin-navy-album', reducer);
       ({uiReady}) => uiReady(newUiState)
     )
   }
-})()
+})
 
 ReactDOM.render(
   <Provider store={store}>
