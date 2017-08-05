@@ -59,7 +59,6 @@ which is an `Object` that has the following shape:
 
 # Cache Lookup Behavior
 
-(TODO: impl)
 (TODO: impl data invalidation & cache limit after other stuff are implemented)
 
 Upon requesting a resource:

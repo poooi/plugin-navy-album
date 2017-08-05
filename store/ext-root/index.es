@@ -6,4 +6,6 @@ import { reducer as subtitle } from './subtitle'
 
 const reducer = combineReducers({ui, swfDatabase, subtitle})
 
-export { reducer }
+const initState = reducer(undefined, {type: '@@INIT'})
+
+export { reducer, initState }

@@ -128,6 +128,17 @@ const actionCreator = {
       )
     )
   },
+  swfDatabaseDiskFilesReady: diskFiles =>
+    actionCreator.swfDatabaseModify(
+      _.flow([
+        modifyObject(
+          'diskFiles', () => diskFiles
+        ),
+        modifyObject(
+          'diskFilesReady', () => true
+        ),
+      ])
+    ),
   swfDatabaseDiskFileUpdate: (mstId, shipRecord) => {
     const {sgFileName, sgVersion, lastFetch} = shipRecord
     return actionCreator.swfDatabaseModify(
@@ -140,6 +151,15 @@ const actionCreator = {
       )
     )
   },
+  swfDatabaseDiskFileLoaded: (mstId, shipRecord) =>
+    actionCreator.swfDatabaseModify(
+      modifyObject(
+        'shipDb',
+        modifyObject(
+          mstId, () => shipRecord
+        )
+      )
+    ),
   subtitleModify: modifier => ({
     type: '@poi-plugin-navy-album@subtitle@Modify',
     modifier,

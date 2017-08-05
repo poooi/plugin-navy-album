@@ -1,11 +1,13 @@
+import _ from 'lodash'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { store, extendReducer } from 'views/create-store'
 
-import { reducer, withBoundActionCreator } from '../store'
+import { reducer, withBoundActionCreator, initState } from '../store'
 import { NavyAlbum } from './navy-album'
 import { loadPState } from '../p-state'
+import { readIndexFile } from '../swf-cache'
 
 const {$} = window
 
@@ -16,6 +18,7 @@ $('#rc-slider-css')
 
 extendReducer('poi-plugin-navy-album', reducer)
 
+// start loading p-state
 setTimeout(() => {
   let newUiState = {}
   try {
@@ -30,6 +33,27 @@ setTimeout(() => {
     )
   }
 })
+
+/*
+   load swf cache index synchronously - this needs to be done before
+   observers are initialized, otherwise first ship graph request will
+   always end up missing the cache.
+*/
+{
+  let newDiskFiles = initState.swfDatabase.diskFiles
+  try {
+    const indexContent = readIndexFile()
+    if (!_.isEmpty(indexContent.files))
+      newDiskFiles = indexContent.files
+  } catch (e) {
+    console.error('error while initializing', e)
+  } finally {
+    withBoundActionCreator(
+      ({swfDatabaseDiskFilesReady}) =>
+        swfDatabaseDiskFilesReady(newDiskFiles)
+    )
+  }
+}
 
 ReactDOM.render(
   <Provider store={store}>
