@@ -6,6 +6,7 @@ import {
 import {
   serverIpSelector,
   poiConfigSelector,
+  subtitleSelector,
 } from '../../../../selectors'
 import {
   mstIdSelector,
@@ -38,7 +39,8 @@ const voiceListSelector = createSelector(
   mstIdSelector,
   serverIpSelector,
   quotesOptionsSelector,
-  (voiceFlag, $shipGraph, mstId, serverIp, quotesOptions) => {
+  subtitleSelector,
+  (voiceFlag, $shipGraph, mstId, serverIp, quotesOptions, subtitle) => {
     if (! _.isInteger(voiceFlag))
       return []
 
@@ -53,9 +55,10 @@ const voiceListSelector = createSelector(
 
         const path = computeVoicePath($shipGraph,mstId,voiceId)
         const url = `http://${serverIp}${path}`
+        const line = _.get(subtitle,[mstId,voiceId]) || null
         return [{
           situation, voiceId, mstId,
-          url,
+          url, line,
         }]
       }
     )

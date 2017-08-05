@@ -17,9 +17,10 @@ const mkExtPropSelector = _.memoize(propName =>
 
 const uiSelector =
   mkExtPropSelector('ui')
-
 const swfDatabaseSelector =
   mkExtPropSelector('swfDatabase')
+const subtitleSelector =
+  mkExtPropSelector('subtitle')
 
 const indexedShipGraphsSelector = createSelector(
   constSelector,
@@ -98,4 +99,5 @@ export {
   themeSelector,
   serverIpSelector,
   poiConfigSelector,
+  subtitleSelector,
 }

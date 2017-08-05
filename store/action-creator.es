@@ -120,6 +120,10 @@ const actionCreator = {
         dispatch(actionCreator.swfDatabaseUnlockPath(path))
       }
     })(),
+  subtitleModify: modifier => ({
+    type: '@poi-plugin-navy-album@subtitle@Modify',
+    modifier,
+  }),
 }
 
 const mapDispatchToProps = _.memoize(dispatch =>
