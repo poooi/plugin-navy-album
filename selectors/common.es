@@ -5,6 +5,7 @@ import {
   constSelector,
   extensionSelectorFactory,
   configSelector as poiConfigSelector,
+  stateSelector as poiStateSelector,
 } from 'views/utils/selectors'
 
 const extSelector = createSelector(
@@ -72,12 +73,28 @@ const themeSelector = createSelector(
   poiConfigSelector,
   pc => _.get(pc, 'poi.theme', 'paperdark'))
 
+const infoSelector = createSelector(
+  poiStateSelector,
+  state => state.info
+)
+
+const serverIpSelector = createSelector(
+  () => window.serverIp,
+  infoSelector,
+  (wServerIp, info) => {
+    const rServerIp = _.get(info,'server.ip')
+    return rServerIp || wServerIp
+  }
+)
+
 export {
   extSelector,
   uiSelector,
   shipGraphInfoSelector,
   shipsInfoSelector,
   swfDatabaseSelector,
+  indexedShipGraphsSelector,
   indexedShipGraphInfoSelector,
   themeSelector,
+  serverIpSelector,
 }

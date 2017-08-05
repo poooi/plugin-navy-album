@@ -15,7 +15,7 @@ const interpretRange = range =>
   String(range)
 
 /* eslint-disable quote-props */
-const situationToVoiceId = {
+const situationTable = {
   'Intro': 1,
   'Library': 25,
   'Poke(1)': 2,
@@ -56,8 +56,8 @@ const situationToVoiceId = {
 }
 /* eslint-enable quote-props */
 
+export * from './voice'
 export {
   interpretSpeed,
   interpretRange,
-  situationToVoiceId,
 }
