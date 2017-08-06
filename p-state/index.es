@@ -11,8 +11,7 @@ import { join } from 'path-extra'
 const stateToPState = ({ui, gameUpdate}) => ({
   ui,
   gameUpdate,
-  // TODO: sync with package version (p-state-0.0.1)
-  $dataVersion: 'initial-b',
+  $dataVersion: 'p-state-0.0.1',
 })
 
 const getPStateFilePath = () => {
@@ -32,19 +31,8 @@ const savePState = pState => {
 }
 
 const updatePState = oldPState => {
-  if (oldPState.$dataVersion === 'initial-b')
+  if (oldPState.$dataVersion === 'p-state-0.0.1')
     return oldPState
-
-  if (oldPState.$dataVersion === 'initial-a') {
-    const newPState = oldPState
-    newPState.gameUpdate = {
-      summary: null,
-      digest: null,
-      ready: true,
-    }
-    newPState.$dataVersion = 'initial-b'
-    return newPState
-  }
 
   throw new Error('failed to update the config')
 }

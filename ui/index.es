@@ -61,7 +61,7 @@ setTimeout(() => {
   let newDiskFiles = initState.swfDatabase.diskFiles
   try {
     const indexContent = readIndexFile()
-    if (!_.isEmpty(indexContent.files))
+    if (!_.isEmpty(_.get(indexContent,'files')))
       newDiskFiles = indexContent.files
   } catch (e) {
     console.error('error while initializing', e)

@@ -55,7 +55,7 @@ which is an `Object` that has the following shape:
       When a resource is being queried, `diskFiles` (runtime-representation of this part)
       is checked first, start loading process of the actual file on a cache hit.
 
-    - `version`: for now always `initial` (TODO to keep sync with package version on release)
+    - `version`: for now always `cache-0.0.1`
 
 # Cache Lookup Behavior
 
