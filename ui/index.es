@@ -8,6 +8,7 @@ import { reducer, withBoundActionCreator, initState } from '../store'
 import { NavyAlbum } from './navy-album'
 import { loadPState } from '../p-state'
 import { readIndexFile } from '../swf-cache'
+import { constDigestSelector } from '../selectors'
 
 const {$} = window
 
@@ -33,15 +34,26 @@ extendReducer('poi-plugin-navy-album', reducer)
 // start loading p-state
 setTimeout(() => {
   let newUiState = {}
+  let newGameUpdate = initState.gameUpdate
   try {
     const pState = loadPState()
     if (pState !== null)
       newUiState = pState.ui
+    if (pState !== null)
+      newGameUpdate = pState.gameUpdate
   } catch (e) {
     console.error('error while initializing', e)
   } finally {
     withBoundActionCreator(
       ({uiReady}) => uiReady(newUiState)
+    )
+    // now make sure that we always have gameUpdate.digest available
+    // before setting the ready flag
+    if (!newGameUpdate.digest) {
+      newGameUpdate.digest = constDigestSelector(store.getState())
+    }
+    withBoundActionCreator(
+      ({gameUpdateReady}) => gameUpdateReady(newGameUpdate)
     )
   }
 })

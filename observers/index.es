@@ -8,6 +8,7 @@ import {
   swfCacheUpdater,
   swfCacheIndexFileUpdater,
 } from './swf-cache-updater'
+import { gameUpdateDetector } from './game-update-detector'
 
 const observeAll = () =>
   observe(store, [
@@ -17,6 +18,8 @@ const observeAll = () =>
 
     swfCacheUpdater,
     swfCacheIndexFileUpdater,
+
+    gameUpdateDetector,
   ])
 
 export { observeAll }

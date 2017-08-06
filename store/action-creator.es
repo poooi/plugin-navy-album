@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { bindActionCreators } from 'redux'
 import { store } from 'views/create-store'
-import { modifyObject } from 'subtender'
+import { modifyObject, generalComparator } from 'subtender'
 import { mkRequestShipGraph } from './request-ship-graph'
 
 const actionCreator = {
@@ -164,6 +164,55 @@ const actionCreator = {
     type: '@poi-plugin-navy-album@subtitle@Modify',
     modifier,
   }),
+  gameUpdateReady: newState => ({
+    type: '@poi-plugin-navy-album@gameUpdate@Ready',
+    newState,
+  }),
+  gameUpdateModify: modifier => ({
+    type: '@poi-plugin-navy-album@gameUpdate@Modify',
+    modifier,
+  }),
+  gameUpdateNewDigest: digest =>
+    actionCreator.gameUpdateModify(
+      modifyObject('digest', () => digest)
+    ),
+  gameUpdateNewSummary: newSummary =>
+    actionCreator.gameUpdateModify(
+      modifyObject(
+        'summary',
+        oldSummary => {
+          const oneWeek = 7 * 24 * 3600 * 1000
+          if (
+            oldSummary &&
+            newSummary.lastUpdate - oldSummary.lastUpdate <= oneWeek
+          ) {
+            // merge summary if the change is made within a week
+            const mergeSorted = (xs, ys) =>
+              _.uniq([...xs, ...ys]).sort(generalComparator)
+            return {
+              lastUpdate: newSummary.lastUpdate,
+              addedShipMstIds:
+                mergeSorted(
+                  oldSummary.addedShipMstIds,
+                  newSummary.addedShipMstIds
+                ),
+              addedEquipMstIds:
+                mergeSorted(
+                  oldSummary.addedEquipMstIds,
+                  newSummary.addedEquipMstIds
+                ),
+              changedShipMstIds:
+                mergeSorted(
+                  oldSummary.changedShipMstIds,
+                  newSummary.changedShipMstIds
+                ),
+            }
+          } else {
+            return newSummary
+          }
+        }
+      )
+    ),
 }
 
 actionCreator.requestShipGraph =

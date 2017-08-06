@@ -4,7 +4,7 @@
   "description": "Show illustration album of ships and items.",
   "main": "index.es",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --compilers js:babel-core/register --recursive",
     "lint": "eslint '**/*.es'",
     "update-wctf": "node scripts/update-wctf-db.js",
     "update-kcreplay": "node scripts/update-kcreplay-db.js"

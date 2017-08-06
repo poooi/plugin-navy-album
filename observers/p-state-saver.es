@@ -7,7 +7,11 @@ import {
 import { observer } from 'redux-observers'
 
 import { stateToPState, savePState } from '../p-state'
-import { extSelector, uiSelector } from '../selectors'
+import {
+  extSelector,
+  uiSelector,
+  gameUpdateSelector,
+} from '../selectors'
 
 const pStateSelector = createSelector(
   extSelector,
@@ -18,7 +22,8 @@ const pStateSelector = createSelector(
 // observer saves only when all observering parts (for now only ui) are ready
 const readySelector = createSelector(
   uiSelector,
-  ui => ui.ready
+  gameUpdateSelector,
+  (ui, gameUpdate) => ui.ready && gameUpdate.ready
 )
 
 const debouncedSavePState = _.debounce(
