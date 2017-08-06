@@ -21,17 +21,6 @@ import { ShipInfoView } from './ship-info-view'
 import { GalleryView } from './gallery-view'
 import { QuotesView } from './quotes-view'
 
-
-/*
-   TODO
-   draft:
-
-   # image viewer
-
-   - perhaps: allow exporting images
-
- */
-
 class ShipViewerImpl extends Component {
   static propTypes = {
     style: PTyp.object.isRequired,

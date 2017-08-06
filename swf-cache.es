@@ -35,6 +35,7 @@ const writeIndexFile = diskFiles => {
     join(base,'index.json'),
     {
       files: diskFiles,
+      // TODO: sync with package version (cache-0.0.1 maybe?)
       version: 'initial',
     }
   )

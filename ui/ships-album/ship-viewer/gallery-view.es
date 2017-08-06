@@ -1,4 +1,5 @@
 import _ from 'lodash'
+// import { shell } from 'electron'
 import React, { PureComponent } from 'react'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
@@ -18,6 +19,7 @@ import {
   isFetchingGraphSelector,
 } from './selectors'
 import { mapDispatchToProps } from '../../../store'
+
 
 class GalleryViewImpl extends PureComponent {
   static propTypes = {
@@ -81,6 +83,21 @@ class GalleryViewImpl extends PureComponent {
                 src={_.get(shipGraphSources,chId,'')}
                 alt={`ship=${mstId}, chId=${chId}`}
               />
+              {
+                // TODO download img
+                /*
+                <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
+                  <Button
+                    onClick={() => {
+                        const x = _.get(shipGraphSources,chId,'')
+                        shell.openExternal(x)
+                    }}
+                    bsSize="small">
+                    <FontAwesome name="download" />
+                  </Button>
+                </div>
+                */
+              }
             </ListGroupItem>
           ))
         }

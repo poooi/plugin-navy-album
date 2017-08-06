@@ -9,7 +9,6 @@ import { EquipmentsView } from './equipments-view'
 
 import { StatsView } from './stats-view'
 
-// TODO: definitely needs cleanup
 const abyssalInfo = readJsonSync(
   join(__dirname,'..', '..','..','assets','abyssal.json')
 )
