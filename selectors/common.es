@@ -21,6 +21,8 @@ const swfDatabaseSelector =
   mkExtPropSelector('swfDatabase')
 const subtitleSelector =
   mkExtPropSelector('subtitle')
+const gameUpdateSelector =
+  mkExtPropSelector('gameUpdate')
 
 const indexedShipGraphsSelector = createSelector(
   constSelector,
@@ -100,4 +102,5 @@ export {
   serverIpSelector,
   poiConfigSelector,
   subtitleSelector,
+  gameUpdateSelector,
 }

@@ -1,11 +1,17 @@
-import _ from 'lodash'
 import { ensureDirSync, readJsonSync, writeJsonSync } from 'fs-extra'
 import { join } from 'path-extra'
 
-// state persistence: for now only extStore.ui is kept and restored at runtime.
-const stateToPState = ({ui}) => ({
+/*
+   state persistence: the following paths are kept and restored at runtime:
+
+   - extStore.ui
+   - extStore.gameUpdate
+
+ */
+const stateToPState = ({ui, gameUpdate}) => ({
   ui,
-  $dataVersion: 'initial-a',
+  gameUpdate,
+  $dataVersion: 'initial-b',
 })
 
 const getPStateFilePath = () => {
@@ -25,13 +31,17 @@ const savePState = pState => {
 }
 
 const updatePState = oldPState => {
-  if (oldPState.$dataVersion === 'initial-a')
+  if (oldPState.$dataVersion === 'initial-b')
     return oldPState
 
-  if (oldPState.$dataVersion === 'initial') {
+  if (oldPState.$dataVersion === 'initial-a') {
     const newPState = oldPState
-    _.set(newPState,'ui.shipsAlbum.shipViewer.debuffFlag', false)
-    setTimeout(() => savePState(newPState))
+    newPState.gameUpdate = {
+      summary: null,
+      digest: null,
+      ready: true,
+    }
+    newPState.$dataVersion = 'initial-b'
     return newPState
   }
 
