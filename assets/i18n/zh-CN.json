@@ -1,0 +1,51 @@
+{
+  "Package": {
+    "Name": "海色相簿",
+    "Desc": "舰娘与装备资料库"
+  },
+
+  "Ships": "舰船",
+  "Equipments": "装备",
+  "GameUpdate": "游戏更新",
+
+  "ShowOpts": "显示选项",
+  "HideOpts": "隐藏选项",
+
+  "Friendly": "己方",
+  "Abyssal": "深海",
+
+  "ShipsTab": {
+    "GroupByShipTypes": "按舰种分组",
+    "GroupRemodels": "集合同舰改造",
+
+    "WaitingDataFor": "等待#%s数据",
+    "(D)": "(削弱)",
+    "Info": "信息",
+    "MaxConsump": "最大消耗",
+    "ScrapValue": "解体资源",
+    "Modernization": "近代化改造",
+    "Remodels": "相关改造",
+
+    "Gallery": "画廊",
+    "LastUpdate": "最后更新",
+
+    "Voice": "语音",
+    "ShowWedding": "显示结婚语音",
+    "ShowSunk": "显示击沉语音"
+  },
+
+  "EquipmentsTab": {
+    "GroupByTypes": "按类型分组",
+    "ScrapValue": "废弃资源",
+    "Distance": "航程",
+    "Cost": "消耗"
+  },
+
+  "GameUpdateTab": {
+    "NewShips": "新舰船",
+    "NewEquipments": "新装备",
+    "NewCGs": "新立绘",
+    "GeneralInfo": "常规信息",
+    "GeneralInfoDetail": "舰船总数: %s, 装备总数: %s"
+  }
+}

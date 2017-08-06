@@ -1,0 +1,51 @@
+{
+  "Package": {
+    "Name": "海色相簿",
+    "Desc": "艦娘與裝備資料庫"
+  },
+
+  "Ships": "艦船",
+  "Equipments": "裝備",
+  "GameUpdate": "遊戲更新",
+
+  "ShowOpts": "顯示選項",
+  "HideOpts": "隱藏選項",
+
+  "Friendly": "己方",
+  "Abyssal": "深海",
+
+  "ShipsTab": {
+    "GroupByShipTypes": "按艦種分組",
+    "GroupRemodels": "集合同艦改造",
+
+    "WaitingDataFor": "等待#%s數據",
+    "(D)": "(削弱)",
+    "Info": "信息",
+    "MaxConsump": "最大消耗",
+    "ScrapValue": "解體資源",
+    "Modernization": "近代化改造",
+    "Remodels": "相關改造",
+
+    "Gallery": "畫廊",
+    "LastUpdate": "最後更新",
+
+    "Voice": "語音",
+    "ShowWedding": "顯示結婚語音",
+    "ShowSunk": "顯示擊沉語音"
+  },
+
+  "EquipmentsTab": {
+    "GroupByTypes": "按類型分組",
+    "ScrapValue": "廢棄資源",
+    "Distance": "航程",
+    "Cost": "消耗"
+  },
+
+  "GameUpdateTab": {
+    "NewShips": "新艦船",
+    "NewEquipments": "新裝備",
+    "NewCGs": "新立繪",
+    "GeneralInfo": "常規信息",
+    "GeneralInfoDetail": "艦船總數: %s, 裝備總數: %s"
+  }
+}

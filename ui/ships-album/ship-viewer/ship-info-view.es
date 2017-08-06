@@ -72,7 +72,7 @@ class ShipInfoViewImpl extends PureComponent {
     const equipIds = _.get(wctfShip,'equip',[])
     const equips = _.zip($ship.api_maxeq, equipIds).map(([slotNum,mstIdRaw]) =>
       ({cap: slotNum, mstId: _.isInteger(mstIdRaw) ? mstIdRaw : null}))
-
+    const {__} = window
     const introMessaage = normalizeIntro($ship.api_getmes)
 
     return (
@@ -92,7 +92,7 @@ class ShipInfoViewImpl extends PureComponent {
             <img
               style={{width: 218, height: 300}}
               src={shipGraphSource}
-              alt={`Data not yet available for ${mstId}`}
+              alt={__('ShipsTab.WaitingDataFor',mstId)}
             />
           </div>
           <div style={{

@@ -79,11 +79,11 @@ class RemodelInfoViewImpl extends PureComponent {
         </div>
       )
     }
-
+    const {__} = window
     return (
       <Panel
         className="remodel-info-view"
-        header={<div>Remodels</div>}
+        header={<div>{__('ShipsTab.Remodels')}</div>}
         style={{
           ...style,
         }}>

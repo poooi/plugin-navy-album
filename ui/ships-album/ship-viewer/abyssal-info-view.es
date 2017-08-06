@@ -44,6 +44,7 @@ class AbyssalInfoView extends PureComponent {
   render() {
     const {mstId, shipGraphSource, $ship} = this.props
     const $abyssal = abyssalInfo[mstId]
+    const {__} = window
     const hasAbyssalEquipsInfo =
       $abyssal &&
       Array.isArray($abyssal.EQUIPS) &&
@@ -53,7 +54,7 @@ class AbyssalInfoView extends PureComponent {
         <img
           style={{maxWidth: '100%', height: 'auto'}}
           src={shipGraphSource}
-          alt={`Data not yet available for ${mstId}`}
+          alt={__('ShipsTab.WaitingDataFor',mstId)}
         />
         <div style={{
           display: 'flex',

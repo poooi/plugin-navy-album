@@ -54,6 +54,8 @@ class EquipmentsAlbumImpl extends Component {
       groupEquipTypes,
     } = this.props
 
+    const {__} = window
+
     const boolToBsStyle = v => v ? 'primary' : 'default'
     return (
       <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
@@ -67,26 +69,26 @@ class EquipmentsAlbumImpl extends Component {
               <Button
                 onClick={this.handleToggle('expanded')}
                 style={{width: 200}}>
-                Hide options
+                {__('HideOpts')}
               </Button>
             </ButtonGroup>
             <ButtonGroup>
               <Button
                 onClick={this.handleToggleSide('friendly')}
                 bsStyle={boolToBsStyle(showSides.friendly)}>
-                Friendly
+                {__('Friendly')}
               </Button>
               <Button
                 onClick={this.handleToggleSide('abyssal')}
                 bsStyle={boolToBsStyle(showSides.abyssal)}>
-                Abyssal
+                {__('Abyssal')}
               </Button>
             </ButtonGroup>
             <ButtonGroup>
               <Button
                 onClick={this.handleToggle('groupEquipTypes')}
                 bsStyle={boolToBsStyle(groupEquipTypes)}>
-                Group by Types
+                {__('EquipmentsTab.GroupByTypes')}
               </Button>
             </ButtonGroup>
           </ButtonToolbar>
@@ -106,7 +108,7 @@ class EquipmentsAlbumImpl extends Component {
                 marginBottom: 5,
                 ...(expanded ? {display: 'none'} : {}),
               }}>
-              Show options
+              {__('ShowOpts')}
             </Button>
             <EquipPicker />
           </div>

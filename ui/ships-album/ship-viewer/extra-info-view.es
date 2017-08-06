@@ -19,6 +19,7 @@ class ExtraInfoView extends PureComponent {
     const applyAfterMarriage =
       v => (v === 0) ? 0 : Math.max(1, Math.floor(v*0.85))
     const costMod = level >= 100 ? applyAfterMarriage : (x => x)
+    const {__} = window
 
     return (
       <Table
@@ -31,7 +32,7 @@ class ExtraInfoView extends PureComponent {
         <tbody>
           <tr>
             <td style={{verticalAlign: 'middle'}}>
-              Max Consumption
+              {__('ShipsTab.MaxConsump')}
             </td>
             {
               _.zip(
@@ -56,7 +57,7 @@ class ExtraInfoView extends PureComponent {
           </tr>
           <tr>
             <td style={{verticalAlign: 'middle'}}>
-              Scrap value
+              {__('ShipsTab.ScrapValue')}
             </td>
             {
               _.zip(
@@ -77,7 +78,7 @@ class ExtraInfoView extends PureComponent {
           </tr>
           <tr>
             <td style={{verticalAlign: 'middle'}}>
-              Modernization
+              {__('ShipsTab.Modernization')}
             </td>
             {
               _.zip(

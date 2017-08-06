@@ -65,10 +65,11 @@ class GameUpdateViewerImpl extends PureComponent {
 
   renderNewShipsPart = () => {
     const {summary, uiSwitchShip} = this.props
+    const {__} = window
     const [abyssalMstIds, friendlyMstIds] =
       _.partition(summary.addedShipMstIds,isAbyssalMstId)
     return summary.addedShipMstIds.length > 0 && [
-      <h3 key="sh-1">New Ships</h3>,
+      <h3 key="sh-1">{__('GameUpdateTab.NewShips')}</h3>,
       renderShipGraphRow(friendlyMstIds,"sh-2",uiSwitchShip),
       renderShipGraphRow(abyssalMstIds,"sh-3",uiSwitchShip),
     ]
@@ -107,9 +108,9 @@ class GameUpdateViewerImpl extends PureComponent {
         </Button>
       )
     }
-
+    const {__} = window
     return summary.addedEquipMstIds.length > 0 && [
-      <h3 key="eq-1">New Equipments</h3>,
+      <h3 key="eq-1">{__('GameUpdateTab.NewEquipments')}</h3>,
       friendlyEqMstIds.length > 0 && (
         <div
           style={{display: 'flex', flexWrap: 'wrap', marginBottom: '1em'}}
@@ -149,11 +150,12 @@ class GameUpdateViewerImpl extends PureComponent {
   }
 
   renderNewCGsPart = () => {
+    const {__} = window
     const {summary, uiSwitchShip} = this.props
     const [abyssalMstIds, friendlyMstIds] =
       _.partition(summary.changedShipMstIds,isAbyssalMstId)
     return summary.changedShipMstIds.length > 0 && [
-      <h3 key="cg-1">New CGs</h3>,
+      <h3 key="cg-1">{__('GameUpdateTab.NewCGs')}</h3>,
       renderShipGraphRow(friendlyMstIds,"cg-2",uiSwitchShip),
       renderShipGraphRow(abyssalMstIds,"cg-3",uiSwitchShip),
     ]
@@ -161,16 +163,16 @@ class GameUpdateViewerImpl extends PureComponent {
 
   renderGeneralInfoPart = () => {
     const {digest} = this.props
+    const {__} = window
     return [
-      <h3 key="gi-1">General Info</h3>,
+      <h3 key="gi-1">{__('GameUpdateTab.GeneralInfo')}</h3>,
       <p key="gi-2">
         {
-          [
-            `Ship Count:`,
-            `${digest.shipDigests.length},`,
-            `Equipment Count:`,
-            `${digest.equipMstIds.length}`,
-          ].join(' ')
+          __(
+            'GameUpdateTab.GeneralInfoDetail',
+            digest.shipDigests.length,
+            digest.equipMstIds.length,
+          )
         }
       </p>,
     ]
