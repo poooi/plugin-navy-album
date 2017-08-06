@@ -50,6 +50,7 @@ class QuotesViewImpl extends Component {
       marginTop: 0,
       marginRight: '1em',
     }
+    const {__} = window
     return (
       <ListGroup>
         <ListGroupItem
@@ -59,13 +60,13 @@ class QuotesViewImpl extends Component {
               bsStyle={showWedding ? 'primary' : 'default'}
               onClick={this.handleToggleOption('showWedding')}
               style={optBtnStyle}>
-              Wedding
+              {__('ShipsTab.ShowWedding')}
             </Button>
             <Button
               bsStyle={showSunk ? 'primary' : 'default'}
               onClick={this.handleToggleOption('showSunk')}
               style={optBtnStyle}>
-              Sunk
+              {__('ShipsTab.ShowSunk')}
             </Button>
           </div>
         </ListGroupItem>

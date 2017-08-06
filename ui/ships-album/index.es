@@ -58,6 +58,7 @@ class ShipsAlbumImpl extends Component {
       groupShipTypes,
       groupRemodels,
     } = this.props
+    const {__} = window
     const boolToBsStyle = v => v ? 'primary' : 'default'
     return (
       <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
@@ -71,33 +72,33 @@ class ShipsAlbumImpl extends Component {
               <Button
                 onClick={this.handleToggle('expanded')}
                 style={{width: 200}}>
-                Hide options
+                {__('HideOpts')}
               </Button>
             </ButtonGroup>
             <ButtonGroup>
               <Button
                 onClick={this.handleToggleSide('friendly')}
                 bsStyle={boolToBsStyle(showSides.friendly)}>
-                Friendly
+                {__('Friendly')}
               </Button>
               <Button
                 onClick={this.handleToggleSide('abyssal')}
                 bsStyle={boolToBsStyle(showSides.abyssal)}>
-                Abyssal
+                {__('Abyssal')}
               </Button>
             </ButtonGroup>
             <ButtonGroup>
               <Button
                 onClick={this.handleToggle('groupShipTypes')}
                 bsStyle={boolToBsStyle(groupShipTypes)}>
-                Group by Ship Types
+                {__('ShipsTab.GroupByShipTypes')}
               </Button>
             </ButtonGroup>
             <ButtonGroup>
               <Button
                 onClick={this.handleToggle('groupRemodels')}
                 bsStyle={boolToBsStyle(groupRemodels)}>
-                Group Remodels
+                {__('ShipsTab.GroupRemodels')}
               </Button>
             </ButtonGroup>
           </ButtonToolbar>
@@ -117,7 +118,7 @@ class ShipsAlbumImpl extends Component {
                 marginBottom: 5,
                 ...(expanded ? {display: 'none'} : {}),
               }}>
-              Show options
+              {__('ShowOpts')}
             </Button>
             <ShipPicker />
           </div>

@@ -34,6 +34,7 @@ class NavyAlbumImpl extends Component {
 
   render() {
     const {activeTab, theme} = this.props
+    const {__} = window
     return (
       <Tab.Container
         id="na-main-tab"
@@ -57,13 +58,13 @@ class NavyAlbumImpl extends Component {
               bsStyle="tabs"
               className="main-nav">
               <NavItem eventKey="ships">
-                Ships
+                {__('Ships')}
               </NavItem>
               <NavItem eventKey="equipments">
-                Equipments
+                {__('Equipments')}
               </NavItem>
               <NavItem eventKey="game-update">
-                Game Update
+                {__('GameUpdate')}
               </NavItem>
             </Nav>
           </div>

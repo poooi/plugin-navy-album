@@ -24,10 +24,8 @@ extendReducer('poi-plugin-navy-album', reducer)
 globalSubscribe()
 
 /*
-
    TODO
 
-   - i18n
    - need some refactoring
 
  */

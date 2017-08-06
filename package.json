@@ -14,18 +14,23 @@
     "url": "git+https://github.com/poooi/plugin-navy-album.git"
   },
   "author": {
-    "name": "Dazzy Ding",
-    "link": "https://github.com/yukixz"
+    "name": "Javran",
+    "url": "https://github.com/Javran"
   },
-  "contributors": [],
+  "contributors": [
+    {
+      "name": "Dazzy Ding",
+      "link": "https://github.com/yukixz"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/poooi/plugin-navy-album/issues"
   },
   "homepage": "https://github.com/poooi/plugin-navy-album",
   "poiPlugin": {
-    "title": "Navy Album",
-    "description": "Show illustration album of ships and items.",
+    "title": "Package.Name",
+    "description": "Package.Desc",
     "icon": "th-list",
     "priority": 51
   },

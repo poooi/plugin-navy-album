@@ -1,0 +1,51 @@
+{
+  "Package": {
+    "Name": "Navy Album",
+    "Desc": "Show illustration album of ships and items."
+  },
+
+  "Ships": "Ships",
+  "Equipments": "Equipments",
+  "GameUpdate": "Game Update",
+
+  "ShowOpts": "Show options",
+  "HideOpts": "Hide options",
+
+  "Friendly": "Friendly",
+  "Abyssal": "Abyssal",
+
+  "ShipsTab": {
+    "GroupByShipTypes": "Group by Ship Type",
+    "GroupRemodels": "Group Remodel",
+
+    "WaitingDataFor": "Waiting data for #%s",
+    "(D)": "(D)",
+    "Info": "Info",
+    "MaxConsump": "Max Consumption",
+    "ScrapValue": "Scrap Value",
+    "Modernization": "Modernization",
+    "Remodels": "Remodels",
+
+    "Gallery": "Gallery",
+    "LastUpdate": "Last Update",
+
+    "Voice": "Voice",
+    "ShowWedding": "Show Wedding",
+    "ShowSunk": "Show Sunk"
+  },
+
+  "EquipmentsTab": {
+    "GroupByTypes": "Group by Types",
+    "ScrapValue": "Scrap Value",
+    "Distance": "Distance",
+    "Cost": "Cost"
+  },
+
+  "GameUpdateTab": {
+    "NewShips": "New Ships",
+    "NewEquips": "New Equipments",
+    "NewCGs": "New CGs",
+    "GeneralInfo": "General Info",
+    "GeneralInfoDetail": "Ship Count: %s, Equipment Count: %s"
+  }
+}

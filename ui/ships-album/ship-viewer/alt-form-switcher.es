@@ -47,6 +47,7 @@ class AltFormSwitcherImpl extends PureComponent {
 
   render() {
     const {mstId} = this.props
+    const {__} = window
     const noRender = (<div style={{display: 'none'}} />)
     if (mstId > 1500) {
       const {hasDebuffedGraphs, debuffFlag, $ships} = this.props
@@ -73,7 +74,7 @@ class AltFormSwitcherImpl extends PureComponent {
                   fontSize: '1em',
                   ...(ind === 0 ? {} : {marginLeft: '.4em'}),
                 }}>
-                {`${abyssalName}${curDebuffFlag ? '(D)' : ''}`}
+                {`${abyssalName}${curDebuffFlag ? __('ShipsTab.(D)') : ''}`}
               </Label>
             ))
           }

@@ -49,6 +49,7 @@ class ShipViewerImpl extends Component {
       style, activeTab, mstId, $ship,
       shipGraphSources,
     } = this.props
+    const {__} = window
     const shipGraphSource =
       _.get(shipGraphSources, mstId > 1500 ? 3 : 5, '')
     return (
@@ -69,15 +70,15 @@ class ShipViewerImpl extends Component {
                 bsStyle="tabs"
                 justified className="main-nav">
                 <NavItem eventKey="info">
-                  Info
+                  {__('ShipsTab.Info')}
                 </NavItem>
                 <NavItem eventKey="image">
-                  Gallery
+                  {__('ShipsTab.Gallery')}
                 </NavItem>
                 {
                   mstId <= 1500 && (
                     <NavItem eventKey="voice">
-                      Voice
+                      {__('ShipsTab.Voice')}
                     </NavItem>
                   )
                 }

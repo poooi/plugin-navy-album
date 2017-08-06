@@ -48,7 +48,7 @@ class GalleryViewImpl extends PureComponent {
     } = this.props
     const characterIds =
       Object.keys(shipGraphSources).map(Number).sort(generalComparator)
-
+    const {__} = window
     return (
       <ListGroup>
         {
@@ -62,7 +62,7 @@ class GalleryViewImpl extends PureComponent {
               }}
               key="control">
               <span style={{flex: 1}}>
-                Last Update: {String(new Date(lastFetch))}
+                {__('ShipsTab.LastUpdate')}: {String(new Date(lastFetch))}
               </span>
               <Button
                 disabled={isFetching}

@@ -21,7 +21,7 @@ class ExtraInfoView extends PureComponent {
     const shouldShowAircraftStats =
       _.isInteger($equip.api_cost) ||
       _.isInteger($equip.api_distance)
-
+    const {__} = window
     return (
       <Table
         className="extra-info-view"
@@ -37,7 +37,7 @@ class ExtraInfoView extends PureComponent {
                 ...tdStyle,
                 width: `40%`,
               }}>
-              Scrap Value
+              {__('EquipmentsTab.ScrapValue')}
             </td>
             <td>
               <div style={{
@@ -79,7 +79,7 @@ class ExtraInfoView extends PureComponent {
             shouldShowAircraftStats && [
               <tr key="dist">
                 <td style={tdStyle}>
-                  Distance
+                  {__('EquipmentsTab.Distance')}
                 </td>
                 <td style={tdStyle}>
                   {$equip.api_distance}
@@ -87,7 +87,7 @@ class ExtraInfoView extends PureComponent {
               </tr>,
               <tr key="cost">
                 <td style={tdStyle}>
-                  Cost
+                  {__('EquipmentsTab.Cost')}
                 </td>
                 <td style={tdStyle}>
                   {$equip.api_cost}
