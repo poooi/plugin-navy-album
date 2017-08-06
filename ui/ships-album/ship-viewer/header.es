@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { mergeMapStateToProps } from 'subtender'
@@ -6,21 +5,26 @@ import { createStructuredSelector } from 'reselect'
 
 import { headerInfoSelector } from './selectors'
 import {
-  shipGraphSourcesSelector,
+  debuffFlagSelector,
 } from '../selectors'
 
 import { PTyp } from '../../../ptyp'
+import { ShipGraphView } from '../../ship-graph-view'
 
 class HeaderImpl extends PureComponent {
   static propTypes = {
     mstId: PTyp.number.isRequired,
     shipName: PTyp.string.isRequired,
     typeName: PTyp.string.isRequired,
-    shipGraphSources: PTyp.object.isRequired,
+    debuffFlag: PTyp.bool.isRequired,
   }
   render() {
-    const {mstId, shipName, typeName, shipGraphSources} = this.props
-    const headerSource = _.get(shipGraphSources,1)
+    const {mstId, shipName, typeName, debuffFlag} = this.props
+    /*
+       ShipGraphView requests the image automatically
+       and header always show as long as the component is mounted
+       so we don't need extra mechanism for requesting fetching & swf parsing
+     */
     return (
       <div style={{display: 'flex', alignItems: 'center', height: 40}}>
         <div style={{display: 'flex', alignItems: 'baseline', flex: 1}}>
@@ -48,14 +52,15 @@ class HeaderImpl extends PureComponent {
             ({mstId})
           </div>
         </div>
-        <img
+        <ShipGraphView
+          mstId={mstId}
+          characterId={1}
+          debuffFlag={debuffFlag}
+          hideOnNoSrc
           style={{
             width: 160,
             height: 40,
-            ...(headerSource ? {} : {display: 'none'}),
           }}
-          alt={`mstId: ${mstId}`}
-          src={headerSource}
         />
       </div>
     )
@@ -66,7 +71,7 @@ const Header = connect(
   mergeMapStateToProps(
     headerInfoSelector,
     createStructuredSelector({
-      shipGraphSources: shipGraphSourcesSelector,
+      debuffFlag: debuffFlagSelector,
     }))
 )(HeaderImpl)
 

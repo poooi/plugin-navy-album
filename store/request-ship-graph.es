@@ -132,7 +132,6 @@ const mkRequestShipGraph = actionCreator => (mstId, forced = false) =>
          */
       }
     }
-
     {
       const extractContext = {
         actionCreator,

@@ -23,17 +23,15 @@ extendReducer('poi-plugin-navy-album', reducer)
 
    TODO
 
-   - update summary
    - i18n
    - maintenance note
    - make sure observer sees everything
-   - lazy graph request
    - provide default digest?
 
  */
 
-// start loading p-state
 setTimeout(() => {
+  // start loading p-state
   let newUiState = {}
   let newGameUpdate = initState.gameUpdate
   try {
@@ -57,14 +55,8 @@ setTimeout(() => {
       ({gameUpdateReady}) => gameUpdateReady(newGameUpdate)
     )
   }
-})
 
-/*
-   load swf cache index synchronously - this needs to be done before
-   observers are initialized, otherwise first ship graph request will
-   always end up missing the cache.
-*/
-{
+  // load swf cache index asynchronously
   let newDiskFiles = initState.swfDatabase.diskFiles
   try {
     const indexContent = readIndexFile()
@@ -78,7 +70,7 @@ setTimeout(() => {
         swfDatabaseDiskFilesReady(newDiskFiles)
     )
   }
-}
+})
 
 ReactDOM.render(
   <Provider store={store}>

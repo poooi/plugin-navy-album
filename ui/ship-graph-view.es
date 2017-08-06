@@ -2,7 +2,10 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { PTyp } from '../ptyp'
 import { mapDispatchToProps } from '../store'
-import { shipGraphSourceFuncSelector } from '../selectors'
+import {
+  shipGraphSourceFuncSelector,
+  swfDatabaseSelector,
+} from '../selectors'
 
 class ShipGraphViewImpl extends PureComponent {
   static propTypes = {
@@ -12,24 +15,36 @@ class ShipGraphViewImpl extends PureComponent {
     // optional props
     debuffFlag: PTyp.bool,
     style: PTyp.object,
+    // whether the component hides itself
+    // when no source is available
+    hideOnNoSrc: PTyp.bool,
     // connected
     src: PTyp.string.isRequired,
+    diskFilesReady: PTyp.bool.isRequired,
     requestShipGraph: PTyp.func.isRequired,
   }
 
   static defaultProps = {
     debuffFlag: false,
+    hideOnNoSrc: false,
     style: {},
     src: '',
   }
 
   componentDidMount() {
-    const {requestShipGraph, mstId} = this.props
-    requestShipGraph(mstId)
+    const {requestShipGraph, mstId, diskFilesReady} = this.props
+    if (diskFilesReady)
+      requestShipGraph(mstId)
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.mstId !== this.props.mstId) {
+    if (
+      nextProps.diskFilesReady &&
+      (
+        !this.props.diskFilesReady ||
+        nextProps.mstId !== this.props.mstId
+      )
+    ) {
       nextProps.requestShipGraph(nextProps.mstId)
     }
   }
@@ -39,12 +54,18 @@ class ShipGraphViewImpl extends PureComponent {
       characterId: _ignored1,
       debuffFlag: _ignored2,
     } = this.props
-    const {style,mstId,src} = this.props
+    const {
+      style,mstId,src,
+      hideOnNoSrc,
+    } = this.props
     return (
       <img
         alt={`shipgraph-${mstId}`}
         src={src}
-        style={style}
+        style={{
+          ...style,
+          ...(hideOnNoSrc && !src ? {display: 'none'} : {}),
+        }}
       />
     )
   }
@@ -54,8 +75,10 @@ const ShipGraphView = connect(
   (state, ownProps) => {
     const {mstId, characterId, debuffFlag} = ownProps
     const srcFunc = shipGraphSourceFuncSelector(state)
+    const {diskFilesReady} = swfDatabaseSelector(state)
     return {
       src: srcFunc(mstId, characterId, debuffFlag),
+      diskFilesReady,
     }
   },
   mapDispatchToProps
