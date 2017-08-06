@@ -50,7 +50,8 @@ class EquipPickerImpl extends Component {
                 const {mstId, name, icon} = wrapped
                 key = `equip-${mstId}`
                 content = (
-                  <div style={{display: 'flex', alignItems: 'center'}}>
+                  <div
+                    style={{display: 'flex', alignItems: 'center'}}>
                     <SlotitemIcon
                       className="slotitem-img"
                       slotitemId={icon}

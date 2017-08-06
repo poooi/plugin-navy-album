@@ -104,3 +104,14 @@
     width: 1.4em;
     margin-right: .2em;
 }
+
+#na-main-tab .game-update-viewer.panel button .slotitem-img.png {
+    height: 1.8em;
+    width: 1.8em;
+}
+
+#na-main-tab .game-update-viewer.panel button .slotitem-img.svg {
+    height: 1.2em;
+    width: 1.2em;
+    margin-right: .2em;
+}
