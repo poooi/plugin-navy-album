@@ -35,91 +35,93 @@ class GameUpdateViewerImpl extends PureComponent {
 
     return (
       <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
-        <Panel style={{marginBottom: 8, flex: 1}}>
-          {
-            summary && (
-              <div>
-                {
-                  summary.addedShipMstIds.length > 0 && (
-                    <div>
-                      <h3>New Ships</h3>
-                      <div>
-                        {
-                          summary.addedShipMstIds.map(mstId => (
-                            <ShipGraphView
-                              style={{width: 160, height: 40, margin: 4}}
-                              key={mstId}
-                              mstId={mstId}
-                              characterId={1}
-                            />
-                          ))
-                        }
-                      </div>
-                    </div>
-                  )
-                }
-                {
-                  summary.addedEquipMstIds.length > 0 && (
-                    <div>
-                      <h3>New Equipments</h3>
-                      <div>
-                        {
-                          summary.addedEquipMstIds.map(mstId => (
-                            <img
-                              key={mstId}
-                              alt={`eqp-${mstId}`}
-                              style={{
-                                width: 128,
-                                height: 128,
-                                margin: 4,
-                              }}
-                              src={equipMstIdToSrc(mstId)}
-                            />
-                          ))
-                        }
-                      </div>
-                    </div>
-                  )
-                }
-                {
-                  summary.changedShipMstIds.length > 0 && (
-                    <div>
-                      <h3>New CGs</h3>
-                      <div>
-                        {
-                          summary.changedShipMstIds.map(mstId => (
-                            <ShipGraphView
-                              style={{width: 160, height: 40, margin: 4}}
-                              key={mstId}
-                              mstId={mstId}
-                              characterId={1}
-                            />
-                          ))
-                        }
-                      </div>
-                    </div>
-                  )
-                }
-              </div>
-            )
-          }
-          {
-            digest && (
-              <div>
-                <h3>General Info</h3>
-                <p>
+        <Panel className="game-update-viewer" style={{marginBottom: 8, flex: 1}}>
+          <div style={{overflowY: 'auto', height: 0, flex: 1}}>
+            {
+              summary && (
+                <div>
                   {
-                    [
-                      `Ship Count:`,
-                      `${digest.shipDigests.length},`,
-                      `Equipment Count:`,
-                      `${digest.equipMstIds.length}`,
-                    ].join(' ')
+                    summary.addedShipMstIds.length > 0 && (
+                      <div>
+                        <h3>New Ships</h3>
+                        <div>
+                          {
+                            summary.addedShipMstIds.map(mstId => (
+                              <ShipGraphView
+                                style={{width: 160, height: 40, margin: 4}}
+                                key={mstId}
+                                mstId={mstId}
+                                characterId={1}
+                              />
+                            ))
+                          }
+                        </div>
+                      </div>
+                    )
                   }
-                </p>
-              </div>
-            )
-          }
+                  {
+                    summary.addedEquipMstIds.length > 0 && (
+                      <div>
+                        <h3>New Equipments</h3>
+                        <div>
+                          {
+                            summary.addedEquipMstIds.map(mstId => (
+                              <img
+                                key={mstId}
+                                alt={`eqp-${mstId}`}
+                                style={{
+                                  width: 128,
+                                  height: 128,
+                                  margin: 4,
+                                }}
+                                src={equipMstIdToSrc(mstId)}
+                              />
+                            ))
+                          }
+                        </div>
+                      </div>
+                    )
+                  }
+                  {
+                    summary.changedShipMstIds.length > 0 && (
+                      <div>
+                        <h3>New CGs</h3>
+                        <div>
+                          {
+                            summary.changedShipMstIds.map(mstId => (
+                              <ShipGraphView
+                                style={{width: 160, height: 40, margin: 4}}
+                                key={mstId}
+                                mstId={mstId}
+                                characterId={1}
+                              />
+                            ))
+                          }
+                        </div>
+                      </div>
+                    )
+                  }
+                </div>
+              )
+            }
+            {
+              digest && (
+                <div>
+                  <h3>General Info</h3>
+                  <p>
+                    {
+                      [
+                        `Ship Count:`,
+                        `${digest.shipDigests.length},`,
+                        `Equipment Count:`,
+                        `${digest.equipMstIds.length}`,
+                      ].join(' ')
+                    }
+                  </p>
+                </div>
+              )
+            }
+          </div>
         </Panel>
       </div>
     )
