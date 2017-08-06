@@ -20,6 +20,8 @@ import {
 } from './selectors'
 import { mapDispatchToProps } from '../../../store'
 
+const downloadUrl =
+  window.remote.getCurrentWebContents().downloadURL
 
 class GalleryViewImpl extends PureComponent {
   static propTypes = {
@@ -72,34 +74,33 @@ class GalleryViewImpl extends PureComponent {
           )
         }
         {
-          characterIds.map(chId => (
-            <ListGroupItem
-              key={chId}
-              style={{
-                textAlign: 'center',
-              }}>
-              <img
-                style={{maxWidth: '100%', height: 'auto'}}
-                src={_.get(shipGraphSources,chId,'')}
-                alt={`ship=${mstId}, chId=${chId}`}
-              />
-              {
-                // TODO download img
-                /*
-                <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
-                  <Button
-                    onClick={() => {
-                        const x = _.get(shipGraphSources,chId,'')
-                        shell.openExternal(x)
-                    }}
-                    bsSize="small">
-                    <FontAwesome name="download" />
-                  </Button>
-                </div>
-                */
-              }
-            </ListGroupItem>
-          ))
+          characterIds.map(chId => {
+            const src = _.get(shipGraphSources,chId,'')
+            return (
+              <ListGroupItem
+                key={chId}
+                style={{
+                  textAlign: 'center',
+                }}>
+                <img
+                  style={{maxWidth: '100%', height: 'auto'}}
+                  src={src}
+                  alt={`ship=${mstId}, chId=${chId}`}
+                />
+                {
+                  src && (
+                    <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
+                      <Button
+                        onClick={() => downloadUrl(src)}
+                        bsSize="small">
+                        <FontAwesome name="download" />
+                      </Button>
+                    </div>
+                  )
+                }
+              </ListGroupItem>
+            )
+          })
         }
       </ListGroup>
     )
