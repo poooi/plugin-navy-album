@@ -28,6 +28,7 @@ extendReducer('poi-plugin-navy-album', reducer)
    - maintenance note
    - make sure observer sees everything
    - lazy graph request
+   - provide default digest?
 
  */
 

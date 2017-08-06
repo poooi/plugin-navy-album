@@ -24,14 +24,6 @@ class IntroViewImpl extends PureComponent {
     const mstIdStr = String(mstId).padStart(3,'0')
     const prefix = `http://${serverIp}/kcs/resources/image/slotitem/`
 
-    /* [
-     *   [`card/${mstIdStr}.png`, {width: 260, height: 260}],
-     *   [`item_character/${mstIdStr}.png`, {width: 'auto', height: 260}],
-     *   [`item_up/${mstIdStr}.png`, {width: 'auto', height: 260}],
-     *   [`item_on/${mstIdStr}.png`, {width: 'auto', height: 260}],
-     * ].map(([src,sty], ind) => (
-     */
-
     return (
       <div style={style}>
         <div
