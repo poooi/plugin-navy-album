@@ -28,7 +28,7 @@ globalSubscribe()
    TODO
 
    - i18n
-   - maintenance note
+   - need some refactoring
 
  */
 
