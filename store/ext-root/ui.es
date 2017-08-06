@@ -1,6 +1,6 @@
 const initState = {
   ready: false,
-  // activeTab: ships / equipments
+  // activeTab: ships / equipments / game-update
   activeTab: 'ships',
   // state for ShipsAlbum
   shipsAlbum: {
