@@ -35,14 +35,13 @@ const writeIndexFile = diskFiles => {
     join(base,'index.json'),
     {
       files: diskFiles,
-      // TODO: sync with package version (cache-0.0.1 maybe?)
-      version: 'initial',
+      version: 'cache-0.0.1',
     }
   )
 }
 
 const updateIndexFile = oldIndexContent => {
-  if (oldIndexContent.version === 'initial')
+  if (oldIndexContent.version === 'cache-0.0.1')
     return oldIndexContent
   throw new Error('failed to update the cache index file')
 }
