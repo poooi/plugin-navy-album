@@ -3,7 +3,6 @@ import { store } from 'views/create-store'
 
 import { pStateSaver } from './p-state-saver'
 import { subtitleLoader } from './subtitle-loader'
-import { shipGraphRequester } from './ship-graph-requester'
 import {
   swfCacheUpdater,
   swfCacheIndexFileUpdater,
@@ -14,7 +13,6 @@ const observeAll = () =>
   observe(store, [
     pStateSaver,
     subtitleLoader,
-    shipGraphRequester,
 
     swfCacheUpdater,
     swfCacheIndexFileUpdater,
