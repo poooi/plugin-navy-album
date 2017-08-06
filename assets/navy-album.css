@@ -22,7 +22,8 @@
 #na-main-tab .ship-picker.panel > .panel-body,
 #na-main-tab .ship-viewer.panel > .panel-body,
 #na-main-tab .equip-viewer.panel > .panel-body,
-#na-main-tab .equip-picker.panel > .panel-body {
+#na-main-tab .equip-picker.panel > .panel-body,
+#na-main-tab .game-update-viewer.panel > .panel-body {
     height: 100%;
     display: flex;
     flex-direction: column;

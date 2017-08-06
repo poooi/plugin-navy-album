@@ -3,6 +3,7 @@ import { readFromBufferP, extractImages } from 'swf-extract'
 import {
   swfDatabaseSelector,
   indexedShipGraphInfoSelector,
+  serverIpSelector,
 } from '../selectors'
 import { readCacheFile } from '../swf-cache'
 
@@ -25,8 +26,7 @@ const mayExtractWithLock = async context => {
   // start fetching & parsing
   dispatch(actionCreator.swfDatabaseLockPath(path))
   try {
-    // TODO: use selector
-    const {serverIp} = window
+    const serverIp = serverIpSelector(reduxState)
     const fetched = await fetch(`http://${serverIp}${path}`)
     if (! fetched.ok)
       throw new Error('fetch failed.')
