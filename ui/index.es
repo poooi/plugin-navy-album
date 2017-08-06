@@ -2,13 +2,14 @@ import _ from 'lodash'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
+import { join } from 'path-extra'
+import { readJsonSync } from 'fs-extra'
 import { store, extendReducer } from 'views/create-store'
 
 import { reducer, withBoundActionCreator, initState } from '../store'
 import { NavyAlbum } from './navy-album'
 import { loadPState } from '../p-state'
 import { readIndexFile } from '../swf-cache'
-import { constDigestSelector } from '../selectors'
 import { globalSubscribe } from '../observers'
 
 const {$} = window
@@ -28,7 +29,6 @@ globalSubscribe()
 
    - i18n
    - maintenance note
-   - provide default digest?
 
  */
 
@@ -51,7 +51,8 @@ setTimeout(() => {
     // now make sure that we always have gameUpdate.digest available
     // before setting the ready flag
     if (!newGameUpdate.digest) {
-      newGameUpdate.digest = constDigestSelector(store.getState())
+      newGameUpdate.digest =
+        readJsonSync(join(__dirname,'..','assets','default-digest.json'))
     }
     withBoundActionCreator(
       ({gameUpdateReady}) => gameUpdateReady(newGameUpdate)
