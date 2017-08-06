@@ -19,41 +19,51 @@ const actionCreator = {
   }),
   uiSwitchShip: mstId =>
     actionCreator.uiModify(
-      modifyObject(
-        'shipsAlbum',
+      _.flow([
         modifyObject(
-          'shipViewer',
-          sv => {
-            if (sv.mstId === mstId)
-              return sv
+          'activeTab', () => 'ships'
+        ),
+        modifyObject(
+          'shipsAlbum',
+          modifyObject(
+            'shipViewer',
+            sv => {
+              if (sv.mstId === mstId)
+                return sv
 
-            // disallow voice tab for abyssal ships
-            const newActiveTab =
-              (mstId > 1500 && sv.activeTab === 'voice') ?
-                'info' : sv.activeTab
+              // disallow voice tab for abyssal ships
+              const newActiveTab =
+                (mstId > 1500 && sv.activeTab === 'voice') ?
+                  'info' : sv.activeTab
 
-            return {
-              ...sv,
-              mstId,
-              level: 99,
-              debuffFlag: false,
-              activeTab: newActiveTab,
+              return {
+                ...sv,
+                mstId,
+                level: 99,
+                debuffFlag: false,
+                activeTab: newActiveTab,
+              }
             }
-          }
-        )
-      )
+          )
+        ),
+      ])
     ),
   uiSwitchEquip: mstId =>
     actionCreator.uiModify(
-      modifyObject(
-        'equipmentsAlbum',
+      _.flow([
         modifyObject(
-          'equipViewer',
+          'activeTab', () => 'equipments'
+        ),
+        modifyObject(
+          'equipmentsAlbum',
           modifyObject(
-            'mstId', () => mstId
+            'equipViewer',
+            modifyObject(
+              'mstId', () => mstId
+            )
           )
-        )
-      )
+        ),
+      ])
     ),
 
   swfDatabaseLockPath: path =>

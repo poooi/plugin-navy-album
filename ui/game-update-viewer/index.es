@@ -18,24 +18,34 @@ import {
 } from '../../selectors'
 import { PTyp } from '../../ptyp'
 import { ShipGraphView } from '../ship-graph-view'
+import { mapDispatchToProps } from '../../store'
 
 const isAbyssalMstId = mstId => mstId > 1500
 const isAbyssalEquipMstId = eMstId => eMstId > 500
 
-const renderShipGraphRow = (mstIds, rowKey) =>
+const renderShipGraphRow = (mstIds, rowKey, uiSwitchShip) =>
   mstIds.length > 0 && (
-    <p key={rowKey}>
+    <div
+      style={{display: 'flex', flexWrap: 'wrap', marginBottom: '1em'}}
+      key={rowKey}>
       {
         mstIds.map(mstId => (
-          <ShipGraphView
-            style={{width: 160, height: 40, margin: 4}}
-            key={mstId}
-            mstId={mstId}
-            characterId={1}
-          />
+          <div
+            style={{
+              margin: 4,
+              cursor: 'pointer',
+            }}
+            onClick={() => uiSwitchShip(mstId)}
+            key={mstId}>
+            <ShipGraphView
+              style={{width: 160, height: 40}}
+              mstId={mstId}
+              characterId={1}
+            />
+          </div>
         ))
       }
-    </p>
+    </div>
   )
 
 class GameUpdateViewerImpl extends PureComponent {
@@ -44,6 +54,8 @@ class GameUpdateViewerImpl extends PureComponent {
     summary: PTyp.object,
     serverIp: PTyp.string.isRequired,
     $equips: PTyp.object.isRequired,
+    uiSwitchShip: PTyp.func.isRequired,
+    uiSwitchEquip: PTyp.func.isRequired,
   }
 
   static defaultProps = {
@@ -52,18 +64,18 @@ class GameUpdateViewerImpl extends PureComponent {
   }
 
   renderNewShipsPart = () => {
-    const {summary} = this.props
+    const {summary, uiSwitchShip} = this.props
     const [abyssalMstIds, friendlyMstIds] =
       _.partition(summary.addedShipMstIds,isAbyssalMstId)
     return summary.addedShipMstIds.length > 0 && [
       <h3 key="sh-1">New Ships</h3>,
-      renderShipGraphRow(friendlyMstIds,"sh-2"),
-      renderShipGraphRow(abyssalMstIds,"sh-3"),
+      renderShipGraphRow(friendlyMstIds,"sh-2",uiSwitchShip),
+      renderShipGraphRow(abyssalMstIds,"sh-3",uiSwitchShip),
     ]
   }
 
   renderNewEquipsPart = () => {
-    const {serverIp, summary, $equips} = this.props
+    const {serverIp, summary, $equips, uiSwitchEquip} = this.props
     const equipMstIdToSrc = mstId => {
       const mstIdStr = String(mstId).padStart(3,'0')
       const prefix = `http://${serverIp}/kcs/resources/image/slotitem/`
@@ -77,6 +89,7 @@ class GameUpdateViewerImpl extends PureComponent {
       const iconId = $equip.api_type[3]
       return (
         <Button
+          onClick={() => uiSwitchEquip(mstId)}
           style={{
             fontSize: '1.4em',
             margin: 4,
@@ -98,41 +111,51 @@ class GameUpdateViewerImpl extends PureComponent {
     return summary.addedEquipMstIds.length > 0 && [
       <h3 key="eq-1">New Equipments</h3>,
       friendlyEqMstIds.length > 0 && (
-        <p key="eq-2">
+        <div
+          style={{display: 'flex', flexWrap: 'wrap', marginBottom: '1em'}}
+          key="eq-2">
           {
             friendlyEqMstIds.map(mstId => (
-              <img
+              <div
                 key={mstId}
-                alt={`eqp-${mstId}`}
+                onClick={() => uiSwitchEquip(mstId)}
                 style={{
-                  width: 128,
-                  height: 128,
                   margin: 4,
-                }}
-                src={equipMstIdToSrc(mstId)}
-              />
+                  cursor: 'pointer',
+                }}>
+                <img
+                  alt={`eqp-${mstId}`}
+                  style={{
+                    width: 128,
+                    height: 128,
+                  }}
+                  src={equipMstIdToSrc(mstId)}
+                />
+              </div>
             ))
           }
-        </p>
+        </div>
       ),
       abyssalEqMstIds.length > 0 && (
-        <p key="eq-3">
+        <div
+          style={{display: 'flex', flexWrap: 'wrap', marginBottom: '1em'}}
+          key="eq-3">
           {
             abyssalEqMstIds.map(mkSmallEquip)
           }
-        </p>
+        </div>
       ),
     ]
   }
 
   renderNewCGsPart = () => {
-    const {summary} = this.props
+    const {summary, uiSwitchShip} = this.props
     const [abyssalMstIds, friendlyMstIds] =
       _.partition(summary.changedShipMstIds,isAbyssalMstId)
     return summary.changedShipMstIds.length > 0 && [
       <h3 key="cg-1">New CGs</h3>,
-      renderShipGraphRow(friendlyMstIds,"cg-2"),
-      renderShipGraphRow(abyssalMstIds,"cg-3"),
+      renderShipGraphRow(friendlyMstIds,"cg-2",uiSwitchShip),
+      renderShipGraphRow(abyssalMstIds,"cg-3",uiSwitchShip),
     ]
   }
 
@@ -184,7 +207,8 @@ const GameUpdateViewer = connect(
         ({$equips}) => $equips
       ),
     })
-  )
+  ),
+  mapDispatchToProps,
 )(GameUpdateViewerImpl)
 
 export { GameUpdateViewer }
