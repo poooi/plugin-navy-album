@@ -18,6 +18,18 @@ $('#rc-slider-css')
 
 extendReducer('poi-plugin-navy-album', reducer)
 
+/*
+
+   TODO
+
+   - update summary
+   - i18n
+   - maintenance note
+   - make sure observer sees everything
+   - lazy graph request
+
+ */
+
 // start loading p-state
 setTimeout(() => {
   let newUiState = {}
