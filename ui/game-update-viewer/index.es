@@ -7,7 +7,7 @@ import { mergeMapStateToProps } from 'subtender'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import {
-  Panel, Label, Button,
+  Panel, Button,
 } from 'react-bootstrap'
 import { constSelector } from 'views/utils/selectors'
 import { SlotitemIcon } from 'views/components/etc/icon'
@@ -182,13 +182,9 @@ class GameUpdateViewerImpl extends PureComponent {
       <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
         <Panel className="game-update-viewer" style={{marginBottom: 8, flex: 1}}>
           <div style={{overflowY: 'auto', height: 0, flex: 1}}>
-            {
-              summary && [
-                ...this.renderNewShipsPart(),
-                ...this.renderNewEquipsPart(),
-                ...this.renderNewCGsPart(),
-              ]
-            }
+            {summary && this.renderNewShipsPart()}
+            {summary && this.renderNewEquipsPart()}
+            {summary && this.renderNewCGsPart()}
             {digest && this.renderGeneralInfoPart()}
           </div>
         </Panel>
