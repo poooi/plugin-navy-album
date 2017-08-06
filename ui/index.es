@@ -9,6 +9,7 @@ import { NavyAlbum } from './navy-album'
 import { loadPState } from '../p-state'
 import { readIndexFile } from '../swf-cache'
 import { constDigestSelector } from '../selectors'
+import { globalSubscribe } from '../observers'
 
 const {$} = window
 
@@ -19,13 +20,14 @@ $('#rc-slider-css')
 
 extendReducer('poi-plugin-navy-album', reducer)
 
+globalSubscribe()
+
 /*
 
    TODO
 
    - i18n
    - maintenance note
-   - make sure observer sees everything
    - provide default digest?
 
  */

@@ -9,8 +9,17 @@ import {
 } from './swf-cache-updater'
 import { gameUpdateDetector } from './game-update-detector'
 
-const observeAll = () =>
-  observe(store, [
+let unsubscribe = null
+
+const globalSubscribe = () => {
+  if (unsubscribe !== null) {
+    console.warn('expecting "unsubscribe" to be null')
+    if (typeof unsubscribe === 'function')
+      unsubscribe()
+    unsubscribe = null
+  }
+
+  unsubscribe = observe(store, [
     pStateSaver,
     subtitleLoader,
 
@@ -19,5 +28,18 @@ const observeAll = () =>
 
     gameUpdateDetector,
   ])
+}
 
-export { observeAll }
+const globalUnsubscribe = () => {
+  if (typeof unsubscribe !== 'function') {
+    console.warn(`unsubscribe is not a function`)
+  } else {
+    unsubscribe()
+    unsubscribe = null
+  }
+}
+
+export {
+  globalSubscribe,
+  globalUnsubscribe,
+}
