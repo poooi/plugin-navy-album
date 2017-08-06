@@ -11,7 +11,7 @@ import {
   serverIpSelector,
 } from '../../selectors'
 import { PTyp } from '../../ptyp'
-import { ShipGraphView } from './ship-graph-view'
+import { ShipGraphView } from '../ship-graph-view'
 
 class GameUpdateViewerImpl extends PureComponent {
   static propTypes = {
@@ -47,6 +47,7 @@ class GameUpdateViewerImpl extends PureComponent {
                         {
                           summary.addedShipMstIds.map(mstId => (
                             <ShipGraphView
+                              style={{width: 160, height: 40, margin: 4}}
                               key={mstId}
                               mstId={mstId}
                               characterId={1}
@@ -88,6 +89,7 @@ class GameUpdateViewerImpl extends PureComponent {
                         {
                           summary.changedShipMstIds.map(mstId => (
                             <ShipGraphView
+                              style={{width: 160, height: 40, margin: 4}}
                               key={mstId}
                               mstId={mstId}
                               characterId={1}

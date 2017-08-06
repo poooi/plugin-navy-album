@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { PTyp } from '../../ptyp'
-import { mapDispatchToProps } from '../../store'
-import { shipGraphSourceFuncSelector } from './selectors'
+import { PTyp } from '../ptyp'
+import { mapDispatchToProps } from '../store'
+import { shipGraphSourceFuncSelector } from '../selectors'
 
 class ShipGraphViewImpl extends PureComponent {
   static propTypes = {
-    // require props
+    // required props
     mstId: PTyp.number.isRequired,
     characterId: PTyp.number.isRequired,
     // optional props
