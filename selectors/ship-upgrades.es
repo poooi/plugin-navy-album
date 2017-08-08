@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { readJsonSync } from 'fs-extra'
 import { join } from 'path-extra'
 import { createSelector } from 'reselect'
@@ -12,10 +13,26 @@ const defaultShipUpgrades = readJsonSync(
 
 const shipUpgradesSelector = createSelector(
   constSelector,
-  ({$shipUpgrades}) =>
-    $shipUpgrades || defaultShipUpgrades
+  ({$shipUpgrades}) => {
+    /*
+       $shipUpgrades is only correct when it's an Array
+       rather than Object or any falsy value.
+       Previously indexfied api_mst_shipupgrade by api_id,
+       but turns out api_id is not unique among elements,
+       so we go back and keep it intact instead.
+     */
+    if (Array.isArray($shipUpgrades)) {
+      console.log('store is good to use')
+      /*
+         elements with api_current_shid_id === 0 does not provide useful info
+       */
+      return $shipUpgrades.filter(x => x.api_current_ship_id !== 0)
+    } else {
+      console.log('using fallback')
+      return defaultShipUpgrades
+    }
+  }
 )
-
 
 /*
    - Core.swf/scripts/vo/MasterShipUpgradeData._getNeedDevNum
@@ -51,8 +68,14 @@ const computeInstantBuildCount = mstIdAfter =>
 const remodelDetailsSelector = createSelector(
   constSelector,
   shipUpgradesSelector,
-  ({$ships}, $shipUpgrades) => {
+  ({$ships}, $shipUpgradesRaw) => {
     const remodelDetails = {}
+
+    const $shipUpgrades = _.keyBy(
+      $shipUpgradesRaw,
+      'api_current_ship_id'
+    )
+
     Object.values($ships).map($ship => {
       const mstIdBefore = $ship.api_id
       if (mstIdBefore >= 1500)
@@ -65,7 +88,7 @@ const remodelDetailsSelector = createSelector(
       // yes, this is not a typo.
       const steel = $ship.api_afterfuel
 
-      const $shipUpgrade = $shipUpgrades[mstIdAfter]
+      const $shipUpgrade = $shipUpgrades[mstIdBefore]
       let extraInfo
       if (! $shipUpgrade) {
         extraInfo = {
@@ -93,6 +116,5 @@ const remodelDetailsSelector = createSelector(
 )
 
 export {
-  shipUpgradesSelector,
   remodelDetailsSelector,
 }

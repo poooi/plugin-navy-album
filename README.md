@@ -3,6 +3,13 @@
 Navy Album is a [poi](https://github.com/poooi/poi) plugin that shows
 illustrations, ship and equipment stats, and things beyond.
 
+## Changelog
+
+### 0.0.2 (pending)
+
+- Fix a problem that blueprints and catapults are not correctly displayed
+  for ships that have cyclic remodel chains.
+
 ## Features
 
 ### Ship Viewer

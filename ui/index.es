@@ -26,7 +26,6 @@ globalSubscribe()
 /*
    TODO
 
-   - shoukaku k2 bp
    - max consump < Lv.99
    - level-dependent hp
    - rework remodel panel
