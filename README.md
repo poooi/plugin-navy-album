@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 0.1.1 (pending)
+
+- "New CGs" => "Updated CGs"
+
 ### 0.1.0
 
 - Fix a problem that blueprints and catapults are not correctly displayed

@@ -44,7 +44,7 @@
   "GameUpdateTab": {
     "NewShips": "新艦船",
     "NewEquipments": "新裝備",
-    "NewCGs": "新立繪",
+    "UpdatedCGs": "立繪更新",
     "GeneralInfo": "常規信息",
     "GeneralInfoDetail": "艦船總數: %s, 裝備總數: %s"
   }

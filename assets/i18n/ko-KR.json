@@ -44,7 +44,7 @@
   "GameUpdateTab": {
     "NewShips": "New Ships",
     "NewEquipments": "New Equipments",
-    "NewCGs": "New CGs",
+    "UpdatedCGs": "Updated CGs",
     "GeneralInfo": "General Info",
     "GeneralInfoDetail": "Ship Count: %s, Equipment Count: %s"
   }

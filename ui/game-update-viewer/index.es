@@ -149,13 +149,13 @@ class GameUpdateViewerImpl extends PureComponent {
     ]
   }
 
-  renderNewCGsPart = () => {
+  renderUpdatedCGsPart = () => {
     const {__} = window
     const {summary, uiSwitchShip} = this.props
     const [abyssalMstIds, friendlyMstIds] =
       _.partition(summary.changedShipMstIds,isAbyssalMstId)
     return summary.changedShipMstIds.length > 0 && [
-      <h3 key="cg-1">{__('GameUpdateTab.NewCGs')}</h3>,
+      <h3 key="cg-1">{__('GameUpdateTab.UpdatedCGs')}</h3>,
       renderShipGraphRow(friendlyMstIds,"cg-2",uiSwitchShip),
       renderShipGraphRow(abyssalMstIds,"cg-3",uiSwitchShip),
     ]
@@ -188,7 +188,7 @@ class GameUpdateViewerImpl extends PureComponent {
               summary && _.concat(
                 this.renderNewShipsPart(),
                 this.renderNewEquipsPart(),
-                this.renderNewCGsPart()
+                this.renderUpdatedCGsPart()
               )
             }
             {digest && this.renderGeneralInfoPart()}
