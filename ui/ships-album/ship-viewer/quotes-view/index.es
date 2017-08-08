@@ -97,6 +97,7 @@ class QuotesViewImpl extends Component {
                 <audio
                   className="play-control"
                   style={{width: '100%', marginTop: '.5em'}}
+                  preload="none"
                   onCanPlay={this.handleCanPlay}
                   controls="controls">
                   <source src={url} type="audio/mp3" />

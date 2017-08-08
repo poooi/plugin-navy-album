@@ -30,7 +30,6 @@ globalSubscribe()
    - level-dependent hp
    - rework remodel panel
    - rc-slider dist
-   - <audio> lazy load
    - reduce asset size
    - collapsible type group?
    - needs some refactoring
