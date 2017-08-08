@@ -16,8 +16,6 @@ import { LevelSlider } from './level-slider'
 import { ExtraInfoView } from './extra-info-view'
 import { RemodelInfoView } from './remodel-info-view'
 
-// TODO: hp is level-dependent, a bit complicated though.
-
 const id = _.identity
 
 const mkStats = ($ship, _wctfShip, statsL, level) => {

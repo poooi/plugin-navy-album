@@ -16,8 +16,6 @@ const {$} = window
 
 $('#fontawesome-css')
   .setAttribute('href', require.resolve('font-awesome/css/font-awesome.css'))
-$('#rc-slider-css')
-  .setAttribute('href', require.resolve('rc-slider/assets/index.css'))
 
 extendReducer('poi-plugin-navy-album', reducer)
 
@@ -27,7 +25,6 @@ globalSubscribe()
    TODO
 
    - rework remodel panel
-   - rc-slider dist
    - reduce asset size
    - collapsible type group?
    - needs some refactoring

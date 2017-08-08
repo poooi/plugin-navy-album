@@ -1,8 +1,9 @@
 import { createStructuredSelector } from 'reselect'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import Slider from 'rc-slider'
 import { modifyObject } from 'subtender'
+
+import Slider from '../../../assets/rc-slider.min'
 
 import { PTyp } from '../../../ptyp'
 import { mapDispatchToProps } from '../../../store'
