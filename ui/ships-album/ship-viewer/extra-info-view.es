@@ -45,7 +45,7 @@ class ExtraInfoView extends PureComponent {
                       materialId={matId}
                       className="material-icon"
                     />
-                    <span className={level === 99 ? '' : 'custom text-primary'}>
+                    <span className={level <= 99 ? '' : 'custom text-primary'}>
                       {v}
                     </span>
                   </div>

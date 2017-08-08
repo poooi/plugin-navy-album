@@ -26,7 +26,6 @@ globalSubscribe()
 /*
    TODO
 
-   - max consump < Lv.99
    - level-dependent hp
    - rework remodel panel
    - rc-slider dist
