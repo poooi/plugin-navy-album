@@ -26,7 +26,16 @@ globalSubscribe()
 /*
    TODO
 
-   - need some refactoring
+   - shoukaku k2 bp
+   - max consump < Lv.99
+   - level-dependent hp
+   - rework remodel panel
+   - rc-slider dist
+   - <audio> lazy load
+   - reduce asset size
+   - collapsible type group?
+   - needs some refactoring
+   - needs to move around some selectors
 
  */
 
