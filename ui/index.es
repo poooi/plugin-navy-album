@@ -26,7 +26,6 @@ globalSubscribe()
 /*
    TODO
 
-   - level-dependent hp
    - rework remodel panel
    - rc-slider dist
    - reduce asset size

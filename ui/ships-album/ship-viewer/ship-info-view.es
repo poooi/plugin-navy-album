@@ -35,8 +35,30 @@ const mkStats = ($ship, _wctfShip, statsL, level) => {
     )
   }
 
+  // hp before marriage
+  const hpBase = $ship.api_taik[0]
+  let hp
+  if (level <= 99) {
+    hp = hpBase
+  } else {
+    const incr =
+      hpBase <= 7 ? 3 :
+      hpBase <= 29 ? 4 :
+      hpBase <= 39 ? 5 :
+      hpBase <= 49 ? 6 :
+      hpBase <= 69 ? 7 :
+      hpBase <= 90 ? 8 :
+      9
+    const hpText = Math.min(hpBase+incr,$ship.api_taik[1])
+    hp = (
+      <div className={level === 99 ? '' : 'custom text-primary'}>
+        {hpText}
+      </div>
+    )
+  }
+
   return {
-    hp: $ship.api_taik[0],
+    hp,
     fire: ranged('houg'),
     armor: ranged('souk'),
     torpedo: ranged('souk'),

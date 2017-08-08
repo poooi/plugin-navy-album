@@ -11,6 +11,7 @@ illustrations, ship and equipment stats, and things beyond.
   for ships that have cyclic remodel chains.
 - Now audios are only loaded when start playing
 - The color for max comsumption only changes when Level > 99
+- Show after-marriage max HP when Level > 99
 
 ## Features
 
