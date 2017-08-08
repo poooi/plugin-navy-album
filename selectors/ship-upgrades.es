@@ -22,13 +22,11 @@ const shipUpgradesSelector = createSelector(
        so we go back and keep it intact instead.
      */
     if (Array.isArray($shipUpgrades)) {
-      console.log('store is good to use')
       /*
          elements with api_current_shid_id === 0 does not provide useful info
        */
       return $shipUpgrades.filter(x => x.api_current_ship_id !== 0)
     } else {
-      console.log('using fallback')
       return defaultShipUpgrades
     }
   }
