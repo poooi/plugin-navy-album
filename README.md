@@ -5,7 +5,7 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
-### 0.0.2 (pending)
+### 0.1.0
 
 - Fix a problem that blueprints and catapults are not correctly displayed
   for ships that have cyclic remodel chains.
