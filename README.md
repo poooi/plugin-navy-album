@@ -5,9 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
-### 0.1.1 (pending)
+### 0.1.1
 
 - "New CGs" => "Updated CGs"
+- Fix torpedo stats not being displayed correctly
 
 ### 0.1.0
 

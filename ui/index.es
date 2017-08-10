@@ -27,6 +27,7 @@ globalSubscribe()
    - rework remodel panel
    - reduce asset size
    - collapsible type group?
+   - search bar
    - needs some refactoring
    - needs to move around some selectors
 

@@ -59,7 +59,7 @@ const mkStats = ($ship, _wctfShip, statsL, level) => {
     hp,
     fire: ranged('houg'),
     armor: ranged('souk'),
-    torpedo: ranged('souk'),
+    torpedo: ranged('raig'),
     antiair: ranged('tyku'),
     cap: _.sum($ship.api_maxeq.filter(x => _.isInteger(x) && x > 0)),
     speed: String($ship.api_soku),
