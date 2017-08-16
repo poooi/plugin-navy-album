@@ -5,6 +5,13 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 0.2.0 (pending)
+
+- Improvements to "Remodels" Panel
+
+  - wider layout
+  - clicking on remodels to switch between ships
+
 ### 0.1.1
 
 - "New CGs" => "Updated CGs"

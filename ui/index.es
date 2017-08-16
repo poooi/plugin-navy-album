@@ -24,7 +24,6 @@ globalSubscribe()
 /*
    TODO
 
-   - rework remodel panel
    - reduce asset size
    - collapsible type group?
    - search bar
