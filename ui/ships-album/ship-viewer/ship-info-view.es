@@ -172,7 +172,7 @@ class ShipInfoViewImpl extends PureComponent {
           display: 'flex',
         }}>
           <RemodelInfoView
-            style={{width: '60%'}}
+            style={{width: '100%'}}
             mstId={mstId}
           />
         </div>

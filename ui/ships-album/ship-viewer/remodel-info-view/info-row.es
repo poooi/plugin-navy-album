@@ -21,7 +21,7 @@ class InfoRow extends PureComponent {
       const {shipName, typeName} = mstIdToDesc(curMstId)
       const className = curMstId === mstId ? 'text-primary' : ''
       return (
-        <div style={{width: '30%'}}>
+        <div style={{width: '30%', flex: 1}}>
           <div className={className}>{typeName}</div>
           <div
             className={className}
