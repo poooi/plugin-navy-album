@@ -1,10 +1,9 @@
 import _ from 'lodash'
 import { createStructuredSelector, createSelector } from 'reselect'
 import React, { PureComponent } from 'react'
-import FontAwesome from 'react-fontawesome'
 import { connect } from 'react-redux'
 import {
-  Panel, ListGroup, ListGroupItem,
+  Panel, ListGroup,
 } from 'react-bootstrap'
 import {
   mergeMapStateToProps,
@@ -12,7 +11,6 @@ import {
 import {
   constSelector,
 } from 'views/utils/selectors'
-import { MaterialIcon } from 'views/components/etc/icon'
 
 import {
   remodelInfoSelector,
@@ -21,7 +19,6 @@ import {
 
 import { PTyp } from '../../../../ptyp'
 import { mapDispatchToProps } from '../../../../store'
-import { Icon } from '../../../icon'
 import { InfoRow } from './info-row'
 
 const prepareMstIdToDesc = ($ships, $shipTypes) => mstId => {
@@ -66,20 +63,6 @@ class RemodelInfoViewImpl extends PureComponent {
     if (currentRemodelDetails.length === 0)
       return noRender
     const mstIdToDesc = prepareMstIdToDesc($ships, $shipTypes)
-    const mkShipView = curMstId => {
-      const {shipName, typeName} = mstIdToDesc(curMstId)
-      const className = curMstId === mstId ? 'text-primary' : ''
-      return (
-        <div style={{width: '30%'}}>
-          <div className={className}>{typeName}</div>
-          <div
-            className={className}
-            style={{fontSize: '1.6em', marginLeft: '.3em'}}>
-            {shipName}
-          </div>
-        </div>
-      )
-    }
     const {__} = window
     return (
       <Panel
