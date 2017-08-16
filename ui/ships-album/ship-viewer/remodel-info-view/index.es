@@ -17,11 +17,11 @@ import { MaterialIcon } from 'views/components/etc/icon'
 import {
   remodelInfoSelector,
   remodelDetailsSelector,
-} from '../../../selectors'
+} from '../../../../selectors'
 
-import { PTyp } from '../../../ptyp'
-import { mapDispatchToProps } from '../../../store'
-import { Icon } from '../../icon'
+import { PTyp } from '../../../../ptyp'
+import { mapDispatchToProps } from '../../../../store'
+import { Icon } from '../../../icon'
 
 const prepareMstIdToDesc = ($ships, $shipTypes) => mstId => {
   const $ship = $ships[mstId]
