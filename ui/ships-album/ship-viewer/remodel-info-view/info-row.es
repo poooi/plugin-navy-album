@@ -21,7 +21,7 @@ class InfoRow extends PureComponent {
       const {shipName, typeName} = mstIdToDesc(curMstId)
       const className = curMstId === mstId ? 'text-primary' : ''
       return (
-        <div style={{width: '30%', flex: 1}}>
+        <div style={{width: '30%', flex: 3}}>
           <div className={className}>{typeName}</div>
           <div
             className={className}
@@ -42,7 +42,7 @@ class InfoRow extends PureComponent {
             alignItems: 'center',
           }}
         >
-          <span style={{width: '3em', fontSize: '1.6em'}}>
+          <span style={{width: '3em', fontSize: '1.6em', flex: 1}}>
             Lv. {detail.level}
           </span>
           {mkShipView(detail.mstIdBefore)}
