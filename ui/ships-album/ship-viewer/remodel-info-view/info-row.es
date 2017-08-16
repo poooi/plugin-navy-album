@@ -1,27 +1,41 @@
 import _ from 'lodash'
 import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
 import { ListGroupItem } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import { MaterialIcon } from 'views/components/etc/icon'
 
 import { PTyp } from '../../../../ptyp'
 import { Icon } from '../../../icon'
+import { mapDispatchToProps } from '../../../../store'
 
-class InfoRow extends PureComponent {
+class InfoRowImpl extends PureComponent {
   static propTypes = {
     mstId: PTyp.number.isRequired,
     mstIdToDesc: PTyp.func.isRequired,
     detail: PTyp.object.isRequired,
     style: PTyp.object.isRequired,
+    uiSwitchShip: PTyp.func.isRequired,
   }
 
   render() {
-    const {detail, mstId, mstIdToDesc,style} = this.props
+    const {detail, mstId, mstIdToDesc, style, uiSwitchShip} = this.props
     const mkShipView = curMstId => {
       const {shipName, typeName} = mstIdToDesc(curMstId)
       const className = curMstId === mstId ? 'text-primary' : ''
+      const hasSwitchAction = curMstId !== mstId
       return (
-        <div style={{width: '30%', flex: 3}}>
+        <div
+          style={{
+            width: '30%', flex: 3,
+            ...(hasSwitchAction ? {cursor: 'pointer'} : {}),
+          }}
+          onClick={
+            hasSwitchAction ?
+              () => uiSwitchShip(curMstId) :
+              null
+          }
+        >
           <div className={className}>{typeName}</div>
           <div
             className={className}
@@ -106,5 +120,7 @@ class InfoRow extends PureComponent {
     )
   }
 }
+
+const InfoRow = connect(null,mapDispatchToProps)(InfoRowImpl)
 
 export { InfoRow }
