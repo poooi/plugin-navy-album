@@ -22,6 +22,7 @@ import {
 import { PTyp } from '../../../../ptyp'
 import { mapDispatchToProps } from '../../../../store'
 import { Icon } from '../../../icon'
+import { InfoRow } from './info-row'
 
 const prepareMstIdToDesc = ($ships, $shipTypes) => mstId => {
   const $ship = $ships[mstId]
@@ -91,80 +92,11 @@ class RemodelInfoViewImpl extends PureComponent {
           {
             currentRemodelDetails.map(detail => {
               const key = detail.mstIdBefore
-              return (
-                <ListGroupItem
-                  style={{
-                    padding: '.4em .6em',
-                  }}
-                  key={key}>
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-
-                    }}
-                  >
-                    <span style={{width: '3em', fontSize: '1.6em'}}>
-                      Lv. {detail.level}
-                    </span>
-                    {mkShipView(detail.mstIdBefore)}
-                    <FontAwesome
-                      name="arrow-right"
-                      style={{
-                        margin: '.2em .8em',
-                      }}
-                    />
-                    {mkShipView(detail.mstIdAfter)}
-                  </div>
-                  <div style={{display: 'flex', alignItems: 'center'}}>
-                    {
-                      _.flatMap(
-                        'ammo steel devMat instantBuild blueprint catapult'
-                          .split(' '),
-                        itemOrResource => {
-                          const matIds = {
-                            ammo: 2,
-                            steel: 3,
-                            devMat: 7,
-                            instantBuild: 5,
-                          }
-                          const v = detail[itemOrResource]
-                          if (v === 0)
-                            return []
-                          const icon = matIds[itemOrResource] ? (
-                            <MaterialIcon
-                              materialId={matIds[itemOrResource]}
-                              className="material-icon"
-                            />
-                          ) : (
-                            <Icon
-                              style={{width: '1.5em', height: '1.5em'}}
-                              name={itemOrResource} />
-                          )
-                          const text =
-                            ['ammo', 'steel'].includes(itemOrResource) ?
-                              String(v) :
-                              `x${v}`
-                          return [
-                            <span
-                              key={itemOrResource}
-                              style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                marginRight: '.5em',
-                              }}>
-                              {icon}
-                              <span>
-                                {text}
-                              </span>
-                            </span>,
-                          ]
-                        }
-                      )
-                    }
-                  </div>
-                </ListGroupItem>
-              )
+              const props = {
+                style: {padding: '.4em .6em'},
+                mstId, mstIdToDesc, detail, key,
+              }
+              return (<InfoRow {...props} />)
             })
           }
         </ListGroup>
