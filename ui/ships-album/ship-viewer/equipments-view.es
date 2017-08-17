@@ -10,6 +10,7 @@ import { Label } from 'react-bootstrap'
 import { SlotitemIcon } from 'views/components/etc/icon'
 import { constSelector } from 'views/utils/selectors'
 import { PTyp } from '../../../ptyp'
+import { mapDispatchToProps } from '../../../store'
 
 class EquipmentsViewImpl extends PureComponent {
   static propTypes = {
@@ -17,10 +18,11 @@ class EquipmentsViewImpl extends PureComponent {
     equips: PTyp.array.isRequired,
     $equips: PTyp.object.isRequired,
     style: PTyp.object.isRequired,
+    uiSwitchEquip: PTyp.func.isRequired,
   }
 
   render() {
-    const {slotCount, equips, $equips, style} = this.props
+    const {slotCount, equips, $equips, style, uiSwitchEquip} = this.props
     return (
       <div
         style={{
@@ -44,12 +46,14 @@ class EquipmentsViewImpl extends PureComponent {
             let capText
             let displayIcon
             let displayName
+            let onClick = null
             if (slotInd < slotCount) {
               const {cap, mstId} = equips[slotInd]
               capText = String(cap)
               if (_.isInteger(mstId)) {
                 const $equip = $equips[mstId]
                 const iconId = $equip.api_type[3]
+                onClick = () => uiSwitchEquip(mstId)
                 displayIcon = (
                   <SlotitemIcon
                     className="slotitem-img"
@@ -76,10 +80,14 @@ class EquipmentsViewImpl extends PureComponent {
             return (
               <Label
                 key={slotInd}
+                onClick={onClick}
                 style={{
                   ...commonStyle,
                   display: 'flex',
                   alignItems: 'center',
+                  ...(
+                    typeof onClick === 'function' ? {cursor: 'pointer'} : {}
+                  ),
                 }}>
                 <span style={{
                   width: '2em',
@@ -116,7 +124,8 @@ const EquipmentsView = connect(
     $equips: createSelector(
       constSelector,
       ({$equips}) => $equips),
-  })
+  }),
+  mapDispatchToProps
 )(EquipmentsViewImpl)
 
 export { EquipmentsView }
