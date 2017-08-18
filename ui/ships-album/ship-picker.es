@@ -24,6 +24,12 @@ class ShipPickerImpl extends Component {
 
   constructor(props) {
     super(props)
+    /*
+       TODO: separated search bar component,
+       which debounces the actual update because
+       we don't want to perform the actual search too often
+       as the user is typing something.
+     */
     this.state = {
       searchText: '',
     }
