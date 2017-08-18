@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { ensureDirSync, readJsonSync, writeJsonSync } from 'fs-extra'
 import { join } from 'path-extra'
 
@@ -11,7 +12,7 @@ import { join } from 'path-extra'
 const stateToPState = ({ui, gameUpdate}) => ({
   ui,
   gameUpdate,
-  $dataVersion: 'p-state-0.0.1',
+  $dataVersion: 'p-state-0.2.0',
 })
 
 const getPStateFilePath = () => {
@@ -31,8 +32,17 @@ const savePState = pState => {
 }
 
 const updatePState = oldPState => {
-  if (oldPState.$dataVersion === 'p-state-0.0.1')
+  if (oldPState.$dataVersion === 'p-state-0.2.0')
     return oldPState
+  // eslint-disable-next-line prefer-const
+  let newPState = oldPState
+  if (newPState.$dataVersion === 'p-state-0.0.1') {
+    _.set(newPState,'ui.shipsAlbum.searchText','')
+    _.set(newPState,'ui.equipmentsAlbum.searchText','')
+    newPState.$dataVersion = 'p-state-0.2.0'
+    setTimeout(() => savePState(newPState))
+    return newPState
+  }
 
   throw new Error('failed to update the config')
 }

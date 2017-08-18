@@ -35,6 +35,7 @@ const initState = {
        */
       activeTab: 'info',
     },
+    searchText: '',
   },
   // state for EquipmentsAlbum
   equipmentsAlbum: {
@@ -49,6 +50,7 @@ const initState = {
     equipViewer: {
       mstId: 128,
     },
+    searchText: '',
   },
 }
 
