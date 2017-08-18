@@ -4,8 +4,9 @@ import { connect } from 'react-redux'
 import {
   ListGroup, ListGroupItem,
   Panel,
+  FormControl, Button,
 } from 'react-bootstrap'
-
+import FontAwesome from 'react-fontawesome'
 import {
   shipsInfoSelectorForView,
   listOptionsSelector,
@@ -34,8 +35,18 @@ class ShipPickerImpl extends Component {
           flex: 1,
           marginBottom: 8,
         }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'baseline',
+          marginBottom: 8,
+        }}>
+          <FormControl type="text" placeholder="Search ..." readOnly />
+          <Button bsSize="xsmall">
+            <FontAwesome name="close" />
+          </Button>
+        </div>
         <ListGroup style={{
-          height: '100%',
+          flex: 1,
           overflowY: 'auto',
         }}>
           {
