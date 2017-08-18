@@ -22,8 +22,20 @@ class ShipPickerImpl extends Component {
     uiSwitchShip: PTyp.func.isRequired,
   }
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      searchText: '',
+    }
+  }
+
   handleSelectMstId = mstId => () =>
     this.props.uiSwitchShip(mstId)
+
+  handleChangeSearchText = e => {
+    const searchText = e.target.value
+    this.setState({searchText})
+  }
 
   render() {
     const {groupped, wrappedShipsInfo} = this.props
@@ -40,8 +52,17 @@ class ShipPickerImpl extends Component {
           alignItems: 'baseline',
           marginBottom: 8,
         }}>
-          <FormControl type="text" placeholder="Search ..." readOnly />
-          <Button bsSize="xsmall">
+          <FormControl
+            style={{flex: 1}}
+            type="text"
+            placeholder="Search ..."
+            value={this.state.searchText}
+            onChange={this.handleChangeSearchText}
+          />
+          <Button
+            style={this.state.searchText ? {} : {display: 'none'}}
+            onClick={() => this.setState({searchText: ''})}
+            bsSize="xsmall">
             <FontAwesome name="close" />
           </Button>
         </div>
