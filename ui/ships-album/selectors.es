@@ -145,6 +145,11 @@ const shipViewerSelector = createSelector(
   sa => sa.shipViewer
 )
 
+const searchTextSelector = createSelector(
+  shipsAlbumSelector,
+  sa => sa.searchText
+)
+
 const mstIdSelector = createSelector(
   shipViewerSelector,
   sv => sv.mstId
@@ -202,6 +207,7 @@ const shipMasterDataSelector = createSelector(
 export {
   shipsAlbumSelector,
   listOptionsSelector,
+  searchTextSelector,
   shipsInfoSelectorForView,
   shipViewerSelector,
   mstIdSelector,

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { mergeMapStateToProps } from 'subtender'
+import { mergeMapStateToProps, modifyObject } from 'subtender'
 import { connect } from 'react-redux'
 import {
   ListGroup, ListGroupItem,
@@ -10,16 +10,20 @@ import FontAwesome from 'react-fontawesome'
 import {
   shipsInfoSelectorForView,
   listOptionsSelector,
+  searchTextSelector,
   mstIdSelector,
 } from './selectors'
 import { PTyp } from '../../ptyp'
 import { mapDispatchToProps } from '../../store'
+import { SearchBar } from './search-bar'
 
 class ShipPickerImpl extends Component {
   static propTypes = {
     groupped: PTyp.bool.isRequired,
     wrappedShipsInfo: PTyp.array.isRequired,
+    searchText: PTyp.string.isRequired,
     uiSwitchShip: PTyp.func.isRequired,
+    uiModify: PTyp.func.isRequired,
   }
 
   constructor(props) {
@@ -38,13 +42,18 @@ class ShipPickerImpl extends Component {
   handleSelectMstId = mstId => () =>
     this.props.uiSwitchShip(mstId)
 
-  handleChangeSearchText = e => {
-    const searchText = e.target.value
-    this.setState({searchText})
-  }
+  handleChangeSearchText = searchText =>
+    this.props.uiModify(
+      modifyObject(
+        'shipsAlbum',
+        modifyObject(
+          'searchText', () => searchText
+        )
+      )
+    )
 
   render() {
-    const {groupped, wrappedShipsInfo} = this.props
+    const {groupped, searchText, wrappedShipsInfo} = this.props
     return (
       <Panel
         className="ship-picker"
@@ -53,25 +62,11 @@ class ShipPickerImpl extends Component {
           flex: 1,
           marginBottom: 8,
         }}>
-        <div style={{
-          display: 'flex',
-          alignItems: 'baseline',
-          marginBottom: 8,
-        }}>
-          <FormControl
-            style={{flex: 1}}
-            type="text"
-            placeholder="Search ..."
-            value={this.state.searchText}
-            onChange={this.handleChangeSearchText}
-          />
-          <Button
-            style={this.state.searchText ? {} : {display: 'none'}}
-            onClick={() => this.setState({searchText: ''})}
-            bsSize="xsmall">
-            <FontAwesome name="close" />
-          </Button>
-        </div>
+        <SearchBar
+          style={{marginBottom: 8}}
+          value={searchText}
+          changeValue={this.handleChangeSearchText}
+        />
         <ListGroup style={{
           flex: 1,
           overflowY: 'auto',
@@ -124,6 +119,7 @@ const ShipPicker = connect(
     listOptionsSelector,
     state => ({
       mstId: mstIdSelector(state),
+      searchText: searchTextSelector(state),
     })
   ),
   mapDispatchToProps,

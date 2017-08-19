@@ -37,6 +37,11 @@ class SearchBar extends Component {
     this.debouncedChangeValue(value)
   }
 
+  handleClearValue = () => {
+    this.setState({value: ''})
+    this.debouncedChangeValue('')
+  }
+
   render() {
     const {style} = this.props
     return (
@@ -54,7 +59,7 @@ class SearchBar extends Component {
         />
         <Button
           style={this.state.value ? {} : {display: 'none'}}
-          onClick={() => this.setState({value: ''})}
+          onClick={this.handleClearValue}
           bsSize="xsmall">
           <FontAwesome name="close" />
         </Button>
