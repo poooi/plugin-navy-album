@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React, { Component } from 'react'
 import {
   FormControl, Button,
@@ -24,9 +25,16 @@ class SearchBar extends Component {
       this.setState({value: nextProps.value})
   }
 
+  debouncedChangeValue = _.debounce(
+    value =>
+      // delaying accessing props.changeValue until the time is right
+      this.props.changeValue(value),
+    500)
+
   handleChangeValue = e => {
     const {value} = e.target
     this.setState({value})
+    this.debouncedChangeValue(value)
   }
 
   render() {
@@ -46,7 +54,7 @@ class SearchBar extends Component {
         />
         <Button
           style={this.state.value ? {} : {display: 'none'}}
-          onClick={() => this.setState({searchText: ''})}
+          onClick={() => this.setState({value: ''})}
           bsSize="xsmall">
           <FontAwesome name="close" />
         </Button>
