@@ -4,9 +4,7 @@ import { connect } from 'react-redux'
 import {
   ListGroup, ListGroupItem,
   Panel,
-  FormControl, Button,
 } from 'react-bootstrap'
-import FontAwesome from 'react-fontawesome'
 import {
   shipsInfoSelectorForView,
   listOptionsSelector,
@@ -24,19 +22,6 @@ class ShipPickerImpl extends Component {
     searchText: PTyp.string.isRequired,
     uiSwitchShip: PTyp.func.isRequired,
     uiModify: PTyp.func.isRequired,
-  }
-
-  constructor(props) {
-    super(props)
-    /*
-       TODO: separated search bar component,
-       which debounces the actual update because
-       we don't want to perform the actual search too often
-       as the user is typing something.
-     */
-    this.state = {
-      searchText: '',
-    }
   }
 
   handleSelectMstId = mstId => () =>
