@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 0.2.1
+
+- i18n
+
 ### 0.2.0
 
 - Improvements to "Remodels" Panel

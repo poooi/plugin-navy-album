@@ -44,6 +44,7 @@ class SearchBar extends Component {
 
   render() {
     const {style} = this.props
+    const {__} = window
     return (
       <div style={{
         display: 'flex',
@@ -53,7 +54,7 @@ class SearchBar extends Component {
         <FormControl
           style={{flex: 1}}
           type="text"
-          placeholder="Search ..."
+          placeholder={__('Search ...')}
           value={this.state.value}
           onChange={this.handleChangeValue}
         />
