@@ -24,9 +24,41 @@ const listOptionsSelector = createSelector(
 
 const isAbyssal = s => s.mstId > 1500
 
+const shipViewerSelector = createSelector(
+  shipsAlbumSelector,
+  sa => sa.shipViewer
+)
+
+const searchTextSelector = createSelector(
+  shipsAlbumSelector,
+  sa => sa.searchText
+)
+
+const mstIdSelector = createSelector(
+  shipViewerSelector,
+  sv => sv.mstId
+)
+
+const levelSelector = createSelector(
+  shipViewerSelector,
+  sv => sv.level
+)
+
+const filteredShipsInfoSelector = createSelector(
+  searchTextSelector,
+  shipsInfoSelector,
+  (searchText, shipsInfo) =>
+    searchText === '' ?
+      shipsInfo :
+      shipsInfo.filter(si =>
+        si.name.indexOf(searchText) !== -1 ||
+        String(si.mstId).indexOf(searchText) !== -1
+      )
+)
+
 // "stage1" takes into account friendly / abyssal options
 const shipsInfoStage1Selector = createSelector(
-  shipsInfoSelector,
+  filteredShipsInfoSelector,
   listOptionsSelector,
   (shipsInfo, {showSides}) => {
     const {friendly, abyssal} = showSides
@@ -140,25 +172,6 @@ const shipsInfoStage3Selector = createSelector(
 
 const shipsInfoSelectorForView = shipsInfoStage3Selector
 
-const shipViewerSelector = createSelector(
-  shipsAlbumSelector,
-  sa => sa.shipViewer
-)
-
-const searchTextSelector = createSelector(
-  shipsAlbumSelector,
-  sa => sa.searchText
-)
-
-const mstIdSelector = createSelector(
-  shipViewerSelector,
-  sv => sv.mstId
-)
-
-const levelSelector = createSelector(
-  shipViewerSelector,
-  sv => sv.level
-)
 
 const shipGraphSelector = createSelector(
   indexedShipGraphsSelector,
