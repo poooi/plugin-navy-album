@@ -15,6 +15,11 @@ const listOptionsSelector = createSelector(
   equipmentsAlbumSelector,
   ea => ea.listOptions)
 
+const searchTextSelector = createSelector(
+  equipmentsAlbumSelector,
+  ea => ea.searchText
+)
+
 // order not specified
 const allEquipsRawSelector = createSelector(
   constSelector,
@@ -132,4 +137,5 @@ export {
   equipViewerSelector,
   mstIdSelector,
   equipRawInfoSelector,
+  searchTextSelector,
 }

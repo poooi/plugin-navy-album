@@ -4,27 +4,41 @@ import {
   ListGroup, ListGroupItem,
   Panel,
 } from 'react-bootstrap'
-
+import { mergeMapStateToProps, modifyObject } from 'subtender'
 import { SlotitemIcon } from 'views/components/etc/icon'
 
 import {
   equipsRawSelectorForView,
+  searchTextSelector,
 } from './selectors'
 
 import { PTyp } from '../../ptyp'
 import { mapDispatchToProps } from '../../store'
+import { SearchBar } from '../search-bar'
 
 class EquipPickerImpl extends Component {
   static propTypes = {
     wrappedEquipsRaw: PTyp.array.isRequired,
+    searchText: PTyp.string.isRequired,
     uiSwitchEquip: PTyp.func.isRequired,
+    uiModify: PTyp.func.isRequired,
   }
 
   handleSelectMstId = mstId => () =>
     this.props.uiSwitchEquip(mstId)
 
+  handleChangeSearchText = searchText =>
+    this.props.uiModify(
+      modifyObject(
+        'equipmentsAlbum',
+        modifyObject(
+          'searchText', () => searchText
+        )
+      )
+    )
+
   render() {
-    const {wrappedEquipsRaw} = this.props
+    const {wrappedEquipsRaw,searchText} = this.props
     return (
       <Panel
         className="equip-picker"
@@ -33,8 +47,13 @@ class EquipPickerImpl extends Component {
           flex: 1,
           marginBottom: 8,
         }}>
+        <SearchBar
+          style={{marginBottom: 8}}
+          value={searchText}
+          changeValue={this.handleChangeSearchText}
+        />
         <ListGroup style={{
-          height: '100%',
+          flex: 1,
           overflowY: 'auto',
         }}>
           {
@@ -87,7 +106,11 @@ class EquipPickerImpl extends Component {
 }
 
 const EquipPicker = connect(
-  equipsRawSelectorForView,
+  mergeMapStateToProps(
+    equipsRawSelectorForView,
+    state => ({
+      searchText: searchTextSelector(state),
+    })),
   mapDispatchToProps,
 )(EquipPickerImpl)
 
