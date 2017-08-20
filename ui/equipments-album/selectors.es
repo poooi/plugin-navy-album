@@ -28,9 +28,21 @@ const allEquipsRawSelector = createSelector(
 
 const isAbyssalEq = s => s.api_id > 500
 
+const filteredEquipsRawSelector = createSelector(
+  searchTextSelector,
+  allEquipsRawSelector,
+  (searchText, allEquipsRaw) =>
+    searchText === '' ?
+      allEquipsRaw :
+      allEquipsRaw.filter(raw =>
+        raw.api_name.indexOf(searchText) !== -1 ||
+        String(raw.api_id).indexOf(searchText) !== -1
+      )
+)
+
 // "stage1" takes into account sides.
 const equipsRawStage1Selector = createSelector(
-  allEquipsRawSelector,
+  filteredEquipsRawSelector,
   listOptionsSelector,
   (equipsRaw, {showSides}) => {
     const {friendly, abyssal} = showSides
