@@ -13,7 +13,7 @@ import {
 } from './selectors'
 import { PTyp } from '../../ptyp'
 import { mapDispatchToProps } from '../../store'
-import { SearchBar } from './search-bar'
+import { SearchBar } from '../search-bar'
 
 class ShipPickerImpl extends Component {
   static propTypes = {

@@ -4,7 +4,7 @@ import {
   FormControl, Button,
 } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
-import { PTyp } from '../../ptyp'
+import { PTyp } from '../ptyp'
 
 class SearchBar extends Component {
   static propTypes = {
