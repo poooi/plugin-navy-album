@@ -5,12 +5,14 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
-### 0.2.0 (pending)
+### 0.2.0
 
 - Improvements to "Remodels" Panel
 
   - wider layout
   - clicking on remodels to switch between ships
+
+- Implemented search bar for both ships and equipments
 
 ### 0.1.1
 
