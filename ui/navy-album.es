@@ -17,6 +17,11 @@ import { EquipmentsAlbum } from './equipments-album'
 import { GameUpdateViewer } from './game-update-viewer'
 import { globalUnsubscribe } from '../observers'
 
+import { DebugWindow } from './debug-window'
+
+// TODO: set this to false for releases
+const debugFlag = true
+
 class NavyAlbumImpl extends Component {
   static propTypes = {
     activeTab: PTyp.ActiveTab.isRequired,
@@ -66,6 +71,13 @@ class NavyAlbumImpl extends Component {
               <NavItem eventKey="game-update">
                 {__('GameUpdate')}
               </NavItem>
+              {
+                debugFlag && (
+                  <NavItem eventKey="debug">
+                    Debug
+                  </NavItem>
+                )
+              }
             </Nav>
           </div>
           <div style={{flex: 1}}>
@@ -79,6 +91,13 @@ class NavyAlbumImpl extends Component {
               <Tab.Pane eventKey="game-update" style={{height: '100%'}}>
                 <GameUpdateViewer />
               </Tab.Pane>
+              {
+                debugFlag && (
+                  <Tab.Pane eventKey="debug" style={{height: '100%'}}>
+                    <DebugWindow />
+                  </Tab.Pane>
+                )
+              }
             </Tab.Content>
           </div>
         </div>
