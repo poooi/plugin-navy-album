@@ -15,7 +15,9 @@ const allRequired = shapeObj => {
   return ret
 }
 
-const ActiveTab = PropTypes.oneOf(['ships', 'equipments', 'game-update'])
+const ActiveTab = PropTypes.oneOf([
+  'ships', 'equipments', 'game-update', 'debug',
+])
 
 const PTyp = {
   ...PropTypes,
