@@ -74,6 +74,9 @@ const normalizeIntro = text =>
     text.split('<br>').map(xs => xs.trim())
   )
 
+const isSpecialMstId = x =>
+  x >= 788 && x <= 997
+
 class ShipInfoViewImpl extends PureComponent {
   static propTypes = {
     mstId: PTyp.number.isRequired,
@@ -88,6 +91,8 @@ class ShipInfoViewImpl extends PureComponent {
       mstId, shipGraphSource, $ship,
       statsL, level,
     } = this.props
+    if (isSpecialMstId(mstId))
+      return (<div>-</div>)
     const wctfShip = wctfShips[mstId]
     const equipIds = _.get(wctfShip,'equip',[])
     const equips = _.zip($ship.api_maxeq, equipIds).map(([slotNum,mstIdRaw]) =>

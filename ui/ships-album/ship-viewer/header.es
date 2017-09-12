@@ -11,6 +11,9 @@ import {
 import { PTyp } from '../../../ptyp'
 import { ShipGraphView } from '../../ship-graph-view'
 
+const isSpecialMstId = x =>
+  x >= 788 && x <= 997
+
 class HeaderImpl extends PureComponent {
   static propTypes = {
     mstId: PTyp.number.isRequired,
@@ -20,6 +23,9 @@ class HeaderImpl extends PureComponent {
   }
   render() {
     const {mstId, shipName, typeName, debuffFlag} = this.props
+    if (isSpecialMstId(mstId)) {
+      return (<div />)
+    }
     /*
        ShipGraphView requests the image automatically
        and header always show as long as the component is mounted

@@ -48,6 +48,12 @@ const renderShipGraphRow = (mstIds, rowKey, uiSwitchShip) =>
     </div>
   )
 
+const isSpecialMstId = x =>
+  x >= 788 && x <= 997
+
+const isNotSpecialMstId = x =>
+  !isSpecialMstId(x)
+
 class GameUpdateViewerImpl extends PureComponent {
   static propTypes = {
     digest: PTyp.object,
@@ -67,7 +73,7 @@ class GameUpdateViewerImpl extends PureComponent {
     const {summary, uiSwitchShip} = this.props
     const {__} = window
     const [abyssalMstIds, friendlyMstIds] =
-      _.partition(summary.addedShipMstIds,isAbyssalMstId)
+      _.partition(summary.addedShipMstIds.filter(isNotSpecialMstId),isAbyssalMstId)
     return summary.addedShipMstIds.length > 0 && [
       <h3 key="sh-1">{__('GameUpdateTab.NewShips')}</h3>,
       renderShipGraphRow(friendlyMstIds,"sh-2",uiSwitchShip),
@@ -153,7 +159,7 @@ class GameUpdateViewerImpl extends PureComponent {
     const {__} = window
     const {summary, uiSwitchShip} = this.props
     const [abyssalMstIds, friendlyMstIds] =
-      _.partition(summary.changedShipMstIds,isAbyssalMstId)
+      _.partition(summary.changedShipMstIds.filter(isNotSpecialMstId),isAbyssalMstId)
     return summary.changedShipMstIds.length > 0 && [
       <h3 key="cg-1">{__('GameUpdateTab.UpdatedCGs')}</h3>,
       renderShipGraphRow(friendlyMstIds,"cg-2",uiSwitchShip),

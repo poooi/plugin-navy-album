@@ -20,7 +20,7 @@ import { globalUnsubscribe } from '../observers'
 import { DebugWindow } from './debug-window'
 
 // TODO: set this to false for releases
-const debugFlag = true
+const debugFlag = false
 
 class NavyAlbumImpl extends Component {
   static propTypes = {

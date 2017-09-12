@@ -34,7 +34,7 @@ const remodelInfoSelector = createSelector(
 
         const newResults = [...results, mstId]
         const $ship = $ships[mstId]
-        const afterMstId = Number($ship.api_aftershipid)
+        const afterMstId = Number(_.get($ship,'api_aftershipid',0))
         if (afterMstId !== 0) {
           return searchRemodels(afterMstId,newResults)
         } else {
