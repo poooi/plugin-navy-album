@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 0.2.2
+
+- Fix a problem which causes the whole plugin unusable.
+
 ### 0.2.1
 
 - i18n
