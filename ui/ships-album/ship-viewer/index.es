@@ -50,8 +50,10 @@ class ShipViewerImpl extends Component {
       shipGraphSources,
     } = this.props
     const {__} = window
+    const isAbyssalShip = mstId > 1500
+    const isSpecialCG = !isAbyssalShip && (!$ship || !('api_sortno' in $ship))
     const shipGraphSource =
-      _.get(shipGraphSources, mstId > 1500 ? 3 : 5, '')
+      _.get(shipGraphSources, isAbyssalShip ? 3 : 5, '')
     return (
       <Panel
         className="ship-viewer"
@@ -76,7 +78,7 @@ class ShipViewerImpl extends Component {
                   {__('ShipsTab.Gallery')}
                 </NavItem>
                 {
-                  mstId <= 1500 && (
+                  !isAbyssalShip && (
                     <NavItem eventKey="voice">
                       {__('ShipsTab.Voice')}
                     </NavItem>
@@ -88,7 +90,7 @@ class ShipViewerImpl extends Component {
               <Tab.Content>
                 <Tab.Pane eventKey="info">
                   {
-                    mstId > 1500 ? (
+                    isAbyssalShip ? (
                       <AbyssalInfoView
                         mstId={mstId}
                         shipGraphSource={shipGraphSource}

@@ -91,6 +91,7 @@ class ShipInfoViewImpl extends PureComponent {
       mstId, shipGraphSource, $ship,
       statsL, level,
     } = this.props
+    // TODO
     if (isSpecialMstId(mstId))
       return (<div>-</div>)
     const wctfShip = wctfShips[mstId]

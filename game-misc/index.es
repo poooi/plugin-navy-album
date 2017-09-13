@@ -14,9 +14,10 @@ const interpretRange = range =>
   range === 4 ? '超長' :
   String(range)
 
-export * from './voice'
-export * from './game-update'
 export {
   interpretSpeed,
   interpretRange,
 }
+
+export * from './voice'
+export * from './game-update'
