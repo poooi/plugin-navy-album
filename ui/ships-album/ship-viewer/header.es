@@ -23,9 +23,6 @@ class HeaderImpl extends PureComponent {
   }
   render() {
     const {mstId, shipName, typeName, debuffFlag} = this.props
-    if (isSpecialMstId(mstId)) {
-      return (<div />)
-    }
     /*
        ShipGraphView requests the image automatically
        and header always show as long as the component is mounted
@@ -63,10 +60,15 @@ class HeaderImpl extends PureComponent {
           characterId={1}
           debuffFlag={debuffFlag}
           hideOnNoSrc
-          style={{
-            width: 160,
-            height: 40,
-          }}
+          style={
+            /*
+               for special master ids, ShipGraphView still works
+               as automatic request sender but is invisible
+             */
+            isSpecialMstId(mstId) ?
+              {display: 'none'} :
+              {width: 160, height: 40}
+          }
         />
       </div>
     )

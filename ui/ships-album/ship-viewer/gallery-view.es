@@ -30,6 +30,7 @@ class GalleryViewImpl extends PureComponent {
     lastFetch: PTyp.number,
     isFetching: PTyp.bool.isRequired,
     requestShipGraph: PTyp.func.isRequired,
+    style: PTyp.object.isRequired,
   }
 
   static defaultProps = {
@@ -45,12 +46,13 @@ class GalleryViewImpl extends PureComponent {
     const {
       mstId, shipGraphSources,
       lastFetch, isFetching,
+      style,
     } = this.props
     const characterIds =
       Object.keys(shipGraphSources).map(Number).sort(generalComparator)
     const {__} = window
     return (
-      <ListGroup>
+      <ListGroup style={style}>
         {
           lastFetch && (
             <ListGroupItem
