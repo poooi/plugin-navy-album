@@ -59,7 +59,7 @@ class ShipViewerImpl extends Component {
         className="ship-viewer"
         style={style}
       >
-        <Header />
+        <Header isSpecialCG={isSpecialCG} />
         <AltFormSwitcher />
         {
           isSpecialCG ? (

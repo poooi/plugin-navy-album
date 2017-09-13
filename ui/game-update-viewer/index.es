@@ -48,6 +48,7 @@ const renderShipGraphRow = (mstIds, rowKey, uiSwitchShip) =>
     </div>
   )
 
+// TODO: less magic
 const isSpecialMstId = x =>
   x >= 788 && x <= 997
 
