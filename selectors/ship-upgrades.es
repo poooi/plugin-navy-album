@@ -36,7 +36,6 @@ const shipUpgradesSelector = createSelector(
    - Core.swf/scripts/vo/MasterShipUpgradeData._getNeedDevNum
    - Core.swf/scripts/vo/MasterShipUpgradeData._getBuildKitNum
  */
-const groupA = [503,504,508,509]
 const groupB = [503,504]
 const computeDevMatCount = (steel, blueprint, mstIdAfter) => {
   if (blueprint > 0 && !groupB.includes(mstIdAfter))
@@ -51,7 +50,19 @@ const computeDevMatCount = (steel, blueprint, mstIdAfter) => {
 }
 
 const computeInstantBuildCount = mstIdAfter =>
-  groupA.includes(mstIdAfter) ? 20 : 0
+  // Suzuya K2
+  mstIdAfter === 503 ? 20 :
+  // Kumano K2
+  mstIdAfter === 504 ? 20 :
+  // Suzuya Carrier K2
+  mstIdAfter === 508 ? 20 :
+  // Kumano Carrier K2
+  mstIdAfter === 509 ? 20 :
+  // Saratoga Mk.II
+  mstIdAfter === 545 ? 30 :
+  // Saratoga Mk.II Mod.2
+  mstIdAfter === 550 ? 30 :
+  0
 
 /*
    remodelDetails[mstIdBefore] = {
