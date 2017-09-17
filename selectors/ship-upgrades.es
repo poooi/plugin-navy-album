@@ -36,8 +36,14 @@ const shipUpgradesSelector = createSelector(
    - Core.swf/scripts/vo/MasterShipUpgradeData._getNeedDevNum
    - Core.swf/scripts/vo/MasterShipUpgradeData._getBuildKitNum
  */
-const groupB = [503,504]
 const computeDevMatCount = (steel, blueprint, mstIdAfter) => {
+  if (mstIdAfter === 545)
+    return 20
+  if (mstIdAfter === 550)
+    return 20
+
+  const groupB = [503,504,545,550]
+
   if (blueprint > 0 && !groupB.includes(mstIdAfter))
     return 0
   /* eslint-disable indent */
