@@ -5,6 +5,12 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 0.2.3
+
+- Update WhoCallsTheFleet database
+- Fix remodel cost for Saratoga Mk.II & Saratoga Mk.II Mod.2
+- Better handling for special CGs
+
 ### 0.2.2
 
 - Fix a problem which causes the whole plugin unusable.
