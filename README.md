@@ -9,6 +9,7 @@ illustrations, ship and equipment stats, and things beyond.
 
 - Better handling for special CGs (again)
 - Ship's internal HP range is now available in tooltip.
+- Update WhoCallsTheFleet database
 
 ### 0.2.3
 
