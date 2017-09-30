@@ -44,12 +44,12 @@ class StatsView extends PureComponent {
         const {value, tooltip} = objOrValue
         return (
           <OverlayTrigger
-            placement="bottom"
+            placement="right"
             overlay={(
               <Tooltip id={`${prefix}${statName}`}>{tooltip}</Tooltip>
             )}
           >
-            {decorateValue(value)}
+            <div>{decorateValue(value)}</div>
           </OverlayTrigger>
         )
       } else {

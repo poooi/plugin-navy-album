@@ -8,6 +8,7 @@ illustrations, ship and equipment stats, and things beyond.
 ### 0.2.4 (pending)
 
 - Better handling for special CGs (again)
+- Ship's internal HP range is now available in tooltip.
 
 ### 0.2.3
 

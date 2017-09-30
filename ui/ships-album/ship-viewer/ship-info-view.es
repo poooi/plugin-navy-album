@@ -18,10 +18,13 @@ import { RemodelInfoView } from './remodel-info-view'
 
 const id = _.identity
 
+const pprRanged = (x,y) =>
+  x === y ? `${x}` : `${x}~${y}`
+
 const mkStats = ($ship, _wctfShip, statsL, level) => {
   const ranged = propName => {
     const [x,y] = $ship[`api_${propName}`]
-    return x === y ? `${x}` : `${x}~${y}`
+    return pprRanged(x,y)
   }
 
   const mkLvlDpdStatView = value => {
@@ -34,10 +37,10 @@ const mkStats = ($ship, _wctfShip, statsL, level) => {
   }
 
   // hp before marriage
-  const hpBase = $ship.api_taik[0]
-  let hp
+  const [hpBase, hpMaxInMst] = $ship.api_taik
+  let hpVal
   if (level <= 99) {
-    hp = hpBase
+    hpVal = hpBase
   } else {
     const incr =
       hpBase <= 7 ? 3 :
@@ -47,12 +50,17 @@ const mkStats = ($ship, _wctfShip, statsL, level) => {
       hpBase <= 69 ? 7 :
       hpBase <= 90 ? 8 :
       9
-    const hpText = Math.min(hpBase+incr,$ship.api_taik[1])
-    hp = (
+    const hpText = Math.min(hpBase+incr,hpMaxInMst)
+    hpVal = (
       <div className={level === 99 ? '' : 'custom text-primary'}>
         {hpText}
       </div>
     )
+  }
+
+  const hp = {
+    value: hpVal,
+    tooltip: pprRanged(hpBase, hpMaxInMst),
   }
 
   return {
