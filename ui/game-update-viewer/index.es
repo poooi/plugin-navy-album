@@ -15,6 +15,7 @@ import { SlotitemIcon } from 'views/components/etc/icon'
 import {
   gameUpdateSelector,
   serverIpSelector,
+  isMasterIdSpecialCGFuncSelector,
 } from '../../selectors'
 import { PTyp } from '../../ptyp'
 import { ShipGraphView } from '../ship-graph-view'
@@ -48,13 +49,6 @@ const renderShipGraphRow = (mstIds, rowKey, uiSwitchShip) =>
     </div>
   )
 
-// TODO: less magic
-const isSpecialMstId = x =>
-  x >= 788 && x <= 997
-
-const isNotSpecialMstId = x =>
-  !isSpecialMstId(x)
-
 class GameUpdateViewerImpl extends PureComponent {
   static propTypes = {
     digest: PTyp.object,
@@ -63,6 +57,7 @@ class GameUpdateViewerImpl extends PureComponent {
     $equips: PTyp.object.isRequired,
     uiSwitchShip: PTyp.func.isRequired,
     uiSwitchEquip: PTyp.func.isRequired,
+    isMasterIdSpecialCGFunc: PTyp.func.isRequired,
   }
 
   static defaultProps = {
@@ -71,10 +66,13 @@ class GameUpdateViewerImpl extends PureComponent {
   }
 
   renderNewShipsPart = () => {
-    const {summary, uiSwitchShip} = this.props
+    const {summary, uiSwitchShip, isMasterIdSpecialCGFunc} = this.props
     const {__} = window
     const [abyssalMstIds, friendlyMstIds] =
-      _.partition(summary.addedShipMstIds.filter(isNotSpecialMstId),isAbyssalMstId)
+      _.partition(
+        summary.addedShipMstIds.filter(mstId => !isMasterIdSpecialCGFunc(mstId)),
+        isAbyssalMstId
+      )
     return summary.addedShipMstIds.length > 0 && [
       <h3 key="sh-1">{__('GameUpdateTab.NewShips')}</h3>,
       renderShipGraphRow(friendlyMstIds,"sh-2",uiSwitchShip),
@@ -158,9 +156,12 @@ class GameUpdateViewerImpl extends PureComponent {
 
   renderUpdatedCGsPart = () => {
     const {__} = window
-    const {summary, uiSwitchShip} = this.props
+    const {summary, uiSwitchShip, isMasterIdSpecialCGFunc} = this.props
     const [abyssalMstIds, friendlyMstIds] =
-      _.partition(summary.changedShipMstIds.filter(isNotSpecialMstId),isAbyssalMstId)
+      _.partition(
+        summary.changedShipMstIds.filter(mstId => !isMasterIdSpecialCGFunc(mstId)),
+        isAbyssalMstId
+      )
     return summary.changedShipMstIds.length > 0 && [
       <h3 key="cg-1">{__('GameUpdateTab.UpdatedCGs')}</h3>,
       renderShipGraphRow(friendlyMstIds,"cg-2",uiSwitchShip),
@@ -215,6 +216,7 @@ const GameUpdateViewer = connect(
         constSelector,
         ({$equips}) => $equips
       ),
+      isMasterIdSpecialCGFunc: isMasterIdSpecialCGFuncSelector,
     })
   ),
   mapDispatchToProps,
