@@ -5,7 +5,7 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
-### 0.2.4 (pending)
+### 0.2.4
 
 - Better handling for special CGs (again)
 - Ship's internal HP range is now available in tooltip.
