@@ -49,6 +49,12 @@ const renderShipGraphRow = (mstIds, rowKey, uiSwitchShip) =>
     </div>
   )
 
+/*
+
+   TODO: bring back special CGs, would need a separated row for this.
+
+ */
+
 class GameUpdateViewerImpl extends PureComponent {
   static propTypes = {
     digest: PTyp.object,
@@ -68,9 +74,14 @@ class GameUpdateViewerImpl extends PureComponent {
   renderNewShipsPart = () => {
     const {summary, uiSwitchShip, isMasterIdSpecialCGFunc} = this.props
     const {__} = window
+    const [TODO_addedShipMstIdsSpecial, addedShipMstIdsNormal] =
+      _.partition(
+        summary.addedShipMstIds,
+        isMasterIdSpecialCGFunc,
+      )
     const [abyssalMstIds, friendlyMstIds] =
       _.partition(
-        summary.addedShipMstIds.filter(mstId => !isMasterIdSpecialCGFunc(mstId)),
+        addedShipMstIdsNormal,
         isAbyssalMstId
       )
     return summary.addedShipMstIds.length > 0 && [
@@ -157,9 +168,14 @@ class GameUpdateViewerImpl extends PureComponent {
   renderUpdatedCGsPart = () => {
     const {__} = window
     const {summary, uiSwitchShip, isMasterIdSpecialCGFunc} = this.props
+    const [TODO_changedShipMstIdsSpecial, changedShipMstIdsNormal] =
+      _.partition(
+        summary.changedShipMstIds,
+        isMasterIdSpecialCGFunc,
+      )
     const [abyssalMstIds, friendlyMstIds] =
       _.partition(
-        summary.changedShipMstIds.filter(mstId => !isMasterIdSpecialCGFunc(mstId)),
+        changedShipMstIdsNormal,
         isAbyssalMstId
       )
     return summary.changedShipMstIds.length > 0 && [
