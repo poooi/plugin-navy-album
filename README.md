@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 0.2.4 (pending)
+
+- Better handling for special CGs (again)
+
 ### 0.2.3
 
 - Update WhoCallsTheFleet database

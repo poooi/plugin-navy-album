@@ -24,7 +24,10 @@ import { mapDispatchToProps } from '../../store'
 const isAbyssalMstId = mstId => mstId > 1500
 const isAbyssalEquipMstId = eMstId => eMstId > 500
 
-const renderShipGraphRow = (mstIds, rowKey, uiSwitchShip) =>
+const renderShipGraphRow = (
+  mstIds, rowKey, uiSwitchShip,
+  sgStyle = {width: 160, height: 40}
+) =>
   mstIds.length > 0 && (
     <div
       style={{display: 'flex', flexWrap: 'wrap', marginBottom: '1em'}}
@@ -39,7 +42,7 @@ const renderShipGraphRow = (mstIds, rowKey, uiSwitchShip) =>
             onClick={() => uiSwitchShip(mstId)}
             key={mstId}>
             <ShipGraphView
-              style={{width: 160, height: 40}}
+              style={sgStyle}
               mstId={mstId}
               characterId={1}
             />
@@ -48,12 +51,6 @@ const renderShipGraphRow = (mstIds, rowKey, uiSwitchShip) =>
       }
     </div>
   )
-
-/*
-
-   TODO: bring back special CGs, would need a separated row for this.
-
- */
 
 class GameUpdateViewerImpl extends PureComponent {
   static propTypes = {
@@ -74,7 +71,7 @@ class GameUpdateViewerImpl extends PureComponent {
   renderNewShipsPart = () => {
     const {summary, uiSwitchShip, isMasterIdSpecialCGFunc} = this.props
     const {__} = window
-    const [TODO_addedShipMstIdsSpecial, addedShipMstIdsNormal] =
+    const [addedShipMstIdsSpecial, addedShipMstIdsNormal] =
       _.partition(
         summary.addedShipMstIds,
         isMasterIdSpecialCGFunc,
@@ -87,7 +84,11 @@ class GameUpdateViewerImpl extends PureComponent {
     return summary.addedShipMstIds.length > 0 && [
       <h3 key="sh-1">{__('GameUpdateTab.NewShips')}</h3>,
       renderShipGraphRow(friendlyMstIds,"sh-2",uiSwitchShip),
-      renderShipGraphRow(abyssalMstIds,"sh-3",uiSwitchShip),
+      renderShipGraphRow(
+        addedShipMstIdsSpecial,"sh-3",uiSwitchShip,
+        {width: 218, height: 300}
+      ),
+      renderShipGraphRow(abyssalMstIds,"sh-4",uiSwitchShip),
     ]
   }
 
@@ -168,7 +169,7 @@ class GameUpdateViewerImpl extends PureComponent {
   renderUpdatedCGsPart = () => {
     const {__} = window
     const {summary, uiSwitchShip, isMasterIdSpecialCGFunc} = this.props
-    const [TODO_changedShipMstIdsSpecial, changedShipMstIdsNormal] =
+    const [changedShipMstIdsSpecial, changedShipMstIdsNormal] =
       _.partition(
         summary.changedShipMstIds,
         isMasterIdSpecialCGFunc,
@@ -181,7 +182,10 @@ class GameUpdateViewerImpl extends PureComponent {
     return summary.changedShipMstIds.length > 0 && [
       <h3 key="cg-1">{__('GameUpdateTab.UpdatedCGs')}</h3>,
       renderShipGraphRow(friendlyMstIds,"cg-2",uiSwitchShip),
-      renderShipGraphRow(abyssalMstIds,"cg-3",uiSwitchShip),
+      renderShipGraphRow(
+        changedShipMstIdsSpecial,"cg-3",uiSwitchShip,
+        {width: 218, height: 300}),
+      renderShipGraphRow(abyssalMstIds,"cg-4",uiSwitchShip),
     ]
   }
 
