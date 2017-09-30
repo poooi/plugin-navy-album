@@ -107,6 +107,29 @@ const shipGraphSourceFuncSelector = createSelector(
       ) || ''
 )
 
+const shipsMasterDataSelector = createSelector(
+  constSelector,
+  ({$ships}) => $ships
+)
+
+const isMasterIdAbyssalShip = mstId => mstId > 1500
+
+/*
+   returns a function that tests whether a given ship master id is
+   for special CG.
+ */
+const isMasterIdSpecialCGFuncSelector = createSelector(
+  shipsMasterDataSelector,
+  $ships => mstId => {
+    if (!$ships || typeof $ships !== 'object')
+      return false
+    if (isMasterIdAbyssalShip(mstId))
+      return false
+    const $ship = $ships[mstId]
+    return (!$ship || !('api_sortno' in $ship))
+  }
+)
+
 export {
   extSelector,
   uiSelector,
@@ -121,4 +144,6 @@ export {
   subtitleSelector,
   gameUpdateSelector,
   shipGraphSourceFuncSelector,
+  shipsMasterDataSelector,
+  isMasterIdSpecialCGFuncSelector,
 }

@@ -12,6 +12,7 @@ import {
   sortByRemodelFuncSelector,
   indexedShipGraphsSelector,
   swfDatabaseSelector,
+  shipsMasterDataSelector,
 } from '../../selectors'
 
 const shipsAlbumSelector = createSelector(
@@ -213,8 +214,8 @@ const hasDebuffedGraphsSelector = createSelector(
 
 const shipMasterDataSelector = createSelector(
   mstIdSelector,
-  constSelector,
-  (mstId, {$ships}) => $ships[mstId]
+  shipsMasterDataSelector,
+  (mstId, $ships) => $ships[mstId]
 )
 
 export {

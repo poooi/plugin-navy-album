@@ -13,6 +13,9 @@ import {
   shipGraphSourcesSelector,
   shipMasterDataSelector,
 } from '../selectors'
+import {
+  isMasterIdSpecialCGFuncSelector,
+} from '../../../selectors'
 import { Header } from './header'
 import { AltFormSwitcher } from './alt-form-switcher'
 import { mapDispatchToProps } from '../../../store'
@@ -29,6 +32,7 @@ class ShipViewerImpl extends Component {
     shipGraphSources: PTyp.object.isRequired,
     $ship: PTyp.object.isRequired,
     uiModify: PTyp.func.isRequired,
+    isMasterIdSpecialCGFunc: PTyp.func.isRequired,
   }
 
   handleSwitchTab = activeTab =>
@@ -48,10 +52,11 @@ class ShipViewerImpl extends Component {
     const {
       style, activeTab, mstId, $ship,
       shipGraphSources,
+      isMasterIdSpecialCGFunc,
     } = this.props
     const {__} = window
     const isAbyssalShip = mstId > 1500
-    const isSpecialCG = !isAbyssalShip && (!$ship || !('api_sortno' in $ship))
+    const isSpecialCG = isMasterIdSpecialCGFunc(mstId)
     const shipGraphSource =
       _.get(shipGraphSources, isAbyssalShip ? 3 : 5, '')
     return (
@@ -132,6 +137,7 @@ const ShipViewer = connect(
     createStructuredSelector({
       shipGraphSources: shipGraphSourcesSelector,
       $ship: shipMasterDataSelector,
+      isMasterIdSpecialCGFunc: isMasterIdSpecialCGFuncSelector,
     })
   ),
   mapDispatchToProps,
