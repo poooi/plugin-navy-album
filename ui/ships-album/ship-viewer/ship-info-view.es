@@ -131,6 +131,7 @@ class ShipInfoViewImpl extends PureComponent {
               }}
             />
             <StatsView
+              prefix={`ship-info-view-id-${mstId}-`}
               stats={mkStats($ship, wctfShip, statsL, level)}
               style={{
                 marginTop: '.8em',

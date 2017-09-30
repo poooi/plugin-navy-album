@@ -91,6 +91,7 @@ class AbyssalInfoView extends PureComponent {
                 justifyContent: 'space-around',
               }}>
                 <StatsView
+                  prefix=""
                   stats={mkStats($ship, $abyssal)}
                   style={{
                     width: '100%',

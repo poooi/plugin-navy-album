@@ -1,6 +1,9 @@
 import _ from 'lodash'
 import React, { PureComponent } from 'react'
-import { Table } from 'react-bootstrap'
+import {
+  Table,
+  OverlayTrigger, Tooltip,
+} from 'react-bootstrap'
 
 import { PTyp } from '../../../ptyp'
 import { Icon } from '../../icon'
@@ -9,7 +12,14 @@ import { interpretRange, interpretSpeed } from '../../../game-misc'
 class StatsView extends PureComponent {
   static propTypes = {
     style: PTyp.object.isRequired,
+    /* stats[statName] is
+       - either a value to be displayed
+       - or an Object of {value, tooltip}, of which
+         it allows an optional "tooltip" to be used as, well, tooltip.
+     */
     stats: PTyp.object.isRequired,
+    // prefix for making tooltips, pass an empty one if it's not needed.
+    prefix: PTyp.string.isRequired,
   }
 
   static defaultProps = {
@@ -20,19 +30,38 @@ class StatsView extends PureComponent {
     const {style, stats} = this.props
     const id = x => x
 
-    const decorateValue = (value, statName) => {
-      if (statName === 'range')
-        return interpretRange(Number(value))
-      if (statName === 'speed')
-        return interpretSpeed(Number(value))
-      return value
+    const decorateStatValue = (objOrValue, statName) => {
+      const decorateValue = value => {
+        if (statName === 'range')
+          return interpretRange(Number(value))
+        if (statName === 'speed')
+          return interpretSpeed(Number(value))
+        return value
+      }
+
+      if (objOrValue && typeof objOrValue === 'object') {
+        const {prefix} = this.props
+        const {value, tooltip} = objOrValue
+        return (
+          <OverlayTrigger
+            placement="bottom"
+            overlay={(
+              <Tooltip id={`${prefix}${statName}`}>{tooltip}</Tooltip>
+            )}
+          >
+            {decorateValue(value)}
+          </OverlayTrigger>
+        )
+      } else {
+        return decorateValue(objOrValue)
+      }
     }
 
     const displayStats =
       'hp fire armor torpedo evasion antiair cap asw speed los range luck'
         .split(' ').map(name => ({
           statName: name,
-          value: decorateValue(stats[name], name),
+          value: decorateStatValue(stats[name], name),
         }))
 
     const tdStyle = {
