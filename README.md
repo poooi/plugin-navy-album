@@ -5,6 +5,11 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 0.3.0 (pending)
+
+- Update WhoCallsTheFleet database
+- Update default update digest
+
 ### 0.2.5
 
 - Update WhoCallsTheFleet database
