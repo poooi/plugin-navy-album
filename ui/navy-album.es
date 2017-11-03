@@ -16,6 +16,7 @@ import { ShipsAlbum } from './ships-album'
 import { EquipmentsAlbum } from './equipments-album'
 import { GameUpdateViewer } from './game-update-viewer'
 import { globalUnsubscribe } from '../observers'
+import { register as registerIpc } from '../ipc'
 
 import { DebugWindow } from './debug-window'
 
@@ -29,8 +30,18 @@ class NavyAlbumImpl extends Component {
     uiModify: PTyp.func.isRequired,
   }
 
+  componentDidMount() {
+    this.unregisterIpc = registerIpc()
+  }
+
   componentWillUnmount() {
     globalUnsubscribe()
+    if (typeof this.unregisterIpc !== 'function') {
+      console.error(`unexpected unregisterIpc type: ${typeof this.unregisterIpc}`)
+    } else {
+      this.unregisterIpc()
+      this.unregisterIpc = null
+    }
   }
 
   handleSwitchTab = activeTab =>

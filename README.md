@@ -5,10 +5,14 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
-### 0.3.0 (pending)
+### 0.3.0
 
 - Update WhoCallsTheFleet database
 - Update default update digest
+- Implemented IPC:
+
+    - `showShip(<MasterId>)`
+    - `showEquip(<MasterId>)`
 
 ### 0.2.5
 
