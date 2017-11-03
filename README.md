@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 0.3.1
+
+- Better support when running in backgound
+
 ### 0.3.0
 
 - Update WhoCallsTheFleet database

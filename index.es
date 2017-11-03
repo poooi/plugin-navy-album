@@ -14,11 +14,11 @@ const windowOptions = {
 }
 
 const useEnv = true
-
-export const realClose = true
+const realClose = false
 
 export {
   windowOptions,
   windowURL,
   useEnv,
+  realClose,
 }
