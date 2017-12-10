@@ -5,6 +5,11 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 0.3.2
+
+- Update WhoCallsTheFleet database
+- Update Abyssal info from KC3 replayer
+
 ### 0.3.1
 
 - Better support when running in backgound
