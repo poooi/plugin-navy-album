@@ -42,7 +42,10 @@ const statsAtCurrentLevelSelector = createSelector(
     const computeStat = name => {
       const statBase = _.get(ship,['stat',name])
       const statMax = _.get(ship,['stat', `${name}_max`])
-      if (! _.isInteger(statBase) || ! _.isInteger(statMax))
+      if (
+        !_.isInteger(statBase) || statBase < 0 ||
+        !_.isInteger(statMax) || statMax < 0
+      )
         return null
       return statBase + Math.floor((statMax - statBase)*level / 99)
     }

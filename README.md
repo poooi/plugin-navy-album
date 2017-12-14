@@ -5,6 +5,11 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 0.3.4 (pending)
+
+- Fix: some invalid ships stats are no longer displayed
+- Implemented docking time preview
+
 ### 0.3.3
 
 - Fix: evasion / ASW / LoS not being displayed
