@@ -197,7 +197,7 @@ class ShipInfoViewImpl extends PureComponent {
                     style={{
                       width: '100%',
                       marginBottom: 10,
-                      marginLeft: 5,
+                      paddingLeft: 5,
                       alignItems: 'center',
                     }}
                     level={level}
