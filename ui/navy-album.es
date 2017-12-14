@@ -23,6 +23,24 @@ import { DebugWindow } from './debug-window'
 // TODO: set this to false for releases
 const debugFlag = false
 
+let unregisterIpc = null
+
+const handleWindowUnload = () => {
+  window.removeEventListener('unload', handleWindowUnload)
+
+  if (typeof unregisterIpc !== 'function') {
+    console.error(`unexpected unregisterIpc value: ${unregisterIpc}`)
+  } else {
+    try {
+      unregisterIpc()
+    } finally {
+      unregisterIpc = null
+    }
+  }
+}
+
+window.addEventListener('unload', handleWindowUnload)
+
 class NavyAlbumImpl extends Component {
   static propTypes = {
     activeTab: PTyp.ActiveTab.isRequired,
@@ -31,17 +49,21 @@ class NavyAlbumImpl extends Component {
   }
 
   componentDidMount() {
-    this.unregisterIpc = registerIpc()
+    if (unregisterIpc !== null) {
+      console.warn(`unregisterIpc should be null while getting ${unregisterIpc}`)
+      if (typeof unregisterIpc === 'function') {
+        try {
+          unregisterIpc()
+        } finally {
+          unregisterIpc = null
+        }
+      }
+    }
+    unregisterIpc = registerIpc()
   }
 
   componentWillUnmount() {
     globalUnsubscribe()
-    if (typeof this.unregisterIpc !== 'function') {
-      console.error(`unexpected unregisterIpc type: ${typeof this.unregisterIpc}`)
-    } else {
-      this.unregisterIpc()
-      this.unregisterIpc = null
-    }
   }
 
   handleSwitchTab = activeTab =>
