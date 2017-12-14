@@ -5,6 +5,11 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 0.3.3
+
+- Fix: evasion / ASW / LoS not being displayed
+- Update WhoCallsTheFleet database
+
 ### 0.3.2
 
 - Update WhoCallsTheFleet database
