@@ -14,6 +14,7 @@ import { EquipmentsView } from './equipments-view'
 import { StatsView } from './stats-view'
 import { LevelSlider } from './level-slider'
 import { ExtraInfoView } from './extra-info-view'
+import { DockingTimeView } from './docking-time-view'
 import { RemodelInfoView } from './remodel-info-view'
 
 const id = _.identity
@@ -39,8 +40,10 @@ const mkStats = ($ship, _wctfShip, statsL, level) => {
   // hp before marriage
   const [hpBase, hpMaxInMst] = $ship.api_taik
   let hpVal
+  let realMaxHp
   if (level <= 99) {
     hpVal = hpBase
+    realMaxHp = hpBase
   } else {
     const incr =
       hpBase <= 7 ? 3 :
@@ -50,7 +53,8 @@ const mkStats = ($ship, _wctfShip, statsL, level) => {
       hpBase <= 69 ? 7 :
       hpBase <= 90 ? 8 :
       9
-    const hpText = Math.min(hpBase+incr,hpMaxInMst)
+    realMaxHp = Math.min(hpBase+incr,hpMaxInMst)
+    const hpText = String(realMaxHp)
     hpVal = (
       <div className={level === 99 ? '' : 'custom text-primary'}>
         {hpText}
@@ -60,6 +64,7 @@ const mkStats = ($ship, _wctfShip, statsL, level) => {
 
   const hp = {
     value: hpVal,
+    realMaxHp,
     tooltip: pprRanged(hpBase, hpMaxInMst),
   }
 
@@ -172,26 +177,39 @@ class ShipInfoViewImpl extends PureComponent {
           justifyContent: 'space-around',
         }}>
           <ExtraInfoView
-            style={{maxWidth: 850, width: '100%'}}
+            style={{maxWidth: 850, width: '100%', marginBottom: 14}}
             $ship={$ship}
             level={level}
           />
+        </div>
+        <div style={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+        }}>
           {
             // display docking time only when it makes sense
             (() => {
-              const hp = shipStats.hp.value
+              const hp = shipStats.hp.realMaxHp
               if (_.isInteger(hp) && hp > 1) {
-                return 'TODO'
+                return (
+                  <DockingTimeView
+                    style={{
+                      width: '100%',
+                      marginBottom: 10,
+                      marginLeft: 5,
+                      alignItems: 'center',
+                    }}
+                    level={level}
+                    mstId={mstId}
+                    maxHp={hp}
+                  />
+                )
               } else {
                 return false
               }
             })()
           }
-        </div>
-        <div style={{
-          width: '100%',
-          display: 'flex',
-        }}>
           <RemodelInfoView
             style={{width: '100%'}}
             mstId={mstId}

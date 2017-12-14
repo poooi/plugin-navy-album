@@ -15,7 +15,30 @@ const computeDockingTimePerHp = (stype,level) => {
   return baseTime*getDockingFactor(stype)
 }
 
+const computeHealthState = (now,max) => {
+  if (now === max)
+    return 'full'
+  const percent = now/max * 100
+  /* eslint-disable indent */
+  return percent <= 25 ? 'taiha' :
+    percent <= 50 ? 'chuuha' :
+    percent <= 75 ? 'shouha' :
+    'normal'
+  /* eslint-enable indent */
+}
+
+const healthStateColors = {
+  full: '#4CAF50',
+  normal: '#4CAF50',
+  shouha: '#FBC02D',
+  chuuha: '#F57C00',
+  taiha: '#D50000',
+}
+
+
 export {
   getDockingFactor,
   computeDockingTimePerHp,
+  healthStateColors,
+  computeHealthState,
 }
