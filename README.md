@@ -5,8 +5,9 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
-### 0.3.4 (pending)
+### 0.3.4
 
+- Improved IPC handling
 - Fix: some invalid ships stats are no longer displayed
 - Implemented docking time preview
 
