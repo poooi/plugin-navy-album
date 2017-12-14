@@ -2,6 +2,8 @@ import _ from 'lodash'
 import { ensureDirSync, readJsonSync, writeJsonSync } from 'fs-extra'
 import { join } from 'path-extra'
 
+
+const latestDataVersion = 'p-state-0.3.4'
 /*
    state persistence: the following paths are kept and restored at runtime:
 
@@ -12,7 +14,7 @@ import { join } from 'path-extra'
 const stateToPState = ({ui, gameUpdate}) => ({
   ui,
   gameUpdate,
-  $dataVersion: 'p-state-0.2.0',
+  $dataVersion: latestDataVersion,
 })
 
 const getPStateFilePath = () => {
@@ -32,7 +34,7 @@ const savePState = pState => {
 }
 
 const updatePState = oldPState => {
-  if (oldPState.$dataVersion === 'p-state-0.2.0')
+  if (oldPState.$dataVersion === latestDataVersion)
     return oldPState
   // eslint-disable-next-line prefer-const
   let newPState = oldPState
@@ -40,6 +42,14 @@ const updatePState = oldPState => {
     _.set(newPState,'ui.shipsAlbum.searchText','')
     _.set(newPState,'ui.equipmentsAlbum.searchText','')
     newPState.$dataVersion = 'p-state-0.2.0'
+  }
+
+  if (newPState.$dataVersion === 'p-state-0.2.0') {
+    _.set(newPState,'ui.shipsAlbum.shipViewer.dockingCurrentHp',1)
+    newPState.$dataVersion = 'p-state-0.3.4'
+  }
+
+  if (newPState.$dataVersion === latestDataVersion) {
     setTimeout(() => savePState(newPState))
     return newPState
   }

@@ -25,14 +25,7 @@ const initState = {
         showWedding: false,
         showSunk: false,
       },
-      /*
-         plan to have 3 tabs:
-
-         - info: general info
-         - image: image viewer
-         - voice: voice player, might also include subtitles
-
-       */
+      dockingCurrentHp: 1,
       activeTab: 'info',
     },
     searchText: '',

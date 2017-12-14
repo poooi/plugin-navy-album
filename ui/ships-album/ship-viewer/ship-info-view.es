@@ -102,6 +102,7 @@ class ShipInfoViewImpl extends PureComponent {
       ({cap: slotNum, mstId: _.isInteger(mstIdRaw) ? mstIdRaw : null}))
     const {__} = window
     const introMessaage = normalizeIntro($ship.api_getmes)
+    const shipStats = mkStats($ship, wctfShip, statsL, level)
 
     return (
       <div
@@ -140,7 +141,7 @@ class ShipInfoViewImpl extends PureComponent {
             />
             <StatsView
               prefix={`ship-info-view-id-${mstId}-`}
-              stats={mkStats($ship, wctfShip, statsL, level)}
+              stats={shipStats}
               style={{
                 marginTop: '.8em',
                 maxWidth: 450,
@@ -175,6 +176,17 @@ class ShipInfoViewImpl extends PureComponent {
             $ship={$ship}
             level={level}
           />
+          {
+            // display docking time only when it makes sense
+            (() => {
+              const hp = shipStats.hp.value
+              if (_.isInteger(hp) && hp > 1) {
+                return 'TODO'
+              } else {
+                return false
+              }
+            })()
+          }
         </div>
         <div style={{
           width: '100%',

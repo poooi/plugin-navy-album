@@ -21,3 +21,4 @@ export {
 
 export * from './voice'
 export * from './game-update'
+export * from './docking'

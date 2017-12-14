@@ -28,6 +28,7 @@ globalSubscribe()
    - collapsible type group?
    - needs some refactoring
    - needs to move around some selectors
+   - compute docking time
 
  */
 
