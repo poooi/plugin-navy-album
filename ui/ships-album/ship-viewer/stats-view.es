@@ -39,7 +39,10 @@ class StatsView extends PureComponent {
         return value
       }
 
-      if (objOrValue && typeof objOrValue === 'object') {
+      if (
+        objOrValue && typeof objOrValue === 'object' &&
+        ('value' in objOrValue) && ('tooltip' in objOrValue)
+      ) {
         const {prefix} = this.props
         const {value, tooltip} = objOrValue
         return (
