@@ -13,8 +13,6 @@ import {
   healthStateColors,
 } from '../../../game-misc'
 
-// TODO: i18n
-
 /* pretty-printing a time
    - MM:SS is always shown
    - h:MM:SS where it's not necessary to pad "h"
