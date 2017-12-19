@@ -68,9 +68,9 @@ class ShipPickerImpl extends Component {
                 content = `${typeName} (${stype})`
                 needPadding = false
               } else {
-                const {mstId, name} = wrapped.info
+                const {mstId, name, sortNo, yomi} = wrapped.info
                 key = `mstId-${wrapped.info.mstId}`
-                content = `${name} (${mstId})`
+                content = `${name} ${sortNo ? '' : yomi} (${mstId})`
                 needPadding = groupped
                 onClick = this.handleSelectMstId(mstId)
               }
