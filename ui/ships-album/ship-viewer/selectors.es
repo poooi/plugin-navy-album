@@ -24,6 +24,8 @@ const headerInfoSelector = createSelector(
       mstId,
       shipName: $ship.api_name,
       typeName: $shipType.api_name,
+      yomi: $ship.api_yomi,
+      ours: Boolean($ship.api_sortno),
     })
   }
 )

@@ -16,13 +16,15 @@ class HeaderImpl extends PureComponent {
     mstId: PTyp.number.isRequired,
     shipName: PTyp.string.isRequired,
     typeName: PTyp.string.isRequired,
+    yomi: PTyp.string.isRequired,
+    ours: PTyp.bool.isRequired,
     debuffFlag: PTyp.bool.isRequired,
     isSpecialCG: PTyp.bool.isRequired,
   }
 
   render() {
     const {
-      mstId, shipName, typeName,
+      mstId, shipName, typeName, yomi, ours,
       debuffFlag, isSpecialCG,
     } = this.props
     /*
@@ -47,7 +49,7 @@ class HeaderImpl extends PureComponent {
               fontSize: '1.8em',
               fontWeight: 'bold',
             }}>
-            {shipName}
+            {shipName} {!ours && yomi}
           </div>
           <div
             style={{
