@@ -5,6 +5,12 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 0.4.0 (pending)
+
+- Need poi 8.0+ to work
+- Enable searching by romaji and kana (@KagamiChan)
+- Abyssal ship name suffixes are now displayed (@KagamiChan)
+
 ### 0.3.5
 
 - Update WhoCallsTheFleet database
