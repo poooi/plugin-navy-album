@@ -5,6 +5,11 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 0.3.5
+
+- Update WhoCallsTheFleet database
+- Fix a problem in SWF extraction
+
 ### 0.3.4
 
 - Improved IPC handling
