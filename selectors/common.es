@@ -7,6 +7,7 @@ import {
   configSelector as poiConfigSelector,
   stateSelector as poiStateSelector,
 } from 'views/utils/selectors'
+import { toRomaji } from 'wanakana'
 
 const extSelector = createSelector(
   extensionSelectorFactory('poi-plugin-navy-album'),
@@ -63,11 +64,15 @@ const shipsInfoSelector = createSelector(
     const sortNo = $ship.api_sortno
     const name = $ship.api_name
     const stype = $ship.api_stype
+    const yomi = $ship.api_yomi
+    const romaji = sortNo ? toRomaji(yomi) : toRomaji(name)
     return {
       mstId,
       name,
       sortNo,
       stype,
+      yomi,
+      romaji,
     }
   })
 )

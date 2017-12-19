@@ -53,6 +53,8 @@ const filteredShipsInfoSelector = createSelector(
       shipsInfo :
       shipsInfo.filter(si =>
         si.name.indexOf(searchText) !== -1 ||
+        si.yomi.indexOf(searchText) !== -1 ||
+        si.romaji.indexOf(searchText) !== -1 ||
         String(si.mstId).indexOf(searchText) !== -1
       )
 )

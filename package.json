@@ -32,7 +32,10 @@
     "title": "Package.Name",
     "description": "Package.Desc",
     "icon": "th-list",
-    "priority": 51
+    "priority": 51,
+    "apiVer": {
+      "7.99.99": "0.3.5"
+    }
   },
   "keywords": [
     "kancolle"

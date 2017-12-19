@@ -97,6 +97,7 @@ module.exports = {
       'redux',
       'semver',
       'i18n-2'
+      'wanakana',
     ],
   },
 }
