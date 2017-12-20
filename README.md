@@ -5,7 +5,7 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
-### 0.4.0 (pending)
+### 0.4.0
 
 - Need poi 8.0+ to work
 - Enable searching by romaji and kana (@KagamiChan)
