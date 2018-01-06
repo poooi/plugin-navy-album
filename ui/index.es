@@ -29,8 +29,7 @@ globalSubscribe()
    - needs some refactoring
    - needs to move around some selectors
 
-   - groupping ships by remodel chain
-   - special remodel materials
+   - groupping ships by remodel chain (in game update page)
 
  */
 

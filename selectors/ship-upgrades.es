@@ -109,11 +109,13 @@ const remodelDetailsSelector = createSelector(
         extraInfo = {
           catapult: 0,
           blueprint: 0,
+          report: 0,
         }
       } else {
         extraInfo = {
           catapult: $shipUpgrade.api_catapult_count,
           blueprint: $shipUpgrade.api_drawing_count,
+          report: $shipUpgrade.api_report_count,
         }
       }
 

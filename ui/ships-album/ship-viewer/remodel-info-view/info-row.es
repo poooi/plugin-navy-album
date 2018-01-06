@@ -71,7 +71,7 @@ class InfoRowImpl extends PureComponent {
         <div style={{display: 'flex', alignItems: 'center'}}>
           {
             _.flatMap(
-              'ammo steel devMat instantBuild blueprint catapult'
+              'ammo steel devMat instantBuild blueprint catapult report'
                 .split(' '),
               itemOrResource => {
                 const matIds = {
