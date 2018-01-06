@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 0.4.1 (pending)
+
+- Fix a problem in SWF extraction
+
 ### 0.4.0
 
 - Need poi 8.0+ to work
