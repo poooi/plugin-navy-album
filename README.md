@@ -8,6 +8,7 @@ illustrations, ship and equipment stats, and things beyond.
 ### 0.4.1 (pending)
 
 - Fix a problem in SWF extraction
+- Some routine updates (WCTF, etc.)
 
 ### 0.4.0
 
