@@ -5,10 +5,12 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
-### 0.4.1 (pending)
+### 0.4.1
 
-- Fix a problem in SWF extraction
+- Fix a problem in SWF extraction.
 - Some routine updates (WCTF, etc.)
+- Show action report consumption in remodel info.
+- Updated game server list.
 
 ### 0.4.0
 
