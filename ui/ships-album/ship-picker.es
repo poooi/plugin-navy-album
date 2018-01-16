@@ -47,52 +47,54 @@ class ShipPickerImpl extends Component {
           flex: 1,
           marginBottom: 8,
         }}>
-        <SearchBar
-          style={{marginBottom: 8}}
-          value={searchText}
-          changeValue={this.handleChangeSearchText}
-        />
-        <ListGroup style={{
-          flex: 1,
-          overflowY: 'auto',
-        }}>
-          {
-            wrappedShipsInfo.map(wrapped => {
-              let key
-              let content
-              let needPadding
-              let onClick = null
-              if (wrapped.type === 'stype') {
-                const {typeName, stype} = wrapped
-                key = `stype-${stype}`
-                content = `${typeName} (${stype})`
-                needPadding = false
-              } else {
-                const {mstId, name, sortNo, yomi} = wrapped.info
-                key = `mstId-${wrapped.info.mstId}`
-                content = `${name} ${sortNo ? '' : yomi} (${mstId})`
-                needPadding = groupped
-                onClick = this.handleSelectMstId(mstId)
-              }
-              return (
-                <ListGroupItem
-                  key={key}
-                  style={{padding: 0}}
-                  onClick={onClick}
-                  className="ship-picker-item">
-                  <div style={{
-                    paddingTop: '.4em',
-                    paddingBottom: '.4em',
-                    paddingLeft: '.4em',
-                    ...(needPadding ? {paddingLeft: '2em'} : {}),
-                  }}>
-                    {content}
-                  </div>
-                </ListGroupItem>
-              )
-            })
-          }
-        </ListGroup>
+        <Panel.Body>
+          <SearchBar
+            style={{marginBottom: 8}}
+            value={searchText}
+            changeValue={this.handleChangeSearchText}
+          />
+          <ListGroup style={{
+            flex: 1,
+            overflowY: 'auto',
+          }}>
+            {
+              wrappedShipsInfo.map(wrapped => {
+                let key
+                let content
+                let needPadding
+                let onClick = null
+                if (wrapped.type === 'stype') {
+                  const {typeName, stype} = wrapped
+                  key = `stype-${stype}`
+                  content = `${typeName} (${stype})`
+                  needPadding = false
+                } else {
+                  const {mstId, name, sortNo, yomi} = wrapped.info
+                  key = `mstId-${wrapped.info.mstId}`
+                  content = `${name} ${sortNo ? '' : yomi} (${mstId})`
+                  needPadding = groupped
+                  onClick = this.handleSelectMstId(mstId)
+                }
+                return (
+                  <ListGroupItem
+                    key={key}
+                    style={{padding: 0}}
+                    onClick={onClick}
+                    className="ship-picker-item">
+                    <div style={{
+                      paddingTop: '.4em',
+                      paddingBottom: '.4em',
+                      paddingLeft: '.4em',
+                      ...(needPadding ? {paddingLeft: '2em'} : {}),
+                    }}>
+                      {content}
+                    </div>
+                  </ListGroupItem>
+                )
+              })
+            }
+          </ListGroup>
+        </Panel.Body>
       </Panel>
     )
   }

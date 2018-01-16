@@ -211,16 +211,18 @@ class GameUpdateViewerImpl extends PureComponent {
     return (
       <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
         <Panel className="game-update-viewer" style={{marginBottom: 8, flex: 1}}>
-          <div style={{overflowY: 'auto', height: 0, flex: 1}}>
-            {
-              summary && _.concat(
-                this.renderNewShipsPart(),
-                this.renderNewEquipsPart(),
-                this.renderUpdatedCGsPart()
-              )
-            }
-            {digest && this.renderGeneralInfoPart()}
-          </div>
+          <Panel.Body>
+            <div style={{overflowY: 'auto', height: 0, flex: 1}}>
+              {
+                summary && _.concat(
+                  this.renderNewShipsPart(),
+                  this.renderNewEquipsPart(),
+                  this.renderUpdatedCGsPart()
+                )
+              }
+              {digest && this.renderGeneralInfoPart()}
+            </div>
+          </Panel.Body>
         </Panel>
       </div>
     )

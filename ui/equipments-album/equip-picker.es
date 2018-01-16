@@ -47,59 +47,61 @@ class EquipPickerImpl extends Component {
           flex: 1,
           marginBottom: 8,
         }}>
-        <SearchBar
-          style={{marginBottom: 8}}
-          value={searchText}
-          changeValue={this.handleChangeSearchText}
-        />
-        <ListGroup style={{
-          flex: 1,
-          overflowY: 'auto',
-        }}>
-          {
-            wrappedEquipsRaw.map(wrapped => {
-              let key
-              let content
-              let onClick = null
-              if (wrapped.type === 'etype') {
-                const {typeName, etype} = wrapped
-                key = `etype-${etype}`
-                content = `${typeName} (${etype})`
-              } else {
-                const {mstId, name, icon} = wrapped
-                key = `equip-${mstId}`
-                content = (
-                  <div
-                    style={{display: 'flex', alignItems: 'center'}}>
-                    <SlotitemIcon
-                      className="slotitem-img"
-                      slotitemId={icon}
-                    />
-                    <span style={{marginLeft: '.2em'}}>
-                      {name} ({mstId})
-                    </span>
-                  </div>
+        <Panel.Body>
+          <SearchBar
+            style={{marginBottom: 8}}
+            value={searchText}
+            changeValue={this.handleChangeSearchText}
+          />
+          <ListGroup style={{
+            flex: 1,
+            overflowY: 'auto',
+          }}>
+            {
+              wrappedEquipsRaw.map(wrapped => {
+                let key
+                let content
+                let onClick = null
+                if (wrapped.type === 'etype') {
+                  const {typeName, etype} = wrapped
+                  key = `etype-${etype}`
+                  content = `${typeName} (${etype})`
+                } else {
+                  const {mstId, name, icon} = wrapped
+                  key = `equip-${mstId}`
+                  content = (
+                    <div
+                      style={{display: 'flex', alignItems: 'center'}}>
+                      <SlotitemIcon
+                        className="slotitem-img"
+                        slotitemId={icon}
+                      />
+                      <span style={{marginLeft: '.2em'}}>
+                        {name} ({mstId})
+                      </span>
+                    </div>
+                  )
+                  onClick = this.handleSelectMstId(mstId)
+                }
+                return (
+                  <ListGroupItem
+                    key={key}
+                    style={{padding: 0}}
+                    onClick={onClick}
+                    className="equip-picker-item">
+                    <div style={{
+                      paddingTop: '.4em',
+                      paddingBottom: '.4em',
+                      paddingLeft: '.4em',
+                    }}>
+                      {content}
+                    </div>
+                  </ListGroupItem>
                 )
-                onClick = this.handleSelectMstId(mstId)
-              }
-              return (
-                <ListGroupItem
-                  key={key}
-                  style={{padding: 0}}
-                  onClick={onClick}
-                  className="equip-picker-item">
-                  <div style={{
-                    paddingTop: '.4em',
-                    paddingBottom: '.4em',
-                    paddingLeft: '.4em',
-                  }}>
-                    {content}
-                  </div>
-                </ListGroupItem>
-              )
-            })
-          }
-        </ListGroup>
+              })
+            }
+          </ListGroup>
+        </Panel.Body>
       </Panel>
     )
   }

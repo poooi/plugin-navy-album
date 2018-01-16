@@ -43,45 +43,47 @@ class EquipViewerImpl extends PureComponent {
           ...style,
         }}
       >
-        <div
-          style={{flex: 1, height: 0, overflowY: 'auto'}}
-        >
-          <Header {...infoProps} />
-          {
-            mstId < 501 && (
-              <IntroView style={{}} />
-            )
-          }
-          <div style={{
-            display: 'flex',
-          }}>
-            <div style={{
-              flex: 1,
-              display: 'flex',
-              justifyContent: 'space-around',
-            }}>
-              <StatsView
-                style={{maxWidth: 380}}
-                {...infoProps}
-              />
-            </div>
+        <Panel.Body>
+          <div
+            style={{flex: 1, height: 0, overflowY: 'auto'}}
+          >
+            <Header {...infoProps} />
             {
               mstId < 501 && (
-                <div style={{
-                  flex: 1,
-                  display: 'flex',
-                  justifyContent: 'space-around',
-                  marginLeft: '1em',
-                }}>
-                  <ExtraInfoView
-                    style={{}}
-                    {...infoProps}
-                  />
-                </div>
+                <IntroView style={{}} />
               )
             }
+            <div style={{
+              display: 'flex',
+            }}>
+              <div style={{
+                flex: 1,
+                display: 'flex',
+                justifyContent: 'space-around',
+              }}>
+                <StatsView
+                  style={{maxWidth: 380}}
+                  {...infoProps}
+                />
+              </div>
+              {
+                mstId < 501 && (
+                  <div style={{
+                    flex: 1,
+                    display: 'flex',
+                    justifyContent: 'space-around',
+                    marginLeft: '1em',
+                  }}>
+                    <ExtraInfoView
+                      style={{}}
+                      {...infoProps}
+                    />
+                  </div>
+                )
+              }
+            </div>
           </div>
-        </div>
+        </Panel.Body>
       </Panel>
     )
   }

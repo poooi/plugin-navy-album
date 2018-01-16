@@ -67,22 +67,26 @@ class RemodelInfoViewImpl extends PureComponent {
     return (
       <Panel
         className="remodel-info-view"
-        header={<div>{__('ShipsTab.Remodels')}</div>}
         style={{
           ...style,
         }}>
-        <ListGroup fill>
-          {
-            currentRemodelDetails.map(detail => {
-              const key = detail.mstIdBefore
-              const props = {
-                style: {padding: '.4em .6em'},
-                mstId, mstIdToDesc, detail, key,
-              }
-              return (<InfoRow {...props} />)
-            })
-          }
-        </ListGroup>
+        <Panel.Heading>
+          <div>{__('ShipsTab.Remodels')}</div>
+        </Panel.Heading>
+        <Panel.Body>
+          <ListGroup fill>
+            {
+              currentRemodelDetails.map(detail => {
+                const key = detail.mstIdBefore
+                const props = {
+                  style: {padding: '.4em .6em'},
+                  mstId, mstIdToDesc, detail, key,
+                }
+                return (<InfoRow {...props} />)
+              })
+            }
+          </ListGroup>
+        </Panel.Body>
       </Panel>
     )
   }
