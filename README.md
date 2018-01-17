@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 0.4.2
+
+- Panel Update for react-bootstrap
+
 ### 0.4.1
 
 - Fix a problem in SWF extraction.
