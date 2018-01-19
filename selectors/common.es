@@ -6,6 +6,7 @@ import {
   extensionSelectorFactory,
   configSelector as poiConfigSelector,
   stateSelector as poiStateSelector,
+  wctfSelector,
 } from 'views/utils/selectors'
 import { toRomaji } from 'wanakana'
 
@@ -135,6 +136,11 @@ const isMasterIdSpecialCGFuncSelector = createSelector(
   }
 )
 
+const wctfShipsSelector = createSelector(
+  wctfSelector,
+  w => _.get(w, 'ships', {})
+)
+
 export {
   extSelector,
   uiSelector,
@@ -151,4 +157,5 @@ export {
   shipGraphSourceFuncSelector,
   shipsMasterDataSelector,
   isMasterIdSpecialCGFuncSelector,
+  wctfShipsSelector,
 }

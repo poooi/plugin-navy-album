@@ -11,8 +11,8 @@ import {
   remodelInfoSelector,
   swfDatabaseSelector,
   indexedShipGraphInfoSelector,
+  wctfShipsSelector,
 } from '../../../selectors'
-import { ships } from '../../../wctf'
 
 const headerInfoSelector = createSelector(
   mstIdSelector,
@@ -39,8 +39,9 @@ const activeTabSelector = createSelector(
 const statsAtCurrentLevelSelector = createSelector(
   mstIdSelector,
   levelSelector,
-  (mstId, level) => {
-    const ship = ships[mstId]
+  wctfShipsSelector,
+  (mstId, level, wctfShips) => {
+    const ship = _.get(wctfShips, mstId)
     const computeStat = name => {
       const statBase = _.get(ship,['stat',name])
       const statMax = _.get(ship,['stat', `${name}_max`])
