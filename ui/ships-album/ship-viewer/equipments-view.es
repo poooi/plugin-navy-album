@@ -46,9 +46,10 @@ class EquipmentsViewImpl extends PureComponent {
             let capText
             let displayIcon
             let displayName
+            let displayStar = null
             let onClick = null
             if (slotInd < slotCount) {
-              const {cap, mstId} = equips[slotInd]
+              const {cap, mstId, star} = equips[slotInd]
               capText = String(cap)
               if (_.isInteger(mstId)) {
                 const $equip = $equips[mstId]
@@ -61,6 +62,22 @@ class EquipmentsViewImpl extends PureComponent {
                   />
                 )
                 displayName = $equip.api_name
+
+                // number & greater than 0
+                if (star) {
+                  displayStar = (
+                    <span
+                      style={{
+                        color: '#45a9a5',
+                        marginRight: '.4em',
+                      }}
+                    >
+                      {
+                        star === 10 ? '★Mx' : `★+${star}`
+                      }
+                    </span>
+                  )
+                }
               } else {
                 displayIcon = <span />
                 displayName = <span />
@@ -107,9 +124,13 @@ class EquipmentsViewImpl extends PureComponent {
                   width: 'auto',
                   flex: 1,
                   textAlign: 'start',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
                 }}>
                   {displayName}
                 </span>
+                {displayStar}
               </Label>
             )
           })

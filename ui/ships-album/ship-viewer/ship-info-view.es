@@ -105,9 +105,22 @@ class ShipInfoViewImpl extends PureComponent {
       statsL, level, wctfShips,
     } = this.props
     const wctfShip = _.get(wctfShips,mstId, {})
-    const equipIds = _.get(wctfShip,'equip',[])
-    const equips = _.zip($ship.api_maxeq, equipIds).map(([slotNum,mstIdRaw]) =>
-      ({cap: slotNum, mstId: _.isInteger(mstIdRaw) ? mstIdRaw : null}))
+    // normalize: 'equip' prop can either be a number or an Object of {id, star}
+    // and also it's possible for a value to be null
+    // equipInfos : Array of null or {id, star}, where star is a number or null
+    const equipInfos = _.get(wctfShip,'equip',[]).map(x =>
+      (_.isInteger(x) && x > 0) ? {id: x, star: null} :
+      x && typeof x === 'object' ? x :
+      null
+    )
+    const equips = _.zip($ship.api_maxeq, equipInfos).map(([slotNum,eqpInfo]) => {
+      if (eqpInfo) {
+        const {id: eMstId, star} = eqpInfo
+        return ({cap: slotNum, mstId: eMstId, star})
+      } else {
+        return {cap: slotNum, mstId: null, star: null}
+      }
+    })
     const {__} = window
     const introMessaage = normalizeIntro($ship.api_getmes)
     const shipStats = mkStats($ship, wctfShip, statsL, level)
