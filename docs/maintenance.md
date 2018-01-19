@@ -1,14 +1,5 @@
 This document describes required maintenance to some assets:
 
-## WhoCallsTheFleet
-
-Provides stock equipment info and data necessary
-to compute level-dependent stats (i.e. LoS, evasion, ASW).
-
-```shell
-npm run update-wctf
-```
-
 ## kancolle-replay
 
 Provides abyssal info.

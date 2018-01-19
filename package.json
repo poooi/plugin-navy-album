@@ -6,7 +6,6 @@
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --recursive",
     "lint": "eslint '**/*.es'",
-    "update-wctf": "node scripts/update-wctf-db.js",
     "update-kcreplay": "node scripts/update-kcreplay-db.js"
   },
   "repository": {

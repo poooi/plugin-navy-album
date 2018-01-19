@@ -4,11 +4,13 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 
 import { PTyp } from '../../../ptyp'
-import { ships as wctfShips } from '../../../wctf'
 import {
   statsAtCurrentLevelSelector,
 } from './selectors'
 import { levelSelector } from '../selectors'
+import {
+  wctfShipsSelector,
+} from '../../../selectors'
 
 import { EquipmentsView } from './equipments-view'
 import { StatsView } from './stats-view'
@@ -94,14 +96,15 @@ class ShipInfoViewImpl extends PureComponent {
     $ship: PTyp.object.isRequired,
     level: PTyp.number.isRequired,
     statsL: PTyp.object.isRequired,
+    wctfShips: PTyp.object.isRequired,
   }
 
   render() {
     const {
       mstId, shipGraphSource, $ship,
-      statsL, level,
+      statsL, level, wctfShips,
     } = this.props
-    const wctfShip = wctfShips[mstId]
+    const wctfShip = _.get(wctfShips,mstId, {})
     const equipIds = _.get(wctfShip,'equip',[])
     const equips = _.zip($ship.api_maxeq, equipIds).map(([slotNum,mstIdRaw]) =>
       ({cap: slotNum, mstId: _.isInteger(mstIdRaw) ? mstIdRaw : null}))
@@ -225,6 +228,7 @@ const ShipInfoView = connect(
     level: levelSelector,
     // Level-dependent stats
     statsL: statsAtCurrentLevelSelector,
+    wctfShips: wctfShipsSelector,
   })
 )(ShipInfoViewImpl)
 
