@@ -5,6 +5,11 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 0.4.3
+
+- Now using WhoCallsTheFleet data from fcd
+- Show improvement of default equipments
+
 ### 0.4.2
 
 - Panel Update for react-bootstrap
