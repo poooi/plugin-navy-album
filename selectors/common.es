@@ -141,6 +141,28 @@ const wctfShipsSelector = createSelector(
   w => _.get(w, 'ships', {})
 )
 
+/*
+   provides two sets of all valid master ids:
+
+   - for ships this means all ids from $ships and those ids held by special CGs
+   - for equips this means all ids from $equips
+
+ */
+const validMasterIdSetsSelector = createSelector(
+  constSelector,
+  ({$ships, $shipgraph, $equips}) => {
+    const shipMstIds = _.values($ships).map(x => x.api_id)
+    const shipCGMstIds = _.values($shipgraph).map(x => x.api_id)
+    const equipMstIds = _.values($equips)
+    const shipIdSet = new Set([...shipMstIds, ...shipCGMstIds])
+    const equipIdSet = new Set(equipMstIds)
+    return {
+      shipIdSet,
+      equipIdSet,
+    }
+  }
+)
+
 export {
   extSelector,
   uiSelector,
@@ -158,4 +180,5 @@ export {
   shipsMasterDataSelector,
   isMasterIdSpecialCGFuncSelector,
   wctfShipsSelector,
+  validMasterIdSetsSelector,
 }

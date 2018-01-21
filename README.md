@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 0.4.4 (pending)
+
+- More robust ipc handling
+
 ### 0.4.3
 
 - Now using WhoCallsTheFleet data from fcd

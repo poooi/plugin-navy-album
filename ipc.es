@@ -1,16 +1,29 @@
 import { withBoundActionCreator } from './store'
+import { validMasterIdSetsSelector } from './selectors'
 
 const register = () => {
-  const {ipc, remote} = window
+  const {ipc, remote, getStore} = window
 
   const services = withBoundActionCreator(bac => ({
-    showShip: mstId => {
-      bac.uiSwitchShip(mstId)
-      remote.getCurrentWindow().show()
+    showShip: mstIdRaw => {
+      const mstId = Number(mstIdRaw)
+      const {shipIdSet} = validMasterIdSetsSelector(getStore())
+      if (shipIdSet.has(mstId)) {
+        bac.uiSwitchShip(mstId)
+        remote.getCurrentWindow().show()
+      } else {
+        console.error(`ship id ${mstIdRaw} is not valid`)
+      }
     },
-    showEquip: mstId => {
-      bac.uiSwitchShip(mstId)
-      remote.getCurrentWindow().show()
+    showEquip: mstIdRaw => {
+      const mstId = Number(mstIdRaw)
+      const {equipIdSet} = validMasterIdSetsSelector(getStore())
+      if (equipIdSet.has(mstId)) {
+        bac.uiSwitchShip(mstId)
+        remote.getCurrentWindow().show()
+      } else {
+        console.error(`equip id ${mstIdRaw} is not valid`)
+      }
     },
   }))
 
