@@ -31,6 +31,8 @@ globalSubscribe()
 
    - groupping ships by remodel chain (in game update page)
 
+   - handle special CGs
+
  */
 
 setTimeout(() => {

@@ -100,7 +100,6 @@ const mkRequestShipGraph = actionCreator => (mstId, forced = false) =>
       return
     const {fileName, versionStr} = graphInfo
     const path = `/kcs/resources/swf/ships/${fileName}.swf?VERSION=${versionStr}`
-
     // we don't need to check diskFilesReady,
     // assuming it's always an empty Object when diskFilesReady === false
     if (!forced && !_.isEmpty(diskFiles[mstId])) {
