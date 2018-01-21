@@ -19,14 +19,24 @@ const headerInfoSelector = createSelector(
   constSelector,
   (mstId,{$ships,$shipTypes}) => {
     const $ship = $ships[mstId]
+    if (_.isEmpty($ship)) {
+      return {
+        mstId,
+        shipName: '',
+        typeName: '',
+        yomi: '',
+        ours: true,
+      }
+    }
+
     const $shipType = $shipTypes[$ship.api_stype]
-    return ({
+    return {
       mstId,
       shipName: $ship.api_name,
       typeName: $shipType.api_name,
       yomi: $ship.api_yomi,
       ours: Boolean($ship.api_sortno),
-    })
+    }
   }
 )
 
