@@ -93,9 +93,18 @@ Redux Structure: `<store>.swfCache`, without `dataVersion`.
 Implementation are free to choose between `Map`, `Object` and perhaps something else
 for runtime representation as long as it's consistent throughout the plugin.
 
+Additionally, `<store>.swfCache.fetchLocks` should be present at runtime as an Array of unique strings,
+every element of `fetchLocks` takes one of the following form:
+
+- `ship-<mstId>` or `ship-<mstId>_d`
+- `portBgm-<pBgmId>`
+- `mapBgm-<mBgmId>`
+
+whose meanings are obivious.
+
 ## Ship Cache
 
-`ShipCache` is an Object whose keys are strings converted from integers,
+`ShipCache` is an Object whose keys are strings of `<mstId>` or `<mstId>_d` for debuffed ships,
 and values:
 
 ```
@@ -111,6 +120,8 @@ and values:
 - prefix `sg` stands for ship graph, `sgFileName` and `sgVersion` both come from master data.
 - example of files: `{1: "1.png", 2: "2.jpg", 5: "5.png"}`
 - cached files are located under: `<root>/ship/<mstId>/`
+- for abyssal ships, if "debuffed" form exists, files will be under `<root>/ship/<mstId>_d/` and
+  `ShipCache` will have keys like `<mstId>_d`.
 - it's assumed that file removal never happens at runtime, so if user happens to
   remove some part of the cache, this plugin must be restarted to sync with the file system.
 - file existence is tested before loading, and missing files must be removed from `files` field
@@ -144,4 +155,4 @@ and values:
 ```
 
 - we expect single MP3 file with `soundId=1` from SWF extraction.
-- the file is located: `<root>/mapBgm/<pBgmId>.mp3`
+- the file is located: `<root>/mapBgm/<mBgmId>.mp3`
