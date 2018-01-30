@@ -71,3 +71,77 @@ Upon requesting a resource:
 
 4. an observer should monitor keys in `shipsDb`
    and maintain the representation on disk accordingly.
+
+# TODO: Caching mechanism overhaul
+
+Disk File Strucutre:
+
+- root dir: `$APPDATA/poi/navy-album/cache/`
+
+- metadata: `$APPDATA/poi/navy-album/cache/index.json`, which is an Object of the following shape
+
+```
+{
+    ship: <ShipCache>,
+    portBgm: <PortBgmCache>,
+    mapBgm: <MapBgmCache>,
+    dataVersion: <version>,
+}
+```
+
+Redux Structure: `<store>.swfCache`, without `dataVersion`.
+Implementation are free to choose between `Map`, `Object` and perhaps something else
+for runtime representation as long as it's consistent throughout the plugin.
+
+## Ship Cache
+
+`ShipCache` is an Object whose keys are strings converted from integers,
+and values:
+
+```
+{
+    lastFetch: <date int>,
+    sgFileName: <string>,
+    sgVersion: <string>,
+    files: <Object of characterId to filename>,
+}
+```
+
+- a `<date int>` stands for evaluation result of `Number(<Date>)`.
+- prefix `sg` stands for ship graph, `sgFileName` and `sgVersion` both come from master data.
+- example of files: `{1: "1.png", 2: "2.jpg", 5: "5.png"}`
+- cached files are located under: `<root>/ship/<mstId>/`
+- it's assumed that file removal never happens at runtime, so if user happens to
+  remove some part of the cache, this plugin must be restarted to sync with the file system.
+- file existence is tested before loading, and missing files must be removed from `files` field
+  accordingly.
+
+## Port BGM Cache
+
+`PortBgmCache` is an Object:
+
+```
+{
+    [<port BGM id>]: {
+        lastFetch: <date int>,
+    },
+}
+```
+
+- we expect single MP3 file with `soundId=1` from SWF extraction.
+- the file is located: `<root>/portBgm/<pBgmId>.mp3`
+
+## Map BGM Cache
+
+`MapBgmCache` is an Object:
+
+```
+{
+    [<map BGM id>]: {
+        lastFetch: <date int>,
+    },
+}
+```
+
+- we expect single MP3 file with `soundId=1` from SWF extraction.
+- the file is located: `<root>/mapBgm/<pBgmId>.mp3`
