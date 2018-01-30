@@ -3,10 +3,12 @@ import { store } from 'views/create-store'
 
 import { pStateSaver } from './p-state-saver'
 import { subtitleLoader } from './subtitle-loader'
+/*
 import {
   swfCacheUpdater,
   swfCacheIndexFileUpdater,
 } from './swf-cache-updater'
+*/
 import { gameUpdateDetector } from './game-update-detector'
 
 let unsubscribe = null
@@ -23,8 +25,8 @@ const globalSubscribe = () => {
     pStateSaver,
     subtitleLoader,
 
-    swfCacheUpdater,
-    swfCacheIndexFileUpdater,
+    // swfCacheUpdater,
+    // swfCacheIndexFileUpdater,
 
     gameUpdateDetector,
   ])

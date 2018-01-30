@@ -1,4 +1,4 @@
-import _ from 'lodash'
+// import _ from 'lodash'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
@@ -9,7 +9,7 @@ import { store, extendReducer } from 'views/create-store'
 import { reducer, withBoundActionCreator, initState } from '../store'
 import { NavyAlbum } from './navy-album'
 import { loadPState } from '../p-state'
-import { readIndexFile } from '../swf-cache'
+// import { readIndexFile } from '../swf-cache'
 import { globalSubscribe } from '../observers'
 
 const {$} = window
@@ -62,6 +62,7 @@ setTimeout(() => {
     )
   }
 
+  /*
   // load swf cache index asynchronously
   let newDiskFiles = initState.swfDatabase.diskFiles
   try {
@@ -76,6 +77,7 @@ setTimeout(() => {
         swfDatabaseDiskFilesReady(newDiskFiles)
     )
   }
+  */
 })
 
 ReactDOM.render(
@@ -86,4 +88,5 @@ ReactDOM.render(
       <NavyAlbum />
     </div>
   </Provider>,
-  $("#content-root"))
+  $("#content-root")
+)
