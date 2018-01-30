@@ -74,7 +74,7 @@ class RemodelInfoViewImpl extends PureComponent {
           <div>{__('ShipsTab.Remodels')}</div>
         </Panel.Heading>
         <Panel.Body>
-          <ListGroup fill>
+          <ListGroup>
             {
               currentRemodelDetails.map(detail => {
                 const key = detail.mstIdBefore
