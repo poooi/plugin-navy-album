@@ -5,7 +5,6 @@ import {
   indexedShipGraphInfoSelector,
   serverIpSelector,
 } from '../selectors'
-import { readCacheFile } from '../swf-cache'
 
 const mayExtractWithLock = async context => {
   const {
@@ -73,7 +72,7 @@ const mayReadCacheFileWithLock = context => {
   // start fetching & parsing
   dispatch(actionCreator.swfDatabaseLockPath(path))
   try {
-    dataReady(readCacheFile(mstId))
+    // dataReady(readCacheFile(mstId))
     success = true
   } catch (e) {
     console.error(`error while loading cache for ${path}`,e)

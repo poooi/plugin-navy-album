@@ -6,10 +6,14 @@ import { join } from 'path-extra'
 import { readJsonSync } from 'fs-extra'
 import { store, extendReducer } from 'views/create-store'
 
-import { reducer, withBoundActionCreator, initState } from '../store'
+import {
+  reducer,
+  withBoundActionCreator,
+  boundActionCreators,
+  initState,
+} from '../store'
 import { NavyAlbum } from './navy-album'
 import { loadPState } from '../p-state'
-// import { readIndexFile } from '../swf-cache'
 import { globalSubscribe } from '../observers'
 
 const {$} = window
@@ -60,24 +64,10 @@ setTimeout(() => {
     withBoundActionCreator(
       ({gameUpdateReady}) => gameUpdateReady(newGameUpdate)
     )
-  }
 
-  /*
-  // load swf cache index asynchronously
-  let newDiskFiles = initState.swfDatabase.diskFiles
-  try {
-    const indexContent = readIndexFile()
-    if (!_.isEmpty(_.get(indexContent,'files')))
-      newDiskFiles = indexContent.files
-  } catch (e) {
-    console.error('error while initializing', e)
-  } finally {
-    withBoundActionCreator(
-      ({swfDatabaseDiskFilesReady}) =>
-        swfDatabaseDiskFilesReady(newDiskFiles)
-    )
+    // TODO: we are bypassing cache completely for now.
+    boundActionCreators.swfCacheReady()
   }
-  */
 })
 
 ReactDOM.render(

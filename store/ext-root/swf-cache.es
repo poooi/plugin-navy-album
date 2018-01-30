@@ -20,8 +20,20 @@ const reducer = mkSimpleReducer(
   tyReady,
 )
 
+const actionCreators = {
+  swfCacheReady: newState => ({
+    type: tyReady,
+    newState,
+  }),
+  swfCacheModify: modifier => ({
+    type: tyModify,
+    modifier,
+  }),
+}
+
 export {
   initState,
   reducer,
   tyModify, tyReady,
+  actionCreators,
 }
