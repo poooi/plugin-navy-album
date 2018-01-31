@@ -4,6 +4,7 @@ import { PTyp } from '../ptyp'
 import { mapDispatchToProps } from '../store'
 import {
   shipGraphSourceFuncSelector,
+  getLastFetchFuncSelector,
   swfCacheSelector,
 } from '../selectors'
 
@@ -20,6 +21,7 @@ class ShipGraphViewImpl extends PureComponent {
     hideOnNoSrc: PTyp.bool,
     // connected
     src: PTyp.string.isRequired,
+    lastFetch: PTyp.number.isRequired,
     ready: PTyp.bool.isRequired,
     requestShipGraph: PTyp.func.isRequired,
   }
@@ -53,6 +55,8 @@ class ShipGraphViewImpl extends PureComponent {
     const {
       characterId: _ignored1,
       debuffFlag: _ignored2,
+      // https://stackoverflow.com/a/9943419
+      lastFetch,
     } = this.props
     const {
       style,mstId,src,
@@ -61,7 +65,7 @@ class ShipGraphViewImpl extends PureComponent {
     return (
       <img
         alt={`shipgraph-${mstId}`}
-        src={src}
+        src={`${src}#${lastFetch}`}
         style={{
           ...style,
           ...(hideOnNoSrc && !src ? {display: 'none'} : {}),
@@ -75,10 +79,13 @@ const ShipGraphView = connect(
   (state, ownProps) => {
     const {mstId, characterId, debuffFlag} = ownProps
     const srcFunc = shipGraphSourceFuncSelector(state)
+    const getLastFetch = getLastFetchFuncSelector(state)
+    const lastFetch = getLastFetch(mstId, debuffFlag)
     const {ready} = swfCacheSelector(state)
     return {
       src: srcFunc(mstId, characterId, debuffFlag),
       ready,
+      lastFetch,
     }
   },
   mapDispatchToProps

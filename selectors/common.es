@@ -112,6 +112,16 @@ const shipGraphSourceFuncSelector = createSelector(
     }
 )
 
+const getLastFetchFuncSelector = createSelector(
+  swfCacheSelector,
+  swfCache =>
+    (mstId, debuffFlag=false) => {
+      const mstIdX = debuffFlag ? `${mstId}_d` : String(mstId)
+      const lastFetch = _.get(swfCache, ['ship', mstIdX, 'lastFetch']) || 0
+      return lastFetch
+    }
+)
+
 const shipsMasterDataSelector = createSelector(
   constSelector,
   ({$ships}) => $ships
@@ -182,4 +192,5 @@ export {
   isMasterIdSpecialCGFuncSelector,
   wctfShipsSelector,
   validMasterIdSetsSelector,
+  getLastFetchFuncSelector,
 }

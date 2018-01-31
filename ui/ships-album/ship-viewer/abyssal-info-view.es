@@ -40,9 +40,10 @@ class AbyssalInfoView extends PureComponent {
     mstId: PTyp.number.isRequired,
     shipGraphSource: PTyp.string.isRequired,
     $ship: PTyp.object.isRequired,
+    lastFetch: PTyp.number.isRequired,
   }
   render() {
-    const {mstId, shipGraphSource, $ship} = this.props
+    const {mstId, shipGraphSource, $ship, lastFetch} = this.props
     const $abyssal = abyssalInfo[mstId]
     const {__} = window
     const hasAbyssalEquipsInfo =
@@ -53,7 +54,7 @@ class AbyssalInfoView extends PureComponent {
       <div style={{margin: '.2em', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
         <img
           style={{maxWidth: '100%', height: 'auto'}}
-          src={shipGraphSource}
+          src={`${shipGraphSource}#${lastFetch}`}
           alt={__('ShipsTab.WaitingDataFor',mstId)}
         />
         <div style={{

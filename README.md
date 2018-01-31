@@ -8,6 +8,7 @@ illustrations, ship and equipment stats, and things beyond.
 ### 0.5.0 (pending)
 
 - More robust ipc handling
+- Improved SWF caching mechanism
 
 ### 0.4.3
 

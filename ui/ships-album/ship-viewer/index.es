@@ -15,6 +15,7 @@ import {
 } from '../selectors'
 import {
   isMasterIdSpecialCGFuncSelector,
+  getLastFetchFuncSelector,
 } from '../../../selectors'
 import { Header } from './header'
 import { AltFormSwitcher } from './alt-form-switcher'
@@ -33,6 +34,7 @@ class ShipViewerImpl extends Component {
     $ship: PTyp.object.isRequired,
     uiModify: PTyp.func.isRequired,
     isMasterIdSpecialCGFunc: PTyp.func.isRequired,
+    lastFetch: PTyp.number.isRequired,
   }
 
   handleSwitchTab = activeTab =>
@@ -53,6 +55,7 @@ class ShipViewerImpl extends Component {
       style, activeTab, mstId, $ship,
       shipGraphSources,
       isMasterIdSpecialCGFunc,
+      lastFetch,
     } = this.props
     const {__} = window
     const isAbyssalShip = mstId > 1500
@@ -104,12 +107,14 @@ class ShipViewerImpl extends Component {
                             <AbyssalInfoView
                               mstId={mstId}
                               shipGraphSource={shipGraphSource}
+                              lastFetch={lastFetch}
                               $ship={$ship}
                             />
                           ) : (
                             <ShipInfoView
                               mstId={mstId}
                               shipGraphSource={shipGraphSource}
+                              lastFetch={lastFetch}
                               $ship={$ship}
                             />
                           )
@@ -135,12 +140,17 @@ class ShipViewerImpl extends Component {
 
 const ShipViewer = connect(
   mergeMapStateToProps(
-    shipViewerSelector,
     createStructuredSelector({
       shipGraphSources: shipGraphSourcesSelector,
       $ship: shipMasterDataSelector,
       isMasterIdSpecialCGFunc: isMasterIdSpecialCGFuncSelector,
-    })
+    }),
+    state => {
+      const shipViewer = shipViewerSelector(state)
+      const getLastFetch = getLastFetchFuncSelector(state)
+      const lastFetch = getLastFetch(shipViewer.mstId)
+      return {...shipViewer, lastFetch}
+    }
   ),
   mapDispatchToProps,
 )(ShipViewerImpl)

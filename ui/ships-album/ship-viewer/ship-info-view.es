@@ -97,12 +97,13 @@ class ShipInfoViewImpl extends PureComponent {
     level: PTyp.number.isRequired,
     statsL: PTyp.object.isRequired,
     wctfShips: PTyp.object.isRequired,
+    lastFetch: PTyp.number.isRequired,
   }
 
   render() {
     const {
       mstId, shipGraphSource, $ship,
-      statsL, level, wctfShips,
+      statsL, level, wctfShips, lastFetch,
     } = this.props
     const wctfShip = _.get(wctfShips,mstId, {})
     // normalize: 'equip' prop can either be a number or an Object of {id, star}
@@ -141,7 +142,7 @@ class ShipInfoViewImpl extends PureComponent {
           <div style={{flex: 3, display: 'flex', justifyContent: 'space-around'}}>
             <img
               style={{width: 218, height: 300}}
-              src={shipGraphSource}
+              src={`${shipGraphSource}#${lastFetch}`}
               alt={__('ShipsTab.WaitingDataFor',mstId)}
             />
           </div>

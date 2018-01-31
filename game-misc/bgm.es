@@ -13,13 +13,13 @@ const computePortBgmFileName = pBgmId => {
   return `${pBgmId}${ch}`
 }
 
-const getPortBgmUrl = serverIp => pBgmId =>
-  `http://${serverIp}/kcs/resources/swf_p/${computePortBgmFileName(pBgmId)}.swf`
+const getPortBgmPath = pBgmId =>
+  `/kcs/resources/swf_p/${computePortBgmFileName(pBgmId)}.swf`
 
-const getMapBgmUrl = serverIp => mBgmId =>
-  `http://${serverIp}/kcs/resources/swf/sound_b_bgm_${mBgmId}.swf`
+const getMapBgmPath = mBgmId =>
+  `/kcs/resources/swf/sound_b_bgm_${mBgmId}.swf`
 
 export {
-  getPortBgmUrl,
-  getMapBgmUrl,
+  getPortBgmPath,
+  getMapBgmPath,
 }
