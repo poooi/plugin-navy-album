@@ -65,20 +65,25 @@ const mkRequestShipGraph = actionCreator => (mstId, forced = false) =>
       return console.error(`swfCache not ready`)
     }
 
-    /*
-       no actual request if it's not forced and we have a cache hit
-
-       TODO: sgFileName and sgVersion update should be detected here.
-     */
-    if (!forced && !_.isEmpty(ship[mstId]))
-      return
-
     const indexedShipGraphInfo = indexedShipGraphInfoSelector(reduxState)
     // figure out path
     const graphInfo = _.get(indexedShipGraphInfo,[mstId, 'graphInfo'])
     if (!graphInfo)
       return
     const {fileName, versionStr} = graphInfo
+
+    // determine whether current cache is sufficient and no further processing is required
+    if (!forced) {
+      const shipInfo = ship[mstId]
+      if (
+        !_.isEmpty(shipInfo) &&
+        shipInfo.sgVersion === versionStr &&
+        shipInfo.sgFileName === fileName
+      ) {
+        return
+      }
+    }
+
     const path = `/kcs/resources/swf/ships/${fileName}.swf?VERSION=${versionStr}`
 
     {
