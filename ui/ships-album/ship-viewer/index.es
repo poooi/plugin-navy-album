@@ -100,7 +100,7 @@ class ShipViewerImpl extends Component {
                     </Nav>
                   </div>
                   <div style={{flex: 1, height: 0, overflowY: 'auto'}}>
-                    <Tab.Content>
+                    <Tab.Content animation={false}>
                       <Tab.Pane eventKey="info">
                         {
                           isAbyssalShip ? (
