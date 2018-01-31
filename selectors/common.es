@@ -9,6 +9,7 @@ import {
   wctfSelector,
 } from 'views/utils/selectors'
 import { toRomaji } from 'wanakana'
+import { getShipFilePath } from '../swf-cache'
 
 const extSelector = createSelector(
   extensionSelectorFactory('poi-plugin-navy-album'),
@@ -21,6 +22,8 @@ const uiSelector =
   mkExtPropSelector('ui')
 const swfDatabaseSelector =
   mkExtPropSelector('swfDatabase')
+const swfCacheSelector =
+  mkExtPropSelector('swfCache')
 const subtitleSelector =
   mkExtPropSelector('subtitle')
 const gameUpdateSelector =
@@ -97,20 +100,18 @@ const serverIpSelector = createSelector(
 )
 
 const shipGraphSourceFuncSelector = createSelector(
-  swfDatabaseSelector,
-  swfDatabase =>
-    (mstId, characterId, debuffFlag=false) =>
-      _.get(
-        swfDatabase,
-        [
-          'shipDb',
-          mstId,
-          (mstId > 1500 && debuffFlag) ?
-            'imagesDebuffed' :
-            'images',
-          characterId,
-        ]
-      ) || ''
+  swfCacheSelector,
+  swfCache =>
+    (mstId, characterId, debuffFlag=false) => {
+      const mstIdX = debuffFlag ? `${mstId}_d` : String(mstId)
+      const fileName = _.get(swfCache, ['ship', mstIdX, 'files', characterId])
+      if (fileName) {
+        const path = getShipFilePath(mstIdX)(fileName)
+        return path
+      } else {
+        return ''
+      }
+    }
 )
 
 const shipsMasterDataSelector = createSelector(
@@ -171,6 +172,7 @@ export {
   shipGraphInfoSelector,
   shipsInfoSelector,
   swfDatabaseSelector,
+  swfCacheSelector,
   indexedShipGraphsSelector,
   indexedShipGraphInfoSelector,
   themeSelector,

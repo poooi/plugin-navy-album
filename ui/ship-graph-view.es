@@ -4,7 +4,7 @@ import { PTyp } from '../ptyp'
 import { mapDispatchToProps } from '../store'
 import {
   shipGraphSourceFuncSelector,
-  swfDatabaseSelector,
+  swfCacheSelector,
 } from '../selectors'
 
 class ShipGraphViewImpl extends PureComponent {
@@ -20,7 +20,7 @@ class ShipGraphViewImpl extends PureComponent {
     hideOnNoSrc: PTyp.bool,
     // connected
     src: PTyp.string.isRequired,
-    diskFilesReady: PTyp.bool.isRequired,
+    ready: PTyp.bool.isRequired,
     requestShipGraph: PTyp.func.isRequired,
   }
 
@@ -32,16 +32,16 @@ class ShipGraphViewImpl extends PureComponent {
   }
 
   componentDidMount() {
-    const {requestShipGraph, mstId, diskFilesReady} = this.props
-    if (diskFilesReady)
+    const {requestShipGraph, mstId, ready} = this.props
+    if (ready)
       requestShipGraph(mstId)
   }
 
   componentWillReceiveProps(nextProps) {
     if (
-      nextProps.diskFilesReady &&
+      nextProps.ready &&
       (
-        !this.props.diskFilesReady ||
+        !this.props.ready ||
         nextProps.mstId !== this.props.mstId
       )
     ) {
@@ -75,10 +75,10 @@ const ShipGraphView = connect(
   (state, ownProps) => {
     const {mstId, characterId, debuffFlag} = ownProps
     const srcFunc = shipGraphSourceFuncSelector(state)
-    const {diskFilesReady} = swfDatabaseSelector(state)
+    const {ready} = swfCacheSelector(state)
     return {
       src: srcFunc(mstId, characterId, debuffFlag),
-      diskFilesReady,
+      ready,
     }
   },
   mapDispatchToProps

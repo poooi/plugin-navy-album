@@ -122,8 +122,8 @@ and values:
 - cached files are located under: `<root>/ship/<mstId>/`
 - for abyssal ships, if "debuffed" form exists, files will be under `<root>/ship/<mstId>_d/` and
   `ShipCache` will have keys like `<mstId>_d`.
-- it's assumed that file removal never happens at runtime, so if user happens to
-  remove some part of the cache, this plugin must be restarted to sync with the file system.
+- it's assumed that user will never remove or modify cache dir at runtime, so if user happens to
+  remove or change some part of the cache, this plugin must be restarted to sync with the file system.
 - file existence is tested before loading, and missing files must be removed from `files` field
   accordingly.
 

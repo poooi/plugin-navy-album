@@ -12,7 +12,9 @@ import {
   sortByRemodelFuncSelector,
   indexedShipGraphsSelector,
   swfDatabaseSelector,
+  swfCacheSelector,
   shipsMasterDataSelector,
+  shipGraphSourceFuncSelector,
 } from '../../selectors'
 
 const shipsAlbumSelector = createSelector(
@@ -190,27 +192,28 @@ const debuffFlagSelector = createSelector(
 
 const shipGraphSourcesSelector = createSelector(
   mstIdSelector,
-  swfDatabaseSelector,
   debuffFlagSelector,
-  (mstId, swfDatabase, debuffFlag) =>
-    _.get(
-      swfDatabase,
-      [
-        'shipDb',
-        mstId,
-        (mstId > 1500 && debuffFlag) ?
-          'imagesDebuffed' :
-          'images',
-      ]) || {}
+  swfCacheSelector,
+  shipGraphSourceFuncSelector,
+  (mstId, debuffFlag, swfCache, getShipGraphSource) => {
+    const mstIdX = debuffFlag ? `${mstId}_d` : String(mstId)
+    const characterIds =
+      _.keys(_.get(swfCache, ['ship', mstIdX, 'files'])).map(Number)
+
+    return _.fromPairs(
+      characterIds.map(chId =>
+        [chId, getShipGraphSource(mstId, chId, debuffFlag)])
+    )
+  }
 )
 
 const hasDebuffedGraphsSelector = createSelector(
   mstIdSelector,
-  swfDatabaseSelector,
-  (mstId, swfDatabase) =>
+  swfCacheSelector,
+  (mstId, swfCache) =>
     mstId > 1500 &&
-    ! _.isEmpty(
-      _.get(swfDatabase,['shipDb',mstId,'imagesDebuffed'])
+    !_.isEmpty(
+      _.get(swfCache, ['ship', `${mstId}_d`, 'files'])
     )
 )
 

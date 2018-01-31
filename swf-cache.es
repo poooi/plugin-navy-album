@@ -7,62 +7,31 @@ import {
 } from 'fs-extra'
 
 // delay dir path lookup, but when it's computed, it should stay consistent.
-const getCacheDirPath = _.memoize(() => {
+const getRootPath = _.memoize(() => {
   const {APPDATA_PATH} = window
   const path = join(APPDATA_PATH,'navy-album','cache')
   ensureDirSync(path)
   return path
 })
 
-const getCacheFilePath = mstId => {
-  const base = getCacheDirPath()
-  return join(base,`ship-${mstId}.json`)
+/*
+   subdir: 'ship' / 'portBgm' / 'mapBgm'
+ */
+const getSubdirPath = subdir => {
+  const path = join(getRootPath(), subdir)
+  ensureDirSync(path)
+  return path
 }
 
-const writeCacheFile = (mstId, shipRecord) => {
-  const filePath = getCacheFilePath(mstId)
-  return writeJsonSync(filePath, shipRecord)
-}
-
-const readCacheFile = mstId => {
-  const filePath = getCacheFilePath(mstId)
-  return readJsonSync(filePath)
-}
-
-const writeIndexFile = diskFiles => {
-  const base = getCacheDirPath()
-  return writeJsonSync(
-    join(base,'index.json'),
-    {
-      files: diskFiles,
-      version: 'cache-0.0.1',
-    }
-  )
-}
-
-const updateIndexFile = oldIndexContent => {
-  if (oldIndexContent.version === 'cache-0.0.1')
-    return oldIndexContent
-  throw new Error('failed to update the cache index file')
-}
-
-const readIndexFile = () => {
-  const base = getCacheDirPath()
-  const filePath = join(base,'index.json')
-  try {
-    return updateIndexFile(readJsonSync(filePath))
-  } catch (err) {
-    if (err.syscall !== 'open' || err.code !== 'ENOENT') {
-      console.error('Error while loading cache index file', err)
-    }
-  }
-  return null
+/*
+   mstIdX: <mstId> or <mstId>_d
+ */
+const getShipFilePath = mstIdX => fileName => {
+  const path = join(getSubdirPath('ship'), String(mstIdX))
+  ensureDirSync(path)
+  return join(path, fileName)
 }
 
 export {
-  writeCacheFile,
-  readCacheFile,
-
-  writeIndexFile,
-  readIndexFile,
+  getShipFilePath,
 }

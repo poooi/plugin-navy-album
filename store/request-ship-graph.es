@@ -1,11 +1,18 @@
 import _ from 'lodash'
+import { writeFileSync } from 'fs'
 import { readFromBufferP, extractImages } from 'swf-extract'
 import {
-  swfDatabaseSelector,
+//  swfDatabaseSelector,
+  swfCacheSelector,
   indexedShipGraphInfoSelector,
   serverIpSelector,
 } from '../selectors'
 
+import { getShipFilePath } from '../swf-cache'
+
+/*
+   INVARIANT: swfCache is already when this function is called
+ */
 const mayExtractWithLock = async context => {
   const {
     getState, actionCreator,
@@ -16,14 +23,14 @@ const mayExtractWithLock = async context => {
   } = context
 
   const reduxState = getState()
-  const {fetchLocks} = swfDatabaseSelector(reduxState)
+  const {fetchLocks} = swfCacheSelector(reduxState)
 
   // some other process is already fetching that data
   if (fetchLocks.includes(path))
     return
 
   // start fetching & parsing
-  dispatch(actionCreator.swfDatabaseLockPath(path))
+  dispatch(actionCreator.swfCacheLockPath(path))
   try {
     const serverIp = serverIpSelector(reduxState)
     const fetched = await fetch(`http://${serverIp}${path}`)
@@ -38,9 +45,7 @@ const mayExtractWithLock = async context => {
           'characterId' in data &&
           ['jpeg', 'png', 'gif'].includes(data.imgType)
         ) {
-          const {characterId, imgType, imgData} = data
-          const encoded = `data:image/${imgType};base64,${imgData.toString('base64')}`
-          dataReady(characterId, encoded)
+          dataReady(data)
         }
       })
     )
@@ -49,47 +54,24 @@ const mayExtractWithLock = async context => {
       console.error(`error while processing ${path}`,e)
   } finally {
     // release lock
-    dispatch(actionCreator.swfDatabaseUnlockPath(path))
+    dispatch(actionCreator.swfCacheUnlockPath(path))
   }
-}
-
-// return false only we have failed to load the file.
-const mayReadCacheFileWithLock = context => {
-  const {
-    actionCreator,
-    getState, path, mstId,
-    dataReady, dispatch,
-  } = context
-
-  const reduxState = getState()
-  const {fetchLocks} = swfDatabaseSelector(reduxState)
-
-  // some other process is already fetching that data
-  if (fetchLocks.includes(path))
-    return true
-
-  let success = false
-  // start fetching & parsing
-  dispatch(actionCreator.swfDatabaseLockPath(path))
-  try {
-    // dataReady(readCacheFile(mstId))
-    success = true
-  } catch (e) {
-    console.error(`error while loading cache for ${path}`,e)
-  } finally {
-    // release lock
-    dispatch(actionCreator.swfDatabaseUnlockPath(path))
-  }
-  return success
 }
 
 const mkRequestShipGraph = actionCreator => (mstId, forced = false) =>
   (dispatch, getState) => setTimeout(() => {
     const reduxState = getState()
-    const {shipDb, diskFiles} =
-      swfDatabaseSelector(reduxState)
+    const {ready, ship} = swfCacheSelector(reduxState)
+    if (!ready) {
+      return console.error(`swfCache not ready`)
+    }
 
-    if (!forced && !_.isEmpty(shipDb[mstId]))
+    /*
+       no actual request if it's not forced and we have a cache hit
+
+       TODO: sgFileName and sgVersion update should be detected here.
+     */
+    if (!forced && !_.isEmpty(ship[mstId]))
       return
 
     const indexedShipGraphInfo = indexedShipGraphInfoSelector(reduxState)
@@ -99,53 +81,30 @@ const mkRequestShipGraph = actionCreator => (mstId, forced = false) =>
       return
     const {fileName, versionStr} = graphInfo
     const path = `/kcs/resources/swf/ships/${fileName}.swf?VERSION=${versionStr}`
-    // we don't need to check diskFilesReady,
-    // assuming it's always an empty Object when diskFilesReady === false
-    if (!forced && !_.isEmpty(diskFiles[mstId])) {
-      const diskFile = diskFiles[mstId]
-      if (
-        diskFile.sgFileName === fileName &&
-        diskFile.sgVersion === versionStr
-      ) {
-        // load files from disk
-        const cacheLoadContext = {
-          actionCreator,
-          getState, path, mstId,
-          dispatch,
-          dataReady: cacheData =>
-            dispatch(
-              actionCreator.swfDatabaseDiskFileLoaded(
-                mstId, cacheData)),
-        }
 
-        const loaded = mayReadCacheFileWithLock(cacheLoadContext)
-        if (loaded) {
-          return
-        }
-        /*
-           if we have failed to load a cache file,
-           it will fall back to use network fetch & parse method,
-           after which index.json will be kept in sync (at least
-           with that specific part), so there is no need of invalidation
-         */
-      }
-    }
     {
       const extractContext = {
         actionCreator,
         path, getState,
         reportError: true,
         dispatch,
-        dataReady: (characterId, img) => {
-          dispatch(
-            actionCreator.swfDatabaseInsertShipGraph({
-              mstId,
-              sgFileName: fileName,
-              sgVersion: versionStr,
+        dataReady: data => {
+          const {characterId, imgType, imgData} = data
+          try {
+            const fName = `${characterId}.${imgType}`
+            writeFileSync(getShipFilePath(mstId)(fName), imgData)
+            const sgInfo = {
+              mstIdX: mstId,
+              sgFileName: graphInfo.fileName,
+              sgVersion: graphInfo.versionStr,
               characterId,
-              debuffFlag: false, img,
-            })
-          )
+              fileName: fName,
+            }
+            dispatch(actionCreator.swfCacheRegisterShipGraph(sgInfo))
+          } catch (e) {
+            console.error(`error while writing extracted file`)
+            console.error(e)
+          }
         },
       }
       mayExtractWithLock(extractContext)
@@ -160,16 +119,23 @@ const mkRequestShipGraph = actionCreator => (mstId, forced = false) =>
         path: pathDebuffed, getState,
         reportError: false,
         dispatch,
-        dataReady: (characterId, img) => {
-          dispatch(
-            actionCreator.swfDatabaseInsertShipGraph({
-              mstId,
-              sgFileName: fileName,
-              sgVersion: versionStr,
+        dataReady: data => {
+          const {characterId, imgType, imgData} = data
+          try {
+            const fName = `${characterId}.${imgType}`
+            const mstIdX = `${mstId}_d`
+            writeFileSync(getShipFilePath(mstIdX)(fName), imgData)
+            const sgInfo = {
+              mstIdX,
+              sgFileName: graphInfo.fileName,
+              sgVersion: graphInfo.versionStr,
               characterId,
-              debuffFlag: true, img,
-            })
-          )
+              fileName: fName,
+            }
+            dispatch(actionCreator.swfCacheRegisterShipGraph(sgInfo))
+          } catch (e) {
+            console.error(`error while writing extracted file`)
+          }
         },
       }
       mayExtractWithLock(extractContext)

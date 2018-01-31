@@ -66,75 +66,55 @@ const actionCreator = {
         ),
       ])
     ),
-
-  swfDatabaseLockPath: path =>
-    actionCreator.swfDatabaseModify(
+  swfCacheLockPath: path =>
+    actionCreator.swfCacheModify(
       modifyObject(
         'fetchLocks', fl => [...fl, path]
       )
     ),
-  swfDatabaseUnlockPath: path =>
-    actionCreator.swfDatabaseModify(
+  swfCacheUnlockPath: path =>
+    actionCreator.swfCacheModify(
       modifyObject(
         'fetchLocks', fl => fl.filter(p => p !== path)
       )
     ),
   /*
-     sgInfo is {mstId, sgFileName, sgVersion, characterId, debuffFlag, img}
+     sgInfo is {mstIdX, sgFileName, sgVersion, characterId, fileName}
      where 'debuffFlag' is required to be a boolean if mstId suggests an abyssal ship
    */
-  swfDatabaseInsertShipGraph: sgInfo => {
-    const {mstId} = sgInfo
+  swfCacheRegisterShipGraph: sgInfo => {
+    const {
+      mstIdX, sgFileName, sgVersion, characterId, fileName,
+    } = sgInfo
     const timestamp = Number(new Date())
     // as the creation might be unnecessary, delayed as thunk.
-    const mkEmptyShipDbRecord = () => ({
-      sgFileName: sgInfo.sgFileName,
-      sgVersion: sgInfo.sgVersion,
-      images: {},
+    const mkEmptyShipCacheRecord = () => ({
       lastFetch: timestamp,
-      ...(mstId <= 1500 ? {} : {imagesDebuffed: {}}),
+      sgFileName,
+      sgVersion,
+      files: {},
     })
 
-    return actionCreator.swfDatabaseModify(
+    return actionCreator.swfCacheModify(
       modifyObject(
-        'shipDb',
+        'ship',
         modifyObject(
-          mstId,
-          _.flow([
-            // (1) fill or update
-            /* eslint-disable indent */
-            (shipDbRecord = mkEmptyShipDbRecord()) =>
-              (
-                // sgFileName and sgVersion as digest of the data
-                shipDbRecord.sgFileName !== sgInfo.sgFileName ||
-                shipDbRecord.sgVersion !== sgInfo.sgVersion
-              ) ? (
-                // mismatched, probably we are updating old data
-                // wiping old data
-                mkEmptyShipDbRecord()
-              ) : (
-                // keep intact
-                shipDbRecord
-              ),
+          mstIdX,
+          _.flow(
+            // (1) fill with empty record if it's missing
+            (shipCacheRecord = mkEmptyShipCacheRecord()) =>
+              shipCacheRecord,
             /* eslint-enable indent */
-            // (2) update lastFetch
+            // (2) update meta
             modifyObject('lastFetch', () => timestamp),
-            // (3) update image
+            modifyObject('sgFileName', () => sgFileName),
+            modifyObject('sgVersion', () => sgVersion),
+            // (3) update files
             modifyObject(
-              // determine update target: either 'images' or 'imagesDebuffed'
-              (mstId > 1500 && sgInfo.debuffFlag) ?
-                'imagesDebuffed' : 'images',
-              _.flow([
-                // norm
-                (record = {}) => record,
-                // update
-                modifyObject(
-                  sgInfo.characterId,
-                  () => sgInfo.img
-                ),
-              ])
-            ),
-          ])
+              'files',
+              modifyObject(characterId, () => fileName)
+            )
+          )
         )
       )
     )
