@@ -158,9 +158,9 @@ const updateSwfCache = oldSwfCache => {
      so here we simply remove old cache dir and call it done
    */
   if (curSwfCache.version === 'cache-0.0.1') {
-    removeSync(getRootPath())
-    // call this again to make sure the directory is created afterwards
-    getRootPath()
+    const rootPath = getRootPath()
+    removeSync(rootPath)
+    ensureDirSync(rootPath)
     curSwfCache = {
       ship: {},
       portBgm: {},
