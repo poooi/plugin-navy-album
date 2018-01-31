@@ -5,7 +5,7 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
-### 0.4.4 (pending)
+### 0.5.0 (pending)
 
 - More robust ipc handling
 
