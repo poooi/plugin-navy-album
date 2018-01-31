@@ -15,6 +15,7 @@ import {
 import { NavyAlbum } from './navy-album'
 import { loadPState } from '../p-state'
 import { globalSubscribe } from '../observers'
+import { loadSwfCache } from '../swf-cache'
 
 const {$} = window
 
@@ -65,8 +66,10 @@ setTimeout(() => {
       ({gameUpdateReady}) => gameUpdateReady(newGameUpdate)
     )
 
-    // TODO: we are bypassing cache completely for now.
-    boundActionCreators.swfCacheReady()
+    setTimeout(() => {
+      const swfCache = loadSwfCache()
+      boundActionCreators.swfCacheReady(swfCache)
+    })
   }
 })
 

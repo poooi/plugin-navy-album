@@ -37,7 +37,7 @@ const pStateSaver = observer(
     pState: pStateSelector,
   }),
   (_dispatch, cur, prev) => {
-    if (!cur.ready)
+    if (!cur.ready || !prev.ready)
       return
     if (!shallowEqual(cur.pState, prev.pState)) {
       debouncedSavePState(cur.pState)

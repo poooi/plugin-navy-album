@@ -85,7 +85,7 @@ Disk File Strucutre:
     ship: <ShipCache>,
     portBgm: <PortBgmCache>,
     mapBgm: <MapBgmCache>,
-    dataVersion: <version>,
+    version: '0.5.0',
 }
 ```
 

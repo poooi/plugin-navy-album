@@ -2,6 +2,7 @@ import { observe } from 'redux-observers'
 import { store } from 'views/create-store'
 
 import { pStateSaver } from './p-state-saver'
+import { swfCacheSaver } from './swf-cache-saver'
 import { subtitleLoader } from './subtitle-loader'
 import { gameUpdateDetector } from './game-update-detector'
 
@@ -17,6 +18,7 @@ const globalSubscribe = () => {
 
   unsubscribe = observe(store, [
     pStateSaver,
+    swfCacheSaver,
     subtitleLoader,
     gameUpdateDetector,
   ])
