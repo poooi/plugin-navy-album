@@ -105,8 +105,46 @@ const verifySwfCache = _.flow(
       }
     })
   ),
-  modifyObject('portBgm', _.identity),
-  modifyObject('mapBgm', _.identity)
+  modifyObject(
+    'portBgm',
+    records => {
+      const newRecords = _.fromPairs(
+        _.flatMap(
+          _.toPairs(records),
+          pair => {
+            const [bgmId, _ignored] = pair
+            const fp = getBgmFilePath('port')(bgmId)
+            return fileExists(fp) ? [pair] : []
+          }
+        )
+      )
+      if (_.isEqual(newRecords, records)) {
+        return records
+      } else {
+        return newRecords
+      }
+    }
+  ),
+  modifyObject(
+    'mapBgm',
+    records => {
+      const newRecords = _.fromPairs(
+        _.flatMap(
+          _.toPairs(records),
+          pair => {
+            const [bgmId, _ignored] = pair
+            const fp = getBgmFilePath('map')(bgmId)
+            return fileExists(fp) ? [pair] : []
+          }
+        )
+      )
+      if (_.isEqual(newRecords, records)) {
+        return records
+      } else {
+        return newRecords
+      }
+    }
+  )
 )
 
 const updateSwfCache = oldSwfCache => {
