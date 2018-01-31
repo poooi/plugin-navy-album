@@ -9,10 +9,17 @@ import {
 } from 'fs-extra'
 import { modifyObject } from 'subtender'
 
+/*
+   ensureDirSync is costly to call, so instead we rely on the assumption that
+   user does not manipulate the cache at runtime, therefore ensureDirSync call on
+   any path should be sufficient
+ */
+const lazilyEnsureDirSync = _.memoize(path => ensureDirSync(path))
+
 const getRootPath = () => {
   const {APPDATA_PATH} = window
   const path = join(APPDATA_PATH,'navy-album','cache')
-  ensureDirSync(path)
+  lazilyEnsureDirSync(path)
   return path
 }
 
@@ -24,7 +31,7 @@ const getIndexFilePath = () =>
  */
 const getSubdirPath = subdir => {
   const path = join(getRootPath(), subdir)
-  ensureDirSync(path)
+  lazilyEnsureDirSync(path)
   return path
 }
 
@@ -33,7 +40,7 @@ const getSubdirPath = subdir => {
  */
 const getShipFilePath = mstIdX => fileName => {
   const path = join(getSubdirPath('ship'), String(mstIdX))
-  ensureDirSync(path)
+  lazilyEnsureDirSync(path)
   return join(path, fileName)
 }
 
@@ -42,7 +49,7 @@ const getShipFilePath = mstIdX => fileName => {
  */
 const getBgmFilePath = bgmType => bgmId => {
   const path = join(getSubdirPath(bgmType === 'port' ? 'portBgm' : 'mapBgm'))
-  ensureDirSync(path)
+  lazilyEnsureDirSync(path)
   return join(path, `${bgmId}.mp3`)
 }
 
