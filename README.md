@@ -5,7 +5,7 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
-### 0.5.0 (pending)
+### 0.5.0
 
 - More robust ipc handling
 - Improved SWF caching mechanism
