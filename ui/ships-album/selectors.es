@@ -11,7 +11,6 @@ import {
   shipsInfoSelector,
   sortByRemodelFuncSelector,
   indexedShipGraphsSelector,
-  swfDatabaseSelector,
   swfCacheSelector,
   shipsMasterDataSelector,
   shipGraphSourceFuncSelector,

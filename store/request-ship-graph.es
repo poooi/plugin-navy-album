@@ -2,7 +2,6 @@ import _ from 'lodash'
 import { writeFileSync } from 'fs'
 import { readFromBufferP, extractImages } from 'swf-extract'
 import {
-//  swfDatabaseSelector,
   swfCacheSelector,
   indexedShipGraphInfoSelector,
   serverIpSelector,

@@ -9,7 +9,7 @@ import {
 } from '../selectors'
 import {
   remodelInfoSelector,
-  swfDatabaseSelector,
+  swfCacheSelector,
   indexedShipGraphInfoSelector,
   wctfShipsSelector,
 } from '../../../selectors'
@@ -91,15 +91,9 @@ const minLevelSelector = createSelector(
 
 const shipGraphLastFetchSelector = createSelector(
   mstIdSelector,
-  swfDatabaseSelector,
-  (mstId, swfDatabase) =>
-    _.get(
-      swfDatabase,
-      [
-        'shipDb',
-        mstId,
-        'lastFetch',
-      ]) || null
+  swfCacheSelector,
+  (mstId, swfCache) =>
+    _.get(swfCache, ['ship', mstId, 'lastFetch']) || null
 )
 
 const shipGraphPathSelector = createSelector(
@@ -116,9 +110,9 @@ const shipGraphPathSelector = createSelector(
 
 const isFetchingGraphSelector = createSelector(
   shipGraphPathSelector,
-  swfDatabaseSelector,
-  (path, swfDatabase) =>
-    path && swfDatabase.fetchLocks.includes(path)
+  swfCacheSelector,
+  (path, swfCache) =>
+    path && swfCache.fetchLocks.includes(path)
 )
 
 export {

@@ -14,10 +14,6 @@ const actionCreator = {
     type: '@poi-plugin-navy-album@ui@Modify',
     modifier,
   }),
-  swfDatabaseModify: modifier => ({
-    type: '@poi-plugin-navy-album@swfDatabase@Modify',
-    modifier,
-  }),
   uiSwitchShip: mstId =>
     actionCreator.uiModify(
       _.flow([
@@ -119,38 +115,6 @@ const actionCreator = {
       )
     )
   },
-  swfDatabaseDiskFilesReady: diskFiles =>
-    actionCreator.swfDatabaseModify(
-      _.flow([
-        modifyObject(
-          'diskFiles', () => diskFiles
-        ),
-        modifyObject(
-          'diskFilesReady', () => true
-        ),
-      ])
-    ),
-  swfDatabaseDiskFileUpdate: (mstId, shipRecord) => {
-    const {sgFileName, sgVersion, lastFetch} = shipRecord
-    return actionCreator.swfDatabaseModify(
-      modifyObject(
-        'diskFiles',
-        modifyObject(
-          mstId,
-          () => ({sgFileName, sgVersion, lastFetch})
-        )
-      )
-    )
-  },
-  swfDatabaseDiskFileLoaded: (mstId, shipRecord) =>
-    actionCreator.swfDatabaseModify(
-      modifyObject(
-        'shipDb',
-        modifyObject(
-          mstId, () => shipRecord
-        )
-      )
-    ),
   subtitleModify: modifier => ({
     type: '@poi-plugin-navy-album@subtitle@Modify',
     modifier,
