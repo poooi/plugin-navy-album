@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 0.5.1
+
+- Fix crashes when viewing some ships
+
 ### 0.5.0
 
 - More robust ipc handling

@@ -109,7 +109,9 @@ class ShipInfoViewImpl extends PureComponent {
     // normalize: 'equip' prop can either be a number or an Object of {id, star}
     // and also it's possible for a value to be null
     // equipInfos : Array of null or {id, star}, where star is a number or null
-    const equipInfos = _.get(wctfShip,'equip',[]).map(x =>
+
+    // NOTE: equip could be an empty string, so we have to safeguard it this way
+    const equipInfos = (_.get(wctfShip,'equip') || []).map(x =>
       (_.isInteger(x) && x > 0) ? {id: x, star: null} :
       x && typeof x === 'object' ? x :
       null
