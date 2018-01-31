@@ -14,7 +14,7 @@ const computePortBgmFileName = pBgmId => {
 }
 
 const getPortBgmPath = pBgmId =>
-  `/kcs/resources/swf_p/${computePortBgmFileName(pBgmId)}.swf`
+  `/kcs/resources/bgm_p/${computePortBgmFileName(pBgmId)}.swf`
 
 const getMapBgmPath = mBgmId =>
   `/kcs/resources/swf/sound_b_bgm_${mBgmId}.swf`

@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { store } from 'views/create-store'
 import { modifyObject, generalComparator } from 'subtender'
 import { mkRequestShipGraph } from './request-ship-graph'
+import { mkRequestBgm } from './request-bgm'
 import { actionCreators as swfCacheAC } from './ext-root/swf-cache'
 
 const actionCreator = {
@@ -115,6 +116,19 @@ const actionCreator = {
       )
     )
   },
+  swfCacheRegisterBgm: (bgmType, bgmId) => {
+    const subdir = bgmType === 'port' ? 'portBgm' : 'mapBgm'
+    const timestamp = Number(new Date())
+    return actionCreator.swfCacheModify(
+      modifyObject(
+        subdir,
+        modifyObject(
+          bgmId,
+          () => ({lastFetch: timestamp})
+        )
+      )
+    )
+  },
   subtitleModify: modifier => ({
     type: '@poi-plugin-navy-album@subtitle@Modify',
     modifier,
@@ -174,6 +188,9 @@ const actionCreator = {
 actionCreator.requestShipGraph =
   mkRequestShipGraph(actionCreator)
 
+actionCreator.requestBgm =
+  mkRequestBgm(actionCreator)
+
 const mapDispatchToProps = _.memoize(dispatch =>
   bindActionCreators(actionCreator, dispatch))
 
@@ -185,6 +202,8 @@ const withBoundActionCreator = (func, dispatch=store.dispatch) =>
 const asyncBoundActionCreator = (func, dispatch=store.dispatch) =>
   dispatch(() => setTimeout(() =>
     withBoundActionCreator(func, dispatch)))
+
+window.bac = boundActionCreators
 
 export {
   actionCreator,

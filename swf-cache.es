@@ -37,6 +37,15 @@ const getShipFilePath = mstIdX => fileName => {
   return join(path, fileName)
 }
 
+/*
+   bgmType: 'port' / 'map'
+ */
+const getBgmFilePath = bgmType => bgmId => {
+  const path = join(getSubdirPath(bgmType === 'port' ? 'portBgm' : 'mapBgm'))
+  ensureDirSync(path)
+  return join(path, `${bgmId}.mp3`)
+}
+
 const latestVersion = 'cache-0.5.0'
 
 const saveSwfCache = swfCache => {
@@ -152,6 +161,7 @@ const loadSwfCache = () => {
 
 export {
   getShipFilePath,
+  getBgmFilePath,
   saveSwfCache,
   loadSwfCache,
 }
