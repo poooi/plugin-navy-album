@@ -14,6 +14,7 @@ import { PTyp } from '../ptyp'
 import { mapDispatchToProps } from '../store'
 import { ShipsAlbum } from './ships-album'
 import { EquipmentsAlbum } from './equipments-album'
+import { MusicLibrary } from './music-library'
 import { GameUpdateViewer } from './game-update-viewer'
 import { globalUnsubscribe } from '../observers'
 import { register as registerIpc } from '../ipc'
@@ -101,6 +102,9 @@ class NavyAlbumImpl extends Component {
               <NavItem eventKey="equipments">
                 {__('Equipments')}
               </NavItem>
+              <NavItem eventKey="music">
+                Music
+              </NavItem>
               <NavItem eventKey="game-update">
                 {__('GameUpdate')}
               </NavItem>
@@ -123,6 +127,9 @@ class NavyAlbumImpl extends Component {
               </Tab.Pane>
               <Tab.Pane eventKey="equipments" style={{height: '100%'}}>
                 <EquipmentsAlbum />
+              </Tab.Pane>
+              <Tab.Pane eventKey="music" style={{height: '100%'}}>
+                <MusicLibrary />
               </Tab.Pane>
               <Tab.Pane eventKey="game-update" style={{height: '100%'}}>
                 <GameUpdateViewer />
