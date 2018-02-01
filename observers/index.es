@@ -5,6 +5,7 @@ import { pStateSaver } from './p-state-saver'
 import { swfCacheSaver } from './swf-cache-saver'
 import { subtitleLoader } from './subtitle-loader'
 import { gameUpdateDetector } from './game-update-detector'
+import { masterDataSaver } from './master-data-saver'
 
 let unsubscribe = null
 
@@ -21,6 +22,7 @@ const globalSubscribe = () => {
     swfCacheSaver,
     subtitleLoader,
     gameUpdateDetector,
+    masterDataSaver,
   ])
 }
 

@@ -26,6 +26,8 @@ const subtitleSelector =
   mkExtPropSelector('subtitle')
 const gameUpdateSelector =
   mkExtPropSelector('gameUpdate')
+const masterSelector =
+  mkExtPropSelector('master')
 
 const indexedShipGraphsSelector = createSelector(
   constSelector,
@@ -193,4 +195,5 @@ export {
   wctfShipsSelector,
   validMasterIdSetsSelector,
   getLastFetchFuncSelector,
+  masterSelector,
 }

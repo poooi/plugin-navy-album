@@ -16,6 +16,7 @@ import { NavyAlbum } from './navy-album'
 import { loadPState } from '../p-state'
 import { globalSubscribe } from '../observers'
 import { loadSwfCache } from '../swf-cache'
+import { loadMasterDataFile } from '../store/ext-root/master'
 
 const {$} = window
 
@@ -69,6 +70,9 @@ setTimeout(() => {
     setTimeout(() => {
       const swfCache = loadSwfCache()
       boundActionCreators.swfCacheReady(swfCache)
+
+      const mstData = loadMasterDataFile()
+      boundActionCreators.masterLoadFile(mstData)
     })
   }
 })

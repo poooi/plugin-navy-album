@@ -5,6 +5,7 @@ import { modifyObject, generalComparator } from 'subtender'
 import { mkRequestShipGraph } from './request-ship-graph'
 import { mkRequestBgm } from './request-bgm'
 import { actionCreators as swfCacheAC } from './ext-root/swf-cache'
+import { actionCreators as masterAC } from './ext-root/master'
 
 const actionCreator = {
   uiReady: newState => ({
@@ -183,6 +184,7 @@ const actionCreator = {
       )
     ),
   ...swfCacheAC,
+  ...masterAC,
 }
 
 actionCreator.requestShipGraph =
