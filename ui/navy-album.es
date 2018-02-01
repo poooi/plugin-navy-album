@@ -117,7 +117,7 @@ class NavyAlbumImpl extends Component {
               }
             </Nav>
           </div>
-          <div style={{flex: 1}}>
+          <div style={{flex: 1, height: 0}}>
             <Tab.Content
               animation={false}
               style={{height: '100%'}}

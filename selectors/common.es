@@ -176,6 +176,11 @@ const validMasterIdSetsSelector = createSelector(
   }
 )
 
+const poiVolumeSelector = createSelector(
+  poiConfigSelector,
+  c => _.get(c,'poi.notify.volume',0.8)
+)
+
 export {
   extSelector,
   uiSelector,
@@ -196,4 +201,5 @@ export {
   validMasterIdSetsSelector,
   getLastFetchFuncSelector,
   masterSelector,
+  poiVolumeSelector,
 }

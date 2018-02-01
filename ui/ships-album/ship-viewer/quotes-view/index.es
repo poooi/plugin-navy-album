@@ -11,9 +11,11 @@ import {
 
 import {
   voiceListSelector,
-  poiVolumeSelector,
   quotesOptionsSelector,
 } from './selectors'
+import {
+  poiVolumeSelector,
+} from '../../../../selectors'
 import { PTyp } from '../../../../ptyp'
 import { mapDispatchToProps } from '../../../../store'
 

@@ -65,12 +65,7 @@ const voiceListSelector = createSelector(
   }
 )
 
-const poiVolumeSelector = createSelector(
-  poiConfigSelector,
-  c => _.get(c,'poi.notify.volume',0.8))
-
 export {
   voiceListSelector,
-  poiVolumeSelector,
   quotesOptionsSelector,
 }
