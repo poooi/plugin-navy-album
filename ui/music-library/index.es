@@ -6,7 +6,10 @@ import {
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import FontAwesome from 'react-fontawesome'
-import { ListGroup, ListGroupItem, Button } from 'react-bootstrap'
+import {
+  Panel, Nav, NavItem, Tab,
+  ListGroup, ListGroupItem, Button,
+} from 'react-bootstrap'
 import {
   poiVolumeSelector,
   portBgmsSelector,
@@ -25,7 +28,46 @@ class MusicLibraryImpl extends PureComponent {
 
   render() {
     return (
-      <PortBgmViewer />
+      <Panel
+        style={{
+          height: 'calc(100% - 10px)',
+          marginBottom: 10,
+        }}
+      >
+        <Panel.Body
+          style={{height: '100%'}}
+        >
+          <Tab.Container
+            style={{flex: 1, display: 'flex', flexDirection: 'column', height: '100%'}}
+          >
+            <div>
+              <div style={{marginBottom: 8}}>
+                <Nav
+                  bsStyle="tabs"
+                  justified
+                >
+                  <NavItem eventKey="port">
+                    Port BGM
+                  </NavItem>
+                  <NavItem eventKey="map">
+                    Map BGM
+                  </NavItem>
+                </Nav>
+              </div>
+              <div style={{flex: 1, height: 0, overflowY: 'auto'}}>
+                <Tab.Content animation={false}>
+                  <Tab.Pane eventKey="port">
+                    <PortBgmViewer />
+                  </Tab.Pane>
+                  <Tab.Pane eventKey="map">
+                    TODO: MapBgmViewer
+                  </Tab.Pane>
+                </Tab.Content>
+              </div>
+            </div>
+          </Tab.Container>
+        </Panel.Body>
+      </Panel>
     )
   }
 }

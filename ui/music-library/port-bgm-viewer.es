@@ -39,8 +39,8 @@ class PortBgmViewerImpl extends PureComponent {
       <ListGroup
         style={{
           overflowY: 'auto',
-          height: 'calc(100% - 20px)',
-          marginBottom: 20,
+          height: '100%',
+          marginBottom: 0,
         }}
       >
         {
