@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 0.6.0 (pending)
+
+- Implemented Music Library (port bgm only for now)
+
 ### 0.5.1
 
 - Fix crashes when viewing some ships

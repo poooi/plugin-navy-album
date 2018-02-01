@@ -45,6 +45,24 @@ const initState = {
     },
     searchText: '',
   },
+  musicLibrary: {
+    activeTab: 'port', // 'port' or 'map'
+    mapBgmViewer: {
+      /*
+         current focus of MapBgmViewer, could be:
+
+         - {type: 'map', mapId: <mapId>}
+         - {type: 'bgm', bgmId: <map bgm id>}
+
+       */
+      focus: {
+        type: 'map',
+        mapId: 11,
+      },
+      // 'map' or 'bgm'
+      listMode: 'map',
+    },
+  },
 }
 
 const reducer = (state = initState, action) => {

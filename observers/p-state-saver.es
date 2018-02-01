@@ -6,17 +6,11 @@ import {
 } from 'reselect'
 import { observer } from 'redux-observers'
 
-import { stateToPState, savePState } from '../p-state'
+import { pStateSelector, savePState } from '../p-state'
 import {
-  extSelector,
   uiSelector,
   gameUpdateSelector,
 } from '../selectors'
-
-const pStateSelector = createSelector(
-  extSelector,
-  ext => stateToPState(ext)
-)
 
 // to tell whether we are in the middle of some other loading process
 // observer saves only when all observering parts (for now only ui) are ready
