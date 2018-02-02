@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { modifyObject } from 'subtender'
 import {
   createSelector,
   createStructuredSelector,
@@ -17,6 +18,7 @@ import {
 } from '../../selectors'
 import { PTyp } from '../../ptyp'
 import { mapDispatchToProps } from '../../store'
+import { activeTabSelector } from './selectors'
 import { PortBgmViewer } from './port-bgm-viewer'
 import { getBgmFilePath } from '../../swf-cache'
 
@@ -24,9 +26,20 @@ const getPath = getBgmFilePath('port')
 
 class MusicLibraryImpl extends PureComponent {
   static propTypes = {
+    activeTab: PTyp.string.isRequired,
+    uiModify: PTyp.func.isRequired,
   }
 
+  handleSwitchTab = activeTab =>
+    this.props.uiModify(
+      modifyObject(
+        'musicLibrary',
+        modifyObject('activeTab', () => activeTab)
+      )
+    )
+
   render() {
+    const {activeTab} = this.props
     return (
       <Panel
         style={{
@@ -38,7 +51,14 @@ class MusicLibraryImpl extends PureComponent {
           style={{height: '100%'}}
         >
           <Tab.Container
-            style={{flex: 1, display: 'flex', flexDirection: 'column', height: '100%'}}
+            style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              height: '100%',
+            }}
+            activeKey={activeTab}
+            onSelect={this.handleSwitchTab}
           >
             <div>
               <div style={{marginBottom: 8}}>
@@ -73,6 +93,10 @@ class MusicLibraryImpl extends PureComponent {
 }
 
 const MusicLibrary = connect(
+  createStructuredSelector({
+    activeTab: activeTabSelector,
+  }),
+  mapDispatchToProps,
 )(MusicLibraryImpl)
 
 export { MusicLibrary }

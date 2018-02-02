@@ -69,7 +69,8 @@ class NavyAlbumImpl extends Component {
 
   handleSwitchTab = activeTab =>
     this.props.uiModify(
-      modifyObject('activeTab', () => activeTab))
+      modifyObject('activeTab', () => activeTab)
+    )
 
   render() {
     const {activeTab, theme} = this.props
