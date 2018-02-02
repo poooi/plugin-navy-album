@@ -61,8 +61,7 @@ const updatePState = oldPState => {
     _.set(newPState, 'ui.musicLibrary', {
       activeTab: 'port',
       mapBgmViewer: {
-        focus: {type: 'map', mapId: 11},
-        listMode: 'map',
+        focus: {type: 'all'},
       },
     })
     newPState.$dataVersion = 'p-state-0.6.0'

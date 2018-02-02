@@ -51,16 +51,15 @@ const initState = {
       /*
          current focus of MapBgmViewer, could be:
 
-         - {type: 'map', mapId: <mapId>}
-         - {type: 'bgm', bgmId: <map bgm id>}
+         - {type: 'all'}
+           for all known ids, sorted by id
+         - {type: 'world', worldId: <world id>}
+           for bgms of a specific world
+         - {type: 'others'}
+           for bgms not being mentioned anywhere in api_mst_bgm
 
        */
-      focus: {
-        type: 'map',
-        mapId: 11,
-      },
-      // 'map' or 'bgm'
-      listMode: 'map',
+      focus: {type: 'all'},
     },
   },
 }
