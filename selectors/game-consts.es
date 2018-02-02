@@ -1,6 +1,9 @@
 import _ from 'lodash'
 import { modifyObject } from 'subtender'
+import { splitMapId } from 'subtender/kc'
 import { createSelector } from 'reselect'
+import { readJsonSync } from 'fs-extra'
+import { join } from 'path-extra'
 import { constSelector } from 'views/utils/selectors'
 
 import { masterSelector } from './common'
@@ -82,6 +85,8 @@ const mapBgmUseSiteInfoSelector = createSelector(
     _.mapValues(mapBgms, (bgmInfo, mapIdStr) => {
       const mapId = Number(mapIdStr)
       const register = (bgmId, situation) => {
+        if (bgmId <= 0)
+          return
         useSiteInfo = modifyObject(
           bgmId,
           (uInfo = {}) =>
@@ -101,8 +106,51 @@ const mapBgmUseSiteInfoSelector = createSelector(
   }
 )
 
+/*
+
+   Array of {area: <int>, mapIds: <Array>} sorted by area
+
+ */
+const grouppedMapIdsSelector = createSelector(
+  constSelector,
+  ({$maps}) =>
+    _.sortBy(
+      _.toPairs(
+        _.groupBy(
+          _.values($maps).map(x => x.api_id),
+          x => splitMapId(x).area
+        )
+      ).map(([areaStr, mapIds]) => ({area: Number(areaStr), mapIds})),
+      'area'
+    )
+)
+
+const knownMapBgmIds = readJsonSync(join(__dirname, '..', 'assets', 'map-bgms.json'))
+
+const allMapBgmIdsSelector = createSelector(
+  mapBgmUseSiteInfoSelector,
+  useSiteInfo =>
+    _.sortBy(
+      _.uniq([
+        ...knownMapBgmIds,
+        ..._.keys(useSiteInfo).map(Number),
+      ]),
+      _.identity
+    )
+)
+
+const unusedMapBgmIdsSelector = createSelector(
+  allMapBgmIdsSelector,
+  mapBgmUseSiteInfoSelector,
+  (bgmIds, useSiteInfo) =>
+    bgmIds.filter(id => !(id in useSiteInfo))
+)
+
 export {
   portBgmsSelector,
   mapBgmsSelector,
   mapBgmUseSiteInfoSelector,
+  grouppedMapIdsSelector,
+  allMapBgmIdsSelector,
+  unusedMapBgmIdsSelector,
 }

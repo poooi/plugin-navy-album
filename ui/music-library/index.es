@@ -66,11 +66,20 @@ class MusicLibraryImpl extends PureComponent {
                 </Nav>
               </div>
               <div style={{flex: 1, height: 0, overflowY: 'auto'}}>
-                <Tab.Content animation={false}>
-                  <Tab.Pane eventKey="port">
+                <Tab.Content
+                  style={{height: '100%'}}
+                  animation={false}
+                >
+                  <Tab.Pane
+                    style={{height: '100%'}}
+                    eventKey="port"
+                  >
                     <PortBgmViewer />
                   </Tab.Pane>
-                  <Tab.Pane eventKey="map">
+                  <Tab.Pane
+                    style={{height: '100%'}}
+                    eventKey="map"
+                  >
                     <MapBgmViewer />
                   </Tab.Pane>
                 </Tab.Content>
