@@ -57,7 +57,7 @@ class PortBgmViewerImpl extends PureComponent {
                 <div
                   style={{display: 'flex', alignItems: 'center'}}
                 >
-                  <div style={{flex: 1}}>{name}</div>
+                  <div style={{flex: 1}}>{`${name} (${id})`}</div>
                   <Button
                     onClick={
                       this.handleRequestBgm(
