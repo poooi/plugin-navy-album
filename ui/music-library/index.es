@@ -6,23 +6,14 @@ import {
 } from 'reselect'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import FontAwesome from 'react-fontawesome'
 import {
   Panel, Nav, NavItem, Tab,
-  ListGroup, ListGroupItem, Button,
 } from 'react-bootstrap'
-import {
-  poiVolumeSelector,
-  portBgmsSelector,
-  swfCacheSelector,
-} from '../../selectors'
 import { PTyp } from '../../ptyp'
 import { mapDispatchToProps } from '../../store'
 import { activeTabSelector } from './selectors'
 import { PortBgmViewer } from './port-bgm-viewer'
-import { getBgmFilePath } from '../../swf-cache'
-
-const getPath = getBgmFilePath('port')
+import { MapBgmViewer } from './map-bgm-viewer'
 
 class MusicLibraryImpl extends PureComponent {
   static propTypes = {
@@ -80,7 +71,7 @@ class MusicLibraryImpl extends PureComponent {
                     <PortBgmViewer />
                   </Tab.Pane>
                   <Tab.Pane eventKey="map">
-                    TODO: MapBgmViewer
+                    <MapBgmViewer />
                   </Tab.Pane>
                 </Tab.Content>
               </div>
