@@ -42,3 +42,11 @@ Run the following code and paste the result to that file.
 ```javascript
 JSON.stringify(getStore().const.$shipUpgrades.filter(x => x.api_current_ship_id !== 0))
 ```
+
+## `assets/map-bgms.json`
+
+(TODO) we'll need to maintain a list of known map bgm ids.
+
+```javascript
+_.sortBy(_.keys(getStore().ext['poi-plugin-navy-album']._.swfCache.mapBgm).map(Number), x => x)
+```
