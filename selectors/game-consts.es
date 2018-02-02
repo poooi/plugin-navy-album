@@ -1,5 +1,8 @@
 import _ from 'lodash'
+import { modifyObject } from 'subtender'
 import { createSelector } from 'reselect'
+import { constSelector } from 'views/utils/selectors'
+
 import { masterSelector } from './common'
 
 /*
@@ -47,7 +50,59 @@ const mapBgmsSelector = createSelector(
   }
 )
 
+/*
+   for figuring out things like "this bgm is used in map X for situation Y"
+
+   returns:
+
+   {
+     [mBgmId]: <non-empty UseInfo>
+   }
+
+   UseInfo is:
+
+   {
+     [mapId]: <Array of situations>,
+   }
+
+   the situations array
+
+   - should be a subset of:
+
+      ['moving', 'normalDay', 'normalNight', 'bossDay', 'bossNight']
+
+   - no duplicated element
+   - element if present should be in this order.
+
+ */
+const mapBgmUseSiteInfoSelector = createSelector(
+  mapBgmsSelector,
+  mapBgms => {
+    let useSiteInfo = {}
+    _.mapValues(mapBgms, (bgmInfo, mapIdStr) => {
+      const mapId = Number(mapIdStr)
+      const register = (bgmId, situation) => {
+        useSiteInfo = modifyObject(
+          bgmId,
+          (uInfo = {}) =>
+            modifyObject(
+              mapId,
+              (xs = []) => [...xs, situation]
+            )(uInfo)
+        )(useSiteInfo)
+      }
+      register(bgmInfo.moving, 'moving')
+      register(bgmInfo.normalBattle.day, 'normalDay')
+      register(bgmInfo.normalBattle.night, 'normalNight')
+      register(bgmInfo.bossBattle.day, 'bossDay')
+      register(bgmInfo.bossBattle.night, 'bossNight')
+    })
+    return useSiteInfo
+  }
+)
+
 export {
   portBgmsSelector,
   mapBgmsSelector,
+  mapBgmUseSiteInfoSelector,
 }
