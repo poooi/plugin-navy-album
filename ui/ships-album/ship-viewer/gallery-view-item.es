@@ -38,7 +38,7 @@ class GalleryViewItem extends PureComponent {
               <Button
                 onClick={() => downloadUrl(src)}
                 bsSize="small">
-                <FontAwesome name="download" />
+                <FontAwesome name="save" />
               </Button>
             </div>
           )
