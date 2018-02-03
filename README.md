@@ -5,7 +5,7 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
-### 0.6.0 (pending)
+### 0.6.0
 
 - Implemented Music Library
 
