@@ -15,6 +15,7 @@ import {
 import { PTyp } from '../../ptyp'
 import { mapDispatchToProps } from '../../store'
 import { getBgmFilePath } from '../../swf-cache'
+import { BgmListItem } from './bgm-list-item'
 
 const getPath = getBgmFilePath('port')
 
@@ -30,11 +31,11 @@ class PortBgmViewerImpl extends PureComponent {
     e.target.volume = this.props.volume
   }
 
-  handleRequestBgm = (id, forced) => () =>
+  handleRequestBgm = id => forced =>
     this.props.requestBgm('port', id, forced)
 
   render() {
-    const {portBgmList, portBgmCache} = this.props
+    const {portBgmList, portBgmCache, volume} = this.props
     return (
       <ListGroup
         style={{
@@ -46,48 +47,16 @@ class PortBgmViewerImpl extends PureComponent {
         {
           portBgmList.map(({id, name}) => {
             const cacheHit = !_.isEmpty(portBgmCache[id])
+            const maybePath = cacheHit ? getPath(id) : null
             return (
-              <ListGroupItem
-                style={{
-                  display: 'flex', flexDirection: 'column',
-                  padding: '5px 10px',
-                }}
+              <BgmListItem
                 key={id}
+                volume={volume}
+                maybePath={maybePath}
+                onRequestBgm={this.handleRequestBgm(id)}
               >
-                <div
-                  style={{display: 'flex', alignItems: 'center'}}
-                >
-                  <div style={{flex: 1}}>{`${name} (${id})`}</div>
-                  <Button
-                    onClick={
-                      this.handleRequestBgm(
-                        id,
-                        /*
-                           the request is forced if
-                           we already have a cache hit
-                         */
-                        cacheHit
-                      )}
-                    style={{width: '4em', marginTop: 0}}
-                  >
-                    <FontAwesome
-                      name={cacheHit ? 'refresh' : 'download'}
-                    />
-                  </Button>
-                </div>
-                {
-                  cacheHit && (
-                    <audio
-                      className="play-control"
-                      style={{width: '100%', marginTop: '.5em'}}
-                      preload="none"
-                      onCanPlay={this.handleCanPlay}
-                      controls="controls">
-                      <source src={getPath(id)} type="audio/mp3" />
-                    </audio>
-                  )
-                }
-              </ListGroupItem>
+                {`${name} (${id})`}
+              </BgmListItem>
             )
           })
         }
