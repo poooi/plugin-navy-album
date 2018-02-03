@@ -11,6 +11,7 @@ import { connect } from 'react-redux'
 
 import {
   grouppedMapIdsSelector,
+  mapBgmUseSiteInfoSelector,
   swfCacheSelector,
 } from '../../selectors'
 import {
@@ -23,12 +24,21 @@ import { BgmListItem } from './bgm-list-item'
 
 const getPath = getBgmFilePath('map')
 
+const describe = {
+  moving: 'Moving',
+  normalDay: 'Normal Battle (Day)',
+  normalNight: 'Normal Battle (Night)',
+  bossDay: 'Boss Battle (Day)',
+  bossNight: 'Boss Battle (Night)',
+}
+
 class MapBgmViewerImpl extends PureComponent {
   static propTypes = {
     grouppedMapIds: PTyp.array.isRequired,
     listInfo: PTyp.object.isRequired,
     mapBgmCache: PTyp.object.isRequired,
     uiModify: PTyp.func.isRequired,
+    useSiteInfo: PTyp.object.isRequired,
 
     requestBgm: PTyp.func.isRequired,
   }
@@ -47,17 +57,56 @@ class MapBgmViewerImpl extends PureComponent {
   handleRequestBgm = id => forced =>
     this.props.requestBgm('map', id, forced)
 
-  mkBgmListItem = (id, key) => {
-    const {mapBgmCache} = this.props
-    const cacheHit = !_.isEmpty(mapBgmCache[id])
-    const maybePath = cacheHit ? getPath(id) : null
+  mkBgmListItem = (bgmId, key, mapId = null) => {
+    const {mapBgmCache, useSiteInfo} = this.props
+    const cacheHit = !_.isEmpty(mapBgmCache[bgmId])
+    const maybePath = cacheHit ? getPath(bgmId) : null
+    const useInfo = useSiteInfo[bgmId]
+    const allMapIds = _.sortBy(_.keys(useInfo).map(Number), _.identity)
+    // determine order
+    let mapIds
+    if (mapId > 0) {
+      mapIds = [mapId, ...allMapIds.filter(x => x !== mapId)]
+    } else {
+      mapIds = allMapIds
+    }
+
     return (
       <BgmListItem
         key={key}
         maybePath={maybePath}
-        onRequestBgm={this.handleRequestBgm(id)}
+        onRequestBgm={this.handleRequestBgm(bgmId)}
       >
-        {id}
+        <div>
+          <div>Map BGM #{bgmId}</div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+            }}>
+            {
+              mapIds.map(curMapId => {
+                const mapStr = mapIdToStr(curMapId)
+                const description = _.join(
+                  _.map(useInfo[curMapId], s => describe[s]),
+                  ', '
+                )
+                return (
+                  <span
+                    style={{
+                      marginRight: '.5em',
+                      ...(curMapId === mapId ? {fontWeight: 'bold'} : {}),
+                    }}
+                    key={curMapId}
+                  >
+                    {mapStr} {description}
+                  </span>
+                )
+              })
+            }
+          </div>
+        </div>
       </BgmListItem>
     )
   }
@@ -128,7 +177,7 @@ class MapBgmViewerImpl extends PureComponent {
                       <div style={{marginLeft: 5}}>
                         {
                           bgmIds.map(bgmId =>
-                            this.mkBgmListItem(bgmId, `groupped-${bgmId}`)
+                            this.mkBgmListItem(bgmId, `groupped-${bgmId}`, mapId)
                           )
                         }
                       </div>
@@ -152,6 +201,7 @@ const MapBgmViewer = connect(
       swfCacheSelector,
       sc => sc.mapBgm
     ),
+    useSiteInfo: mapBgmUseSiteInfoSelector,
   }),
   mapDispatchToProps,
 )(MapBgmViewerImpl)
