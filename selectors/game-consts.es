@@ -145,6 +145,25 @@ const unusedMapBgmIdsSelector = createSelector(
     bgmIds.filter(id => !(id in useSiteInfo))
 )
 
+/*
+   sortedMapBgms is an Object:
+
+   {
+     [mapId]: <Array of bgmId>, // respecting order of 'situations'
+   }
+
+ */
+const sortedMapBgmsSelector = createSelector(
+  mapBgmsSelector,
+  mapBgms => _.mapValues(mapBgms, bgmInfo =>
+    _.uniq(
+      _.compact(
+        situations.map(propName => bgmInfo[propName])
+      )
+    )
+  )
+)
+
 export {
   portBgmsSelector,
   mapBgmsSelector,
@@ -152,4 +171,5 @@ export {
   grouppedMapIdsSelector,
   allMapBgmIdsSelector,
   unusedMapBgmIdsSelector,
+  sortedMapBgmsSelector,
 }

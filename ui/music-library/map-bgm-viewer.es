@@ -2,7 +2,6 @@ import { createStructuredSelector } from 'reselect'
 import React, { PureComponent } from 'react'
 import { modifyObject } from 'subtender'
 import {
-  Panel,
   ListGroup,
   ListGroupItem,
 } from 'react-bootstrap'
@@ -10,10 +9,9 @@ import { connect } from 'react-redux'
 
 import {
   grouppedMapIdsSelector,
-  allMapBgmIdsSelector,
 } from '../../selectors'
 import {
-  focusedBgmIdListSelector,
+  focusedListInfoSelector,
 } from './selectors'
 import { PTyp } from '../../ptyp'
 import { mapDispatchToProps } from '../../store'
@@ -21,7 +19,7 @@ import { mapDispatchToProps } from '../../store'
 class MapBgmViewerImpl extends PureComponent {
   static propTypes = {
     grouppedMapIds: PTyp.array.isRequired,
-    bgmIds: PTyp.array.isRequired,
+    listInfo: PTyp.object.isRequired,
     uiModify: PTyp.func.isRequired,
   }
 
@@ -37,7 +35,7 @@ class MapBgmViewerImpl extends PureComponent {
     )
 
   render() {
-    const {grouppedMapIds, bgmIds} = this.props
+    const {grouppedMapIds, listInfo} = this.props
     const itemStyle = {padding: '8px 10px'}
     return (
       <div
@@ -89,13 +87,17 @@ class MapBgmViewerImpl extends PureComponent {
           }}
         >
           {
-            bgmIds.map(x => (
-              <ListGroupItem
-                key={x}
-              >
-                {x}
-              </ListGroupItem>
-            ))
+            listInfo.type === 'simple' ? (
+              listInfo.list.map(x => (
+                <ListGroupItem
+                  key={x}
+                >
+                  {x}
+                </ListGroupItem>
+              ))
+            ) : (
+              <div>{JSON.stringify(listInfo.list)}</div>
+            )
           }
         </ListGroup>
       </div>
@@ -106,7 +108,7 @@ class MapBgmViewerImpl extends PureComponent {
 const MapBgmViewer = connect(
   createStructuredSelector({
     grouppedMapIds: grouppedMapIdsSelector,
-    bgmIds: focusedBgmIdListSelector,
+    listInfo: focusedListInfoSelector,
   }),
   mapDispatchToProps,
 )(MapBgmViewerImpl)

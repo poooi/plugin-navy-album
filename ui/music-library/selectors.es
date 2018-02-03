@@ -1,6 +1,10 @@
+import _ from 'lodash'
 import { createSelector } from 'reselect'
 import {
-  allMapBgmIdsSelector, unusedMapBgmIdsSelector,
+  allMapBgmIdsSelector,
+  unusedMapBgmIdsSelector,
+  grouppedMapIdsSelector,
+  sortedMapBgmsSelector,
   uiSelector,
 } from '../../selectors'
 
@@ -24,22 +28,45 @@ const focusSelector = createSelector(
   m => m.focus
 )
 
-const focusedBgmIdListSelector = createSelector(
+/*
+   returns a function, which when applied with worldId, returns
+   a sorted Array of {mapId, bgmIds: [bgmId]}
+ */
+const getBgmIdListByWorldFuncSelector = createSelector(
+  grouppedMapIdsSelector,
+  sortedMapBgmsSelector,
+  (grouppedMapIds, sortedMapBgms) => _.memoize(worldId => {
+    const ind = grouppedMapIds.findIndex(x => x.area === worldId)
+    if (ind === -1)
+      return []
+
+    const {mapIds} = grouppedMapIds[ind]
+    return mapIds.map(mapId =>
+      ({
+        mapId,
+        bgmIds: sortedMapBgms[mapId] || [],
+      })
+    )
+  })
+)
+
+const focusedListInfoSelector = createSelector(
   focusSelector,
   allMapBgmIdsSelector,
   unusedMapBgmIdsSelector,
-  (focus, allMapBgmIds, unusedMapBgmIds) => {
+  getBgmIdListByWorldFuncSelector,
+  (focus, allMapBgmIds, unusedMapBgmIds, getBgmIdListByWorld) => {
     if (focus.type === 'all')
-      return allMapBgmIds
+      return {type: 'simple', list: allMapBgmIds}
     if (focus.type === 'others')
-      return unusedMapBgmIds
+      return {type: 'simple', list: unusedMapBgmIds}
     if (focus.type === 'world') {
-      // TODO
-      return []
+      const {worldId} = focus
+      return {type: 'groupped', list: getBgmIdListByWorld(worldId)}
     }
 
     console.error(`unrecognized focus type: ${focus.type}`)
-    return []
+    return {type: 'simple', list: []}
   }
 )
 
@@ -47,5 +74,5 @@ export {
   musicLibrarySelector,
   activeTabSelector,
   mapBgmViewerSelector,
-  focusedBgmIdListSelector,
+  focusedListInfoSelector,
 }
