@@ -5,7 +5,6 @@ import {
 } from 'views/utils/selectors'
 import {
   serverIpSelector,
-  poiConfigSelector,
   subtitleSelector,
 } from '../../../../selectors'
 import {

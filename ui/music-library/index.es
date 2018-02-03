@@ -1,7 +1,5 @@
-import _ from 'lodash'
 import { modifyObject } from 'subtender'
 import {
-  createSelector,
   createStructuredSelector,
 } from 'reselect'
 import React, { PureComponent } from 'react'
