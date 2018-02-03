@@ -17,6 +17,7 @@ class BgmListItemImpl extends PureComponent {
     maybePath: PTyp.string,
     // onRequestBgm(pathAvailable): callback for requesting bgm
     onRequestBgm: PTyp.func.isRequired,
+    isFetching: PTyp.bool,
 
     // connected:
     volume: PTyp.number.isRequired,
@@ -24,6 +25,7 @@ class BgmListItemImpl extends PureComponent {
 
   static defaultProps = {
     maybePath: null,
+    isFetching: false,
   }
 
   handleRequestBgm = pathAvailable => () =>
@@ -61,7 +63,7 @@ class BgmListItemImpl extends PureComponent {
 
   render() {
     const {
-      maybePath, children,
+      maybePath, children, isFetching,
     } = this.props
     const pathAvailable = Boolean(maybePath)
     return (
@@ -76,8 +78,10 @@ class BgmListItemImpl extends PureComponent {
         >
           <div style={{flex: 1}}>{children}</div>
           <Button
+            bsSize="small"
             onClick={this.handleRequestBgm(pathAvailable)}
-            style={{width: '4em', marginTop: 0, alignSelf: 'flex-start'}}
+            style={{marginTop: 0, alignSelf: 'flex-start'}}
+            disabled={isFetching}
           >
             <FontAwesome
               name={pathAvailable ? 'refresh' : 'download'}

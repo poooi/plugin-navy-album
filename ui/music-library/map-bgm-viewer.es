@@ -50,6 +50,7 @@ class MapBgmViewerImpl extends PureComponent {
     useSiteInfo: PTyp.object.isRequired,
 
     requestBgm: PTyp.func.isRequired,
+    isFetching: PTyp.func.isRequired,
   }
 
   handleChangeFocus = focus => () =>
@@ -67,7 +68,7 @@ class MapBgmViewerImpl extends PureComponent {
     this.props.requestBgm('map', id, forced)
 
   mkBgmListItem = (bgmId, key, mapId = null) => {
-    const {mapBgmCache, useSiteInfo} = this.props
+    const {mapBgmCache, useSiteInfo, isFetching} = this.props
     const cacheHit = !_.isEmpty(mapBgmCache[bgmId])
     const maybePath = cacheHit ? getPath(bgmId) : null
     const useInfo = useSiteInfo[bgmId]
@@ -84,6 +85,7 @@ class MapBgmViewerImpl extends PureComponent {
       <BgmListItem
         key={key}
         maybePath={maybePath}
+        isFetching={isFetching(bgmId)}
         onRequestBgm={this.handleRequestBgm(bgmId)}
       >
         <div>
@@ -211,6 +213,20 @@ const MapBgmViewer = connect(
       sc => sc.mapBgm
     ),
     useSiteInfo: mapBgmUseSiteInfoSelector,
+    isFetching: createSelector(
+      swfCacheSelector,
+      swfCache => bgmId => {
+        const {fetchLocks} = swfCache
+        return fetchLocks.some(urlPath => {
+          const reResult = /^\/kcs\/resources\/swf\/sound_b_bgm_(\d+)\.swf$/.exec(urlPath)
+          if (reResult) {
+            return Number(reResult[1]) === bgmId
+          } else {
+            return false
+          }
+        })
+      }
+    ),
   }),
   mapDispatchToProps,
 )(MapBgmViewerImpl)

@@ -22,13 +22,14 @@ class PortBgmViewerImpl extends PureComponent {
     portBgmList: PTyp.array.isRequired,
     portBgmCache: PTyp.object.isRequired,
     requestBgm: PTyp.func.isRequired,
+    isFetching: PTyp.func.isRequired,
   }
 
   handleRequestBgm = id => forced =>
     this.props.requestBgm('port', id, forced)
 
   render() {
-    const {portBgmList, portBgmCache} = this.props
+    const {portBgmList, portBgmCache, isFetching} = this.props
     return (
       <ListGroup
         style={{
@@ -46,6 +47,7 @@ class PortBgmViewerImpl extends PureComponent {
                 key={id}
                 maybePath={maybePath}
                 onRequestBgm={this.handleRequestBgm(id)}
+                isFetching={isFetching(id)}
               >
                 {`${name} (${id})`}
               </BgmListItem>
@@ -72,6 +74,20 @@ const PortBgmViewer = connect(
     portBgmCache: createSelector(
       swfCacheSelector,
       sc => sc.portBgm
+    ),
+    isFetching: createSelector(
+      swfCacheSelector,
+      swfCache => bgmId => {
+        const {fetchLocks} = swfCache
+        return fetchLocks.some(urlPath => {
+          const reResult = /^\/kcs\/resources\/bgm_p\/(\d+).*\.swf$/.exec(urlPath)
+          if (reResult) {
+            return Number(reResult[1]) === bgmId
+          } else {
+            return false
+          }
+        })
+      }
     ),
   }),
   mapDispatchToProps,
