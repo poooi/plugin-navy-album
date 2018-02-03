@@ -31,6 +31,7 @@ class MusicLibraryImpl extends PureComponent {
 
   render() {
     const {activeTab} = this.props
+    const {__} = window
     return (
       <Panel
         style={{
@@ -39,7 +40,10 @@ class MusicLibraryImpl extends PureComponent {
         }}
       >
         <Panel.Body
-          style={{height: '100%'}}
+          style={{
+            height: '100%',
+            padding: 10,
+          }}
         >
           <Tab.Container
             style={{
@@ -58,10 +62,10 @@ class MusicLibraryImpl extends PureComponent {
                   justified
                 >
                   <NavItem eventKey="port">
-                    Port BGM
+                    {__('MusicLibraryTab.PortBGM')}
                   </NavItem>
                   <NavItem eventKey="map">
-                    Map BGM
+                    {__('MusicLibraryTab.MapBGM')}
                   </NavItem>
                 </Nav>
               </div>

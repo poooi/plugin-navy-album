@@ -6,6 +6,7 @@
 
   "Ships": "Ships",
   "Equipments": "Equipments",
+  "Music": "Music",
   "GameUpdate": "Game Update",
 
   "Search...": "Search ...",
@@ -42,6 +43,20 @@
     "ScrapValue": "Scrap Value",
     "Distance": "Distance",
     "Cost": "Cost"
+  },
+
+  "MusicLibraryTab": {
+    "PortBGM": "Port BGM",
+    "MapBGM": "Map BGM",
+    "All": "All",
+    "Others": "Others",
+    "Situations": {
+      "moving": "Moving",
+      "normalDay": "Normal Battle (Day)",
+      "normalNight": "Normal Battle (Night)",
+      "bossDay": "Boss Battle (Day)",
+      "bossNight": "Boss Battle (Night)"
+    }
   },
 
   "GameUpdateTab": {

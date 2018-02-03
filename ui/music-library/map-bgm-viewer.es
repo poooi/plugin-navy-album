@@ -24,14 +24,6 @@ import { BgmListItem } from './bgm-list-item'
 
 const getPath = getBgmFilePath('map')
 
-const describe = {
-  moving: 'Moving',
-  normalDay: 'Normal Battle (Day)',
-  normalNight: 'Normal Battle (Night)',
-  bossDay: 'Boss Battle (Day)',
-  bossNight: 'Boss Battle (Night)',
-}
-
 class MapBgmViewerImpl extends PureComponent {
   static propTypes = {
     grouppedMapIds: PTyp.array.isRequired,
@@ -59,6 +51,7 @@ class MapBgmViewerImpl extends PureComponent {
     this.props.requestBgm('map', id, forced)
 
   mkBgmListItem = (bgmId, key, mapId = null) => {
+    const {__} = window
     const {mapBgmCache, useSiteInfo, isFetching} = this.props
     const cacheHit = !_.isEmpty(mapBgmCache[bgmId])
     const maybePath = cacheHit ? getPath(bgmId) : null
@@ -80,7 +73,7 @@ class MapBgmViewerImpl extends PureComponent {
         onRequestBgm={this.handleRequestBgm(bgmId)}
       >
         <div>
-          <div>Map BGM #{bgmId}</div>
+          <div>{__('MusicLibraryTab.MapBGM')} #{bgmId}</div>
           <div
             style={{
               display: 'flex',
@@ -91,7 +84,10 @@ class MapBgmViewerImpl extends PureComponent {
               mapIds.map(curMapId => {
                 const mapStr = mapIdToStr(curMapId)
                 const description = _.join(
-                  _.map(useInfo[curMapId], s => describe[s]),
+                  _.map(
+                    useInfo[curMapId],
+                    s => __(`MusicLibraryTab.Situations.${s}`)
+                  ),
                   ', '
                 )
                 return (
@@ -115,6 +111,7 @@ class MapBgmViewerImpl extends PureComponent {
 
   render() {
     const {grouppedMapIds, listInfo} = this.props
+    const {__} = window
     const itemStyle = {padding: '8px 10px'}
     return (
       <div
@@ -136,7 +133,7 @@ class MapBgmViewerImpl extends PureComponent {
             style={itemStyle}
             onClick={this.handleChangeFocus({type: 'all'})}
           >
-            All
+            {__(`MusicLibraryTab.All`)}
           </ListGroupItem>
           {
             grouppedMapIds.map(grp => (
@@ -153,7 +150,7 @@ class MapBgmViewerImpl extends PureComponent {
             onClick={this.handleChangeFocus({type: 'others'})}
             style={itemStyle}
           >
-            Others
+            {__(`MusicLibraryTab.Others`)}
           </ListGroupItem>
         </ListGroup>
         <ListGroup

@@ -104,7 +104,7 @@ class NavyAlbumImpl extends Component {
                 {__('Equipments')}
               </NavItem>
               <NavItem eventKey="music">
-                Music
+                {__('Music')}
               </NavItem>
               <NavItem eventKey="game-update">
                 {__('GameUpdate')}

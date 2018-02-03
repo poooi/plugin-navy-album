@@ -6,6 +6,7 @@
 
   "Ships": "舰船",
   "Equipments": "装备",
+  "Music": "音乐",
   "GameUpdate": "游戏更新",
 
   "Search ...": "搜索…",
@@ -42,6 +43,20 @@
     "ScrapValue": "废弃资源",
     "Distance": "航程",
     "Cost": "消耗"
+  },
+
+  "MusicLibraryTab": {
+    "PortBGM": "母港BGM",
+    "MapBGM": "海域BGM",
+    "All": "全部",
+    "Others": "其他",
+    "Situations": {
+      "moving": "海域",
+      "normalDay": "道中战(昼)",
+      "normalNight": "道中战(夜)",
+      "bossDay": "Boss战 (昼)",
+      "bossNight": "Boss战 (夜)"
+    }
   },
 
   "GameUpdateTab": {
