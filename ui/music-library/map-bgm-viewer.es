@@ -32,15 +32,6 @@ const describe = {
   bossNight: 'Boss Battle (Night)',
 }
 
-/*
-   TODO:
-
-   - i18n
-   - download button
-   - button styling & icon
-
- */
-
 class MapBgmViewerImpl extends PureComponent {
   static propTypes = {
     grouppedMapIds: PTyp.array.isRequired,

@@ -3,11 +3,12 @@ import {
   ListGroupItem, Button,
 } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
+import { remote } from 'electron'
 
 import { PTyp } from '../../../ptyp'
 
 const downloadUrl =
-  window.remote.getCurrentWebContents().downloadURL
+  remote.getCurrentWebContents().downloadURL
 
 class GalleryViewItem extends PureComponent {
   static propTypes = {

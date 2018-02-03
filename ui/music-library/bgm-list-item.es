@@ -1,3 +1,4 @@
+import { remote } from 'electron'
 import React, { PureComponent } from 'react'
 import {
   ListGroupItem,
@@ -10,6 +11,9 @@ import { PTyp } from '../../ptyp'
 import {
   poiVolumeSelector,
 } from '../../selectors'
+
+const downloadUrl =
+  remote.getCurrentWebContents().downloadURL
 
 class BgmListItemImpl extends PureComponent {
   static propTypes = {
@@ -61,6 +65,8 @@ class BgmListItemImpl extends PureComponent {
     })
   }
 
+  handleDownload = path => () => downloadUrl(`file://${path}`)
+
   render() {
     const {
       maybePath, children, isFetching,
@@ -90,15 +96,31 @@ class BgmListItemImpl extends PureComponent {
         </div>
         {
           pathAvailable && (
-            <audio
-              className="play-control"
-              style={{width: '100%', marginTop: '.5em'}}
-              preload="none"
-              onCanPlay={this.handleCanPlay}
-              onPlaying={this.handlePlaying}
-              controls="controls">
-              <source src={maybePath} type="audio/mp3" />
-            </audio>
+            <div
+              style={{
+                display: 'flex', alignItems: 'center',
+                marginTop: '.5em',
+              }}
+            >
+              <audio
+                className="play-control"
+                style={{
+                  flex: 1,
+                }}
+                preload="none"
+                onCanPlay={this.handleCanPlay}
+                onPlaying={this.handlePlaying}
+                controls="controls">
+                <source src={maybePath} type="audio/mp3" />
+              </audio>
+              <Button
+                bsSize="small"
+                onClick={this.handleDownload(maybePath)}
+                style={{marginTop: 0, marginLeft: 5}}
+              >
+                <FontAwesome name="save" />
+              </Button>
+            </div>
           )
         }
       </ListGroupItem>

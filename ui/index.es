@@ -34,10 +34,10 @@ globalSubscribe()
    - collapsible type group?
    - needs some refactoring
    - needs to move around some selectors
-
    - groupping ships by remodel chain (in game update page)
-
    - handle special CGs
+   - window.serverIp ?
+   - MusicLibrary i18n
 
  */
 
