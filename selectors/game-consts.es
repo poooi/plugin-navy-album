@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { modifyObject } from 'subtender'
+import { modifyObject, words } from 'subtender'
 import { splitMapId } from 'subtender/kc'
 import { createSelector } from 'reselect'
 import { readJsonSync } from 'fs-extra'
@@ -24,32 +24,34 @@ const portBgmsSelector = createSelector(
 )
 
 /*
+   defines the properties for map BGM as well as sorting order.
+ */
+const situations = words('moving normalDay normalNight bossDay bossNight')
+
+/*
    returns: (all <bgm id> stands for map bgm)
 
    {
      [mapId]: {
-       moving: <bgm id>,
-       normalBattle: {day: <bgm id>, night: <bgm id>},
-       bossBattle: {day: <bgm id>, night: <bgm id>},
+       [situation]: <bgm id>,
      },
    }
+
+   where situation are from `situations`
 
  */
 const mapBgmsSelector = createSelector(
   masterSelector,
   mst => {
     const raw = _.get(mst, ['api_mst_mapbgm']) || []
-    const toDayNight = ([day, night]) => ({day, night})
-    return _.mapValues(_.keyBy(raw, 'api_id'), bgmRaw => {
-      const moving = bgmRaw.api_moving_bgm
-      const normalBattle = toDayNight(bgmRaw.api_map_bgm)
-      const bossBattle = toDayNight(bgmRaw.api_boss_bgm)
-      return {
-        moving,
-        normalBattle,
-        bossBattle,
-      }
-    })
+    const norm = v => v <= 0 ? null : v
+    return _.mapValues(_.keyBy(raw, 'api_id'), bgmRaw => ({
+      moving: norm(bgmRaw.api_moving_bgm),
+      normalDay: norm(bgmRaw.api_map_bgm[0]),
+      normalNight: norm(bgmRaw.api_map_bgm[1]),
+      bossDay: norm(bgmRaw.api_boss_bgm[0]),
+      bossNight: norm(bgmRaw.api_boss_bgm[1]),
+    }))
   }
 )
 
@@ -70,10 +72,7 @@ const mapBgmsSelector = createSelector(
 
    the situations array
 
-   - should be a subset of:
-
-      ['moving', 'normalDay', 'normalNight', 'bossDay', 'bossNight']
-
+   - should be a subset of `situations`
    - no duplicated element
    - element if present should be in this order.
 
@@ -85,8 +84,9 @@ const mapBgmUseSiteInfoSelector = createSelector(
     _.mapValues(mapBgms, (bgmInfo, mapIdStr) => {
       const mapId = Number(mapIdStr)
       const register = (bgmId, situation) => {
-        if (bgmId <= 0)
+        if (!bgmId) {
           return
+        }
         useSiteInfo = modifyObject(
           bgmId,
           (uInfo = {}) =>
@@ -96,11 +96,10 @@ const mapBgmUseSiteInfoSelector = createSelector(
             )(uInfo)
         )(useSiteInfo)
       }
-      register(bgmInfo.moving, 'moving')
-      register(bgmInfo.normalBattle.day, 'normalDay')
-      register(bgmInfo.normalBattle.night, 'normalNight')
-      register(bgmInfo.bossBattle.day, 'bossDay')
-      register(bgmInfo.bossBattle.night, 'bossNight')
+
+      situations.map(propName =>
+        register(bgmInfo[propName], propName)
+      )
     })
     return useSiteInfo
   }
