@@ -7,7 +7,7 @@ illustrations, ship and equipment stats, and things beyond.
 
 ### 0.6.0 (pending)
 
-- Implemented Music Library (port bgm only for now)
+- Implemented Music Library
 
 ### 0.5.1
 

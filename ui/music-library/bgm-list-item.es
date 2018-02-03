@@ -3,16 +3,23 @@ import {
   ListGroupItem,
   Button,
 } from 'react-bootstrap'
+import { connect } from 'react-redux'
 import FontAwesome from 'react-fontawesome'
 import { PTyp } from '../../ptyp'
 
-class BgmListItem extends PureComponent {
+import {
+  poiVolumeSelector,
+} from '../../selectors'
+
+class BgmListItemImpl extends PureComponent {
   static propTypes = {
-    volume: PTyp.number.isRequired,
     children: PTyp.node.isRequired,
     maybePath: PTyp.string,
     // onRequestBgm(pathAvailable): callback for requesting bgm
     onRequestBgm: PTyp.func.isRequired,
+
+    // connected:
+    volume: PTyp.number.isRequired,
   }
 
   static defaultProps = {
@@ -67,5 +74,9 @@ class BgmListItem extends PureComponent {
     )
   }
 }
+
+const BgmListItem = connect(
+  state => ({volume: poiVolumeSelector(state)}),
+)(BgmListItemImpl)
 
 export { BgmListItem }

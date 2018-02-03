@@ -1,6 +1,8 @@
-import { createStructuredSelector } from 'reselect'
+import _ from 'lodash'
+import { createSelector, createStructuredSelector } from 'reselect'
 import React, { PureComponent } from 'react'
 import { modifyObject } from 'subtender'
+import { mapIdToStr } from 'subtender/kc'
 import {
   ListGroup,
   ListGroupItem,
@@ -9,18 +11,26 @@ import { connect } from 'react-redux'
 
 import {
   grouppedMapIdsSelector,
+  swfCacheSelector,
 } from '../../selectors'
 import {
   focusedListInfoSelector,
 } from './selectors'
 import { PTyp } from '../../ptyp'
 import { mapDispatchToProps } from '../../store'
+import { getBgmFilePath } from '../../swf-cache'
+import { BgmListItem } from './bgm-list-item'
+
+const getPath = getBgmFilePath('map')
 
 class MapBgmViewerImpl extends PureComponent {
   static propTypes = {
     grouppedMapIds: PTyp.array.isRequired,
     listInfo: PTyp.object.isRequired,
+    mapBgmCache: PTyp.object.isRequired,
     uiModify: PTyp.func.isRequired,
+
+    requestBgm: PTyp.func.isRequired,
   }
 
   handleChangeFocus = focus => () =>
@@ -33,6 +43,24 @@ class MapBgmViewerImpl extends PureComponent {
         )
       )
     )
+
+  handleRequestBgm = id => forced =>
+    this.props.requestBgm('map', id, forced)
+
+  mkBgmListItem = (id, key) => {
+    const {mapBgmCache} = this.props
+    const cacheHit = !_.isEmpty(mapBgmCache[id])
+    const maybePath = cacheHit ? getPath(id) : null
+    return (
+      <BgmListItem
+        key={key}
+        maybePath={maybePath}
+        onRequestBgm={this.handleRequestBgm(id)}
+      >
+        {id}
+      </BgmListItem>
+    )
+  }
 
   render() {
     const {grouppedMapIds, listInfo} = this.props
@@ -88,15 +116,26 @@ class MapBgmViewerImpl extends PureComponent {
         >
           {
             listInfo.type === 'simple' ? (
-              listInfo.list.map(x => (
-                <ListGroupItem
-                  key={x}
-                >
-                  {x}
-                </ListGroupItem>
-              ))
+              listInfo.list.map(bgmId => this.mkBgmListItem(bgmId, `simple-${bgmId}`))
             ) : (
-              <div>{JSON.stringify(listInfo.list)}</div>
+              <div>
+                {
+                  listInfo.list.map(({mapId, bgmIds}) => (
+                    <div
+                      key={mapId}
+                    >
+                      <h4>{mapIdToStr(mapId)}</h4>
+                      <div style={{marginLeft: 5}}>
+                        {
+                          bgmIds.map(bgmId =>
+                            this.mkBgmListItem(bgmId, `groupped-${bgmId}`)
+                          )
+                        }
+                      </div>
+                    </div>
+                  ))
+                }
+              </div>
             )
           }
         </ListGroup>
@@ -109,6 +148,10 @@ const MapBgmViewer = connect(
   createStructuredSelector({
     grouppedMapIds: grouppedMapIdsSelector,
     listInfo: focusedListInfoSelector,
+    mapBgmCache: createSelector(
+      swfCacheSelector,
+      sc => sc.mapBgm
+    ),
   }),
   mapDispatchToProps,
 )(MapBgmViewerImpl)

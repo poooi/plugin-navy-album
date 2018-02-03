@@ -5,10 +5,8 @@ import {
 } from 'reselect'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import FontAwesome from 'react-fontawesome'
-import { ListGroup, ListGroupItem, Button } from 'react-bootstrap'
+import { ListGroup } from 'react-bootstrap'
 import {
-  poiVolumeSelector,
   portBgmsSelector,
   swfCacheSelector,
 } from '../../selectors'
@@ -22,20 +20,15 @@ const getPath = getBgmFilePath('port')
 class PortBgmViewerImpl extends PureComponent {
   static propTypes = {
     portBgmList: PTyp.array.isRequired,
-    volume: PTyp.number.isRequired,
     portBgmCache: PTyp.object.isRequired,
     requestBgm: PTyp.func.isRequired,
-  }
-
-  handleCanPlay = e => {
-    e.target.volume = this.props.volume
   }
 
   handleRequestBgm = id => forced =>
     this.props.requestBgm('port', id, forced)
 
   render() {
-    const {portBgmList, portBgmCache, volume} = this.props
+    const {portBgmList, portBgmCache} = this.props
     return (
       <ListGroup
         style={{
@@ -51,7 +44,6 @@ class PortBgmViewerImpl extends PureComponent {
             return (
               <BgmListItem
                 key={id}
-                volume={volume}
                 maybePath={maybePath}
                 onRequestBgm={this.handleRequestBgm(id)}
               >
@@ -77,7 +69,6 @@ const PortBgmViewer = connect(
           'id'
         )
     ),
-    volume: poiVolumeSelector,
     portBgmCache: createSelector(
       swfCacheSelector,
       sc => sc.portBgm
