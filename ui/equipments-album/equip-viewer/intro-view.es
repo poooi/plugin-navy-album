@@ -1,9 +1,13 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { mergeMapStateToProps } from 'subtender'
 
 import {
   equipRawInfoSelector,
 } from '../selectors'
+import {
+  serverIpSelector,
+} from '../../../selectors'
 
 import { PTyp } from '../../../ptyp'
 
@@ -11,16 +15,16 @@ class IntroViewImpl extends PureComponent {
   static propTypes = {
     style: PTyp.object.isRequired,
     $equip: PTyp.object.isRequired,
+    serverIp: PTyp.string.isRequired,
   }
 
   render() {
-    const {style, $equip} = this.props
+    const {style, $equip, serverIp} = this.props
     const mstId = $equip.api_id
     if (mstId > 500) {
       return <div style={{display: 'none'}} />
     }
     const id = x => x
-    const {serverIp} = window
     const mstIdStr = String(mstId).padStart(3,'0')
     const prefix = `http://${serverIp}/kcs/resources/image/slotitem/`
 
@@ -76,6 +80,11 @@ class IntroViewImpl extends PureComponent {
   }
 }
 
-const IntroView = connect(equipRawInfoSelector)(IntroViewImpl)
+const IntroView = connect(
+  mergeMapStateToProps(
+    equipRawInfoSelector,
+    state => ({serverIp: serverIpSelector(state)}),
+  )
+)(IntroViewImpl)
 
 export { IntroView }

@@ -1,6 +1,6 @@
-const { config, _serverId } = window
+const { config } = window
 
-const windowURL = `file://${__dirname}/index.html?server_id=${_serverId}`
+const windowURL = `file://${__dirname}/index.html`
 
 const bounds = config.get('plugin.navyAlbumWindow.bounds') || {
   x: config.get("poi.window.x", 0),

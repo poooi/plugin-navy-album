@@ -91,12 +91,8 @@ const infoSelector = createSelector(
 )
 
 const serverIpSelector = createSelector(
-  () => window.serverIp,
   infoSelector,
-  (wServerIp, info) => {
-    const rServerIp = _.get(info,'server.ip')
-    return rServerIp || wServerIp
-  }
+  info => _.get(info,'server.ip')
 )
 
 const shipGraphSourceFuncSelector = createSelector(
