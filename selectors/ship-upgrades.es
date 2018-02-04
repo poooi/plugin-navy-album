@@ -1,15 +1,9 @@
 import _ from 'lodash'
-import { readJsonSync } from 'fs-extra'
-import { join } from 'path-extra'
 import { createSelector } from 'reselect'
 
 import {
   constSelector,
 } from 'views/utils/selectors'
-
-const defaultShipUpgrades = readJsonSync(
-  join(__dirname, '..', 'assets', 'ship-upgrades.json')
-)
 
 const shipUpgradesSelector = createSelector(
   constSelector,
@@ -27,7 +21,8 @@ const shipUpgradesSelector = createSelector(
        */
       return $shipUpgrades.filter(x => x.api_current_ship_id !== 0)
     } else {
-      return defaultShipUpgrades
+      console.error(`incorrect $shipUpgrades: ${$shipUpgrades}`)
+      return {}
     }
   }
 )
