@@ -7,7 +7,6 @@ import {
   sortByRemodelFuncSelector,
 } from '../../selectors'
 
-/*
 const genSummary = () => {
   const {getStore} = window
   const {$ships, $equips} = getStore('const')
@@ -21,9 +20,8 @@ const genSummary = () => {
     changedShipMstIds: genShips(),
   }
 }
-*/
 
-// const fakedSummary = genSummary()
+const fakedSummary = genSummary()
 
 const summarySelector = createSelector(
   gameUpdateSelector,
@@ -31,8 +29,8 @@ const summarySelector = createSelector(
 )
 
 const mkSimpleArrSelector = propName => createSelector(
-  // () => fakedSummary,
-  summarySelector,
+  () => fakedSummary,
+  // summarySelector,
   gu => _.get(gu, propName) || []
 )
 
@@ -132,4 +130,7 @@ const reorganizedSummarySelector = createSelector(
   }
 )
 
-export { reorganizedSummarySelector }
+export {
+  reorganizedSummarySelector,
+  mstIdToCategoryFuncSelector,
+}

@@ -35,8 +35,6 @@ globalSubscribe()
    - needs to move around some selectors
    - ship album
        - handle special CGs
-   - game update:
-       - preview CGs in tooltip
 
  */
 

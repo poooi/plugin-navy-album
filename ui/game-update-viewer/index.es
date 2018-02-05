@@ -20,12 +20,13 @@ import {
   reorganizedSummarySelector,
 } from './selectors'
 import { PTyp } from '../../ptyp'
-import { ShipGraphView } from '../ship-graph-view'
+// import { ShipGraphView } from '../ship-graph-view'
+import { ShipGraphViewWithCG } from './ship-graph-view-with-cg'
 import { mapDispatchToProps } from '../../store'
 
 const renderShipGraphRow = (
-  mstIds, rowKey, uiSwitchShip,
-  sgStyle = {width: 160, height: 40}
+  mstIds, rowKey, uiSwitchShip, prefix = 'gameupdate-default-prefix-',
+  graphSize = {width: 160, height: 40}
 ) =>
   mstIds.length > 0 && (
     <div
@@ -40,10 +41,10 @@ const renderShipGraphRow = (
             }}
             onClick={() => uiSwitchShip(mstId)}
             key={mstId}>
-            <ShipGraphView
-              style={sgStyle}
+            <ShipGraphViewWithCG
+              graphSize={graphSize}
               mstId={mstId}
-              characterId={1}
+              prefix={prefix}
             />
           </div>
         ))
@@ -87,14 +88,15 @@ class GameUpdateViewerImpl extends PureComponent {
     const {rSummary: {addedShipMstIds}, uiSwitchShip} = this.props
     const {special, friendly, abyssal} = addedShipMstIds
     const length = _.sum(_.values(addedShipMstIds).map(x => x.length))
+    const prefix = 'gameupdate-newship-'
     return length > 0 && [
       <h3 key="sh-1">{__('GameUpdateTab.NewShips')}</h3>,
-      renderShipGraphRow(friendly,"sh-2",uiSwitchShip),
+      renderShipGraphRow(friendly,"sh-2",uiSwitchShip,prefix),
       renderShipGraphRow(
-        special,"sh-3",uiSwitchShip,
+        special,"sh-3",uiSwitchShip,prefix,
         {width: 218, height: 300}
       ),
-      renderShipGraphRow(abyssal,"sh-4",uiSwitchShip),
+      renderShipGraphRow(abyssal,"sh-4",uiSwitchShip,prefix),
     ]
   }
 
@@ -176,14 +178,14 @@ class GameUpdateViewerImpl extends PureComponent {
     const {rSummary: {changedShipMstIds}, uiSwitchShip} = this.props
     const {special, friendly, abyssal} = changedShipMstIds
     const length = _.sum(_.values(changedShipMstIds).map(x => x.length))
-
+    const prefix = 'gameupdate-changedship-'
     return length > 0 && [
       <h3 key="cg-1">{__('GameUpdateTab.UpdatedCGs')}</h3>,
-      renderShipGraphRow(friendly,"cg-2",uiSwitchShip),
+      renderShipGraphRow(friendly,"cg-2",uiSwitchShip, prefix),
       renderShipGraphRow(
-        special,"cg-3",uiSwitchShip,
+        special,"cg-3",uiSwitchShip,prefix,
         {width: 218, height: 300}),
-      renderShipGraphRow(abyssal,"cg-4",uiSwitchShip),
+      renderShipGraphRow(abyssal,"cg-4",uiSwitchShip, prefix),
     ]
   }
 
@@ -210,7 +212,14 @@ class GameUpdateViewerImpl extends PureComponent {
       <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
         <Panel className="game-update-viewer" style={{marginBottom: 8, flex: 1}}>
           <Panel.Body>
-            <div style={{overflowY: 'auto', height: 0, flex: 1}}>
+            <div
+              style={{
+                overflowX: 'hidden',
+                overflowY: 'auto',
+                height: 0,
+                flex: 1,
+              }}
+            >
               {
                 summaryAvailable && _.concat(
                   this.renderNewShipsPart(),

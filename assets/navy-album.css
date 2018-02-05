@@ -115,3 +115,7 @@
     width: 1.2em;
     margin-right: .2em;
 }
+
+.game-update-shipcg-tooltip .tooltip-inner {
+    max-width: none;
+}

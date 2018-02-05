@@ -5,6 +5,11 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 0.7.0
+
+- Game Update Panel now groups together ships that belong to the same remodel chain.
+- Game Update Panel now pops up special CGs (if possible) when mouse moves over a ship.
+
 ### 0.6.0
 
 - Implemented Music Library
