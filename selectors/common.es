@@ -31,16 +31,26 @@ const masterSelector =
 
 const indexedShipGraphsSelector = createSelector(
   constSelector,
-  ({$shipgraph}) => _.keyBy($shipgraph, 'api_id'))
+  ({$shipgraph = {}}) => _.keyBy($shipgraph, 'api_id')
+)
+
+// all master ids including those for special CGs
+const allMasterIdsSelector = createSelector(
+  constSelector,
+  ({$shipgraph=[], $ships={}}) => {
+    const mstIds1 = $shipgraph.map(x => x.api_id)
+    const mstIds2 = _.values($ships).map(x => x.api_id)
+    return _.uniq([...mstIds1, ...mstIds2]).sort(generalComparator)
+  }
+)
 
 const shipGraphInfoSelector = createSelector(
   constSelector,
   indexedShipGraphsSelector,
-  ({$ships}, indexedShipGraphs) => {
-    const mstIds = Object.keys($ships)
-      .map(Number).sort(generalComparator)
-    return mstIds.map(mstId => {
-      const $ship = $ships[mstId]
+  allMasterIdsSelector,
+  ({$ships}, indexedShipGraphs, allMstIds) =>
+    allMstIds.map(mstId => {
+      const $ship = $ships[mstId] || {api_name: ''}
       const $shipgraph = indexedShipGraphs[mstId]
       const shipName = $ship.api_name
       return {
@@ -52,7 +62,6 @@ const shipGraphInfoSelector = createSelector(
         },
       }
     })
-  }
 )
 
 const indexedShipGraphInfoSelector = createSelector(
@@ -134,8 +143,10 @@ const isMasterIdAbyssalShip = mstId => mstId > 1500
 const isMasterIdSpecialCGFuncSelector = createSelector(
   shipsMasterDataSelector,
   $ships => mstId => {
+    // const.$ships not ready
     if (!$ships || typeof $ships !== 'object')
       return false
+
     if (isMasterIdAbyssalShip(mstId))
       return false
     const $ship = $ships[mstId]
