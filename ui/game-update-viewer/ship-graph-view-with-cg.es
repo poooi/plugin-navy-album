@@ -87,6 +87,8 @@ const ShipGraphViewWithCG = connect(
     } else if (cat === 'abyssal') {
       chIds = [3].filter(checkAvailable)
     // no character id for special for now
+    } else if (cat === 'special') {
+      chIds = [9,11].filter(checkAvailable)
     }
     return {chIds}
   },
