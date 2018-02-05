@@ -5,10 +5,11 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
-### 0.7.0
+### 0.7.0 (pending)
 
 - Game Update Panel now groups together ships that belong to the same remodel chain.
 - Game Update Panel now pops up special CGs (if possible) when mouse moves over a ship.
+- Default Digest updated (as of Feb 4, 2018 before maintenance)
 
 ### 0.6.0
 
