@@ -168,11 +168,9 @@ const wctfShipsSelector = createSelector(
  */
 const validMasterIdSetsSelector = createSelector(
   constSelector,
-  ({$ships, $shipgraph: _ignored, $equips}) => {
+  ({$ships, $shipgraph, $equips}) => {
     const shipMstIds = _.values($ships).map(x => x.api_id)
-    // const shipCGMstIds = _.values($shipgraph).map(x => x.api_id)
-    // we are not ready to handle special CGs, leaving this blank for now.
-    const shipCGMstIds = []
+    const shipCGMstIds = _.values($shipgraph).map(x => x.api_id)
     const equipMstIds = _.values($equips)
     const shipIdSet = new Set([...shipMstIds, ...shipCGMstIds])
     const equipIdSet = new Set(equipMstIds)
