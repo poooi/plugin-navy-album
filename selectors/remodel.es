@@ -56,6 +56,10 @@ const remodelInfoSelector = createSelector(
 )
 
 /*
+   returns a function:
+
+   sortByRemodelFunc: Array<{mstId, ...}> => Array<{mstId, ...}>
+
    to sort by remodeling is to
 
    (1) group ships by their originalMstIds
