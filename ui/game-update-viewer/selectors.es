@@ -12,25 +12,27 @@ const genSummary = () => {
   const {$ships, $equips} = getStore('const')
   const allShipMstIds = _.values($ships).map(x => x.api_id)
   const allEquipMstIds = _.values($equips).map(x => x.api_id)
-  const genShips = () => allShipMstIds.filter(() => Math.random() < 0.05 )
-  const genEquips = () => allEquipMstIds.filter(() => Math.random() < 0.05 )
+  const genShips = () => allShipMstIds.filter(() => Math.random() < 0.02 )
+  const genEquips = () => allEquipMstIds.filter(() => Math.random() < 0.02 )
   return {
     addedShipMstIds: genShips(),
     addedEquipMstIds: genEquips(),
-    changedShipMstIds: genShips(),
+    changedShipMstIds: [800, 801, 802, 855, 880], // genShips(),
   }
 }
 
-const fakedSummary = genSummary()
+const fakedSummary = false && genSummary()
 
-const summarySelector = createSelector(
-  gameUpdateSelector,
-  gu => _.get(gu, 'summary') || {}
-)
+const summarySelector =
+  fakedSummary
+    ? (() => fakedSummary)
+    : createSelector(
+      gameUpdateSelector,
+      gu => _.get(gu, 'summary') || {}
+    )
 
 const mkSimpleArrSelector = propName => createSelector(
-  () => fakedSummary,
-  // summarySelector,
+  summarySelector,
   gu => _.get(gu, propName) || []
 )
 
