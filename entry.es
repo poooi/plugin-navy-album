@@ -4,7 +4,6 @@ import i18n2 from 'i18n-2'
 import { join } from 'path-extra'
 import { remote } from 'electron'
 import _ from 'lodash'
-import { readJSONSync } from 'fs-extra'
 
 const { config } = window
 
