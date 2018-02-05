@@ -15,14 +15,13 @@ import { SlotitemIcon } from 'views/components/etc/icon'
 import {
   gameUpdateSelector,
   serverIpSelector,
-  isMasterIdSpecialCGFuncSelector,
 } from '../../selectors'
+import {
+  reorganizedSummarySelector,
+} from './selectors'
 import { PTyp } from '../../ptyp'
 import { ShipGraphView } from '../ship-graph-view'
 import { mapDispatchToProps } from '../../store'
-
-const isAbyssalMstId = mstId => mstId > 1500
-const isAbyssalEquipMstId = eMstId => eMstId > 500
 
 const renderShipGraphRow = (
   mstIds, rowKey, uiSwitchShip,
@@ -52,15 +51,30 @@ const renderShipGraphRow = (
     </div>
   )
 
+const GrouppedShipMstIds = PTyp.shape({
+  special: PTyp.array.isRequired,
+  friendly: PTyp.array.isRequired,
+  abyssal: PTyp.array.isRequired,
+})
+
+const GrouppedEquipMstIds = PTyp.shape({
+  friendly: PTyp.array.isRequired,
+  abyssal: PTyp.array.isRequired,
+})
+
 class GameUpdateViewerImpl extends PureComponent {
   static propTypes = {
+    summaryAvailable: PTyp.bool.isRequired,
     digest: PTyp.object,
-    summary: PTyp.object,
+    rSummary: PTyp.shape({
+      addedShipMstIds: GrouppedShipMstIds.isRequired,
+      addedEquipMstIds: GrouppedEquipMstIds.isRequired,
+      changedShipMstIds: GrouppedShipMstIds.isRequired,
+    }).isRequired,
     serverIp: PTyp.string.isRequired,
     $equips: PTyp.object.isRequired,
     uiSwitchShip: PTyp.func.isRequired,
     uiSwitchEquip: PTyp.func.isRequired,
-    isMasterIdSpecialCGFunc: PTyp.func.isRequired,
   }
 
   static defaultProps = {
@@ -69,39 +83,30 @@ class GameUpdateViewerImpl extends PureComponent {
   }
 
   renderNewShipsPart = () => {
-    const {summary, uiSwitchShip, isMasterIdSpecialCGFunc} = this.props
     const {__} = window
-    const [addedShipMstIdsSpecial, addedShipMstIdsNormal] =
-      _.partition(
-        summary.addedShipMstIds,
-        isMasterIdSpecialCGFunc,
-      )
-    const [abyssalMstIds, friendlyMstIds] =
-      _.partition(
-        addedShipMstIdsNormal,
-        isAbyssalMstId
-      )
-    return summary.addedShipMstIds.length > 0 && [
+    const {rSummary: {addedShipMstIds}, uiSwitchShip} = this.props
+    const {special, friendly, abyssal} = addedShipMstIds
+    const length = _.sum(_.values(addedShipMstIds).map(x => x.length))
+    return length > 0 && [
       <h3 key="sh-1">{__('GameUpdateTab.NewShips')}</h3>,
-      renderShipGraphRow(friendlyMstIds,"sh-2",uiSwitchShip),
+      renderShipGraphRow(friendly,"sh-2",uiSwitchShip),
       renderShipGraphRow(
-        addedShipMstIdsSpecial,"sh-3",uiSwitchShip,
+        special,"sh-3",uiSwitchShip,
         {width: 218, height: 300}
       ),
-      renderShipGraphRow(abyssalMstIds,"sh-4",uiSwitchShip),
+      renderShipGraphRow(abyssal,"sh-4",uiSwitchShip),
     ]
   }
 
   renderNewEquipsPart = () => {
-    const {serverIp, summary, $equips, uiSwitchEquip} = this.props
+    const {serverIp, rSummary: {addedEquipMstIds}, $equips, uiSwitchEquip} = this.props
+    const {friendly, abyssal} = addedEquipMstIds
+    const length = _.sum(_.values(addedEquipMstIds).map(x => x.length))
     const equipMstIdToSrc = mstId => {
       const mstIdStr = String(mstId).padStart(3,'0')
       const prefix = `http://${serverIp}/kcs/resources/image/slotitem/`
       return `${prefix}card/${mstIdStr}.png`
     }
-    const [abyssalEqMstIds, friendlyEqMstIds] =
-      _.partition(summary.addedEquipMstIds,isAbyssalEquipMstId)
-
     const mkSmallEquip = mstId => {
       const $equip = $equips[mstId]
       const iconId = $equip.api_type[3]
@@ -126,14 +131,14 @@ class GameUpdateViewerImpl extends PureComponent {
       )
     }
     const {__} = window
-    return summary.addedEquipMstIds.length > 0 && [
+    return length > 0 && [
       <h3 key="eq-1">{__('GameUpdateTab.NewEquipments')}</h3>,
-      friendlyEqMstIds.length > 0 && (
+      friendly.length > 0 && (
         <div
           style={{display: 'flex', flexWrap: 'wrap', marginBottom: '1em'}}
           key="eq-2">
           {
-            friendlyEqMstIds.map(mstId => (
+            friendly.map(mstId => (
               <div
                 key={mstId}
                 onClick={() => uiSwitchEquip(mstId)}
@@ -154,12 +159,12 @@ class GameUpdateViewerImpl extends PureComponent {
           }
         </div>
       ),
-      abyssalEqMstIds.length > 0 && (
+      abyssal.length > 0 && (
         <div
           style={{display: 'flex', flexWrap: 'wrap', marginBottom: '1em'}}
           key="eq-3">
           {
-            abyssalEqMstIds.map(mkSmallEquip)
+            abyssal.map(mkSmallEquip)
           }
         </div>
       ),
@@ -168,24 +173,17 @@ class GameUpdateViewerImpl extends PureComponent {
 
   renderUpdatedCGsPart = () => {
     const {__} = window
-    const {summary, uiSwitchShip, isMasterIdSpecialCGFunc} = this.props
-    const [changedShipMstIdsSpecial, changedShipMstIdsNormal] =
-      _.partition(
-        summary.changedShipMstIds,
-        isMasterIdSpecialCGFunc,
-      )
-    const [abyssalMstIds, friendlyMstIds] =
-      _.partition(
-        changedShipMstIdsNormal,
-        isAbyssalMstId
-      )
-    return summary.changedShipMstIds.length > 0 && [
+    const {rSummary: {changedShipMstIds}, uiSwitchShip} = this.props
+    const {special, friendly, abyssal} = changedShipMstIds
+    const length = _.sum(_.values(changedShipMstIds).map(x => x.length))
+
+    return length > 0 && [
       <h3 key="cg-1">{__('GameUpdateTab.UpdatedCGs')}</h3>,
-      renderShipGraphRow(friendlyMstIds,"cg-2",uiSwitchShip),
+      renderShipGraphRow(friendly,"cg-2",uiSwitchShip),
       renderShipGraphRow(
-        changedShipMstIdsSpecial,"cg-3",uiSwitchShip,
+        special,"cg-3",uiSwitchShip,
         {width: 218, height: 300}),
-      renderShipGraphRow(abyssalMstIds,"cg-4",uiSwitchShip),
+      renderShipGraphRow(abyssal,"cg-4",uiSwitchShip),
     ]
   }
 
@@ -207,14 +205,14 @@ class GameUpdateViewerImpl extends PureComponent {
   }
 
   render() {
-    const {digest, summary} = this.props
+    const {digest, summaryAvailable} = this.props
     return (
       <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
         <Panel className="game-update-viewer" style={{marginBottom: 8, flex: 1}}>
           <Panel.Body>
             <div style={{overflowY: 'auto', height: 0, flex: 1}}>
               {
-                summary && _.concat(
+                summaryAvailable && _.concat(
                   this.renderNewShipsPart(),
                   this.renderNewEquipsPart(),
                   this.renderUpdatedCGsPart()
@@ -231,14 +229,20 @@ class GameUpdateViewerImpl extends PureComponent {
 
 const GameUpdateViewer = connect(
   mergeMapStateToProps(
-    gameUpdateSelector,
+    state => {
+      const {summary, digest} = gameUpdateSelector(state)
+      return {
+        summaryAvailable: !_.isEmpty(summary),
+        digest,
+      }
+    },
     createStructuredSelector({
+      rSummary: reorganizedSummarySelector,
       serverIp: serverIpSelector,
       $equips: createSelector(
         constSelector,
         ({$equips}) => $equips
       ),
-      isMasterIdSpecialCGFunc: isMasterIdSpecialCGFuncSelector,
     })
   ),
   mapDispatchToProps,

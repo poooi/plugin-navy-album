@@ -33,8 +33,11 @@ globalSubscribe()
    - collapsible type group?
    - needs some refactoring
    - needs to move around some selectors
-   - groupping ships by remodel chain (in game update page)
-   - handle special CGs
+   - ship album
+       - handle special CGs
+   - game update:
+       - groupping ships by remodel chain
+       - preview CGs in tooltip
 
  */
 
