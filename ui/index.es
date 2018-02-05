@@ -36,7 +36,6 @@ globalSubscribe()
    - ship album
        - handle special CGs
    - game update:
-       - groupping ships by remodel chain
        - preview CGs in tooltip
 
  */

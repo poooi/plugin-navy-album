@@ -1,11 +1,29 @@
 import _ from 'lodash'
 import { createSelector } from 'reselect'
-import { selectorTester } from 'subtender/poi'
 
 import {
   gameUpdateSelector,
   isMasterIdSpecialCGFuncSelector,
+  sortByRemodelFuncSelector,
 } from '../../selectors'
+
+/*
+const genSummary = () => {
+  const {getStore} = window
+  const {$ships, $equips} = getStore('const')
+  const allShipMstIds = _.values($ships).map(x => x.api_id)
+  const allEquipMstIds = _.values($equips).map(x => x.api_id)
+  const genShips = () => allShipMstIds.filter(() => Math.random() < 0.05 )
+  const genEquips = () => allEquipMstIds.filter(() => Math.random() < 0.05 )
+  return {
+    addedShipMstIds: genShips(),
+    addedEquipMstIds: genEquips(),
+    changedShipMstIds: genShips(),
+  }
+}
+*/
+
+// const fakedSummary = genSummary()
 
 const summarySelector = createSelector(
   gameUpdateSelector,
@@ -13,6 +31,7 @@ const summarySelector = createSelector(
 )
 
 const mkSimpleArrSelector = propName => createSelector(
+  // () => fakedSummary,
   summarySelector,
   gu => _.get(gu, propName) || []
 )
@@ -62,7 +81,17 @@ const reorganizedSummarySelector = createSelector(
   addedShipMstIdsSelector,
   changedShipMstIdsSelector,
   mstIdToCategoryFuncSelector,
-  (addedEquipMstIds, addedShipMstIds, changedShipMstIds, mstIdToCat) => {
+  sortByRemodelFuncSelector,
+  (
+    addedEquipMstIds,
+    addedShipMstIds,
+    changedShipMstIds,
+    mstIdToCat,
+    sortByRemodel,
+  ) => {
+    const sortMstIds = xs =>
+      sortByRemodel(xs.map(mstId => ({mstId}))).map(x => x.mstId)
+
     let newAddedEquipMstIds
     {
       const [abyssal, friendly] =
@@ -76,7 +105,11 @@ const reorganizedSummarySelector = createSelector(
         friendly: friendly=[],
         abyssal: abyssal=[],
       } = _.groupBy(addedShipMstIds, mstIdToCat)
-      newAddedShipMstIds = {special, friendly, abyssal}
+      newAddedShipMstIds = {
+        special,
+        friendly: sortMstIds(friendly),
+        abyssal,
+      }
     }
     let newChangedShipMstIds
     {
@@ -85,7 +118,11 @@ const reorganizedSummarySelector = createSelector(
         friendly: friendly=[],
         abyssal: abyssal=[],
       } = _.groupBy(changedShipMstIds, mstIdToCat)
-      newChangedShipMstIds = {special, friendly, abyssal}
+      newChangedShipMstIds = {
+        special,
+        friendly: sortMstIds(friendly),
+        abyssal,
+      }
     }
     return {
       addedEquipMstIds: newAddedEquipMstIds,
