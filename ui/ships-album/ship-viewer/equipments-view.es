@@ -23,6 +23,9 @@ class EquipmentsViewImpl extends PureComponent {
 
   render() {
     const {slotCount, equips, $equips, style, uiSwitchEquip} = this.props
+    if (equips.length > 5) {
+      console.warn(`equips Array is longer than expected`, equips)
+    }
     return (
       <div
         style={{
@@ -33,7 +36,7 @@ class EquipmentsViewImpl extends PureComponent {
         className="equipments-view"
       >
         {
-          [0,1,2,3].map(slotInd => {
+          [0,1,2,3,4].map(slotInd => {
             const commonStyle= {
               fontSize: '1.2em',
               width: '100%',
