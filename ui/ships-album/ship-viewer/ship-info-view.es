@@ -139,9 +139,16 @@ class ShipInfoViewImpl extends PureComponent {
         <div style={{
           width: '100%',
           display: 'flex',
+          marginBottom: '.6em',
           justifyContent: 'space-around',
         }}>
-          <div style={{flex: 3, display: 'flex', justifyContent: 'space-around'}}>
+          <div
+            style={{
+              flex: 3,
+              display: 'flex',
+              justifyContent: 'space-around',
+              alignItems: 'center',
+            }}>
             <img
               style={{width: 218, height: 300}}
               src={`${shipGraphSource}#${lastFetch}`}

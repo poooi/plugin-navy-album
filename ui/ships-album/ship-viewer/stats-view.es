@@ -75,6 +75,7 @@ class StatsView extends PureComponent {
       <Table
         style={{
           tableLayout: 'fixed',
+          marginBottom: 0,
           ...style,
         }}
         striped bordered condensed hover>
