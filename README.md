@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 0.7.1
+
+- Fix crash caused by removed equipments
+
 ### 0.7.0
 
 - Game Update Panel now groups together ships that belong to the same remodel chain.
