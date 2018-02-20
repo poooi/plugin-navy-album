@@ -13,6 +13,10 @@ class Header extends PureComponent {
 
   render() {
     const {$equip, $equipType} = this.props
+    if ($equip === null || $equipType === null) {
+      return (<div>???</div>)
+    }
+
     const mstId = $equip.api_id
     return (
       <div

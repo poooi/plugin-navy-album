@@ -135,10 +135,17 @@ const mstIdSelector = createSelector(
 const equipRawInfoSelector = createSelector(
   mstIdSelector,
   constSelector,
-  (mstId, {$equips, $equipTypes}) => {
+  (mstId, {$equips = {}, $equipTypes = {}}) => {
+    if (_.isEmpty($equips) || _.isEmpty($equipTypes))
+      return {$equip: null, $equipType: null}
     const $equip = $equips[mstId]
+    if (_.isEmpty($equip))
+      return {$equip: null, $equipType: null}
     const etype = $equip.api_type[2]
     const $equipType = $equipTypes[etype]
+    if (_.isEmpty($equipType))
+      return {$equip: null, $equipType: null}
+
     return {$equip, $equipType}
   }
 )

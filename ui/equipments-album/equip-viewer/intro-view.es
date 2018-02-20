@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { mergeMapStateToProps } from 'subtender'
@@ -20,6 +21,10 @@ class IntroViewImpl extends PureComponent {
 
   render() {
     const {style, $equip, serverIp} = this.props
+    if (_.isEmpty($equip)) {
+      return <div style={{display: 'none'}} />
+    }
+
     const mstId = $equip.api_id
     if (mstId > 500) {
       return <div style={{display: 'none'}} />

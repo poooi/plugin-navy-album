@@ -13,6 +13,10 @@ class ExtraInfoView extends PureComponent {
 
   render() {
     const {$equip, style} = this.props
+    if (_.isEmpty($equip)) {
+      return <div style={{display: 'none'}} />
+    }
+
     const tdStyle = {
       textAlign: 'center',
       verticalAlign: 'middle',
