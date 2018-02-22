@@ -4,7 +4,7 @@
   "description": "Show illustration album of ships and items.",
   "main": "index.es",
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register --recursive",
+    "test": "mocha -r @babel/register --recursive",
     "lint": "eslint '**/*.es'",
     "update-kcreplay": "node scripts/update-kcreplay-db.js"
   },
@@ -41,12 +41,12 @@
     "kancolle"
   ],
   "devDependencies": {
-    "babel-core": "^6.24.1",
+    "@babel/core": "^7.0.0-beta.40",
+    "@babel/preset-env": "^7.0.0-beta.40",
+    "@babel/preset-stage-0": "^7.0.0-beta.40",
+    "@babel/register": "^7.0.0-beta.40",
     "babel-eslint": "^7.2.3",
     "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-preset-es2015-node6": "^0.4.0",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
     "eslint": "^4.3.0",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.7.0",
