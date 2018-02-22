@@ -35,6 +35,9 @@ globalSubscribe()
    - needs to move around some selectors
    - ship album
        - handle special CGs
+   - special CG handling: check shipgraph as well
+   - use error boundaries as current impl is fragile
+   - non-forced batch request for game update tab
 
  */
 
