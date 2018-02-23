@@ -32,10 +32,27 @@ const shipUpgradesSelector = createSelector(
    - Core.swf/scripts/vo/MasterShipUpgradeData._getBuildKitNum
  */
 const computeDevMatCount = (steel, blueprint, mstIdAfter) => {
-  if (mstIdAfter === 545)
-    return 20
-  if (mstIdAfter === 550)
-    return 20
+  const specialResults =
+    // Tatsuta K2
+    /*
+       NOTE: originally it's 214 for Tatsuta Kai,
+       but I believe it is a mistake
+       and the cost actually applies to Tatsuta K2, therefore 478.
+       Same applies to instant build
+     */
+    mstIdAfter === 478 ? 15 :
+    // Saratoga Mk.II
+    mstIdAfter === 545 ? 20 :
+    // Saratoga Mk.II Mod.2
+    mstIdAfter === 550 ? 20 :
+    // Zuihou K2
+    mstIdAfter === 555 ? 5 :
+    // Zuihou K2B
+    mstIdAfter === 560 ? 5 :
+    null
+
+  if (specialResults !== null)
+    return specialResults
 
   const groupB = [503,504,545,550]
 
@@ -51,6 +68,8 @@ const computeDevMatCount = (steel, blueprint, mstIdAfter) => {
 }
 
 const computeInstantBuildCount = mstIdAfter =>
+  // Tatsuta K2
+  mstIdAfter === 478 ? 5 :
   // Suzuya K2
   mstIdAfter === 503 ? 20 :
   // Kumano K2
@@ -63,6 +82,10 @@ const computeInstantBuildCount = mstIdAfter =>
   mstIdAfter === 545 ? 30 :
   // Saratoga Mk.II Mod.2
   mstIdAfter === 550 ? 30 :
+  // Zuihou K2
+  mstIdAfter === 555 ? 20 :
+  // Zuihou K2B
+  mstIdAfter === 560 ? 20 :
   0
 
 /*
