@@ -5,7 +5,13 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
-### 0.7.1
+### 0.7.3
+
+- Improved error handling
+- Ship upgrade info for Tatsuta K2, Zuihou K2 and Zuihou K2B is now available
+- Updated some abyssal info
+
+### 0.7.2
 
 - Fix crash caused by removed equipments
 

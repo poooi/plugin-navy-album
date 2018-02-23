@@ -28,3 +28,7 @@ so new users will receive game update of the on-going event.
 ```javascript
 _.sortBy(_.keys(getStore().ext['poi-plugin-navy-album']._.swfCache.mapBgm).map(Number), x => x)
 ```
+
+## ship upgrade info
+
+Update `selectors/ship-upgrades.es` using info from `Core.swf` if needed

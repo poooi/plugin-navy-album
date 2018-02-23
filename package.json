@@ -5,7 +5,7 @@
   "main": "index.es",
   "scripts": {
     "test": "mocha -r @babel/register --recursive",
-    "lint": "eslint '**/*.es'",
+    "lint": "eslint '**/*.es' || true",
     "update-kcreplay": "node scripts/update-kcreplay-db.js"
   },
   "repository": {
