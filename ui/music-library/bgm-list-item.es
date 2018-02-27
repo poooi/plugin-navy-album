@@ -103,6 +103,7 @@ class BgmListItemImpl extends PureComponent {
               }}
             >
               <audio
+                loop
                 className="play-control"
                 style={{
                   flex: 1,
