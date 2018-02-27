@@ -38,6 +38,9 @@ globalSubscribe()
    - special CG handling: check shipgraph as well
    - non-forced batch request for game update tab
    - docking time from store
+   - settings tab
+      - loop toggle
+      - lazy game update tab (no loading until requested)
 
  */
 
