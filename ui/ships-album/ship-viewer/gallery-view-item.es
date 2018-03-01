@@ -4,11 +4,29 @@ import {
 } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import { remote } from 'electron'
+import { extname } from 'path-extra'
+import { copySync } from 'fs-extra'
 
 import { PTyp } from '../../../ptyp'
 
-const downloadUrl =
-  remote.getCurrentWebContents().downloadURL
+const {dialog} = remote.require('electron')
+
+const handleSaveImage = (src, mstId, chId, lastFetch) => () => {
+  const ext = extname(src)
+  const defFileName = `${mstId}-${chId}-${lastFetch}${ext}`
+  dialog.showSaveDialog(
+    {defaultPath: defFileName},
+    fileName => {
+      if (!fileName)
+        return
+      try {
+        copySync(src, fileName)
+      } catch (e) {
+        console.error(`error while saving file: `, e)
+      }
+    }
+  )
+}
 
 class GalleryViewItem extends PureComponent {
   static propTypes = {
@@ -37,7 +55,7 @@ class GalleryViewItem extends PureComponent {
           src && (
             <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
               <Button
-                onClick={() => downloadUrl(src)}
+                onClick={handleSaveImage(src,mstId,chId, lastFetch)}
                 bsSize="small">
                 <FontAwesome name="save" />
               </Button>
