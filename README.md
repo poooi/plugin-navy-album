@@ -5,6 +5,11 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 0.7.4 (pending)
+
+- All music under music library now loops
+- Fix crash when saving gallery images
+
 ### 0.7.3
 
 - Improved error handling
