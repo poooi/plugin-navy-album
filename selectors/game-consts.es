@@ -164,6 +164,21 @@ const sortedMapBgmsSelector = createSelector(
   )
 )
 
+/*
+   it seems that we can actually derive this factor from store, compare the result
+   of following two:
+
+   - _.values(getStore().const.$shipTypes).map(d => d.api_scnt / 2)
+   - _.values(getStore().const.$shipTypes).map(d => getDockingFactor(d.api_id))
+
+*/
+const getDockingFactorFuncSelector = createSelector(
+  constSelector,
+  ({$shipTypes}) => _.memoize(stype =>
+    _.get($shipTypes, [stype, 'api_scnt'], NaN) / 2
+  )
+)
+
 export {
   portBgmsSelector,
   mapBgmsSelector,
@@ -172,4 +187,5 @@ export {
   allMapBgmIdsSelector,
   unusedMapBgmIdsSelector,
   sortedMapBgmsSelector,
+  getDockingFactorFuncSelector,
 }

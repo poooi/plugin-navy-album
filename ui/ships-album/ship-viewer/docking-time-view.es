@@ -6,9 +6,14 @@ import Slider from '../../../assets/rc-slider.min'
 
 import { PTyp } from '../../../ptyp'
 import { mapDispatchToProps } from '../../../store'
-import { shipViewerSelector } from '../selectors'
 import {
-  computeDockingTimePerHp,
+  shipViewerSelector,
+} from '../selectors'
+import {
+  getDockingFactorFuncSelector,
+} from '../../../selectors'
+import {
+  computeDockingTimePerHpWith,
   computeHealthState,
   healthStateColors,
 } from '../../../game-misc'
@@ -39,6 +44,9 @@ class DockingTimeViewImpl extends PureComponent {
     nowHp: PTyp.number.isRequired,
     maxHp: PTyp.number.isRequired,
     uiModify: PTyp.func.isRequired,
+
+    // connected:
+    computeDockingTimePerHp: PTyp.func.isRequired,
   }
 
   componentDidMount() {
@@ -72,7 +80,7 @@ class DockingTimeViewImpl extends PureComponent {
   }
 
   render() {
-    const {nowHp, maxHp} = this.props
+    const {nowHp, maxHp, computeDockingTimePerHp} = this.props
     if (!_.isInteger(maxHp) || maxHp <= 1 || nowHp > maxHp) {
       return (<div style={{display: 'none'}} />)
     }
@@ -124,7 +132,11 @@ const DockingTimeView = connect(
   (state, {mstId}) => {
     const stype = _.get(state.const,['$ships',mstId,'api_stype'])
     const nowHp = shipViewerSelector(state).dockingCurrentHp
-    return {stype, nowHp}
+    const getDockingFactor = getDockingFactorFuncSelector(state)
+    console.log(getDockingFactor(2), 'aaaa')
+    const computeDockingTimePerHp =
+      computeDockingTimePerHpWith(getDockingFactor)
+    return {stype, nowHp, computeDockingTimePerHp}
   },
   mapDispatchToProps
 )(DockingTimeViewImpl)
