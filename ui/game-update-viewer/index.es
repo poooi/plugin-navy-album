@@ -80,7 +80,6 @@ class GameUpdateViewerImpl extends PureComponent {
 
   static defaultProps = {
     digest: null,
-    summary: null,
   }
 
   renderNewShipsPart = () => {

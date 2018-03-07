@@ -30,7 +30,6 @@ class ShipGraphViewImpl extends PureComponent {
     debuffFlag: false,
     hideOnNoSrc: false,
     style: {},
-    src: '',
   }
 
   componentDidMount() {

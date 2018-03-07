@@ -36,7 +36,7 @@ const mayExtractWithLock = async context => {
     if (! fetched.ok)
       throw new Error('fetch failed.')
     const ab = await fetched.arrayBuffer()
-    const swfData = await readFromBufferP(new Buffer(ab))
+    const swfData = await readFromBufferP(Buffer.from(ab))
     await Promise.all(
       extractImages(swfData.tags).map(async p => {
         const data = await p

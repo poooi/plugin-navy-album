@@ -71,7 +71,10 @@ module.exports = {
     'react/jsx-boolean-value': 'off',
     'no-mixed-operators': 'off',
     'consistent-return': 'off',
-    'no-plusplus': 'off'
+    'no-plusplus': 'off',
+    'function-paren-newline': 'off',
+    'object-curly-newline': 'off',
+    'jsx-a11y/click-events-have-key-events': 'off'
   },
   'settings': {
     'import/resolver': {

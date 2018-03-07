@@ -32,7 +32,7 @@ const mayExtractWithLock = async context => {
     if (! fetched.ok)
       throw new Error('fetch failed.')
     const ab = await fetched.arrayBuffer()
-    const swfData = await readFromBufferP(new Buffer(ab))
+    const swfData = await readFromBufferP(Buffer.from(ab))
     const sounds = _.compact(await Promise.all(extractSounds(swfData.tags)))
     dataReady(sounds)
   } catch (e) {

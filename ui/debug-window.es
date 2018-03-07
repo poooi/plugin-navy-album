@@ -21,7 +21,7 @@ const initiateFetch = async setState => {
     return console.error('fetch failed.')
   const ab = await fetched.arrayBuffer()
 
-  const swfData = await readFromBufferP(new Buffer(ab))
+  const swfData = await readFromBufferP(Buffer.from(ab))
   extractImages(swfData.tags).map(async p => {
     const imgData = await p
     setState(xs => ({

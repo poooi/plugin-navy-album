@@ -22,10 +22,6 @@ class StatsView extends PureComponent {
     prefix: PTyp.string.isRequired,
   }
 
-  static defaultProps = {
-    wctfShip: null,
-  }
-
   render() {
     const {style, stats} = this.props
     const id = x => x
