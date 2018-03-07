@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 0.7.5
+
+- Ship text search is now case-insensitive.
+
 ### 0.7.4
 
 - All music under music library now loops
