@@ -23,9 +23,12 @@ so new users will receive game update of the on-going event.
 
 ## `assets/map-bgms.json`
 
-(TODO) we'll need to maintain a list of known map bgm ids.
+We'll need to maintain a list of known map bgm ids.
 
 ```javascript
+for (let i = 1; i < 200; ++i) {
+    bac.requestBgm('map',i)
+}
 _.sortBy(_.keys(getStore().ext['poi-plugin-navy-album']._.swfCache.mapBgm).map(Number), x => x)
 ```
 
