@@ -133,7 +133,6 @@ const DockingTimeView = connect(
     const stype = _.get(state.const,['$ships',mstId,'api_stype'])
     const nowHp = shipViewerSelector(state).dockingCurrentHp
     const getDockingFactor = getDockingFactorFuncSelector(state)
-    console.log(getDockingFactor(2), 'aaaa')
     const computeDockingTimePerHp =
       computeDockingTimePerHpWith(getDockingFactor)
     return {stype, nowHp, computeDockingTimePerHp}
