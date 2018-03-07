@@ -49,15 +49,23 @@ const levelSelector = createSelector(
 const filteredShipsInfoSelector = createSelector(
   searchTextSelector,
   shipsInfoSelector,
-  (searchText, shipsInfo) =>
-    searchText === '' ?
-      shipsInfo :
-      shipsInfo.filter(si =>
-        si.name.indexOf(searchText) !== -1 ||
-        si.yomi.indexOf(searchText) !== -1 ||
-        si.romaji.indexOf(searchText) !== -1 ||
-        String(si.mstId).indexOf(searchText) !== -1
-      )
+  (searchText, shipsInfo) => {
+    if (searchText === '')
+      return shipsInfo
+
+    const searchTextLC = _.lowerCase(searchText)
+    // convert raw data to lowercase string, then compare with searchText
+    // to implement a case-insensitive search
+    const matchFound = raw =>
+      _.lowerCase(String(raw)).indexOf(searchTextLC) !== -1
+
+    return shipsInfo.filter(si =>
+      matchFound(si.name) ||
+      matchFound(si.yomi) ||
+      matchFound(si.romaji) ||
+      matchFound(si.mstId)
+    )
+  }
 )
 
 // "stage1" takes into account friendly / abyssal options
