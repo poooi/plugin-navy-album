@@ -32,7 +32,6 @@ globalSubscribe()
 
    - collapsible type group?
    - needs some refactoring
-   - needs to move around some selectors
    - ship album
        - handle special CGs
    - special CG handling: check shipgraph as well
