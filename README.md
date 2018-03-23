@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 0.7.6 (pending)
+
+- Update few assets
+
 ### 0.7.5
 
 - Ship text search is now case-insensitive.
