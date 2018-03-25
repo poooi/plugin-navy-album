@@ -5,9 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
-### 0.7.6 (pending)
+### 0.7.6
 
 - Update few assets
+- Fix & Update problems with devmat & instant build consumption
 
 ### 0.7.5
 
