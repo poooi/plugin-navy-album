@@ -31,24 +31,22 @@ const shipUpgradesSelector = createSelector(
    - Core.swf/scripts/vo/MasterShipUpgradeData._getNeedDevNum
    - Core.swf/scripts/vo/MasterShipUpgradeData._getBuildKitNum
  */
-const computeDevMatCount = (steel, blueprint, mstIdAfter) => {
+const computeDevMatCount = (steel, blueprint, mstIdBefore) => {
   const specialResults =
-    // Tatsuta K2
-    /*
-       NOTE: originally it's 214 for Tatsuta Kai,
-       but I believe it is a mistake
-       and the cost actually applies to Tatsuta K2, therefore 478.
-       Same applies to instant build
-     */
-    mstIdAfter === 478 ? 15 :
-    // Saratoga Mk.II
-    mstIdAfter === 545 ? 20 :
-    // Saratoga Mk.II Mod.2
-    mstIdAfter === 550 ? 20 :
-    // Zuihou K2
-    mstIdAfter === 555 ? 5 :
-    // Zuihou K2B
-    mstIdAfter === 560 ? 5 :
+    // => Tatsuta K2
+    mstIdBefore === 214 ? 15 :
+    // => Hamakaze B Kai
+    mstIdBefore === 312 ? 40 :
+    // => Isokaze B Kai
+    mstIdBefore === 320 ? 40 :
+    // => Saratoga Mk.II
+    mstIdBefore === 545 ? 20 :
+    // => Saratoga Mk.II Mod.2
+    mstIdBefore === 550 ? 20 :
+    // => Zuihou K2
+    mstIdBefore === 555 ? 5 :
+    // => Zuihou K2B
+    mstIdBefore === 560 ? 5 :
     null
 
   if (specialResults !== null)
@@ -56,7 +54,7 @@ const computeDevMatCount = (steel, blueprint, mstIdAfter) => {
 
   const groupB = [503,504,545,550]
 
-  if (blueprint > 0 && !groupB.includes(mstIdAfter))
+  if (blueprint > 0 && !groupB.includes(mstIdBefore))
     return 0
   /* eslint-disable indent */
   return steel < 4500 ? 0 :
@@ -67,25 +65,29 @@ const computeDevMatCount = (steel, blueprint, mstIdAfter) => {
   /* eslint-enable indent */
 }
 
-const computeInstantBuildCount = mstIdAfter =>
+const computeInstantBuildCount = mstIdBefore =>
   // Tatsuta K2
-  mstIdAfter === 478 ? 5 :
+  mstIdBefore === 214 ? 5 :
+  // Hamakaze B Kai
+  mstIdBefore === 312 ? 10 :
+  // Isokaze B Kai
+  mstIdBefore === 320 ? 10 :
   // Suzuya K2
-  mstIdAfter === 503 ? 20 :
+  mstIdBefore === 503 ? 20 :
   // Kumano K2
-  mstIdAfter === 504 ? 20 :
+  mstIdBefore === 504 ? 20 :
   // Suzuya Carrier K2
-  mstIdAfter === 508 ? 20 :
+  mstIdBefore === 508 ? 20 :
   // Kumano Carrier K2
-  mstIdAfter === 509 ? 20 :
+  mstIdBefore === 509 ? 20 :
   // Saratoga Mk.II
-  mstIdAfter === 545 ? 30 :
+  mstIdBefore === 545 ? 30 :
   // Saratoga Mk.II Mod.2
-  mstIdAfter === 550 ? 30 :
+  mstIdBefore === 550 ? 30 :
   // Zuihou K2
-  mstIdAfter === 555 ? 20 :
+  mstIdBefore === 555 ? 20 :
   // Zuihou K2B
-  mstIdAfter === 560 ? 20 :
+  mstIdBefore === 560 ? 20 :
   0
 
 /*
@@ -142,8 +144,8 @@ const remodelDetailsSelector = createSelector(
         level: $ship.api_afterlv,
         ammo, steel,
         ...extraInfo,
-        devMat: computeDevMatCount(steel, extraInfo.blueprint, mstIdAfter),
-        instantBuild: computeInstantBuildCount(mstIdAfter),
+        devMat: computeDevMatCount(steel, extraInfo.blueprint, mstIdBefore),
+        instantBuild: computeInstantBuildCount(mstIdBefore),
       }
     })
     return remodelDetails
