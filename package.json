@@ -60,7 +60,7 @@
   },
   "dependencies": {
     "shallowequal": "^1.0.2",
-    "subtender": "^0.13.1",
+    "subtender": "^0.14.0",
     "swf-extract": "^1.1.0"
   }
 }
