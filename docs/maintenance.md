@@ -26,10 +26,13 @@ so new users will receive game update of the on-going event.
 We'll need to maintain a list of known map bgm ids.
 
 ```javascript
+// wait for this command to finish, then proceed.
 for (let i = 1; i < 200; ++i) {
     bac.requestBgm('map',i)
 }
+JSON.stringify(
 _.sortBy(_.keys(getStore().ext['poi-plugin-navy-album']._.swfCache.mapBgm).map(Number), x => x)
+)
 ```
 
 ## ship upgrade info
