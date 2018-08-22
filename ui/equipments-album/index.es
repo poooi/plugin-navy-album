@@ -64,7 +64,9 @@ class EquipmentsAlbumImpl extends Component {
             marginBottom: 8,
             ...(expanded ? {} : {display: 'none'}),
           }}>
-          <ButtonToolbar>
+          <ButtonToolbar
+            style={{padding: 15}}
+          >
             <ButtonGroup>
               <Button
                 onClick={this.handleToggle('expanded')}
