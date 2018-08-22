@@ -11,6 +11,7 @@ import { levelSelector } from '../selectors'
 import {
   wctfShipsSelector,
 } from '../../../selectors'
+import {getShipImgPath} from '../../../game-misc/p2-ship-img'
 
 import { EquipmentsView } from './equipments-view'
 import { StatsView } from './stats-view'
@@ -98,12 +99,14 @@ class ShipInfoViewImpl extends PureComponent {
     statsL: PTyp.object.isRequired,
     wctfShips: PTyp.object.isRequired,
     lastFetch: PTyp.number.isRequired,
+    serverIp: PTyp.string.isRequired,
   }
 
   render() {
     const {
       mstId, shipGraphSource, $ship,
       statsL, level, wctfShips, lastFetch,
+      serverIp,
     } = this.props
     const wctfShip = _.get(wctfShips,mstId, {})
     // normalize: 'equip' prop can either be a number or an Object of {id, star}
@@ -127,7 +130,7 @@ class ShipInfoViewImpl extends PureComponent {
     const {__} = window
     const introMessaage = normalizeIntro($ship.api_getmes)
     const shipStats = mkStats($ship, wctfShip, statsL, level)
-
+    const url = `http://${serverIp}${getShipImgPath(mstId, 'card', false)}`
     return (
       <div
         className="ship-info-view"
@@ -151,7 +154,7 @@ class ShipInfoViewImpl extends PureComponent {
             }}>
             <img
               style={{width: 218, height: 300}}
-              src={`${shipGraphSource}#${lastFetch}`}
+              src={url}
               alt={__('ShipsTab.WaitingDataFor',mstId)}
             />
           </div>
@@ -252,6 +255,8 @@ const ShipInfoView = connect(
     // Level-dependent stats
     statsL: statsAtCurrentLevelSelector,
     wctfShips: wctfShipsSelector,
+    // TODO: hacky
+    serverIp: state => _.get(state, ['info', 'server', 'ip']),
   })
 )(ShipInfoViewImpl)
 
