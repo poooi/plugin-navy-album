@@ -23,6 +23,7 @@ import { mapDispatchToProps } from '../../../store'
 import { AbyssalInfoView } from './abyssal-info-view'
 import { ShipInfoView } from './ship-info-view'
 import { GalleryView } from './gallery-view'
+import { GalleryViewP2 } from './gallery-view-p2'
 import { QuotesView } from './quotes-view'
 import { ErrorBoundary } from '../../error-boundary'
 
@@ -123,7 +124,13 @@ class ShipViewerImpl extends Component {
                           }
                         </Tab.Pane>
                         <Tab.Pane eventKey="image">
-                          <GalleryView style={{}} />
+                          {
+                            isAbyssalShip ? (
+                              <GalleryView style={{}} />
+                            ) : (
+                              <GalleryViewP2 mstId={mstId} />
+                            )
+                          }
                         </Tab.Pane>
                         <Tab.Pane eventKey="voice">
                           <QuotesView />
