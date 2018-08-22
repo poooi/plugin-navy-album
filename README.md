@@ -5,6 +5,12 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 1.0.0 (pending)
+
+- Update few assets
+- Gallery is now using HTML5 resources if possible (hopefully)
+- Level slider upper bound is now 175 for the obvious reason.
+
 ### 0.7.8
 
 - Update few assets
