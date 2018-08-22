@@ -36,6 +36,7 @@ class IntroViewImpl extends PureComponent {
             alignItems: 'center',
           }}>
           <img
+            key={`card-${mstId}`}
             src={`${prefix}card/${mstIdStr}.png`}
             alt="equip-img"
             style={{width: 260, height: 260}}
@@ -68,7 +69,7 @@ class IntroViewImpl extends PureComponent {
             ].map((src, ind) => (
               <img
                 style={{height: 200, width: 'auto'}}
-                key={id(ind)}
+                key={src}
                 alt={`eqp-extra-${ind}`}
                 src={`${prefix}${src}`}
               />

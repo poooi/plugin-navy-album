@@ -153,6 +153,7 @@ class ShipInfoViewImpl extends PureComponent {
               alignItems: 'center',
             }}>
             <img
+              key={mstId}
               style={{width: 218, height: 300}}
               src={url}
               alt={__('ShipsTab.WaitingDataFor',mstId)}
