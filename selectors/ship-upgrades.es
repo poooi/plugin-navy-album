@@ -28,31 +28,36 @@ const shipUpgradesSelector = createSelector(
 )
 
 /*
-   - Core.swf/scripts/vo/MasterShipUpgradeData._getNeedDevNum
-   - Core.swf/scripts/vo/MasterShipUpgradeData._getBuildKitNum
+   kcs2/js/main.js:
+   - _getRequiredDevkitNum
+   - _getRequiredBuildKitNum
  */
 const computeDevMatCount = (steel, blueprint, mstIdBefore) => {
   const specialResults =
-    // => Tatsuta K2
+    // Tatsuta K2
     mstIdBefore === 214 ? 15 :
-    // => Hamakaze B Kai
-    mstIdBefore === 312 ? 40 :
-    // => Isokaze B Kai
-    mstIdBefore === 320 ? 40 :
-    // => Saratoga Mk.II
-    mstIdBefore === 545 ? 20 :
-    // => Saratoga Mk.II Mod.2
-    mstIdBefore === 550 ? 20 :
-    // => Zuihou K2
-    mstIdBefore === 555 ? 5 :
-    // => Zuihou K2B
-    mstIdBefore === 560 ? 5 :
+    // Saratoga Mk.II, Saratoga Mk.II Mod.2
+    (mstIdBefore === 545 || mstIdBefore === 550) ? 20 :
+    // Zuihou K2, Zuihou K2B
+    (mstIdBefore === 555 || mstIdBefore === 560) ? 5 :
+    // Hamakaze B Kai, Isokaze B Kai, Urakaze D Kai
+    (mstIdBefore === 312 || mstIdBefore === 320 || mstIdBefore === 317) ? 40 :
+    // Kagero K2, Shiranui K2
+    (mstIdBefore === 225 || mstIdBefore === 226) ? 20 :
+    // Ise K2
+    mstIdBefore === 82 ? 80 :
+    // Kuroshio K2
+    mstIdBefore === 227 ? 20 :
+    // Shiratsuyu K2
+    mstIdBefore === 242 ? 15 :
+    // Tenryuu K2
+    mstIdBefore === 213 ? 24 :
     null
 
   if (specialResults !== null)
     return specialResults
 
-  const groupB = [503,504,545,550]
+  const groupB = [503,504]
 
   if (blueprint > 0 && !groupB.includes(mstIdBefore))
     return 0
@@ -60,34 +65,23 @@ const computeDevMatCount = (steel, blueprint, mstIdBefore) => {
   return steel < 4500 ? 0 :
     steel < 5500 ? 10 :
     steel < 6500 ? 15 :
-    steel < 999999 ? 20 :
-    Infinity
+    20
   /* eslint-enable indent */
 }
 
 const computeInstantBuildCount = mstIdBefore =>
   // Tatsuta K2
   mstIdBefore === 214 ? 5 :
-  // Hamakaze B Kai
-  mstIdBefore === 312 ? 10 :
-  // Isokaze B Kai
-  mstIdBefore === 320 ? 10 :
-  // Suzuya K2
-  mstIdBefore === 503 ? 20 :
-  // Kumano K2
-  mstIdBefore === 504 ? 20 :
-  // Suzuya Carrier K2
-  mstIdBefore === 508 ? 20 :
-  // Kumano Carrier K2
-  mstIdBefore === 509 ? 20 :
-  // Saratoga Mk.II
-  mstIdBefore === 545 ? 30 :
-  // Saratoga Mk.II Mod.2
-  mstIdBefore === 550 ? 30 :
-  // Zuihou K2
-  mstIdBefore === 555 ? 20 :
-  // Zuihou K2B
-  mstIdBefore === 560 ? 20 :
+  // Suzuya K2, Kumano K2, Suzuya Carrier K2, Kumano Carrier K2
+  (mstIdBefore === 503 || mstIdBefore === 504 || mstIdBefore === 508 || mstIdBefore === 509) ? 20 :
+  // Saratoga Mk.II, Saratoga Mk.II Mod.2
+  (mstIdBefore === 545 || mstIdBefore === 550) ? 30 :
+  // Zuihou K2, Zuihou K2B
+  (mstIdBefore === 555 || mstIdBefore === 560) ? 20 :
+  // Hamakaze B Kai, Isokaze B Kai, Urakaze D Kai
+  (mstIdBefore === 312 || mstIdBefore === 320 || mstIdBefore === 317) ? 10 :
+  // Tenryuu K2
+  mstIdBefore === 213 ? 8 :
   0
 
 /*
