@@ -37,4 +37,4 @@ _.sortBy(_.keys(getStore().ext['poi-plugin-navy-album']._.swfCache.mapBgm).map(N
 
 ## ship upgrade info
 
-Update `selectors/ship-upgrades.es` using info from `Core.swf` if needed
+Update `selectors/ship-upgrades.es` using info from `kcs2/js/main.js` if needed
