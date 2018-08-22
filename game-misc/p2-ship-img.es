@@ -71,3 +71,20 @@ export function getShipImgPath(id, type, damaged) {
   map.set(mapkey, ret)
   return ret
 }
+
+const getBgm = (id, type) => {
+  const padId = padStart(id, 3, '0')
+  const code = create(id, `bgm_${type}`)
+  return `/kcs2/resources/bgm/${type}/${padId}_${code}.mp3`
+}
+
+const getPortBgm = id => getBgm(id, 'port')
+
+// TODO: for debugging
+window.getPortBgm = getPortBgm
+window.getBgm = getBgm
+
+export {
+  getBgm,
+  getPortBgm,
+}
