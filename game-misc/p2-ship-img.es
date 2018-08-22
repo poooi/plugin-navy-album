@@ -2,7 +2,11 @@ import { padStart } from 'lodash'
 
 export const shipImgType = [
   'banner',
-  'banner_g',
+  /*
+     technically exists for sunk ships (damaged only),
+     but it's too unpleasant to put in the gallery.
+   */
+  // 'banner_g',
   'card',
   'remodel',
   'character_up',
