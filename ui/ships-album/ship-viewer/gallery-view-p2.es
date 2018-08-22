@@ -33,6 +33,7 @@ class GalleryViewP2Impl extends PureComponent {
             const url = `http://${serverIp}${getShipImgPath(mstId, x.ty, x.damaged)}`
             return (
               <ListGroupItem
+                key={`${mstId},${x.ty},${x.damaged}`}
                 style={{
                   textAlign: 'center',
                 }}
