@@ -81,8 +81,8 @@ const getBgm = (id, type) => {
 const getPortBgm = id => getBgm(id, 'port')
 
 // TODO: for debugging
-window.getPortBgm = getPortBgm
-window.getBgm = getBgm
+// window.getPortBgm = getPortBgm
+// window.getBgm = getBgm
 
 export {
   getBgm,

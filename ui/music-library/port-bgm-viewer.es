@@ -13,7 +13,7 @@ import {
 import { PTyp } from '../../ptyp'
 import { mapDispatchToProps } from '../../store'
 import { getBgmFilePath } from '../../swf-cache'
-import { BgmListItem } from './bgm-list-item'
+import { BgmListItemP2 } from './bgm-list-item-p2'
 
 const getPath = getBgmFilePath('port')
 
@@ -40,17 +40,14 @@ class PortBgmViewerImpl extends PureComponent {
       >
         {
           portBgmList.map(({id, name}) => {
-            const cacheHit = !_.isEmpty(portBgmCache[id])
-            const maybePath = cacheHit ? getPath(id) : null
             return (
-              <BgmListItem
+              <BgmListItemP2
                 key={id}
-                maybePath={maybePath}
-                onRequestBgm={this.handleRequestBgm(id)}
-                isFetching={isFetching(id)}
+                bgmId={id}
+                bgmType="port"
               >
                 {`${name} (${id})`}
-              </BgmListItem>
+              </BgmListItemP2>
             )
           })
         }
