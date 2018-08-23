@@ -127,7 +127,7 @@ class ShipInfoViewImpl extends PureComponent {
         return {cap: slotNum, mstId: null, star: null}
       }
     })
-    const {__} = window
+    const {__} = window.i18n["poi-plugin-navy-album"]
     const introMessaage = normalizeIntro($ship.api_getmes)
     const shipStats = mkStats($ship, wctfShip, statsL, level)
     const url = `http://${serverIp}${getShipImgPath(mstId, 'card', false)}`

@@ -54,7 +54,7 @@ class EquipmentsAlbumImpl extends Component {
       groupEquipTypes,
     } = this.props
 
-    const {__} = window
+    const {__} = window.i18n["poi-plugin-navy-album"]
 
     const boolToBsStyle = v => v ? 'primary' : 'default'
     return (

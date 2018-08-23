@@ -45,7 +45,7 @@ class AbyssalInfoView extends PureComponent {
   render() {
     const {mstId, shipGraphSource, $ship, lastFetch} = this.props
     const $abyssal = abyssalInfo[mstId]
-    const {__} = window
+    const {__} = window.i18n["poi-plugin-navy-album"]
     const hasAbyssalEquipsInfo =
       $abyssal &&
       Array.isArray($abyssal.EQUIPS) &&

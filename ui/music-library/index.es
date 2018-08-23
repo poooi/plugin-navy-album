@@ -30,7 +30,7 @@ class MusicLibraryImpl extends PureComponent {
 
   render() {
     const {activeTab} = this.props
-    const {__} = window
+    const {__} = window.i18n["poi-plugin-navy-album"]
     return (
       <Panel
         style={{

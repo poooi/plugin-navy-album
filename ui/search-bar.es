@@ -44,7 +44,7 @@ class SearchBar extends Component {
 
   render() {
     const {style} = this.props
-    const {__} = window
+    const {__} = window.i18n["poi-plugin-navy-album"]
     return (
       <div style={{
         display: 'flex',

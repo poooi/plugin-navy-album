@@ -83,7 +83,7 @@ class GameUpdateViewerImpl extends PureComponent {
   }
 
   renderNewShipsPart = () => {
-    const {__} = window
+    const {__} = window.i18n["poi-plugin-navy-album"]
     const {rSummary: {addedShipMstIds}, uiSwitchShip} = this.props
     const {special, friendly, abyssal} = addedShipMstIds
     const length = _.sum(_.values(addedShipMstIds).map(x => x.length))
@@ -131,7 +131,7 @@ class GameUpdateViewerImpl extends PureComponent {
         </Button>
       )
     }
-    const {__} = window
+    const {__} = window.i18n["poi-plugin-navy-album"]
     return length > 0 && [
       <h3 key="eq-1">{__('GameUpdateTab.NewEquipments')}</h3>,
       friendly.length > 0 && (
@@ -173,7 +173,7 @@ class GameUpdateViewerImpl extends PureComponent {
   }
 
   renderUpdatedCGsPart = () => {
-    const {__} = window
+    const {__} = window.i18n["poi-plugin-navy-album"]
     const {rSummary: {changedShipMstIds}, uiSwitchShip} = this.props
     const {special, friendly, abyssal} = changedShipMstIds
     // friendly.push(973)
@@ -192,7 +192,7 @@ class GameUpdateViewerImpl extends PureComponent {
 
   renderGeneralInfoPart = () => {
     const {digest} = this.props
-    const {__} = window
+    const {__} = window.i18n["poi-plugin-navy-album"]
     return [
       <h3 key="gi-1">{__('GameUpdateTab.GeneralInfo')}</h3>,
       <p key="gi-2">

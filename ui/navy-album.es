@@ -36,7 +36,7 @@ class NavyAlbumImpl extends Component {
 
   render() {
     const {activeTab, theme} = this.props
-    const {__} = window
+    const {__} = window.i18n["poi-plugin-navy-album"]
     return (
       <Tab.Container
         id="na-main-tab"

@@ -47,7 +47,7 @@ class GalleryViewImpl extends PureComponent {
     } = this.props
     const characterIds =
       Object.keys(shipGraphSources).map(Number).sort(generalComparator)
-    const {__} = window
+    const {__} = window.i18n["poi-plugin-navy-album"]
     return (
       <ListGroup style={style}>
         {

@@ -59,7 +59,7 @@ class ShipViewerImpl extends Component {
       isMasterIdSpecialCGFunc,
       lastFetch,
     } = this.props
-    const {__} = window
+    const {__} = window.i18n["poi-plugin-navy-album"]
     const isAbyssalShip = mstId > 1500
     const isSpecialCG = isMasterIdSpecialCGFunc(mstId)
     const shipGraphSource =

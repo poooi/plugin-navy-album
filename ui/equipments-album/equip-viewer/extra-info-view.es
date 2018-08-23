@@ -21,7 +21,7 @@ class ExtraInfoView extends PureComponent {
     const shouldShowAircraftStats =
       _.isInteger($equip.api_cost) ||
       _.isInteger($equip.api_distance)
-    const {__} = window
+    const {__} = window.i18n["poi-plugin-navy-album"]
     return (
       <Table
         className="extra-info-view"

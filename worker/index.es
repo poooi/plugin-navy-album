@@ -1,7 +1,7 @@
 import { join } from 'path-extra'
 import { store } from 'views/create-store'
 
-const swfExtractor = new Worker(join(__dirname, 'swf-extractor.js'))
+const swfExtractor = new SharedWorker(join(__dirname, 'swf-extractor.js'))
 
 const taskContexts = new Map()
 let taskCount = 0

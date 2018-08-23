@@ -42,7 +42,7 @@ class MapBgmViewerImpl extends PureComponent {
     )
 
   mkBgmListItem = (bgmId, key, mapId = null) => {
-    const {__} = window
+    const {__} = window.i18n["poi-plugin-navy-album"]
     const {useSiteInfo} = this.props
     const useInfo = useSiteInfo[bgmId]
     const allMapIds = _.sortBy(_.keys(useInfo).map(Number), _.identity)
@@ -99,7 +99,7 @@ class MapBgmViewerImpl extends PureComponent {
 
   render() {
     const {grouppedMapIds, listInfo} = this.props
-    const {__} = window
+    const {__} = window.i18n["poi-plugin-navy-album"]
     const itemStyle = {padding: '8px 10px'}
     return (
       <div

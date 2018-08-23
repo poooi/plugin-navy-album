@@ -52,7 +52,7 @@ class QuotesViewImpl extends Component {
       marginTop: 0,
       marginRight: '1em',
     }
-    const {__} = window
+    const {__} = window.i18n["poi-plugin-navy-album"]
     return (
       <ListGroup>
         <ListGroupItem

@@ -47,7 +47,7 @@ class AltFormSwitcherImpl extends PureComponent {
 
   render() {
     const {mstId} = this.props
-    const {__} = window
+    const {__} = window.i18n["poi-plugin-navy-album"]
     const noRender = (<div style={{display: 'none'}} />)
     if (mstId > 1500) {
       const {hasDebuffedGraphs, debuffFlag, $ships} = this.props

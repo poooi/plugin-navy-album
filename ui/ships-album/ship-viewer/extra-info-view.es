@@ -19,7 +19,7 @@ class ExtraInfoView extends PureComponent {
     const applyAfterMarriage =
       v => (v === 0) ? 0 : Math.max(1, Math.floor(v*0.85))
     const costMod = level >= 100 ? applyAfterMarriage : (x => x)
-    const {__} = window
+    const {__} = window.i18n["poi-plugin-navy-album"]
 
     return (
       <Table

@@ -63,7 +63,7 @@ class RemodelInfoViewImpl extends PureComponent {
     if (currentRemodelDetails.length === 0)
       return noRender
     const mstIdToDesc = prepareMstIdToDesc($ships, $shipTypes)
-    const {__} = window
+    const {__} = window.i18n["poi-plugin-navy-album"]
     return (
       <Panel
         className="remodel-info-view"

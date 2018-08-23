@@ -58,7 +58,7 @@ class ShipsAlbumImpl extends Component {
       groupShipTypes,
       groupRemodels,
     } = this.props
-    const {__} = window
+    const {__} = window.i18n["poi-plugin-navy-album"]
     const boolToBsStyle = v => v ? 'primary' : 'default'
     return (
       <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
