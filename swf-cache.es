@@ -44,15 +44,6 @@ const getShipFilePath = mstIdX => fileName => {
   return join(path, fileName)
 }
 
-/*
-   bgmType: 'port' / 'map'
- */
-const getBgmFilePath = bgmType => bgmId => {
-  const path = join(getSubdirPath(bgmType === 'port' ? 'portBgm' : 'mapBgm'))
-  lazilyEnsureDirSync(path)
-  return join(path, `${bgmId}.mp3`)
-}
-
 const latestVersion = 'cache-0.5.0'
 
 const saveSwfCache = swfCache => {
@@ -86,7 +77,7 @@ const fileExists = path => {
    verify that files in swfCache actually exists,
    and remove non-existing items from cache
  */
-const verifySwfCache = _.flow(
+const verifySwfCache =
   modifyObject(
     'ship',
     mapValues((record, mstIdX) => {
@@ -111,48 +102,7 @@ const verifySwfCache = _.flow(
         }
       }
     })
-  ),
-  modifyObject(
-    'portBgm',
-    records => {
-      const newRecords = _.fromPairs(
-        _.flatMap(
-          _.toPairs(records),
-          pair => {
-            const [bgmId, _ignored] = pair
-            const fp = getBgmFilePath('port')(bgmId)
-            return fileExists(fp) ? [pair] : []
-          }
-        )
-      )
-      if (_.isEqual(newRecords, records)) {
-        return records
-      } else {
-        return newRecords
-      }
-    }
-  ),
-  modifyObject(
-    'mapBgm',
-    records => {
-      const newRecords = _.fromPairs(
-        _.flatMap(
-          _.toPairs(records),
-          pair => {
-            const [bgmId, _ignored] = pair
-            const fp = getBgmFilePath('map')(bgmId)
-            return fileExists(fp) ? [pair] : []
-          }
-        )
-      )
-      if (_.isEqual(newRecords, records)) {
-        return records
-      } else {
-        return newRecords
-      }
-    }
   )
-)
 
 const updateSwfCache = oldSwfCache => {
   if (!oldSwfCache)
@@ -206,7 +156,6 @@ const loadSwfCache = () => {
 
 export {
   getShipFilePath,
-  getBgmFilePath,
   saveSwfCache,
   loadSwfCache,
 }
