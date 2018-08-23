@@ -1,9 +1,7 @@
-import _ from 'lodash'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
-import { swfCacheSelector } from '../../selectors'
 import { mstIdToCategoryFuncSelector } from './selectors'
 import { PTyp } from '../../ptyp'
 import { ShipGraphViewP2 } from '../ship-graph-view-p2'
@@ -81,11 +79,15 @@ const ShipGraphViewWithCG = connect(
     const cat = mstIdToCategoryFuncSelector(state)(mstId)
     let graphAttrs
     if (cat === 'friendly') {
-      graphAttrs = [{graphType: 'full', damaged: false}, {graphType: 'full', damaged: true}]
+      graphAttrs = [
+        {graphType: 'full', damaged: false},
+        {graphType: 'full', damaged: true},
+      ]
     } else if (cat === 'abyssal') {
       graphAttrs = [{graphType: 'full', damaged: false}]
-    // no character id for special for now
     } else if (cat === 'special') {
+      // no character id for special for now
+      // TODO: i feel special viewer for seasonal CGs should be a thing.
       graphAttrs = [
         {graphType: 'character_full', damaged: false},
         {graphType: 'character_full', damaged: true},
