@@ -13,7 +13,7 @@ import {
 import { PTyp } from '../../ptyp'
 import { mapDispatchToProps } from '../../store'
 import { getBgmFilePath } from '../../swf-cache'
-import { BgmListItemP2 } from './bgm-list-item-p2'
+import { BgmListItem } from './bgm-list-item'
 
 const getPath = getBgmFilePath('port')
 
@@ -41,13 +41,13 @@ class PortBgmViewerImpl extends PureComponent {
         {
           portBgmList.map(({id, name}) => {
             return (
-              <BgmListItemP2
+              <BgmListItem
                 key={id}
                 bgmId={id}
                 bgmType="port"
               >
                 {`${name} (${id})`}
-              </BgmListItemP2>
+              </BgmListItem>
             )
           })
         }

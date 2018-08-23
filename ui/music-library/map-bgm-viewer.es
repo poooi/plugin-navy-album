@@ -20,7 +20,7 @@ import {
 import { PTyp } from '../../ptyp'
 import { mapDispatchToProps } from '../../store'
 import { getBgmFilePath } from '../../swf-cache'
-import { BgmListItemP2 } from './bgm-list-item-p2'
+import { BgmListItem } from './bgm-list-item'
 
 const getPath = getBgmFilePath('map')
 
@@ -66,7 +66,7 @@ class MapBgmViewerImpl extends PureComponent {
     }
 
     return (
-      <BgmListItemP2
+      <BgmListItem
         key={key}
         bgmId={bgmId}
         bgmType="battle"
@@ -104,7 +104,7 @@ class MapBgmViewerImpl extends PureComponent {
             }
           </div>
         </div>
-      </BgmListItemP2>
+      </BgmListItem>
     )
   }
 

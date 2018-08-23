@@ -7,9 +7,11 @@ import {
 import { connect } from 'react-redux'
 import FontAwesome from 'react-fontawesome'
 import { PTyp } from '../../ptyp'
+import { getBgm } from '../../game-misc/p2-ship-img'
 
 import {
   poiVolumeSelector,
+  serverIpSelector,
 } from '../../selectors'
 
 const downloadUrl =
@@ -18,22 +20,13 @@ const downloadUrl =
 class BgmListItemImpl extends PureComponent {
   static propTypes = {
     children: PTyp.node.isRequired,
-    maybePath: PTyp.string,
-    // onRequestBgm(pathAvailable): callback for requesting bgm
-    onRequestBgm: PTyp.func.isRequired,
-    isFetching: PTyp.bool,
+    bgmId: PTyp.number.isRequired,
+    bgmType: PTyp.string.isRequired,
 
     // connected:
     volume: PTyp.number.isRequired,
+    serverIp: PTyp.string.isRequired,
   }
-
-  static defaultProps = {
-    maybePath: null,
-    isFetching: false,
-  }
-
-  handleRequestBgm = pathAvailable => () =>
-    this.props.onRequestBgm(pathAvailable)
 
   handleCanPlay = e => {
     e.target.volume = this.props.volume
@@ -68,10 +61,9 @@ class BgmListItemImpl extends PureComponent {
   handleDownload = path => () => downloadUrl(`file://${path}`)
 
   render() {
-    const {
-      maybePath, children, isFetching,
-    } = this.props
-    const pathAvailable = Boolean(maybePath)
+    const {children, serverIp, bgmId, bgmType} = this.props
+    const path = getBgm(bgmId, bgmType)
+    const url = `http://${serverIp}${path}`
     return (
       <ListGroupItem
         style={{
@@ -83,54 +75,36 @@ class BgmListItemImpl extends PureComponent {
           style={{display: 'flex', alignItems: 'center'}}
         >
           <div style={{flex: 1}}>{children}</div>
-          <Button
-            bsSize="small"
-            onClick={this.handleRequestBgm(pathAvailable)}
-            style={{marginTop: 0, alignSelf: 'flex-start'}}
-            disabled={isFetching}
-          >
-            <FontAwesome
-              name={pathAvailable ? 'refresh' : 'download'}
-            />
-          </Button>
         </div>
-        {
-          pathAvailable && (
-            <div
-              style={{
-                display: 'flex', alignItems: 'center',
-                marginTop: '.5em',
-              }}
-            >
-              <audio
-                loop
-                className="play-control"
-                style={{
-                  flex: 1,
-                }}
-                preload="none"
-                onCanPlay={this.handleCanPlay}
-                onPlaying={this.handlePlaying}
-                controls="controls">
-                <source src={maybePath} type="audio/mp3" />
-              </audio>
-              <Button
-                bsSize="small"
-                onClick={this.handleDownload(maybePath)}
-                style={{marginTop: 0, marginLeft: 5}}
-              >
-                <FontAwesome name="save" />
-              </Button>
-            </div>
-          )
-        }
+        <div
+          style={{
+            display: 'flex', alignItems: 'center',
+            marginTop: '.5em',
+          }}
+        >
+          <audio
+            loop
+            className="play-control"
+            style={{
+              flex: 1,
+            }}
+            preload="none"
+            onCanPlay={this.handleCanPlay}
+            onPlaying={this.handlePlaying}
+            controls="controls">
+            <source src={url} type="audio/mp3" />
+          </audio>
+        </div>
       </ListGroupItem>
     )
   }
 }
 
 const BgmListItem = connect(
-  state => ({volume: poiVolumeSelector(state)}),
+  state => ({
+    volume: poiVolumeSelector(state),
+    serverIp: serverIpSelector(state),
+  }),
 )(BgmListItemImpl)
 
 export { BgmListItem }
