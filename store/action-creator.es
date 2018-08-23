@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux'
 import { store } from 'views/create-store'
 import { modifyObject, generalComparator } from 'subtender'
 import { mkRequestShipGraph } from './request-ship-graph'
-import { mkRequestBgm } from './request-bgm'
 import { actionCreators as swfCacheAC } from './ext-root/swf-cache'
 import { actionCreators as masterAC } from './ext-root/master'
 
@@ -189,9 +188,6 @@ const actionCreator = {
 
 actionCreator.requestShipGraph =
   mkRequestShipGraph(actionCreator)
-
-actionCreator.requestBgm =
-  mkRequestBgm(actionCreator)
 
 const mapDispatchToProps = _.memoize(dispatch =>
   bindActionCreators(actionCreator, dispatch))
