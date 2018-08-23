@@ -130,9 +130,25 @@ const updateSwfCache = oldSwfCache => {
      0.5.0 => 1.0.0
    */
   if (curSwfCache.version === 'cache-0.5.0') {
+    const {
+      portBgm: _ignored1,
+      mapBgm: _ignored2,
+      ship,
+    } = curSwfCache
     delete curSwfCache.portBgm
     delete curSwfCache.mapBgm
-    curSwfCache.version = 'cache-1.0.0'
+
+    const newSwfCache = {
+      ship: {},
+      version: 'cache-1.0.0',
+    }
+    _.keys(curSwfCache.ship).forEach(mstId => {
+      // we now only do swf extraction on abyssal ship,
+      // so we might as well just keep the abyssal part.
+      if (mstId > 1500)
+        newSwfCache.ship[mstId] = ship[mstId]
+    })
+    curSwfCache = newSwfCache
   }
 
   if (curSwfCache.version === latestVersion) {
