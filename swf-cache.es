@@ -27,7 +27,7 @@ const getIndexFilePath = () =>
   join(getRootPath(), 'index.json')
 
 /*
-   subdir: 'ship' / 'portBgm' / 'mapBgm'
+   subdir: 'ship'
  */
 const getSubdirPath = subdir => {
   const path = join(getRootPath(), subdir)
@@ -44,7 +44,7 @@ const getShipFilePath = mstIdX => fileName => {
   return join(path, fileName)
 }
 
-const latestVersion = 'cache-0.5.0'
+const latestVersion = 'cache-1.0.0'
 
 const saveSwfCache = swfCache => {
   try {
@@ -124,6 +124,15 @@ const updateSwfCache = oldSwfCache => {
       mapBgm: {},
       version: 'cache-0.5.0',
     }
+  }
+
+  /*
+     0.5.0 => 1.0.0
+   */
+  if (curSwfCache.version === 'cache-0.5.0') {
+    delete curSwfCache.portBgm
+    delete curSwfCache.mapBgm
+    curSwfCache.version = 'cache-1.0.0'
   }
 
   if (curSwfCache.version === latestVersion) {

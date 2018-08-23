@@ -1,8 +1,6 @@
 // see ../../docs/swf-caching.md for details
 const initState = {
   ship: {},
-  portBgm: {},
-  mapBgm: {},
 
   // the following props do not require persistence
   fetchLocks: [],

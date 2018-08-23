@@ -17,14 +17,10 @@ const mkSelector = propName => createSelector(
 
 const readySelector = mkSelector('ready')
 const shipSelector = mkSelector('ship')
-const portBgmSelector = mkSelector('portBgm')
-const mapBgmSelector = mkSelector('mapBgm')
 
 const pSwfCacheSelector = createSelector(
   shipSelector,
-  portBgmSelector,
-  mapBgmSelector,
-  (ship, portBgm, mapBgm) => ({ship, portBgm, mapBgm})
+  ship => ({ship})
 )
 
 const debouncedSaveSwfCache = _.debounce(

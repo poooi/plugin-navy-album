@@ -9,8 +9,6 @@ This document describes caching mechanism of processed SWF files.
 ```
 {
     ship: <ShipCache>,
-    portBgm: <PortBgmCache>,
-    mapBgm: <MapBgmCache>,
     version: '0.5.0',
 }
 ```
@@ -48,33 +46,3 @@ and values:
   remove or change some part of the cache, this plugin must be restarted to sync with the file system.
 - file existence is tested before loading, and missing files must be removed from `files` field
   accordingly.
-
-## Port BGM Cache
-
-`PortBgmCache` is an Object:
-
-```
-{
-    [<port BGM id>]: {
-        lastFetch: <date int>,
-    },
-}
-```
-
-- we expect single MP3 file with `soundId=1` from SWF extraction.
-- the file is located: `<root>/portBgm/<pBgmId>.mp3`
-
-## Map BGM Cache
-
-`MapBgmCache` is an Object:
-
-```
-{
-    [<map BGM id>]: {
-        lastFetch: <date int>,
-    },
-}
-```
-
-- we expect single MP3 file with `soundId=1` from SWF extraction.
-- the file is located: `<root>/mapBgm/<mBgmId>.mp3`

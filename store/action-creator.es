@@ -116,19 +116,6 @@ const actionCreator = {
       )
     )
   },
-  swfCacheRegisterBgm: (bgmType, bgmId) => {
-    const subdir = bgmType === 'port' ? 'portBgm' : 'mapBgm'
-    const timestamp = Number(new Date())
-    return actionCreator.swfCacheModify(
-      modifyObject(
-        subdir,
-        modifyObject(
-          bgmId,
-          () => ({lastFetch: timestamp})
-        )
-      )
-    )
-  },
   subtitleModify: modifier => ({
     type: '@poi-plugin-navy-album@subtitle@Modify',
     modifier,
