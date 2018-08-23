@@ -8,6 +8,7 @@ import {
 } from '../selectors'
 
 import { getShipFilePath } from '../swf-cache'
+import { scheduleSwfExtract } from '../worker'
 
 /*
    INVARIANT: swfCache is already when this function is called
@@ -16,7 +17,6 @@ const mayExtractWithLock = async context => {
   const {
     getState, actionCreator,
     path,
-    dispatch,
     reportError,
     dataReady,
   } = context
@@ -29,32 +29,14 @@ const mayExtractWithLock = async context => {
     return
 
   // start fetching & parsing
-  dispatch(actionCreator.swfCacheLockPath(path))
-  try {
-    const serverIp = serverIpSelector(reduxState)
-    const fetched = await fetch(`http://${serverIp}${path}`)
-    if (! fetched.ok)
-      throw new Error('fetch failed.')
-    const ab = await fetched.arrayBuffer()
-    const swfData = await readFromBufferP(Buffer.from(ab))
-    await Promise.all(
-      extractImages(swfData.tags).map(async p => {
-        const data = await p
-        if (
-          'characterId' in data &&
-          ['jpeg', 'png', 'gif'].includes(data.imgType)
-        ) {
-          dataReady(data)
-        }
-      })
-    )
-  } catch (e) {
-    if (reportError)
-      console.error(`error while processing ${path}`,e)
-  } finally {
-    // release lock
-    dispatch(actionCreator.swfCacheUnlockPath(path))
-  }
+  const serverIp = serverIpSelector(reduxState)
+  scheduleSwfExtract({
+    serverIp,
+    path,
+    actionCreator,
+    reportError,
+    dataReady,
+  })
 }
 
 const mkRequestShipGraph = actionCreator => (mstId, forced = false) =>
