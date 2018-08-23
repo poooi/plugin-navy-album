@@ -16,55 +16,17 @@ import { ShipsAlbum } from './ships-album'
 import { EquipmentsAlbum } from './equipments-album'
 import { MusicLibrary } from './music-library'
 import { GameUpdateViewer } from './game-update-viewer'
-import { globalUnsubscribe } from '../observers'
-import { register as registerIpc } from '../ipc'
 
 import { DebugWindow } from './debug-window'
 
 // TODO: set this to false for releases
 const debugFlag = false
 
-let unregisterIpc = null
-
-const handleWindowUnload = () => {
-  window.removeEventListener('unload', handleWindowUnload)
-
-  if (typeof unregisterIpc !== 'function') {
-    console.error(`unexpected unregisterIpc value: ${unregisterIpc}`)
-  } else {
-    try {
-      unregisterIpc()
-    } finally {
-      unregisterIpc = null
-    }
-  }
-}
-
-window.addEventListener('unload', handleWindowUnload)
-
 class NavyAlbumImpl extends Component {
   static propTypes = {
     activeTab: PTyp.ActiveTab.isRequired,
     theme: PTyp.string.isRequired,
     uiModify: PTyp.func.isRequired,
-  }
-
-  componentDidMount() {
-    if (unregisterIpc !== null) {
-      console.warn(`unregisterIpc should be null while getting ${unregisterIpc}`)
-      if (typeof unregisterIpc === 'function') {
-        try {
-          unregisterIpc()
-        } finally {
-          unregisterIpc = null
-        }
-      }
-    }
-    unregisterIpc = registerIpc()
-  }
-
-  componentWillUnmount() {
-    globalUnsubscribe()
   }
 
   handleSwitchTab = activeTab =>
