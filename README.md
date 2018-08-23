@@ -10,6 +10,7 @@ illustrations, ship and equipment stats, and things beyond.
 - Update few assets
 - Gallery is now using HTML5 resources if possible (hopefully)
 - Level slider upper bound is now 175 for the obvious reason.
+- Music Library is now using phase 2 music sources
 
 ### 0.7.8
 

@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { createSelector, createStructuredSelector } from 'reselect'
+import { createStructuredSelector } from 'reselect'
 import React, { PureComponent } from 'react'
 import { modifyObject } from 'subtender'
 import { mapIdToStr } from 'subtender/kc'
@@ -12,28 +12,22 @@ import { connect } from 'react-redux'
 import {
   grouppedMapIdsSelector,
   mapBgmUseSiteInfoSelector,
-  swfCacheSelector,
 } from '../../selectors'
 import {
   focusedListInfoSelector,
 } from './selectors'
 import { PTyp } from '../../ptyp'
 import { mapDispatchToProps } from '../../store'
-import { getBgmFilePath } from '../../swf-cache'
 import { BgmListItem } from './bgm-list-item'
-
-const getPath = getBgmFilePath('map')
 
 class MapBgmViewerImpl extends PureComponent {
   static propTypes = {
+    // connected
     grouppedMapIds: PTyp.array.isRequired,
     listInfo: PTyp.object.isRequired,
-    mapBgmCache: PTyp.object.isRequired,
-    uiModify: PTyp.func.isRequired,
     useSiteInfo: PTyp.object.isRequired,
 
-    requestBgm: PTyp.func.isRequired,
-    isFetching: PTyp.func.isRequired,
+    uiModify: PTyp.func.isRequired,
   }
 
   handleChangeFocus = focus => () =>
@@ -47,14 +41,9 @@ class MapBgmViewerImpl extends PureComponent {
       )
     )
 
-  handleRequestBgm = id => forced =>
-    this.props.requestBgm('map', id, forced)
-
   mkBgmListItem = (bgmId, key, mapId = null) => {
     const {__} = window
-    const {mapBgmCache, useSiteInfo, isFetching} = this.props
-    const cacheHit = !_.isEmpty(mapBgmCache[bgmId])
-    const maybePath = cacheHit ? getPath(bgmId) : null
+    const {useSiteInfo} = this.props
     const useInfo = useSiteInfo[bgmId]
     const allMapIds = _.sortBy(_.keys(useInfo).map(Number), _.identity)
     // determine order
@@ -195,25 +184,7 @@ const MapBgmViewer = connect(
   createStructuredSelector({
     grouppedMapIds: grouppedMapIdsSelector,
     listInfo: focusedListInfoSelector,
-    mapBgmCache: createSelector(
-      swfCacheSelector,
-      sc => sc.mapBgm
-    ),
     useSiteInfo: mapBgmUseSiteInfoSelector,
-    isFetching: createSelector(
-      swfCacheSelector,
-      swfCache => bgmId => {
-        const {fetchLocks} = swfCache
-        return fetchLocks.some(urlPath => {
-          const reResult = /^\/kcs\/resources\/swf\/sound_b_bgm_(\d+)\.swf$/.exec(urlPath)
-          if (reResult) {
-            return Number(reResult[1]) === bgmId
-          } else {
-            return false
-          }
-        })
-      }
-    ),
   }),
   mapDispatchToProps,
 )(MapBgmViewerImpl)
