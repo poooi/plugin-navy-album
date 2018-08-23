@@ -31,14 +31,12 @@ globalSubscribe()
    TODO
 
    - collapsible type group?
-   - needs some refactoring
    - ship album
        - handle special CGs
    - special CG handling: check shipgraph as well
    - non-forced batch request for game update tab
    - settings tab
       - loop toggle
-      - lazy game update tab (no loading until requested)
 
  */
 
