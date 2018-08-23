@@ -9,7 +9,7 @@ import {
 } from 'fs-extra'
 
 const reducer = (state = null, action) => {
-  if (action.type === '@@Response/kcsapi/api_start2') {
+  if (action.type === '@@Response/kcsapi/api_start2/getData') {
     const {body} = action
     // only update when it's changed
     return _.isEqual(body, state) ? state : body
