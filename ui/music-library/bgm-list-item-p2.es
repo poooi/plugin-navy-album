@@ -75,13 +75,6 @@ class BgmListItemP2Impl extends PureComponent {
           style={{display: 'flex', alignItems: 'center'}}
         >
           <div style={{flex: 1}}>{children}</div>
-          <Button
-            bsSize="small"
-            onClick={() => console.log('TODO')}
-            style={{marginTop: 0, alignSelf: 'flex-start'}}
-          >
-            <FontAwesome name="download" />
-          </Button>
         </div>
         <div
           style={{
@@ -101,13 +94,6 @@ class BgmListItemP2Impl extends PureComponent {
             controls="controls">
             <source src={url} type="audio/mp3" />
           </audio>
-          <Button
-            bsSize="small"
-            onClick={this.handleDownload(url)}
-            style={{marginTop: 0, marginLeft: 5}}
-          >
-            <FontAwesome name="save" />
-          </Button>
         </div>
       </ListGroupItem>
     )
