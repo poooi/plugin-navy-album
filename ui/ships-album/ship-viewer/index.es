@@ -126,9 +126,9 @@ class ShipViewerImpl extends Component {
                         <Tab.Pane eventKey="image">
                           {
                             isAbyssalShip ? (
-                              <GalleryView style={{}} />
+                              <GalleryView style={{}} mstId={mstId} />
                             ) : (
-                              <GalleryViewP2 mstId={mstId} />
+                              <GalleryViewP2 style={{}} mstId={mstId} />
                             )
                           }
                         </Tab.Pane>

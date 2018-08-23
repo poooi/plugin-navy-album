@@ -61,7 +61,7 @@ class HeaderImpl extends PureComponent {
           </div>
         </div>
         {
-          debuffFlag ? (
+          mstId > 1500 ? (
             <ShipGraphView
               key={mstId}
               mstId={mstId}
