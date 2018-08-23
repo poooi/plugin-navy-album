@@ -3,12 +3,15 @@ import React, { PureComponent } from 'react'
 import {
   ListGroupItem, ListGroup, Button,
 } from 'react-bootstrap'
-
+import FontAwesome from 'react-fontawesome'
 import { connect } from 'react-redux'
-
+import { remote } from 'electron'
 import {shipImgType, getShipImgPath} from '../../../game-misc/p2-ship-img'
 
 import { PTyp } from '../../../ptyp'
+
+const downloadUrl =
+  remote.getCurrentWebContents().downloadURL
 
 const imgList = _.flatMap(shipImgType, ty =>
   ty === 'album_status' ?
@@ -43,6 +46,14 @@ class GalleryViewP2Impl extends PureComponent {
                   src={url}
                   alt={`ship=${mstId}, type=${x.ty}, damaged=${x.damaged}`}
                 />
+                <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
+                  <Button
+                    onClick={() => downloadUrl(url)}
+                    bsSize="small"
+                  >
+                    <FontAwesome name="save" />
+                  </Button>
+                </div>
               </ListGroupItem>
             )
           })
