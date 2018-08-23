@@ -6,7 +6,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { swfCacheSelector } from '../../selectors'
 import { mstIdToCategoryFuncSelector } from './selectors'
 import { PTyp } from '../../ptyp'
-import { ShipGraphView } from '../ship-graph-view'
+import { ShipGraphViewP2 } from '../ship-graph-view-p2'
 
 /*
    ShipGraphView with CG in tooltip (if available)
@@ -22,20 +22,20 @@ class ShipGraphViewWithCGImpl extends PureComponent {
     prefix: PTyp.string.isRequired,
 
     // connected:
-    chIds: PTyp.array.isRequired,
+    graphAttrs: PTyp.array.isRequired,
   }
 
   render() {
     const {
       graphSize,
-      mstId, chIds, prefix,
+      mstId, graphAttrs, prefix,
     } = this.props
-    const cgAvailable = chIds.length > 0
+    const cgAvailable = graphAttrs.length > 0
     const content = (
-      <ShipGraphView
+      <ShipGraphViewP2
         style={graphSize}
         mstId={mstId}
-        characterId={1}
+        graphType="banner"
       />
     )
 
@@ -50,12 +50,13 @@ class ShipGraphViewWithCGImpl extends PureComponent {
             >
               <div style={{display: 'flex', alignItems: 'center'}}>
                 {
-                  chIds.map(chId => (
-                    <ShipGraphView
-                      key={chId}
+                  graphAttrs.map(({graphType, damaged}) => (
+                    <ShipGraphViewP2
+                      key={graphType}
                       style={{maxHeight: 400, maxWidth: 400}}
                       mstId={mstId}
-                      characterId={chId}
+                      graphType={graphType}
+                      damaged={damaged}
                     />
                   ))
                 }
@@ -78,19 +79,19 @@ const ShipGraphViewWithCG = connect(
   (state, ownProps) => {
     const {mstId} = ownProps
     const cat = mstIdToCategoryFuncSelector(state)(mstId)
-    const swfCache = swfCacheSelector(state)
-    let chIds = []
-    const checkAvailable = chId =>
-      _.get(swfCache, ['ship', mstId, 'files', chId])
+    let graphAttrs
     if (cat === 'friendly') {
-      chIds = [17,19].filter(checkAvailable)
+      graphAttrs = [{graphType: 'full', damaged: false}, {graphType: 'full', damaged: true}]
     } else if (cat === 'abyssal') {
-      chIds = [3].filter(checkAvailable)
+      graphAttrs = [{graphType: 'full', damaged: false}]
     // no character id for special for now
     } else if (cat === 'special') {
-      chIds = [9,11].filter(checkAvailable)
+      graphAttrs = [
+        {graphType: 'character_full', damaged: false},
+        {graphType: 'character_full', damaged: true},
+      ]
     }
-    return {chIds}
+    return {graphAttrs}
   },
 )(ShipGraphViewWithCGImpl)
 

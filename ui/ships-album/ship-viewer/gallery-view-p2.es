@@ -19,15 +19,15 @@ const imgList = _.flatMap(shipImgType, ty =>
 class GalleryViewP2Impl extends PureComponent {
   static propTypes = {
     mstId: PTyp.number.isRequired,
-
+    style: PTyp.object.isRequired,
     // connected:
     serverIp: PTyp.string.isRequired,
   }
 
   render() {
-    const {mstId, serverIp} = this.props
+    const {mstId, serverIp, style} = this.props
     return (
-      <ListGroup>
+      <ListGroup style={style}>
         {
           imgList.map(x => {
             const url = `http://${serverIp}${getShipImgPath(mstId, x.ty, x.damaged)}`

@@ -176,6 +176,8 @@ class GameUpdateViewerImpl extends PureComponent {
     const {__} = window
     const {rSummary: {changedShipMstIds}, uiSwitchShip} = this.props
     const {special, friendly, abyssal} = changedShipMstIds
+    // friendly.push(973)
+    // abyssal.push(1708)
     const length = _.sum(_.values(changedShipMstIds).map(x => x.length))
     const prefix = 'gameupdate-changedship-'
     return length > 0 && [
