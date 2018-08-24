@@ -39,8 +39,8 @@ class BgmListItemImpl extends PureComponent {
   handlePlaying = e => {
     const currentAudio = e.target
     const {$$} = window
-
-    const audioTags = [...$$('#content-root audio')]
+    // TODO: no longer working after migrating to embedded plugin.
+    const audioTags = [...$$('#poi-plugin-navy-album audio')]
     audioTags.map(aud => {
       if (aud === currentAudio)
         return
