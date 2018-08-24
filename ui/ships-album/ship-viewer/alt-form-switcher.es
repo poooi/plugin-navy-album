@@ -64,6 +64,7 @@ class AltFormSwitcherImpl extends PureComponent {
           justifyContent: 'flex-end',
         }}>
           {
+            // TODO: __('ShipsTab.(D)') needs fixing
             [false, true].map((curDebuffFlag,ind) => (
               <Label
                 onClick={this.handleChangeDebuffFlag(curDebuffFlag)}
