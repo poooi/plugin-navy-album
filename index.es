@@ -83,8 +83,8 @@ const pluginWillUnload = () => {
 
 export {
   reducer,
-  // pluginDidLoad,
-  // pluginWillUnload,
+  pluginDidLoad,
+  pluginWillUnload,
 
   reactClass,
   windowMode,
