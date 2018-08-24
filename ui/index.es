@@ -1,9 +1,6 @@
-// import _ from 'lodash'
 import React from 'react'
-
+import { join } from 'path-extra'
 import { NavyAlbum } from './navy-album'
-
-// const {$} = window
 
 // $('#fontawesome-css')
 //  .setAttribute('href', require.resolve('font-awesome/css/font-awesome.css'))
@@ -26,7 +23,16 @@ import { NavyAlbum } from './navy-album'
 const NavyAlbumRoot = _props => (
   <div
     style={{margin: "0 1%", minWidth: 600}}
-    className="navy-album-main">
+    className="navy-album-main"
+  >
+    <link
+      rel="stylesheet"
+      href={join(__dirname, '..', 'assets', 'rc-slider.min.css')}
+    />
+    <link
+      rel="stylesheet"
+      href={join(__dirname, '..', 'assets', 'navy-album.css')}
+    />
     <NavyAlbum />
   </div>
 )
