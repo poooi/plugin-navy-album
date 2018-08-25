@@ -1,6 +1,6 @@
 import { padStart } from 'lodash'
 
-export const shipImgType = [
+const shipImgType = [
   'banner',
   /*
      technically exists for sunk ships (damaged only),
@@ -32,7 +32,7 @@ const resource = [
   6201, 5999, 5339, 4431, 2911, 4435, 3611, 4423, 9517, 3243,
 ]
 
-function createKey(t) {
+const createKey = t => {
   let e = 0
   if (t !== null && t !== '') {
     for (let i = 0; i < t.length; i++) {
@@ -42,7 +42,7 @@ function createKey(t) {
   return e
 }
 
-function create(id, seed) {
+const create = (id, seed) => {
   const o = id.toString().match(/\d+/)
   if (o === null || o.length === 0)
     return ''
@@ -52,7 +52,7 @@ function create(id, seed) {
   return (17 * (r + 7) * resource[(s + r * a) % 100] % 8973 + 1e3).toString()
 }
 
-export function getShipImgPath(id, type, damaged) {
+const getShipImgPath = (id, type, damaged) => {
   const mapkey = [id, type, damaged].toString()
   if (map.has(mapkey)) {
     return map.get(mapkey)
@@ -78,13 +78,8 @@ const getBgm = (id, type) => {
   return `/kcs2/resources/bgm/${type}/${padId}_${code}.mp3`
 }
 
-const getPortBgm = id => getBgm(id, 'port')
-
-// TODO: for debugging
-// window.getPortBgm = getPortBgm
-// window.getBgm = getBgm
-
 export {
+  shipImgType,
+  getShipImgPath,
   getBgm,
-  getPortBgm,
 }
