@@ -93,19 +93,17 @@ const normalizeIntro = text =>
 class ShipInfoViewImpl extends PureComponent {
   static propTypes = {
     mstId: PTyp.number.isRequired,
-    shipGraphSource: PTyp.string.isRequired,
     $ship: PTyp.object.isRequired,
     level: PTyp.number.isRequired,
     statsL: PTyp.object.isRequired,
     wctfShips: PTyp.object.isRequired,
-    lastFetch: PTyp.number.isRequired,
     serverIp: PTyp.string.isRequired,
   }
 
   render() {
     const {
-      mstId, shipGraphSource, $ship,
-      statsL, level, wctfShips, lastFetch,
+      mstId, $ship,
+      statsL, level, wctfShips,
       serverIp,
     } = this.props
     const wctfShip = _.get(wctfShips,mstId, {})

@@ -1,6 +1,5 @@
 import _ from 'lodash'
 import { writeFileSync } from 'fs'
-import { readFromBufferP, extractImages } from 'swf-extract'
 import {
   swfCacheSelector,
   indexedShipGraphInfoSelector,
@@ -11,7 +10,7 @@ import { getShipFilePath } from '../swf-cache'
 import { scheduleSwfExtract } from '../worker'
 
 /*
-   INVARIANT: swfCache is already when this function is called
+   INVARIANT: swfCache is ready when this function is called
  */
 const mayExtractWithLock = async context => {
   const {

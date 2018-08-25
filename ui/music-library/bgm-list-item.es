@@ -2,10 +2,8 @@ import { remote } from 'electron'
 import React, { PureComponent } from 'react'
 import {
   ListGroupItem,
-  Button,
 } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import FontAwesome from 'react-fontawesome'
 import { PTyp } from '../../ptyp'
 import { getBgm } from '../../game-misc'
 
