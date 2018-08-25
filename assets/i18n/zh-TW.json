@@ -22,7 +22,7 @@
     "GroupRemodels": "集合同艦改造",
 
     "WaitingDataFor": "等待#%s數據",
-    "(D)": "(削弱)",
+    "Debuff": "(削弱)",
     "Info": "信息",
     "MaxConsump": "最大消耗",
     "ScrapValue": "解體資源",

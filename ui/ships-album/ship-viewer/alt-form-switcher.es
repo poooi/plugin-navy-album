@@ -64,7 +64,6 @@ class AltFormSwitcherImpl extends PureComponent {
           justifyContent: 'flex-end',
         }}>
           {
-            // TODO: __('ShipsTab.(D)') needs fixing
             [false, true].map((curDebuffFlag,ind) => (
               <Label
                 onClick={this.handleChangeDebuffFlag(curDebuffFlag)}
@@ -75,7 +74,7 @@ class AltFormSwitcherImpl extends PureComponent {
                   fontSize: '1em',
                   ...(ind === 0 ? {} : {marginLeft: '.4em'}),
                 }}>
-                {`${abyssalName}${curDebuffFlag ? __('ShipsTab.(D)') : ''}`}
+                {`${abyssalName}${curDebuffFlag ? __('ShipsTab.Debuff') : ''}`}
               </Label>
             ))
           }
