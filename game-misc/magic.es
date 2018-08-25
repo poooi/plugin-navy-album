@@ -58,7 +58,7 @@ const getShipImgPath = (id, type, damaged) => {
     return map.get(mapkey)
   }
   if (!shipImgType.includes(type)) {
-    // throw new Error('Wrong type!')
+    console.warn(`unexpected type: ${type}`)
   }
   if (type === 'album_status' && damaged) {
     throw new Error('Wrong damage status!')

@@ -7,7 +7,7 @@ import {
 import { connect } from 'react-redux'
 import FontAwesome from 'react-fontawesome'
 import { PTyp } from '../../ptyp'
-import { getBgm } from '../../game-misc/p2-ship-img'
+import { getBgm } from '../../game-misc'
 
 import {
   poiVolumeSelector,

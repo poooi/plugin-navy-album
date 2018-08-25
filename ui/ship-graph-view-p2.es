@@ -5,7 +5,7 @@ import { mapDispatchToProps } from '../store'
 import {
   serverIpSelector,
 } from '../selectors'
-import { getShipImgPath } from '../game-misc/p2-ship-img'
+import { getShipImgPath } from '../game-misc'
 
 class ShipGraphViewP2Impl extends PureComponent {
   static propTypes = {

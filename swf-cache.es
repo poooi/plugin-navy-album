@@ -78,6 +78,7 @@ const fileExists = path => {
    and remove non-existing items from cache
  */
 const verifySwfCache =
+  // TODO: remove empty entries
   modifyObject(
     'ship',
     mapValues((record, mstIdX) => {

@@ -11,7 +11,7 @@ import { levelSelector } from '../selectors'
 import {
   wctfShipsSelector,
 } from '../../../selectors'
-import {getShipImgPath} from '../../../game-misc/p2-ship-img'
+import {getShipImgPath} from '../../../game-misc'
 
 import { EquipmentsView } from './equipments-view'
 import { StatsView } from './stats-view'

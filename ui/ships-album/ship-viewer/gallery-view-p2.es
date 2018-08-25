@@ -6,7 +6,7 @@ import {
 import FontAwesome from 'react-fontawesome'
 import { connect } from 'react-redux'
 import { remote } from 'electron'
-import {shipImgType, getShipImgPath} from '../../../game-misc/p2-ship-img'
+import {shipImgType, getShipImgPath} from '../../../game-misc'
 
 import { PTyp } from '../../../ptyp'
 
