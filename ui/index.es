@@ -2,11 +2,6 @@ import React from 'react'
 import { join } from 'path-extra'
 import { NavyAlbum } from './navy-album'
 
-// $('#fontawesome-css')
-//  .setAttribute('href', require.resolve('font-awesome/css/font-awesome.css'))
-
-// extendReducer('poi-plugin-navy-album', reducer)
-
 /*
    TODO
 
