@@ -74,7 +74,7 @@ const shipsInfoSelector = createSelector(
   constSelector,
   ({$ships}) => Object.values($ships).map($ship => {
     const mstId = $ship.api_id
-    const sortNo = $ship.api_sortno
+    const sortNo = $ship.api_sort_id
     const name = $ship.api_name
     const stype = $ship.api_stype
     const yomi = $ship.api_yomi
