@@ -87,7 +87,6 @@ const ShipGraphViewWithCG = connect(
       graphAttrs = [{graphType: 'full', damaged: false}]
     } else if (cat === 'special') {
       // no character id for special for now
-      // TODO: i feel special viewer for seasonal CGs should be a thing.
       graphAttrs = [
         {graphType: 'character_full', damaged: false},
         {graphType: 'character_full', damaged: true},

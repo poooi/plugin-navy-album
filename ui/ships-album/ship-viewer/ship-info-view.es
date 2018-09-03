@@ -9,6 +9,7 @@ import {
 } from './selectors'
 import { levelSelector } from '../selectors'
 import {
+  serverIpSelector,
   wctfShipsSelector,
 } from '../../../selectors'
 import {getShipImgPath} from '../../../game-misc'
@@ -254,8 +255,7 @@ const ShipInfoView = connect(
     // Level-dependent stats
     statsL: statsAtCurrentLevelSelector,
     wctfShips: wctfShipsSelector,
-    // TODO: hacky
-    serverIp: state => _.get(state, ['info', 'server', 'ip']),
+    serverIp: serverIpSelector,
   })
 )(ShipInfoViewImpl)
 
