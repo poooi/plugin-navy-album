@@ -20,6 +20,7 @@ class BgmListItemImpl extends PureComponent {
     children: PTyp.node.isRequired,
     bgmId: PTyp.number.isRequired,
     bgmType: PTyp.string.isRequired,
+    onPlay: PTyp.func.isRequired,
 
     // connected:
     volume: PTyp.number.isRequired,
@@ -30,36 +31,10 @@ class BgmListItemImpl extends PureComponent {
     e.target.volume = this.props.volume
   }
 
-  /*
-     pause all audio tags except one that we just started playing,
-     this prevents more than one music to be played at the same time.
-   */
-  handlePlaying = e => {
-    const currentAudio = e.target
-    const {$$} = window
-    // TODO: no longer working after migrating to embedded plugin.
-    const audioTags = [...$$('#poi-plugin-navy-album audio')]
-    audioTags.map(aud => {
-      if (aud === currentAudio)
-        return
-
-      // https://stackoverflow.com/a/6877530
-      // https://stackoverflow.com/a/31133401
-      if (
-        aud.currentTime > 0 &&
-        !aud.paused &&
-        !aud.ended &&
-        aud.readyState > 2
-      ) {
-        aud.pause()
-      }
-    })
-  }
-
   handleDownload = path => () => downloadUrl(`file://${path}`)
 
   render() {
-    const {children, serverIp, bgmId, bgmType} = this.props
+    const {children, serverIp, bgmId, bgmType, onPlay} = this.props
     const path = getBgm(bgmId, bgmType)
     const url = `http://${serverIp}${path}`
     return (
@@ -88,7 +63,7 @@ class BgmListItemImpl extends PureComponent {
             }}
             preload="none"
             onCanPlay={this.handleCanPlay}
-            onPlaying={this.handlePlaying}
+            onPlaying={onPlay}
             controls="controls">
             <source src={url} type="audio/mp3" />
           </audio>

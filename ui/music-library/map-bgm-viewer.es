@@ -22,6 +22,8 @@ import { BgmListItem } from './bgm-list-item'
 
 class MapBgmViewerImpl extends PureComponent {
   static propTypes = {
+    onPlay: PTyp.func.isRequired,
+
     // connected
     grouppedMapIds: PTyp.array.isRequired,
     listInfo: PTyp.object.isRequired,
@@ -43,7 +45,7 @@ class MapBgmViewerImpl extends PureComponent {
 
   mkBgmListItem = (bgmId, key, mapId = null) => {
     const {__} = window.i18n["poi-plugin-navy-album"]
-    const {useSiteInfo} = this.props
+    const {useSiteInfo, onPlay} = this.props
     const useInfo = useSiteInfo[bgmId]
     const allMapIds = _.sortBy(_.keys(useInfo).map(Number), _.identity)
     // determine order
@@ -58,6 +60,7 @@ class MapBgmViewerImpl extends PureComponent {
       <BgmListItem
         key={key}
         bgmId={bgmId}
+        onPlay={onPlay}
         bgmType="battle"
       >
         <div>

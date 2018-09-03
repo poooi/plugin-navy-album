@@ -16,10 +16,11 @@ import { BgmListItem } from './bgm-list-item'
 class PortBgmViewerImpl extends PureComponent {
   static propTypes = {
     portBgmList: PTyp.array.isRequired,
+    onPlay: PTyp.func.isRequired,
   }
 
   render() {
-    const {portBgmList} = this.props
+    const {portBgmList, onPlay} = this.props
     return (
       <ListGroup
         style={{
@@ -35,6 +36,7 @@ class PortBgmViewerImpl extends PureComponent {
                 key={id}
                 bgmId={id}
                 bgmType="port"
+                onPlay={onPlay}
               >
                 {`${name} (${id})`}
               </BgmListItem>
