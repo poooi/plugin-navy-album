@@ -58,12 +58,6 @@ const saveSwfCache = swfCache => {
   }
 }
 
-const mapValues = modifier => obj => _.flow(
-  _.keys(obj).map(k =>
-    modifyObject(k, modifier)
-  )
-)(obj)
-
 const fileExists = path => {
   try {
     statSync(path)
@@ -78,31 +72,42 @@ const fileExists = path => {
    and remove non-existing items from cache
  */
 const verifySwfCache =
-  // TODO: remove empty entries
   modifyObject(
     'ship',
-    mapValues((record, mstIdX) => {
-      const getFP = getShipFilePath(mstIdX)
-      const {files} = record
-      const newFiles = _.fromPairs(
-        _.flatMap(
-          _.toPairs(files),
-          pair => {
-            const [_ignored, fileName] = pair
-            const fp = getFP(fileName)
-            return fileExists(fp) ? [pair] : []
-          }
+    // for ship swf cache, concatMap by pairs
+    _.flow(
+      _.toPairs,
+      // Array<[k,v]> => Array<[k, v]>
+      pairs => _.flatMap(pairs, pair => {
+        const [mstIdX, record] = pair
+        const getFP = getShipFilePath(mstIdX)
+        const {files} = record
+        // test files' existence and keep only exist ones
+        const newFiles = _.fromPairs(
+          _.flatMap(
+            _.toPairs(files),
+            fPair => {
+              const [_ignored, fileName] = fPair
+              const fp = getFP(fileName)
+              return fileExists(fp) ? [fPair] : []
+            }
+          )
         )
-      )
-      if (_.isEqual(newFiles, files)) {
-        return record
-      } else {
-        return {
-          ...record,
-          files: newFiles,
+        if (_.isEmpty(newFiles)) {
+          // empty records are removed regardless of changes
+          return []
         }
-      }
-    })
+        if (_.isEqual(newFiles, files)) {
+          // no diff, keep.
+          return [pair]
+        } else {
+          // some files might be removed, but not all of them
+          // keep new records for the time being
+          return [[/* key */mstIdX, /* value */{...record, files: newFiles}]]
+        }
+      }),
+      _.fromPairs,
+    )
   )
 
 const updateSwfCache = oldSwfCache => {
