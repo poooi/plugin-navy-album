@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { createSelector } from 'reselect'
 import {
   generalComparator,
@@ -26,10 +27,9 @@ const constDigestSelector = createSelector(
       const $shipGraph = indexedShipGraphs[mstId]
       return [
         mstId,
-        `${$shipGraph.api_filename}#${$shipGraph.api_version[0]}`,
+        `${$shipGraph.api_filename}#${_.join($shipGraph.api_version,'~')}`,
       ]
     })
-
     return {
       equipMstIds,
       shipDigests,
