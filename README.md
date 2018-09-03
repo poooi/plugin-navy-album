@@ -5,10 +5,15 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
-### 1.0.0 (pending)
+### 1.0.0
 
+- The plugin is no longer a separated process.
+  In simple words, less memory consumption than before.
 - Update few assets
-- Gallery is now using HTML5 resources if possible (hopefully)
+- Gallery is now using HTML5 resources if possible
+    - As a result, memory usage will be much better than before, give it a shot xD
+    - However sometimes SWF sources will still be used for abyssal ships
+      because some abyssal debuff'ed CGs are nowhere to be found in phase 2 resources.
 - Level slider upper bound is now 175 for the obvious reason.
 - Music Library is now using phase 2 music sources
 - Ship Graph change detection improved
