@@ -1,11 +1,12 @@
 import _ from 'lodash'
+import { modifyObject } from 'subtender'
 import { createSelector } from 'reselect'
 import { ensureDirSync, readJsonSync, writeJsonSync } from 'fs-extra'
 import { join } from 'path-extra'
 
 import { uiSelector, gameUpdateSelector } from '../selectors'
 
-const latestDataVersion = 'p-state-0.6.0'
+const latestDataVersion = 'p-state-1.0.0'
 
 /*
    state persistence: the following paths are kept and restored at runtime:
@@ -66,6 +67,17 @@ const updatePState = oldPState => {
     })
     newPState.$dataVersion = 'p-state-0.6.0'
   }
+  if (newPState.$dataVersion === 'p-state-0.6.0') {
+    /*
+       digesting method updated at 1.0.0 to include all parts of api_version,
+       which means we'll have to abandon old digest and allow new one to come in.
+     */
+    newPState = modifyObject(
+      'gameUpdate',
+      modifyObject('digest', () => null)
+    )(newPState)
+    newPState.$dataVersion = 'p-state-1.0.0'
+  }
 
   if (newPState.$dataVersion === latestDataVersion) {
     if (oldPState !== newPState) {
@@ -79,6 +91,9 @@ const updatePState = oldPState => {
   throw new Error('failed to update the config')
 }
 
+
+// note that path `gameUpdate.digest` of returned structure might be `null`,
+// which means we must drop the old one and allow default one to come in.
 const loadPState = () => {
   try {
     return updatePState(readJsonSync(getPStateFilePath()))

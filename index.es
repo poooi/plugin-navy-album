@@ -51,7 +51,7 @@ const pluginDidLoad = () => {
       // before setting the ready flag
       if (!newGameUpdate.digest) {
         newGameUpdate.digest =
-          readJsonSync(join(__dirname,'..','assets','default-digest.json'))
+          readJsonSync(join(__dirname,'assets','default-digest.json'))
       }
       withBoundActionCreator(
         ({gameUpdateReady}) => gameUpdateReady(newGameUpdate)
