@@ -10,7 +10,6 @@ const register = () => {
       const {shipIdSet} = validMasterIdSetsSelector(getStore())
       if (shipIdSet.has(mstId)) {
         bac.uiSwitchShip(mstId)
-        remote.getCurrentWindow().show()
       } else {
         console.error(`ship id ${mstIdRaw} is not valid`)
       }
@@ -20,7 +19,6 @@ const register = () => {
       const {equipIdSet} = validMasterIdSetsSelector(getStore())
       if (equipIdSet.has(mstId)) {
         bac.uiSwitchShip(mstId)
-        remote.getCurrentWindow().show()
       } else {
         console.error(`equip id ${mstIdRaw} is not valid`)
       }
