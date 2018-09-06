@@ -72,7 +72,7 @@ const indexedShipGraphInfoSelector = createSelector(
 // returns an Array of ShipInfo, order is unspecified.
 const shipsInfoSelector = createSelector(
   constSelector,
-  ({$ships}) => Object.values($ships).map($ship => {
+  ({$ships}) => _.values($ships).map($ship => {
     const mstId = $ship.api_id
     const sortNo = $ship.api_sort_id
     const name = $ship.api_name

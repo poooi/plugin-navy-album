@@ -23,7 +23,7 @@ const searchTextSelector = createSelector(
 // order not specified
 const allEquipsRawSelector = createSelector(
   constSelector,
-  ({$equips}) => Object.values($equips)
+  ({$equips}) => _.values($equips)
 )
 
 const isAbyssalEq = s => s.api_id > 500

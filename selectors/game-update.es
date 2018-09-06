@@ -7,7 +7,7 @@ import { constSelector } from 'views/utils/selectors'
 import { indexedShipGraphsSelector } from './common'
 
 const digestConstObj = x =>
-  Object.keys(x).map(Number).sort(generalComparator)
+  _.keys(x).map(Number).sort(generalComparator)
 
 /*
    generates a digest of store.const:

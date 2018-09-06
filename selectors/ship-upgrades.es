@@ -105,7 +105,7 @@ const remodelDetailsSelector = createSelector(
       'api_current_ship_id'
     )
 
-    Object.values($ships).map($ship => {
+    _.values($ships).map($ship => {
       const mstIdBefore = $ship.api_id
       if (mstIdBefore >= 1500)
         return
