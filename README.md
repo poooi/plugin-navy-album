@@ -5,6 +5,11 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 1.0.1
+
+- Fixed IPC support
+- Fixed some crash on new poi installations
+
 ### 1.0.0
 
 - The plugin is no longer a separated process.
