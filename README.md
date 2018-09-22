@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 1.1.0 (pending)
+
+- Completely dropped support for SWF extraction, now all sources are from phase 2, enjoy.
+
 ### 1.0.1
 
 - Fixed IPC support
