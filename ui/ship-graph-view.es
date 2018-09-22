@@ -3,68 +3,45 @@ import { connect } from 'react-redux'
 import { PTyp } from '../ptyp'
 import { mapDispatchToProps } from '../store'
 import {
-  shipGraphSourceFuncSelector,
-  getLastFetchFuncSelector,
-  swfCacheSelector,
+  serverIpSelector,
 } from '../selectors'
+import { getShipImgPath } from '../game-misc'
 
 class ShipGraphViewImpl extends PureComponent {
   static propTypes = {
     // required props
     mstId: PTyp.number.isRequired,
-    characterId: PTyp.number.isRequired,
+    graphType: PTyp.string.isRequired,
+    damaged: PTyp.bool.isRequired,
+    debuffFlag: PTyp.bool.isRequired,
+
     // optional props
-    debuffFlag: PTyp.bool,
     style: PTyp.object,
     // whether the component hides itself
     // when no source is available
     hideOnNoSrc: PTyp.bool,
     // connected
     src: PTyp.string.isRequired,
-    lastFetch: PTyp.number.isRequired,
-    ready: PTyp.bool.isRequired,
-    requestShipGraph: PTyp.func.isRequired,
   }
 
   static defaultProps = {
-    debuffFlag: false,
     hideOnNoSrc: false,
     style: {},
   }
 
-  componentDidMount() {
-    const {requestShipGraph, mstId, ready} = this.props
-    if (ready)
-      requestShipGraph(mstId)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (
-      nextProps.ready &&
-      (
-        !this.props.ready ||
-        nextProps.mstId !== this.props.mstId
-      )
-    ) {
-      nextProps.requestShipGraph(nextProps.mstId)
-    }
-  }
-
   render() {
-    const {
-      characterId: _ignored1,
-      debuffFlag: _ignored2,
-      // https://stackoverflow.com/a/9943419
-      lastFetch,
-    } = this.props
     const {
       style,mstId,src,
       hideOnNoSrc,
+
+      // used in selectors
+      graphType: _ignored1,
+      damaged: _ignored2,
     } = this.props
     return (
       <img
         alt={`shipgraph-${mstId}`}
-        src={`${src}#${lastFetch}`}
+        src={`${src}`}
         style={{
           ...style,
           ...(hideOnNoSrc && !src ? {display: 'none'} : {}),
@@ -76,15 +53,11 @@ class ShipGraphViewImpl extends PureComponent {
 
 const ShipGraphView = connect(
   (state, ownProps) => {
-    const {mstId, characterId, debuffFlag} = ownProps
-    const srcFunc = shipGraphSourceFuncSelector(state)
-    const getLastFetch = getLastFetchFuncSelector(state)
-    const lastFetch = getLastFetch(mstId, debuffFlag)
-    const {ready} = swfCacheSelector(state)
+    const {mstId, graphType, damaged, debuffFlag} = ownProps
+    const serverIp = serverIpSelector(state)
+    const path = getShipImgPath(mstId, graphType, damaged, debuffFlag)
     return {
-      src: srcFunc(mstId, characterId, debuffFlag),
-      ready,
-      lastFetch,
+      src: `http://${serverIp}${path}`,
     }
   },
   mapDispatchToProps

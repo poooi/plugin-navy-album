@@ -2,7 +2,6 @@ import _ from 'lodash'
 import { bindActionCreators } from 'redux'
 import { store } from 'views/create-store'
 import { modifyObject, generalComparator } from 'subtender'
-import { mkRequestShipGraph } from './request-ship-graph'
 import { actionCreators as swfCacheAC } from './ext-root/swf-cache'
 import { actionCreators as masterAC } from './ext-root/master'
 import { mkTouchDebuffGraph } from './touch-debuff-graph'
@@ -177,9 +176,6 @@ const actionCreator = {
   ...swfCacheAC,
   ...masterAC,
 }
-
-actionCreator.requestShipGraph =
-  mkRequestShipGraph(actionCreator)
 
 actionCreator.touchDebuffGraph =
   mkTouchDebuffGraph(actionCreator)

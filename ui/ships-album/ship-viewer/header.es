@@ -10,7 +10,6 @@ import {
 
 import { PTyp } from '../../../ptyp'
 import { ShipGraphView } from '../../ship-graph-view'
-import { ShipGraphViewP2 } from '../../ship-graph-view-p2'
 
 class HeaderImpl extends PureComponent {
   static propTypes = {
@@ -60,35 +59,23 @@ class HeaderImpl extends PureComponent {
             ({mstId})
           </div>
         </div>
-        {
-          mstId > 1500 ? (
-            <ShipGraphView
-              key={mstId}
-              mstId={mstId}
-              characterId={1}
-              debuffFlag={debuffFlag}
-              hideOnNoSrc
-              style={{width: 160, height: 40}}
-            />
-          ) : (
-            <ShipGraphViewP2
-              key={mstId}
-              mstId={mstId}
-              graphType="banner"
-              damaged={false}
-              hideOnNoSrc
-              style={
-                /*
-                   for special master ids, ShipGraphView still works
-                   as automatic request sender but is invisible
-                 */
-                isSpecialCG ?
-                  {display: 'none'} :
-                  {width: 160, height: 40}
-              }
-            />
-          )
-        }
+        <ShipGraphView
+          key={mstId}
+          mstId={mstId}
+          debuffFlag={debuffFlag}
+          graphType="banner"
+          damaged={false}
+          hideOnNoSrc
+          style={
+            /*
+               for special master ids, ShipGraphView still works
+               as automatic request sender but is invisible
+             */
+            isSpecialCG ?
+              {display: 'none'} :
+              {width: 160, height: 40}
+          }
+        />
       </div>
     )
   }

@@ -4,7 +4,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import { mstIdToCategoryFuncSelector } from './selectors'
 import { PTyp } from '../../ptyp'
-import { ShipGraphViewP2 } from '../ship-graph-view-p2'
+import { ShipGraphView } from '../ship-graph-view'
 
 /*
    ShipGraphView with CG in tooltip (if available)
@@ -30,9 +30,10 @@ class ShipGraphViewWithCGImpl extends PureComponent {
     } = this.props
     const cgAvailable = graphAttrs.length > 0
     const content = (
-      <ShipGraphViewP2
+      <ShipGraphView
         style={graphSize}
         mstId={mstId}
+        debuffFlag={false}
         graphType="banner"
       />
     )
@@ -49,7 +50,7 @@ class ShipGraphViewWithCGImpl extends PureComponent {
               <div style={{display: 'flex', alignItems: 'center'}}>
                 {
                   graphAttrs.map(({graphType, damaged}) => (
-                    <ShipGraphViewP2
+                    <ShipGraphView
                       key={graphType}
                       style={{maxHeight: 400, maxWidth: 400}}
                       mstId={mstId}
