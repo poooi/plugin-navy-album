@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import React, { Component } from 'react'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
@@ -10,12 +9,10 @@ import { mergeMapStateToProps, modifyObject } from 'subtender'
 import { PTyp } from '../../../ptyp'
 import {
   shipViewerSelector,
-  shipGraphSourcesSelector,
   shipMasterDataSelector,
 } from '../selectors'
 import {
   isMasterIdSpecialCGFuncSelector,
-  getLastFetchFuncSelector,
 } from '../../../selectors'
 import { Header } from './header'
 import { AltFormSwitcher } from './alt-form-switcher'
@@ -35,7 +32,6 @@ class ShipViewerImpl extends Component {
     $ship: PTyp.object.isRequired,
     uiModify: PTyp.func.isRequired,
     isMasterIdSpecialCGFunc: PTyp.func.isRequired,
-    lastFetch: PTyp.number.isRequired,
   }
 
   handleSwitchTab = activeTab =>
@@ -55,7 +51,6 @@ class ShipViewerImpl extends Component {
     const {
       style, activeTab, mstId, $ship, debuffFlag,
       isMasterIdSpecialCGFunc,
-      lastFetch,
     } = this.props
     const {__} = window.i18n["poi-plugin-navy-album"]
     const isAbyssalShip = mstId > 1500
@@ -146,15 +141,12 @@ class ShipViewerImpl extends Component {
 const ShipViewer = connect(
   mergeMapStateToProps(
     createStructuredSelector({
-      shipGraphSources: shipGraphSourcesSelector,
       $ship: shipMasterDataSelector,
       isMasterIdSpecialCGFunc: isMasterIdSpecialCGFuncSelector,
     }),
     state => {
       const shipViewer = shipViewerSelector(state)
-      const getLastFetch = getLastFetchFuncSelector(state)
-      const lastFetch = getLastFetch(shipViewer.mstId)
-      return {...shipViewer, lastFetch}
+      return {...shipViewer}
     }
   ),
   mapDispatchToProps,

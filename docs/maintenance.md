@@ -27,16 +27,6 @@ We'll need to maintain a list of known map bgm ids.
 
 TODO: we now need new ways of doing this.
 
-```javascript
-// wait for this command to finish, then proceed.
-for (let i = 1; i < 200; ++i) {
-    bac.requestBgm('map',i)
-}
-JSON.stringify(
-_.sortBy(_.keys(getStore().ext['poi-plugin-navy-album']._.swfCache.mapBgm).map(Number), x => x)
-)
-```
-
 ## ship upgrade info
 
 Update `selectors/ship-upgrades.es` using info from `kcs2/js/main.js` if needed

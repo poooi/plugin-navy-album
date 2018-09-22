@@ -11,9 +11,7 @@ import {
   shipsInfoSelector,
   sortByRemodelFuncSelector,
   indexedShipGraphsSelector,
-  swfCacheSelector,
   shipsMasterDataSelector,
-  shipGraphSourceFuncSelector,
   debuffInfoSelector,
 } from '../../selectors'
 
@@ -198,23 +196,6 @@ const debuffFlagSelector = createSelector(
   sv => sv.debuffFlag
 )
 
-const shipGraphSourcesSelector = createSelector(
-  mstIdSelector,
-  debuffFlagSelector,
-  swfCacheSelector,
-  shipGraphSourceFuncSelector,
-  (mstId, debuffFlag, swfCache, getShipGraphSource) => {
-    const mstIdX = debuffFlag ? `${mstId}_d` : String(mstId)
-    const characterIds =
-      _.keys(_.get(swfCache, ['ship', mstIdX, 'files'])).map(Number)
-
-    return _.fromPairs(
-      characterIds.map(chId =>
-        [chId, getShipGraphSource(mstId, chId, debuffFlag)])
-    )
-  }
-)
-
 const hasDebuffedGraphsSelector = createSelector(
   mstIdSelector,
   debuffInfoSelector,
@@ -237,7 +218,6 @@ export {
   mstIdSelector,
   levelSelector,
   shipGraphSelector,
-  shipGraphSourcesSelector,
   shipMasterDataSelector,
   hasDebuffedGraphsSelector,
   debuffFlagSelector,

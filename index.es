@@ -3,7 +3,6 @@ import { readJsonSync } from 'fs-extra'
 import { NavyAlbumRoot as reactClass } from './ui'
 import { loadPState } from './p-state'
 import { globalSubscribe, globalUnsubscribe } from './observers'
-import { loadSwfCache } from './swf-cache'
 import { loadMasterDataFile } from './store/ext-root/master'
 import {
   reducer,
@@ -58,9 +57,6 @@ const pluginDidLoad = () => {
       )
 
       setTimeout(() => {
-        const swfCache = loadSwfCache()
-        boundActionCreators.swfCacheReady(swfCache)
-
         const mstData = loadMasterDataFile()
         boundActionCreators.masterLoadFile(mstData)
       })

@@ -2,7 +2,6 @@ import _ from 'lodash'
 import { bindActionCreators } from 'redux'
 import { store } from 'views/create-store'
 import { modifyObject, generalComparator } from 'subtender'
-import { actionCreators as swfCacheAC } from './ext-root/swf-cache'
 import { actionCreators as masterAC } from './ext-root/master'
 import { mkTouchDebuffGraph } from './touch-debuff-graph'
 
@@ -63,59 +62,6 @@ const actionCreator = {
         ),
       ])
     ),
-  swfCacheLockPath: path =>
-    actionCreator.swfCacheModify(
-      modifyObject(
-        'fetchLocks', fl => [...fl, path]
-      )
-    ),
-  swfCacheUnlockPath: path =>
-    actionCreator.swfCacheModify(
-      modifyObject(
-        'fetchLocks', fl => fl.filter(p => p !== path)
-      )
-    ),
-  /*
-     sgInfo is {mstIdX, sgFileName, sgVersion, characterId, fileName}
-     where 'debuffFlag' is required to be a boolean if mstId suggests an abyssal ship
-   */
-  swfCacheRegisterShipGraph: sgInfo => {
-    const {
-      mstIdX, sgFileName, sgVersion, characterId, fileName,
-    } = sgInfo
-    const timestamp = Number(new Date())
-    // as the creation might be unnecessary, delayed as thunk.
-    const mkEmptyShipCacheRecord = () => ({
-      lastFetch: timestamp,
-      sgFileName,
-      sgVersion,
-      files: {},
-    })
-
-    return actionCreator.swfCacheModify(
-      modifyObject(
-        'ship',
-        modifyObject(
-          mstIdX,
-          _.flow(
-            // (1) fill with empty record if it's missing
-            (shipCacheRecord = mkEmptyShipCacheRecord()) =>
-              shipCacheRecord,
-            /* eslint-enable indent */
-            // (2) update meta
-            modifyObject('lastFetch', () => timestamp),
-            modifyObject('sgFileName', () => sgFileName),
-            modifyObject('sgVersion', () => sgVersion),
-            // (3) update files
-            modifyObject(
-              'files',
-              modifyObject(characterId, () => fileName)
-            )
-          )
-        )
-      )
-    )
-  },
   subtitleModify: modifier => ({
     type: '@poi-plugin-navy-album@subtitle@Modify',
     modifier,
@@ -173,7 +119,6 @@ const actionCreator = {
     type: '@poi-plugin-navy-album@debuffInfo@Modify',
     modifier,
   }),
-  ...swfCacheAC,
   ...masterAC,
 }
 
