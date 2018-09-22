@@ -2,7 +2,7 @@ import { withBoundActionCreator } from './store'
 import { validMasterIdSetsSelector } from './selectors'
 
 const register = () => {
-  const {ipc, remote, getStore} = window
+  const {ipc, getStore} = window
 
   const services = withBoundActionCreator(bac => ({
     showShip: mstIdRaw => {

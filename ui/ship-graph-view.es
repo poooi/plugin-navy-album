@@ -37,6 +37,7 @@ class ShipGraphViewImpl extends PureComponent {
       // used in selectors
       graphType: _ignored1,
       damaged: _ignored2,
+      debuffFlag: _ignored3,
     } = this.props
     return (
       <img
