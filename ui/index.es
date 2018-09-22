@@ -9,9 +9,10 @@ import { NavyAlbum } from './navy-album'
    - ship album
        - handle special CGs
    - special CG handling: check shipgraph as well
-   - non-forced batch request for game update tab
    - settings tab
       - loop toggle
+
+   - default table for debuff info
 
  */
 
