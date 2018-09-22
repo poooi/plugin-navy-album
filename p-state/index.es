@@ -6,7 +6,7 @@ import { join } from 'path-extra'
 
 import { uiSelector, gameUpdateSelector, debuffInfoSelector } from '../selectors'
 
-const latestDataVersion = 'p-state-1.0.0'
+const latestDataVersion = 'p-state-1.1.0'
 
 /*
    state persistence: the following paths are kept and restored at runtime:
@@ -78,6 +78,14 @@ const updatePState = oldPState => {
       modifyObject('digest', () => null)
     )(newPState)
     newPState.$dataVersion = 'p-state-1.0.0'
+  }
+
+  if (newPState.$dataVersion === 'p-state-1.0.0') {
+    newPState = {
+      ...newPState,
+      debuffInfo: {},
+      $dataVersion: 'p-state-1.1.0',
+    }
   }
 
   if (newPState.$dataVersion === latestDataVersion) {

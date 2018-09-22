@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { join } from 'path-extra'
 import { readJsonSync } from 'fs-extra'
 import { NavyAlbumRoot as reactClass } from './ui'
@@ -14,8 +15,6 @@ import { register as registerIpc } from './ipc'
 const windowMode = true
 
 let unregisterIpc = null
-
-const defDebuffInfo = readJsonSync(join(__dirname,'assets','default-debuff-info.json'))
 
 const pluginDidLoad = () => {
   globalSubscribe()
@@ -35,7 +34,7 @@ const pluginDidLoad = () => {
     // start loading p-state
     let newUiState = {}
     let newGameUpdate = initState.gameUpdate
-    let newDebuffInfo = defDebuffInfo
+    let newDebuffInfo = {}
     try {
       const pState = loadPState()
       if (pState !== null && ('ui' in pState))
@@ -43,10 +42,7 @@ const pluginDidLoad = () => {
       if (pState !== null && ('gameUpdate' in pState))
         newGameUpdate = pState.gameUpdate
       if (pState !== null && ('debuffInfo' in pState))
-        newDebuffInfo = {
-          ...newDebuffInfo,
-          ...pState.debuffInfo,
-        }
+        newDebuffInfo = pState.debuffInfo
     } catch (e) {
       console.error('error while initializing', e)
     } finally {
@@ -60,6 +56,9 @@ const pluginDidLoad = () => {
       }
 
       bac.gameUpdateReady(newGameUpdate)
+      if (_.isEmpty(newDebuffInfo)) {
+        newDebuffInfo = readJsonSync(join(__dirname,'assets','default-debuff-info.json'))
+      }
       bac.debuffInfoModify(() => newDebuffInfo)
 
       setTimeout(() => {
