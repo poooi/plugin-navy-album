@@ -32,7 +32,6 @@ class ShipViewerImpl extends Component {
     activeTab: PTyp.string.isRequired,
     mstId: PTyp.number.isRequired,
     debuffFlag: PTyp.bool.isRequired,
-    shipGraphSources: PTyp.object.isRequired,
     $ship: PTyp.object.isRequired,
     uiModify: PTyp.func.isRequired,
     isMasterIdSpecialCGFunc: PTyp.func.isRequired,
@@ -55,15 +54,12 @@ class ShipViewerImpl extends Component {
   render() {
     const {
       style, activeTab, mstId, $ship, debuffFlag,
-      shipGraphSources,
       isMasterIdSpecialCGFunc,
       lastFetch,
     } = this.props
     const {__} = window.i18n["poi-plugin-navy-album"]
     const isAbyssalShip = mstId > 1500
     const isSpecialCG = isMasterIdSpecialCGFunc(mstId)
-    const shipGraphSource =
-      _.get(shipGraphSources, isAbyssalShip ? 3 : 5, '')
     return (
       <Panel
         className="ship-viewer"
@@ -113,15 +109,12 @@ class ShipViewerImpl extends Component {
                             isAbyssalShip ? (
                               <AbyssalInfoView
                                 mstId={mstId}
-                                shipGraphSource={shipGraphSource}
-                                lastFetch={lastFetch}
+                                debuffFlag={debuffFlag}
                                 $ship={$ship}
                               />
                             ) : (
                               <ShipInfoView
                                 mstId={mstId}
-                                shipGraphSource={shipGraphSource}
-                                lastFetch={lastFetch}
                                 $ship={$ship}
                               />
                             )

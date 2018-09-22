@@ -1,12 +1,16 @@
 import _ from 'lodash'
 import { readJsonSync } from 'fs-extra'
 import { join } from 'path-extra'
-
+import { createStructuredSelector } from 'reselect'
 import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
 
 import { PTyp } from '../../../ptyp'
 import { EquipmentsView } from './equipments-view'
-
+import {
+  serverIpSelector,
+} from '../../../selectors'
+import {getShipImgPath} from '../../../game-misc'
 import { StatsView } from './stats-view'
 
 const abyssalInfo = readJsonSync(
@@ -35,27 +39,30 @@ const mkStats = (_s, $abyssal) => {
   }
 }
 
-class AbyssalInfoView extends PureComponent {
+class AbyssalInfoViewImpl extends PureComponent {
   static propTypes = {
     mstId: PTyp.number.isRequired,
-    shipGraphSource: PTyp.string.isRequired,
     $ship: PTyp.object.isRequired,
-    lastFetch: PTyp.number.isRequired,
+    debuffFlag: PTyp.bool.isRequired,
+    serverIp: PTyp.string.isRequired,
   }
   render() {
-    const {mstId, shipGraphSource, $ship, lastFetch} = this.props
+    const {mstId, $ship, debuffFlag, serverIp} = this.props
     const $abyssal = abyssalInfo[mstId]
     const {__} = window.i18n["poi-plugin-navy-album"]
     const hasAbyssalEquipsInfo =
       $abyssal &&
       Array.isArray($abyssal.EQUIPS) &&
       Array.isArray($abyssal.SLOTS)
+
+    const url = `http://${serverIp}${getShipImgPath(mstId, 'full', false, debuffFlag)}`
     return (
       <div style={{margin: '.2em', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
         <img
           style={{maxWidth: '100%', height: 'auto'}}
-          src={`${shipGraphSource}#${lastFetch}`}
+          src={url}
           alt={__('ShipsTab.WaitingDataFor',mstId)}
+          key={`${mstId},${debuffFlag}`}
         />
         <div style={{
           display: 'flex',
@@ -107,5 +114,11 @@ class AbyssalInfoView extends PureComponent {
     )
   }
 }
+
+const AbyssalInfoView = connect(
+  createStructuredSelector({
+    serverIp: serverIpSelector,
+  })
+)(AbyssalInfoViewImpl)
 
 export { AbyssalInfoView }
