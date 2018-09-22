@@ -52,8 +52,8 @@ const create = (id, seed) => {
   return (17 * (r + 7) * resource[(s + r * a) % 100] % 8973 + 1e3).toString()
 }
 
-const getShipImgPath = (id, type, damaged) => {
-  const mapkey = [id, type, damaged].toString()
+const getShipImgPath = (id, type, damaged, debuff = false) => {
+  const mapkey = [id, type, damaged, debuff].toString()
   if (map.has(mapkey)) {
     return map.get(mapkey)
   }
@@ -67,10 +67,13 @@ const getShipImgPath = (id, type, damaged) => {
   const seed = `ship_${ntype}`
   const cipherNum = create(id, seed)
   const padId = padStart(id, 4, '0')
-  const ret = `/kcs2/resources/ship/${ntype}/${padId}_${cipherNum}.png`
+  const debuffInfix = debuff ? '_d' : ''
+  const ret = `/kcs2/resources/ship/${ntype}/${padId}${debuffInfix}_${cipherNum}.png`
   map.set(mapkey, ret)
   return ret
 }
+
+window.getShipImgPath = getShipImgPath
 
 const getBgm = (id, type) => {
   const padId = padStart(id, 3, '0')
