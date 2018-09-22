@@ -74,7 +74,7 @@ const reducer = (state = initState, action) => {
     }
   }
 
-  if (! state.ready)
+  if (!state.ready)
     return state
 
   if (action.type === '@poi-plugin-navy-album@ui@Modify') {

@@ -28,6 +28,8 @@ const gameUpdateSelector =
   mkExtPropSelector('gameUpdate')
 const masterSelector =
   mkExtPropSelector('master')
+const debuffInfoSelector =
+  mkExtPropSelector('debuffInfo')
 
 const indexedShipGraphsSelector = createSelector(
   constSelector,
@@ -207,4 +209,5 @@ export {
   getLastFetchFuncSelector,
   masterSelector,
   poiVolumeSelector,
+  debuffInfoSelector,
 }
