@@ -36,7 +36,7 @@ const imgListSpecialCG = [
   {ty: 'character_full', damaged: true},
 ]
 
-class GalleryViewP2Impl extends PureComponent {
+class GalleryViewImpl extends PureComponent {
   static propTypes = {
     mstId: PTyp.number.isRequired,
     style: PTyp.object.isRequired,
@@ -87,7 +87,7 @@ class GalleryViewP2Impl extends PureComponent {
   }
 }
 
-const GalleryViewP2 = connect(
+const GalleryView = connect(
   (state, props) => {
     // TODO: use selector
     const serverIp = _.get(state, ['info', 'server', 'ip'])
@@ -98,6 +98,6 @@ const GalleryViewP2 = connect(
       isSpecialCG: isMasterIdSpecialCG(mstId),
     }
   }
-)(GalleryViewP2Impl)
+)(GalleryViewImpl)
 
-export { GalleryViewP2 }
+export { GalleryView }

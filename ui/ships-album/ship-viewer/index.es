@@ -22,7 +22,7 @@ import { AltFormSwitcher } from './alt-form-switcher'
 import { mapDispatchToProps } from '../../../store'
 import { AbyssalInfoView } from './abyssal-info-view'
 import { ShipInfoView } from './ship-info-view'
-import { GalleryViewP2 } from './gallery-view-p2'
+import { GalleryView } from './gallery-view'
 import { QuotesView } from './quotes-view'
 import { ErrorBoundary } from '../../error-boundary'
 
@@ -75,7 +75,7 @@ class ShipViewerImpl extends Component {
             <AltFormSwitcher />
             {
               isSpecialCG ? (
-                <GalleryViewP2
+                <GalleryView
                   style={{flex: 1, height: 0, overflowY: 'auto'}}
                   mstId={mstId}
                   debuffFlag={debuffFlag}
@@ -128,7 +128,7 @@ class ShipViewerImpl extends Component {
                           }
                         </Tab.Pane>
                         <Tab.Pane eventKey="image">
-                          <GalleryViewP2
+                          <GalleryView
                             style={{}}
                             debuffFlag={debuffFlag}
                             mstId={mstId}
