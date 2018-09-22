@@ -12,8 +12,6 @@ import { NavyAlbum } from './navy-album'
    - settings tab
       - loop toggle
 
-   - default table for debuff info
-
  */
 
 const NavyAlbumRoot = _props => (

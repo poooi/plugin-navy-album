@@ -139,6 +139,39 @@ const asyncBoundActionCreator = (func, dispatch=store.dispatch) =>
 
 window.navyAlbumBAC = boundActionCreators
 
+/*
+   quick & dirty way to populate debuffInfo so user don't have
+   to attempt on known abyssal ships on their own.
+
+   execute this repeatly (hopefully once is good enought) until
+   no more request is scheduled.
+
+   then: JSON.stringify(pluginHelper.navyAlbum.getExt().debuffInfo)
+ */
+window.navyAlbumPopulateDebuffInfo = () => {
+  const {getStore} = window
+  const abyssalMstIds = _.flatMap(
+    _.values(_.get(getStore(), ['const', '$ships'])),
+    raw => raw.api_id > 1500 ? [raw.api_id] : []
+  )
+  const obtainedMstIds = new Set(
+    _.keys(
+      _.get(getStore(), ['ext', 'poi-plugin-navy-album', '_', 'debuffInfo'])
+    ).map(Number)
+  )
+
+  let count = 0
+  abyssalMstIds.forEach(mstId => {
+    if (!obtainedMstIds.has(mstId)) {
+      boundActionCreators.touchDebuffGraph(mstId, false)
+      ++count
+    }
+  })
+  /* eslint-disable no-console */
+  console.log(`${count} requests scheduled`)
+  /* eslint-enable no-console */
+}
+
 export {
   actionCreator,
   mapDispatchToProps,

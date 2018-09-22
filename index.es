@@ -6,8 +6,7 @@ import { globalSubscribe, globalUnsubscribe } from './observers'
 import { loadMasterDataFile } from './store/ext-root/master'
 import {
   reducer,
-  withBoundActionCreator,
-  boundActionCreators,
+  boundActionCreators as bac,
   initState,
 } from './store'
 import { register as registerIpc } from './ipc'
@@ -15,6 +14,8 @@ import { register as registerIpc } from './ipc'
 const windowMode = true
 
 let unregisterIpc = null
+
+const defDebuffInfo = readJsonSync(join(__dirname,'assets','default-debuff-info.json'))
 
 const pluginDidLoad = () => {
   globalSubscribe()
@@ -34,31 +35,36 @@ const pluginDidLoad = () => {
     // start loading p-state
     let newUiState = {}
     let newGameUpdate = initState.gameUpdate
+    let newDebuffInfo = defDebuffInfo
     try {
       const pState = loadPState()
-      if (pState !== null)
+      if (pState !== null && ('ui' in pState))
         newUiState = pState.ui
-      if (pState !== null)
+      if (pState !== null && ('gameUpdate' in pState))
         newGameUpdate = pState.gameUpdate
+      if (pState !== null && ('debuffInfo' in pState))
+        newDebuffInfo = {
+          ...newDebuffInfo,
+          ...pState.debuffInfo,
+        }
     } catch (e) {
       console.error('error while initializing', e)
     } finally {
-      withBoundActionCreator(
-        ({uiReady}) => uiReady(newUiState)
-      )
+      bac.uiReady(newUiState)
+
       // now make sure that we always have gameUpdate.digest available
       // before setting the ready flag
       if (!newGameUpdate.digest) {
         newGameUpdate.digest =
           readJsonSync(join(__dirname,'assets','default-digest.json'))
       }
-      withBoundActionCreator(
-        ({gameUpdateReady}) => gameUpdateReady(newGameUpdate)
-      )
+
+      bac.gameUpdateReady(newGameUpdate)
+      bac.debuffInfoModify(() => newDebuffInfo)
 
       setTimeout(() => {
         const mstData = loadMasterDataFile()
-        boundActionCreators.masterLoadFile(mstData)
+        bac.masterLoadFile(mstData)
       })
     }
   })

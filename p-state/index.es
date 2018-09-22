@@ -4,7 +4,7 @@ import { createSelector } from 'reselect'
 import { ensureDirSync, readJsonSync, writeJsonSync } from 'fs-extra'
 import { join } from 'path-extra'
 
-import { uiSelector, gameUpdateSelector } from '../selectors'
+import { uiSelector, gameUpdateSelector, debuffInfoSelector } from '../selectors'
 
 const latestDataVersion = 'p-state-1.0.0'
 
@@ -18,7 +18,8 @@ const latestDataVersion = 'p-state-1.0.0'
 const pStateSelector = createSelector(
   uiSelector,
   gameUpdateSelector,
-  (ui, gameUpdate) => ({ui, gameUpdate})
+  debuffInfoSelector,
+  (ui, gameUpdate, debuffInfo) => ({ui, gameUpdate, debuffInfo})
 )
 
 const getPStateFilePath = () => {
