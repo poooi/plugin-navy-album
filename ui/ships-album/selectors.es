@@ -14,6 +14,7 @@ import {
   swfCacheSelector,
   shipsMasterDataSelector,
   shipGraphSourceFuncSelector,
+  debuffInfoSelector,
 } from '../../selectors'
 
 const shipsAlbumSelector = createSelector(
@@ -216,12 +217,9 @@ const shipGraphSourcesSelector = createSelector(
 
 const hasDebuffedGraphsSelector = createSelector(
   mstIdSelector,
-  swfCacheSelector,
-  (mstId, swfCache) =>
-    mstId > 1500 &&
-    !_.isEmpty(
-      _.get(swfCache, ['ship', `${mstId}_d`, 'files'])
-    )
+  debuffInfoSelector,
+  (mstId, debuffInfo) =>
+    (mstId in debuffInfo) && debuffInfo[mstId] === true
 )
 
 const shipMasterDataSelector = createSelector(

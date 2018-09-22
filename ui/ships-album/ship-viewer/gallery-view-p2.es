@@ -8,32 +8,55 @@ import { connect } from 'react-redux'
 import { remote } from 'electron'
 import {shipImgType, getShipImgPath} from '../../../game-misc'
 
+import {
+  isMasterIdSpecialCGFuncSelector,
+} from '../../../selectors'
+
 import { PTyp } from '../../../ptyp'
 
 const downloadUrl =
   remote.getCurrentWebContents().downloadURL
 
-const imgList = _.flatMap(shipImgType, ty =>
+// TODO: clean up
+const imgListFriendly = _.flatMap(shipImgType, ty =>
   ty === 'album_status' ?
     [{ty, damaged: false}] :
     [{ty, damaged: false}, {ty, damaged: true}]
 )
 
+const imgListAbyssal = _.flatMap(['banner', 'full'], ty =>
+  [{ty, damaged: false}]
+)
+
+const imgListSpecialCG = [
+  {ty: 'card', damaged: false},
+  {ty: 'character_up', damaged: false},
+  {ty: 'character_up', damaged: true},
+  {ty: 'character_full', damaged: false},
+  {ty: 'character_full', damaged: true},
+]
+
 class GalleryViewP2Impl extends PureComponent {
   static propTypes = {
     mstId: PTyp.number.isRequired,
     style: PTyp.object.isRequired,
+    debuffFlag: PTyp.bool.isRequired,
+
     // connected:
     serverIp: PTyp.string.isRequired,
+    isSpecialCG: PTyp.bool.isRequired,
   }
 
   render() {
-    const {mstId, serverIp, style} = this.props
+    const {mstId, serverIp, style, debuffFlag, isSpecialCG} = this.props
+    const imgList = isSpecialCG ? imgListSpecialCG :
+      mstId > 1500 ? imgListAbyssal : imgListFriendly
+
     return (
       <ListGroup style={style}>
         {
           imgList.map(x => {
-            const url = `http://${serverIp}${getShipImgPath(mstId, x.ty, x.damaged)}`
+            const url = `http://${serverIp}${getShipImgPath(mstId, x.ty, x.damaged, debuffFlag)}`
             return (
               <ListGroupItem
                 key={`${mstId},${x.ty},${x.damaged}`}
@@ -45,6 +68,7 @@ class GalleryViewP2Impl extends PureComponent {
                   style={{maxWidth: '100%', height: 'auto'}}
                   src={url}
                   alt={`ship=${mstId}, type=${x.ty}, damaged=${x.damaged}`}
+                  key={`${mstId},${x.ty},${x.damaged},${debuffFlag}`}
                 />
                 <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
                   <Button
@@ -64,10 +88,14 @@ class GalleryViewP2Impl extends PureComponent {
 }
 
 const GalleryViewP2 = connect(
-  state => {
+  (state, props) => {
+    // TODO: use selector
     const serverIp = _.get(state, ['info', 'server', 'ip'])
+    const {mstId} = props
+    const isMasterIdSpecialCG = isMasterIdSpecialCGFuncSelector(state)
     return {
       serverIp,
+      isSpecialCG: isMasterIdSpecialCG(mstId),
     }
   }
 )(GalleryViewP2Impl)

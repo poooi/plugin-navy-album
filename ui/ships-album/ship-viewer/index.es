@@ -22,7 +22,6 @@ import { AltFormSwitcher } from './alt-form-switcher'
 import { mapDispatchToProps } from '../../../store'
 import { AbyssalInfoView } from './abyssal-info-view'
 import { ShipInfoView } from './ship-info-view'
-import { GalleryView } from './gallery-view'
 import { GalleryViewP2 } from './gallery-view-p2'
 import { QuotesView } from './quotes-view'
 import { ErrorBoundary } from '../../error-boundary'
@@ -32,6 +31,7 @@ class ShipViewerImpl extends Component {
     style: PTyp.object.isRequired,
     activeTab: PTyp.string.isRequired,
     mstId: PTyp.number.isRequired,
+    debuffFlag: PTyp.bool.isRequired,
     shipGraphSources: PTyp.object.isRequired,
     $ship: PTyp.object.isRequired,
     uiModify: PTyp.func.isRequired,
@@ -54,7 +54,7 @@ class ShipViewerImpl extends Component {
 
   render() {
     const {
-      style, activeTab, mstId, $ship,
+      style, activeTab, mstId, $ship, debuffFlag,
       shipGraphSources,
       isMasterIdSpecialCGFunc,
       lastFetch,
@@ -75,7 +75,11 @@ class ShipViewerImpl extends Component {
             <AltFormSwitcher />
             {
               isSpecialCG ? (
-                <GalleryView style={{flex: 1, height: 0, overflowY: 'auto'}} />
+                <GalleryViewP2
+                  style={{flex: 1, height: 0, overflowY: 'auto'}}
+                  mstId={mstId}
+                  debuffFlag={debuffFlag}
+                />
               ) : (
                 <Tab.Container
                   style={{flex: 1, display: 'flex', flexDirection: 'column'}}
@@ -124,13 +128,11 @@ class ShipViewerImpl extends Component {
                           }
                         </Tab.Pane>
                         <Tab.Pane eventKey="image">
-                          {
-                            isAbyssalShip ? (
-                              <GalleryView style={{}} mstId={mstId} />
-                            ) : (
-                              <GalleryViewP2 style={{}} mstId={mstId} />
-                            )
-                          }
+                          <GalleryViewP2
+                            style={{}}
+                            debuffFlag={debuffFlag}
+                            mstId={mstId}
+                          />
                         </Tab.Pane>
                         <Tab.Pane eventKey="voice">
                           <QuotesView />

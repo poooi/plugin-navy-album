@@ -27,6 +27,23 @@ class AltFormSwitcherImpl extends PureComponent {
     debuffFlag: PTyp.bool.isRequired,
     uiSwitchShip: PTyp.func.isRequired,
     uiModify: PTyp.func.isRequired,
+    touchDebuffGraph: PTyp.func.isRequired,
+  }
+
+  componentDidMount() {
+    this.tryTouchDebuffGraph(this.props.mstId)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.mstId !== this.props.mstId) {
+      this.tryTouchDebuffGraph(this.props.mstId)
+    }
+  }
+
+  tryTouchDebuffGraph(mstId) {
+    const {touchDebuffGraph} = this.props
+    if (mstId > 1500)
+      touchDebuffGraph(mstId, false)
   }
 
   handleSwitchShip = mstId => () =>
@@ -51,7 +68,7 @@ class AltFormSwitcherImpl extends PureComponent {
     const noRender = (<div style={{display: 'none'}} />)
     if (mstId > 1500) {
       const {hasDebuffedGraphs, debuffFlag, $ships} = this.props
-      if (! hasDebuffedGraphs)
+      if (!hasDebuffedGraphs)
         return noRender
       const abyssalName = $ships[mstId].api_name
       return (
@@ -85,10 +102,10 @@ class AltFormSwitcherImpl extends PureComponent {
     const {remodelInfo, $ships} = this.props
     const {remodelChains, originMstIdOf} = remodelInfo
     const originMstId = originMstIdOf[mstId]
-    if (! originMstId)
+    if (!originMstId)
       return noRender
     const remodelChain = remodelChains[originMstId]
-    if (! remodelChain)
+    if (!remodelChain)
       return noRender
 
     return (
