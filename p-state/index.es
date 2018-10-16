@@ -89,6 +89,11 @@ const updatePState = oldPState => {
   }
 
   if (newPState.$dataVersion === 'p-state-1.1.0') {
+    /*
+       turns out the old way (prior to 0.6.0) of detection version change is correct:
+       api_version[1] and api_version[2] are for voices (thank you, tanaka.)
+       so here we need to nuke ship digests again.
+     */
     newPState = modifyObject(
       'gameUpdate',
       modifyObject('digest', () => null)
