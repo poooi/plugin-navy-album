@@ -5,9 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
-### 1.2.0 (pending)
+### 1.2.0
 
 - Fix ship CG change detection
+- Update few assets
 
 ### 1.1.0
 
