@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 1.2.0 (pending)
+
+- Fix ship CG change detection
+
 ### 1.1.0
 
 - Completely dropped support for SWF extraction, now all sources are from phase 2, enjoy.

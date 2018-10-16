@@ -25,9 +25,13 @@ const constDigestSelector = createSelector(
     const equipMstIds = digestConstObj($equips)
     const shipDigests = digestConstObj($ships).map(mstId => {
       const $shipGraph = indexedShipGraphs[mstId]
+      /*
+         note: ship graph version is just the `[0]` part of api_version,
+         which can be confirmed from ShipGraphModel.version of main.js
+       */
       return [
         mstId,
-        `${$shipGraph.api_filename}#${_.join($shipGraph.api_version,'~')}`,
+        `${$shipGraph.api_filename}#${$shipGraph.api_version[0]}`,
       ]
     })
     return {
