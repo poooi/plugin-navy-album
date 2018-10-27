@@ -32,6 +32,34 @@ const register = () => {
   return unregister
 }
 
+let unregisterFunc = null
+
+const registerIpc = () => {
+  if (unregisterFunc !== null) {
+    console.warn(`unregisterFunc should be null while getting ${unregisterFunc}`)
+    if (typeof unregisterFunc === 'function') {
+      try {
+        unregisterFunc()
+      } finally {
+        unregisterFunc = null
+      }
+    }
+  }
+  unregisterFunc = register()
+}
+
+const unregisterIpc = () => {
+  if (typeof unregisterFunc !== 'function') {
+    console.error(`unexpected unregisterIpc value: ${unregisterFunc}`)
+  } else {
+    try {
+      unregisterFunc()
+    } finally {
+      unregisterFunc = null
+    }
+  }
+}
+
 export {
-  register,
+  registerIpc, unregisterIpc,
 }

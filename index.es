@@ -10,26 +10,13 @@ import {
   boundActionCreators as bac,
   initState,
 } from './store'
-import { register as registerIpc } from './ipc'
+import { registerIpc, unregisterIpc } from './ipc'
 
 const windowMode = true
 
-let unregisterIpc = null
-
 const pluginDidLoad = () => {
   globalSubscribe()
-
-  if (unregisterIpc !== null) {
-    console.warn(`unregisterIpc should be null while getting ${unregisterIpc}`)
-    if (typeof unregisterIpc === 'function') {
-      try {
-        unregisterIpc()
-      } finally {
-        unregisterIpc = null
-      }
-    }
-  }
-  unregisterIpc = registerIpc()
+  registerIpc()
   setTimeout(() => {
     // start loading p-state
     let newUiState = {}
@@ -70,15 +57,7 @@ const pluginDidLoad = () => {
 }
 
 const pluginWillUnload = () => {
-  if (typeof unregisterIpc !== 'function') {
-    console.error(`unexpected unregisterIpc value: ${unregisterIpc}`)
-  } else {
-    try {
-      unregisterIpc()
-    } finally {
-      unregisterIpc = null
-    }
-  }
+  unregisterIpc()
   globalUnsubscribe()
 }
 
