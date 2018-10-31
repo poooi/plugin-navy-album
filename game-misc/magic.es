@@ -1,4 +1,4 @@
-import { padStart, get } from 'lodash'
+import _ from 'lodash'
 
 const shipImgType = [
   'banner',
@@ -52,11 +52,12 @@ const create = (id, seed) => {
   return (17 * (r + 7) * resource[(s + r * a) % 100] % 8973 + 1e3).toString()
 }
 
+// TODO: consider this to be a temp fix as no one is giving sgRawInp any value right now.
 const getShipImgPath = (id, type, damaged, debuff = false, sgRawInp = null) => {
   let sgRaw
   if (sgRawInp === null) {
     const {getStore} = window
-    sgRaw = get(getStore(), ['const', '$shipgraph'], [])
+    sgRaw = _.get(getStore(), ['const', '$shipgraph'], [])
   } else {
     sgRaw = sgRawInp
   }
@@ -76,7 +77,7 @@ const getShipImgPath = (id, type, damaged, debuff = false, sgRawInp = null) => {
   const ntype = type + (damaged ? '_dmg' : '')
   const seed = `ship_${ntype}`
   const cipherNum = create(id, seed)
-  const padId = padStart(id, 4, '0')
+  const padId = _.padStart(id, 4, '0')
   const debuffInfix = debuff ? '_d' : ''
   let fcukTanaka = ''
   if (type === 'full' && sgRawInfoInd !== -1) {
@@ -90,7 +91,7 @@ const getShipImgPath = (id, type, damaged, debuff = false, sgRawInp = null) => {
 window.getShipImgPath = getShipImgPath
 
 const getBgm = (id, type) => {
-  const padId = padStart(id, 3, '0')
+  const padId = _.padStart(id, 3, '0')
   const code = create(id, `bgm_${type}`)
   return `/kcs2/resources/bgm/${type}/${padId}_${code}.mp3`
 }
