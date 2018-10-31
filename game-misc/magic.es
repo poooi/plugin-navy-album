@@ -1,4 +1,4 @@
-import { padStart } from 'lodash'
+import { padStart, get } from 'lodash'
 
 const shipImgType = [
   'banner',
@@ -52,7 +52,17 @@ const create = (id, seed) => {
   return (17 * (r + 7) * resource[(s + r * a) % 100] % 8973 + 1e3).toString()
 }
 
-const getShipImgPath = (id, type, damaged, debuff = false) => {
+const getShipImgPath = (id, type, damaged, debuff = false, sgRawInp = null) => {
+  let sgRaw
+  if (sgRawInp === null) {
+    const {getStore} = window
+    sgRaw = get(getStore(), ['const', '$shipgraph'], [])
+  } else {
+    sgRaw = sgRawInp
+  }
+
+  const sgRawInfoInd = sgRaw.findIndex(x => x.api_id === id)
+
   const mapkey = [id, type, damaged, debuff].toString()
   if (map.has(mapkey)) {
     return map.get(mapkey)
@@ -68,7 +78,11 @@ const getShipImgPath = (id, type, damaged, debuff = false) => {
   const cipherNum = create(id, seed)
   const padId = padStart(id, 4, '0')
   const debuffInfix = debuff ? '_d' : ''
-  const ret = `/kcs2/resources/ship/${ntype}/${padId}${debuffInfix}_${cipherNum}.png`
+  let fcukTanaka = ''
+  if (type === 'full' && sgRawInfoInd !== -1) {
+    fcukTanaka = `_${sgRaw[sgRawInfoInd].api_filename}`
+  }
+  const ret = `/kcs2/resources/ship/${ntype}/${padId}${debuffInfix}_${cipherNum}${fcukTanaka}.png`
   map.set(mapkey, ret)
   return ret
 }
