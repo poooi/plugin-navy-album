@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 1.2.1
+
+- Update shipgraph path on "full" type
+
 ### 1.2.0
 
 - Fix ship CG change detection
