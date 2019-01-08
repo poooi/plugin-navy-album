@@ -88,7 +88,27 @@ const getShipImgPath = (id, type, damaged, debuff = false, sgRawInp = null) => {
   return ret
 }
 
+// for non-abyssal ships only.
+const getAllShipImgPaths = id => {
+  if (id > 1500)
+    throw new Error(`getAllShipImgPaths is for non-abyssal ships only`)
+  const inps = [
+    ['banner', false], ['banner', true],
+    ['banner_g', true],
+    ['card', false], ['card', true],
+    ['remodel', false], ['remodel', true],
+    ['character_up', false], ['character_up', true],
+    ['character_full', false], ['character_full', true],
+    ['full', false], ['full', true],
+    ['supply_character', false], ['supply_character', true],
+    ['album_status', false],
+  ]
+
+  return inps.map(([typ,dmg]) => getShipImgPath(id,typ,dmg))
+}
+
 window.getShipImgPath = getShipImgPath
+window.getAllShipImgPaths = getAllShipImgPaths
 
 const getBgm = (id, type) => {
   const padId = _.padStart(id, 3, '0')
