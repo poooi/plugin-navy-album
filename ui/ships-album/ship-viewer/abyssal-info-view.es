@@ -70,7 +70,7 @@ class AbyssalInfoViewImpl extends PureComponent {
           width: '100%',
         }}>
           {
-            hasAbyssalEquipsInfo && (
+            (hasAbyssalEquipsInfo && false) && (
               <div style={{
                 flex: 3,
                 display: 'flex',
