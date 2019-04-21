@@ -52,7 +52,8 @@ class EquipmentsViewImpl extends PureComponent {
             let displayStar = null
             let onClick = null
             if (slotInd < slotCount) {
-              const {cap, mstId, star} = equips[slotInd]
+              const {mstId, star} = equips[slotInd]
+              const cap = _.get(equips[slotInd], null)
               capText = String(cap)
               if (_.isInteger(mstId)) {
                 const $equip = $equips[mstId]
