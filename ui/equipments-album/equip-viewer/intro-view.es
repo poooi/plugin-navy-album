@@ -47,11 +47,15 @@ class IntroViewImpl extends PureComponent {
             fontSize: '1.2em',
           }}>
             {
-              $equip.api_info.split('<br>').map((text,ind) => (
-                <p key={id(ind)}>
-                  {text}
-                </p>
-              ))
+              (
+                /* TODO: wtf? */
+                false &&
+                $equip.api_info.split('<br>').map((text,ind) => (
+                  <p key={id(ind)}>
+                    {text}
+                  </p>
+                ))
+              )
             }
           </div>
         </div>

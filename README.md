@@ -9,6 +9,7 @@ illustrations, ship and equipment stats, and things beyond.
 
 - Update on assets.
 - Fix slot num display.
+- Fix equipment page. (descriptions are still missing.)
 
 ### 1.2.1
 

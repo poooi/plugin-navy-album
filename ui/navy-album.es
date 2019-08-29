@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React, { Component } from 'react'
 import {
   Tab, Nav, NavItem,
@@ -97,7 +98,8 @@ const NavyAlbum = connect(
   createStructuredSelector({
     activeTab: createSelector(
       uiSelector,
-      ui => ui.activeTab),
+      // TODO: figure out why the fork `ui` can be undefined.
+      ui => _.get(ui, 'activeTab', 'ships')),
     theme: themeSelector,
   }),
   mapDispatchToProps,
