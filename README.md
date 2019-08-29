@@ -5,7 +5,7 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
-### 1.2.2 (pending)
+### 1.2.2
 
 - Update on assets.
 - Fix slot num display.
