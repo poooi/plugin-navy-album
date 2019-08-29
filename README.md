@@ -5,6 +5,11 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 1.2.2 (pending)
+
+- Update on assets.
+- Fix slot num display.
+
 ### 1.2.1
 
 - Update shipgraph path on "full" type
