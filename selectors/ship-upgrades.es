@@ -52,12 +52,36 @@ const computeDevMatCount = (steel, blueprint, mstIdBefore) => {
     mstIdBefore === 242 ? 15 :
     // Tenryuu K2
     mstIdBefore === 213 ? 24 :
+    // Shinyou K2
+    mstIdBefore === 381 ? 40 :
+    // Tanikaze D Kai
+    mstIdBefore === 313 ? 50 :
+    // Johnston Kai
+    mstIdBefore === 562 ? 80 :
+    // Colorado Kai
+    mstIdBefore === 149 ? 300 :
+    // Akagi K2
+    mstIdBefore === 277 ? 100 :
+    // Akaki K2 E & Akagi K2 (back) & Fletcher Kai
+    (mstIdBefore === 594 || mstIdBefore === 599 || mstIdBefore === 596) ? 80 :
+    // Umikaze K2
+    mstIdBefore === 350 ? 30 :
+    // Janus Kai
+    mstIdBefore === 520 ? 90 :
     null
 
   if (specialResults !== null)
     return specialResults
 
-  const groupB = [503,504]
+
+  const groupB = [
+    // Suzuya Carrier K2
+    503,
+    // Kumano Carrier K2
+    504,
+    // Janus Kai
+    520,
+  ]
 
   if (blueprint > 0 && !groupB.includes(mstIdBefore))
     return 0
@@ -82,6 +106,14 @@ const computeInstantBuildCount = mstIdBefore =>
   (mstIdBefore === 312 || mstIdBefore === 320 || mstIdBefore === 317) ? 10 :
   // Tenryuu K2
   mstIdBefore === 213 ? 8 :
+  // Tanikaze D Kai
+  mstIdBefore === 313 ? 20 :
+  // Johnston Kai
+  mstIdBefore === 562 ? 10 :
+  // Akagi K2 E && Akagi K2 (back)
+  (mstIdBefore === 594 || mstIdBefore === 599) ? 30 :
+  // Fletcher Kai && Janus Kai
+  (mstIdBefore === 596 || mstIdBefore === 520) ? 10 :
   0
 
 /*
