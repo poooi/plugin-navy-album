@@ -105,7 +105,13 @@ class ShipsAlbumImpl extends Component {
             </ButtonToolbar>
           </Panel.Body>
         </Panel>
-        <div style={{display: 'flex', flex: 1}}>
+        <div
+          style={{
+            display: 'flex',
+            flex: 1,
+            height: '100%',
+          }}
+        >
           <div style={{
             width: '25%',
             minWidth: '14em', maxWidth: '21em',

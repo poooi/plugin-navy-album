@@ -73,7 +73,12 @@ class ShipViewerImpl extends Component {
                 />
               ) : (
                 <Tab.Container
-                  style={{flex: 1, display: 'flex', flexDirection: 'column'}}
+                  style={{
+                    flex: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '100%',
+                  }}
                   id="na-ship-viewer-tab"
                   onSelect={this.handleSwitchTab}
                   activeKey={activeTab}>
