@@ -5,13 +5,15 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
-### 1.2.3
+### 1.3.1
 
 - Fix scrolling.
 - Update some assets.
+- Update devmat & instantbuild consumption on remodels.
 
-### 1.2.2
+### 1.3.0
 
+- Note that this was previously labelled version 1.3.0 because I screwed up versioning.
 - Update on assets.
 - Fix slot num display.
 - Fix equipment page. (descriptions are still missing.)
