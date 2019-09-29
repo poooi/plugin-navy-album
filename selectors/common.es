@@ -9,10 +9,11 @@ import {
   wctfSelector,
 } from 'views/utils/selectors'
 import { toRomaji } from 'wanakana'
+import { initState } from '../store'
 
 const extSelector = createSelector(
   extensionSelectorFactory('poi-plugin-navy-album'),
-  ext => _.isEmpty(ext) ? [] : ext)
+  ext => _.isEmpty(ext) ? initState : ext)
 
 const mkExtPropSelector = _.memoize(propName =>
   createSelector(extSelector, ext => ext[propName]))
