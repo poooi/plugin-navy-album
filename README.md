@@ -5,7 +5,7 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
-### Unreleased
+### 1.3.2
 
 - Update assets.
 
