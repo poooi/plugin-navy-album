@@ -95,7 +95,7 @@ class EquipmentsAlbumImpl extends Component {
             </ButtonGroup>
           </ButtonToolbar>
         </Panel>
-        <div style={{display: 'flex', flex: 1}}>
+        <div style={{display: 'flex', flex: 1, height: 0}}>
           <div style={{
             width: '30%',
             minWidth: '14em', maxWidth: '25em',

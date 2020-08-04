@@ -211,8 +211,19 @@ class GameUpdateViewerImpl extends PureComponent {
     const {digest, summaryAvailable} = this.props
     return (
       <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
-        <Panel className="game-update-viewer" style={{marginBottom: 8, flex: 1}}>
-          <Panel.Body>
+        <Panel
+          className="game-update-viewer"
+          style={{
+            marginBottom: 8,
+            flex: 1,
+            height: '100%',
+            overflowY: 'auto',
+          }}>
+          <Panel.Body
+            style={{
+              height: '100%',
+            }}
+          >
             <ErrorBoundary>
               <div
                 style={{
