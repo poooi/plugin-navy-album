@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 1.3.3
+
+- Fixed some scrolling issue, yet again.
+
 ### 1.3.2
 
 - Update assets.
