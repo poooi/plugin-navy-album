@@ -53,7 +53,8 @@ const sortByRemodelFuncSelector = createSelector(
           } else {
             key = Number(originMstIdStr)
             const originalMstId = key
-            const remodelChain = remodelChains[originalMstId]
+            // TODO: figure out how exactly does this happen.
+            const remodelChain = remodelChains[originalMstId] || []
 
             group = _.compact(
               remodelChain.map(mstId =>
