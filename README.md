@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 1.3.6
+
+- Fix a issue that non-existing ship causes UI crash.
+
 ### 1.3.5
 
 - Update assets.
