@@ -5,6 +5,11 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 1.3.7
+
+- Fix the same issue as in previous version but done more properly.
+  (which turns out not to be a phantom ship)
+
 ### 1.3.6
 
 - Fix a issue that non-existing ship causes UI crash.
