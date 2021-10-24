@@ -1,0 +1,60 @@
+name: kc-navy-album-maintenance
+version: 0.1.0.0
+github: Javran/kc-navy-album-maintenance
+license: BSD3
+author: Javran Cheng
+maintainer: javran.c@gmail.com
+copyright: "Copyright: (c) 2019 Javran Cheng"
+
+description: description
+
+dependencies:
+- aeson
+- base
+- containers
+- deriving-aeson
+- http-client
+- http-client-tls
+- http-types
+- system-filepath
+- text
+- turtle
+- vector
+- vector-algorithms
+- unordered-containers
+
+library:
+  source-dirs: src
+  ghc-options:
+    - -Wall
+    - -O2
+
+executables:
+  demo:
+    main: Main.hs
+    source-dirs: exe
+    dependencies:
+      - kc-navy-album-maintenance
+    ghc-options:
+      - -Wall
+      - -O2
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+
+tests:
+  hspec:
+    main: Spec.hs
+    source-dirs:
+      - test
+    dependencies:
+      - kc-navy-album-maintenance
+      - QuickCheck
+      - hspec
+    ghc-options:
+      - -Wall
+      - -O2
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+      - -main-is Spec

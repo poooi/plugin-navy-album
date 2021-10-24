@@ -1,31 +1,21 @@
-This document describes required maintenance to some assets:
+This document describes required maintenance to some assets.
 
-## kancolle-replay
+Update to some of the assets are now semi-automated, to update those assets (requires [Stack](https://haskellstack.org/)):
 
-Provides abyssal info.
-
-```shell
-npm run update-kcreplay
+```sh
+# at project root
+export NAVY_ALBUM_REPO=$(pwd)
+cd scripts/kc-navy-album-maintenance
+# 'all' action run all maintenance routines.
+# see below
+stack build && stack exec -- demo all
 ```
 
-## `assets/default-digest.json`
+To only update individual assets:
 
-For detecting changes to some parts of `getStore().const`.
-
-Paste the result of the following command to that file.
-
-```javascript
-JSON.stringify(getStore().ext['poi-plugin-navy-album']._.gameUpdate.digest)
-```
-
-Note that this needs to be done before game maintenance (especially before events)
-so new users will receive game update of the on-going event.
-
-## `assets/map-bgms.json`
-
-We'll need to maintain a list of known map bgm ids.
-
-TODO: we now need new ways of doing this.
+- `assets/map-bgms.json`: run `demo map-bgms`
+- `assets/default-digest.json`: run `demo default-digest`
+- `assets/abyssal.json`: run `demo update-kcreplay`
 
 ## ship upgrade info
 

@@ -1,0 +1,6 @@
+resolver: lts-16.31
+packages:
+- .
+
+extra-deps:
+- deriving-aeson-0.2.7
