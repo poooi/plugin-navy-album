@@ -7,7 +7,7 @@ const { writeJsonSync } = require('fs-extra')
 request('https://raw.githubusercontent.com/KC3Kai/kancolle-replay/master/js/kcSHIPDATA.js')
   .then(data => {
     // redo serialization to destroy non-serializable stuff like functions.
-    const raw = JSON.stringify(localeval(`${data}; SHIPDATA`))
+    const raw = localeval(`${data}; JSON.stringify(SHIPDATA)`)
     const kcReplayData = JSON.parse(raw)
 
     const resultObj = _.fromPairs(
