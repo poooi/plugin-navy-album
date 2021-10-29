@@ -88,6 +88,8 @@ const getShipImgPath = (id, type, damaged, debuff = false, sgRawInp = null) => {
   return ret
 }
 
+window.NavyAlbumGetShipImgPath = getShipImgPath
+
 // for non-abyssal ships only.
 const getAllShipImgPaths = id => {
   if (id > 1500)
