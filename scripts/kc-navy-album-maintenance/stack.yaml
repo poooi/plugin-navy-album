@@ -4,3 +4,7 @@ packages:
 
 extra-deps:
 - deriving-aeson-0.2.7
+- git: https://github.com/Javran/kantour.git
+  commit: 1317d5b9f663acfa9c8b9080f49c48712f772094
+  subdirs:
+    - kantour-core

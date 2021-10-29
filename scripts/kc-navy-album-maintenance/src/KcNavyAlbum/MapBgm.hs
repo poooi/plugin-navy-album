@@ -8,7 +8,7 @@ import Control.Monad
 import qualified Data.Aeson as Aeson
 import qualified Data.IntSet as IS
 import qualified Data.Text as T
-import Kantour.GameResource.Magic
+import Kantour.Core.GameResource.Magic
 import Network.HTTP.Client
 import Network.HTTP.Types
 import Text.Printf
