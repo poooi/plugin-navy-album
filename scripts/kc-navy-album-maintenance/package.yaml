@@ -12,7 +12,6 @@ dependencies:
 - aeson
 - base
 - containers
-- deriving-aeson
 - http-client
 - http-client-tls
 - http-types
