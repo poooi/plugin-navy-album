@@ -1,5 +1,5 @@
-{-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TypeApplications #-}
 
@@ -10,16 +10,13 @@ import qualified Data.Aeson as Aeson
 import qualified Data.IntSet as IS
 import qualified Data.Text as T
 import Kantour.Core.GameResource.Magic
-import Network.HTTP.Client
-import Network.HTTP.Types
+import KcNavyAlbum.CmdCommon
 import Text.Printf
 import Turtle.Prelude
 import Prelude hiding (FilePath)
-import KcNavyAlbum.CmdCommon
 
 subCmdMain :: CmdCommon -> String -> IO ()
-subCmdMain CmdCommon {getManager} _cmdHelpPrefix = do
-  mgr <- getManager
+subCmdMain common _cmdHelpPrefix = do
   let goodGap = 16
   knownBgms <-
     Aeson.eitherDecodeFileStrict @IS.IntSet "assets/map-bgms.json" >>= \case
@@ -35,8 +32,8 @@ subCmdMain CmdCommon {getManager} _cmdHelpPrefix = do
           detectBgm (curId + 1) (Just curId)
         | otherwise = do
           putStr $ "Checking BGM #" <> show curId <> " ..."
-          s <- checkBattleBgm mgr curId
-          if s == 200
+          exist <- checkBattleBgm common curId
+          if exist
             then do
               putStrLn " yes"
               (curId :) <$> detectBgm (curId + 1) (Just curId)
@@ -51,9 +48,7 @@ subCmdMain CmdCommon {getManager} _cmdHelpPrefix = do
       putStrLn "Map BGM asset updated."
     else putStrLn "Nothing to do."
 
-checkBattleBgm :: Manager -> Int -> IO Int
-checkBattleBgm mgr bgmId = do
+checkBattleBgm :: CmdCommon -> Int -> IO Bool
+checkBattleBgm CmdCommon {doesResourceExist} bgmId = do
   let code = magicCode bgmId "bgm_battle"
-  req <- parseRequest (printf "http://%s/kcs2/resources/bgm/battle/%03d_%04d.mp3" defaultServer bgmId code)
-  resp <- httpNoBody req mgr
-  pure (statusCode $ responseStatus resp)
+  doesResourceExist (printf "/kcs2/resources/bgm/battle/%03d_%04d.mp3" bgmId code)

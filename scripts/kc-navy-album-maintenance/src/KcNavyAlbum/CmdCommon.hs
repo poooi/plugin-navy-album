@@ -9,4 +9,6 @@ import Network.HTTP.Client
 data CmdCommon = CmdCommon
   { getManager :: IO Manager
   , getMasterRoot :: IO MasterRoot
+  , doesResourceExist :: String -> IO Bool
   }
+

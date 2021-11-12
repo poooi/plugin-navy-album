@@ -23,6 +23,7 @@ dependencies:
 - unordered-containers
 - kantour-core
 - once
+- http-types
 
 library:
   source-dirs: src

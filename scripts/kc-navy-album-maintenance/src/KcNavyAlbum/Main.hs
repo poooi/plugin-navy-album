@@ -1,7 +1,7 @@
-{-# LANGUAGE NamedFieldPuns #-}
-{-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TypeApplications #-}
 
 module KcNavyAlbum.Main
   ( main
@@ -17,20 +17,23 @@ where
 
 import Control.Monad
 import Control.Once
+import qualified Data.Aeson as Aeson
 import qualified Data.Text as T
 import Filesystem.Path.CurrentOS hiding (null)
+import Kantour.Core.KcData.Master.Root
 import KcNavyAlbum.CmdCommon
 import qualified KcNavyAlbum.DefaultDigest
 import qualified KcNavyAlbum.MapBgm
+import qualified KcNavyAlbum.ScanSpecialShipGraphs
 import Network.HTTP.Client
 import Network.HTTP.Client.TLS
+import Network.HTTP.Types
 import System.Environment
 import System.Exit
 import Turtle.Prelude hiding (die)
 import Prelude hiding (FilePath)
-import qualified Data.Aeson as Aeson
-import Kantour.Core.KcData.Master.Root
-
+import Text.Printf
+import Kantour.Core.GameResource.Magic
 updateKcReplay :: IO ()
 updateKcReplay = do
   (ec, out) <- procStrict "npm" ["run", "update-kcreplay"] ""
@@ -54,7 +57,14 @@ main = do
       case Aeson.eitherDecode @MasterRoot (responseBody resp) of
         Left msg -> die ("parse error: " <> msg)
         Right r -> pure r
-    pure $ CmdCommon {getManager, getMasterRoot}
+
+    let doesResourceExist path = do
+          mgr <- getManager
+          req <- parseRequest (printf "http://%s%s" defaultServer path)
+          resp <- httpNoBody req mgr
+          pure $ statusCode (responseStatus resp) == 200
+
+    pure $ CmdCommon {getManager, getMasterRoot, doesResourceExist}
 
   getArgs >>= \case
     subCmd : args
@@ -73,5 +83,6 @@ main = do
       [ ("map-bgm", KcNavyAlbum.MapBgm.subCmdMain)
       , ("default-digest", KcNavyAlbum.DefaultDigest.subCmdMain)
       , ("update-kcreplay", \_ _ -> updateKcReplay)
+      , ("scan-special-ship-graphs", KcNavyAlbum.ScanSpecialShipGraphs.subCmdMain)
       , ("all", runAll)
       ]
