@@ -17,12 +17,22 @@ import { PTyp } from '../../../ptyp'
 const downloadUrl =
   remote.getCurrentWebContents().downloadURL
 
+const asWeCan = mstId => [184, 634, 635, 639, 640].indexOf(mstId) !== -1
+
 // TODO: clean up
-const imgListFriendly = _.flatMap(shipImgType, ty =>
-  ty === 'album_status' ?
-    [{ty, damaged: false}] :
-    [{ty, damaged: false}, {ty, damaged: true}]
-)
+const mkImgListFriendly = mstId => {
+  const xs = _.flatMap(shipImgType, ty =>
+    ty === 'album_status' ?
+      [{ty, damaged: false}] :
+      [{ty, damaged: false}, {ty, damaged: true}]
+  )
+  if (asWeCan(mstId)) {
+    xs.push({ty: 'special', damaged: false})
+    xs.push({ty: 'special', damaged: true})
+  }
+  // TODO: big 7 and other special attacks.
+  return xs
+}
 
 const imgListAbyssal = _.flatMap(['banner', 'full'], ty =>
   [{ty, damaged: false}]
@@ -50,7 +60,7 @@ class GalleryViewImpl extends PureComponent {
   render() {
     const {mstId, serverIp, style, debuffFlag, isSpecialCG} = this.props
     const imgList = isSpecialCG ? imgListSpecialCG :
-      mstId > 1500 ? imgListAbyssal : imgListFriendly
+      mstId > 1500 ? imgListAbyssal : mkImgListFriendly(mstId)
 
     return (
       <ListGroup style={style}>
