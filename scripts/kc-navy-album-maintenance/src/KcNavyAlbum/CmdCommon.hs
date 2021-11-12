@@ -36,7 +36,8 @@ mkCmdCommon = do
 
   let doesResourceExist path = do
         mgr <- getManager
-        req <- parseRequest (printf "http://%s%s" defaultServer path)
+        let url = printf "http://%s%s" defaultServer path
+        req <- parseRequest url
         resp <- httpNoBody req mgr
         pure $ statusCode (responseStatus resp) == 200
 
