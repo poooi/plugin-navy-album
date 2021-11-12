@@ -43,9 +43,11 @@ subCmdMain c@CmdCommon {getMasterRoot} _cmdHelpPrefix = do
   forM_ results $ \(Ship {name}, graphTypes) -> do
     printf "%s: %s\n" name (T.intercalate ", " graphTypes)
   putStrLn "Other than AS:"
+  putStrLn "  [ "
   forM_ (filter (\(Ship {stype}, _) -> stype /= Just 20) results) $ \(Ship {name, shipId}, gts) -> do
     printf "    // %s: %s\n" name (T.intercalate ", " gts)
     printf "    %d,\n" shipId
+  putStrLn "  ].indexOf(mstId) !== -1"
 
 checkSpecialShipGraph :: CmdCommon -> Int -> IO [T.Text]
 checkSpecialShipGraph CmdCommon {doesResourceExist} mstId =

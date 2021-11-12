@@ -20,3 +20,7 @@ To only update individual assets:
 ## ship upgrade info
 
 Update `selectors/ship-upgrades.es` using info from `kcs2/js/main.js` if needed
+
+## graphs for special attacks
+
+Update `ui/ships-album/ship-viewer/gallery-view.es` using info from running `demo scan-special-ship-graphs` if needed.

@@ -8,7 +8,7 @@ illustrations, ship and equipment stats, and things beyond.
 ### (not yet released)
 
 - Fix an issue that causes old (cached) ship graphs to show up.
-- Gallery now shows special attack graph for submarine tenders (AS).
+- Gallery now shows special attack graph for submarine tenders (AS) and Big Sevens.
 
 ### 1.3.8
 

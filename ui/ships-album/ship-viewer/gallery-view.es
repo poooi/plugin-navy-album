@@ -18,6 +18,20 @@ const downloadUrl =
   remote.getCurrentWebContents().downloadURL
 
 const asWeCan = mstId => [184, 634, 635, 639, 640].indexOf(mstId) !== -1
+const battleShipSpecials = mstId =>
+  [ // 長門改二: special
+    541,
+    // Nelson: special
+    571,
+    // 陸奥改二: special
+    573,
+    // Nelson改: special
+    576,
+    // Colorado: special
+    601,
+    // Colorado改: special
+    1496,
+  ].indexOf(mstId) !== -1
 
 // TODO: clean up
 const mkImgListFriendly = mstId => {
@@ -30,7 +44,9 @@ const mkImgListFriendly = mstId => {
     xs.push({ty: 'special', damaged: false})
     xs.push({ty: 'special', damaged: true})
   }
-  // TODO: big 7 and other special attacks.
+  if (battleShipSpecials(mstId)) {
+    xs.push({ty: 'special', damaged: false})
+  }
   return xs
 }
 
