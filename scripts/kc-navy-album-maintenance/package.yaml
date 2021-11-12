@@ -24,6 +24,8 @@ dependencies:
 - kantour-core
 - once
 - http-types
+- async
+- SafeSemaphore
 
 library:
   source-dirs: src
