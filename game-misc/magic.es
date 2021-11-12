@@ -52,6 +52,39 @@ const create = (id, seed) => {
   return (17 * (r + 7) * resource[(s + r * a) % 100] % 8973 + 1e3).toString()
 }
 
+/*
+  Ported from main.js VersionUtil.
+ */
+const mkVersionUtil = getShipGraphVersion => {
+  const VersionUtil = {}
+  VersionUtil.get = (versionType, id, _i = 1) => {
+    if (versionType === 0) {
+      const version = getShipGraphVersion(id)
+      if (version) {
+        return version
+      }
+    } else {
+      /*
+        TODO: Other version types include:
+        - case 1: slotitem, get api_version.
+        - case 2: furniture, get api_version.
+        - case 3:
+          + when i is 2 or 3: 母港ボイス(api_version[2])
+          + otherwise ボイス(api_version[1])
+        Leave them as unsupported for now, since we are only using case 0.
+       */
+      console.warn(`Unsupported type: ${versionType}`)
+    }
+    return '1'
+  }
+  VersionUtil.getResourceVersion = (n, o, p = 1) => {
+    const q = VersionUtil.get(n, o, p)
+    return q !== '1' ? `?version=${q}` : ''
+  }
+
+  return VersionUtil
+}
+
 // TODO: consider this to be a temp fix as no one is giving sgRawInp any value right now.
 const getShipImgPath = (id, type, damaged, debuff = false, sgRawInp = null) => {
   let sgRaw
@@ -61,12 +94,24 @@ const getShipImgPath = (id, type, damaged, debuff = false, sgRawInp = null) => {
   } else {
     sgRaw = sgRawInp
   }
-
   const sgRawInfoInd = sgRaw.findIndex(x => x.api_id === id)
+  const VersionUtil = mkVersionUtil(shipId => {
+    const i = sgRaw.findIndex(x => x.api_id === shipId)
+    return i === -1 ? null : _.get(sgRaw[i], ['api_version', 0], null)
+  })
+
+  /*
+    Note that this part is not inside of the cache so that it can update at runtime
+    with updates to master data.
+
+    TODO: we'd better wire-in some selector or
+    this ad-hoc caching mechanism gotta fail at some point.
+   */
+  const versionPart = VersionUtil.getResourceVersion(0, id)
 
   const mapkey = [id, type, damaged, debuff].toString()
   if (map.has(mapkey)) {
-    return map.get(mapkey)
+    return map.get(mapkey) + versionPart
   }
   if (!shipImgType.includes(type)) {
     console.warn(`unexpected type: ${type}`)
@@ -85,7 +130,7 @@ const getShipImgPath = (id, type, damaged, debuff = false, sgRawInp = null) => {
   }
   const ret = `/kcs2/resources/ship/${ntype}/${padId}${debuffInfix}_${cipherNum}${fcukTanaka}.png`
   map.set(mapkey, ret)
-  return ret
+  return ret + versionPart
 }
 
 window.NavyAlbumGetShipImgPath = getShipImgPath

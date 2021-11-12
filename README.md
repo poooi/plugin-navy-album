@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### (not yet released)
+
+- Fix an issue that causes old (cached) ship graphs to show up.
+
 ### 1.3.8
 
 - Update assets.
