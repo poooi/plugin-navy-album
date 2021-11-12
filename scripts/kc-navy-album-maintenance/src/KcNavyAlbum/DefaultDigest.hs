@@ -2,7 +2,6 @@
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE TypeApplications #-}
 
 module KcNavyAlbum.DefaultDigest where
 
@@ -17,16 +16,11 @@ import Kantour.Core.KcData.Master.Root
 import Kantour.Core.KcData.Master.Ship
 import Kantour.Core.KcData.Master.Shipgraph
 import Kantour.Core.KcData.Master.Slotitem
-import Network.HTTP.Client
-import System.Exit
+import KcNavyAlbum.CmdCommon
 
-subCmdMain :: Manager -> String -> IO ()
-subCmdMain mgr _cmdHelpPrefix = do
-  req <- parseRequest "https://raw.githubusercontent.com/kcwiki/kancolle-data/master/api/api_start2.json"
-  resp <- httpLbs req mgr
-  parsed <- case Aeson.eitherDecode @MasterRoot (responseBody resp) of
-    Left msg -> die ("parse error: " <> msg)
-    Right r -> pure r
+subCmdMain :: CmdCommon -> String -> IO ()
+subCmdMain CmdCommon {getMasterRoot} _cmdHelpPrefix = do
+  parsed <- getMasterRoot
   encodeFile "assets/default-digest.json" (mkDigest parsed)
   putStrLn "Written to default-digest.json."
 

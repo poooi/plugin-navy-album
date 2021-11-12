@@ -1,3 +1,5 @@
+{-# LANGUAGE NamedFieldPuns #-}
+{-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedStrings #-}
 
@@ -14,8 +16,10 @@ where
  -}
 
 import Control.Monad
+import Control.Once
 import qualified Data.Text as T
 import Filesystem.Path.CurrentOS hiding (null)
+import KcNavyAlbum.CmdCommon
 import qualified KcNavyAlbum.DefaultDigest
 import qualified KcNavyAlbum.MapBgm
 import Network.HTTP.Client
@@ -24,6 +28,8 @@ import System.Environment
 import System.Exit
 import Turtle.Prelude hiding (die)
 import Prelude hiding (FilePath)
+import qualified Data.Aeson as Aeson
+import Kantour.Core.KcData.Master.Root
 
 updateKcReplay :: IO ()
 updateKcReplay = do
@@ -38,12 +44,22 @@ main :: IO ()
 main = do
   Just fp <- need "NAVY_ALBUM_REPO"
   cd (fromText fp)
-  mgr <- newManager tlsManagerSettings
+
+  common <- do
+    getManager <- once (newManager tlsManagerSettings)
+    getMasterRoot <- once $ do
+      mgr <- getManager
+      req <- parseRequest "https://raw.githubusercontent.com/kcwiki/kancolle-data/master/api/api_start2.json"
+      resp <- httpLbs req mgr
+      case Aeson.eitherDecode @MasterRoot (responseBody resp) of
+        Left msg -> die ("parse error: " <> msg)
+        Right r -> pure r
+    pure $ CmdCommon {getManager, getMasterRoot}
 
   getArgs >>= \case
     subCmd : args
       | Just handler <- lookup subCmd handlers ->
-        withArgs args (handler mgr ("<prog> " <> subCmd <> " "))
+        withArgs args (handler common ("<prog> " <> subCmd <> " "))
     _ -> do
       forM_ handlers $ \(sub, _) ->
         putStrLn $ "<prog> " <> sub <> " ..."

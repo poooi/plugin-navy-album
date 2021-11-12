@@ -22,6 +22,7 @@ dependencies:
 - vector-algorithms
 - unordered-containers
 - kantour-core
+- once
 
 library:
   source-dirs: src

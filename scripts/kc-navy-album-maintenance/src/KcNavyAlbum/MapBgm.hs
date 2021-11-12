@@ -1,3 +1,4 @@
+{-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TypeApplications #-}
@@ -14,9 +15,11 @@ import Network.HTTP.Types
 import Text.Printf
 import Turtle.Prelude
 import Prelude hiding (FilePath)
+import KcNavyAlbum.CmdCommon
 
-subCmdMain :: Manager -> String -> IO ()
-subCmdMain mgr _cmdHelpPrefix = do
+subCmdMain :: CmdCommon -> String -> IO ()
+subCmdMain CmdCommon {getManager} _cmdHelpPrefix = do
+  mgr <- getManager
   let goodGap = 16
   knownBgms <-
     Aeson.eitherDecodeFileStrict @IS.IntSet "assets/map-bgms.json" >>= \case
