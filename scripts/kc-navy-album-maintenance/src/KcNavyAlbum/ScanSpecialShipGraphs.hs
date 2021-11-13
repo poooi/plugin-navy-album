@@ -40,6 +40,7 @@ subCmdMain c@CmdCommon {getMasterRoot} _cmdHelpPrefix = do
           then Nothing
           else Just (s, xs)
   results <- catMaybes <$> mapM wait tasks
+  putStrLn ""
   forM_ results $ \(Ship {name}, graphTypes) -> do
     printf "%s: %s\n" name (T.intercalate ", " graphTypes)
   putStrLn "Other than AS:"
