@@ -17,7 +17,10 @@ import { PTyp } from '../../../ptyp'
 const downloadUrl =
   remote.getCurrentWebContents().downloadURL
 
+// main.js module: CutinSSAttack._getFlagShipPosition
 const asWeCan = mstId => [184, 634, 635, 639, 640].indexOf(mstId) !== -1
+
+// main.js module: CutinSpSSF, look for `preload` or `_ready` function.
 const battleShipSpecials = mstId =>
   [ // 長門改二: special
     541,
