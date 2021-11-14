@@ -1,6 +1,6 @@
 {
   "name": "poi-plugin-navy-album",
-  "version": "1.3.8",
+  "version": "1.4.0",
   "description": "Show illustration album of ships and items.",
   "main": "index.es",
   "scripts": {
