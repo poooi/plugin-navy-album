@@ -16,7 +16,12 @@ import { NavyAlbum } from './navy-album'
 
 const NavyAlbumRoot = _props => (
   <div
-    style={{margin: "0 1%", minWidth: 600}}
+    style={{
+      margin: '0 1%',
+      minWidth: 600,
+      display: 'flex',
+      height: '100%',
+    }}
     className="navy-album-main"
   >
     <link
