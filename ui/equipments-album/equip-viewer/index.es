@@ -57,6 +57,7 @@ class EquipViewerImpl extends PureComponent {
               }
               <div style={{
                 display: 'flex',
+                alignItems: 'center',
               }}>
                 <div style={{
                   flex: 1,
