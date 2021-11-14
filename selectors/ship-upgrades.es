@@ -44,6 +44,11 @@ const computeDevMatAndInstantBuildCost = (mstIdBefore, blueprint, steel) => {
     return {devMat, instantBuild}
   }
 
+  /*
+    This is the standard rule for deriving dev mat cost
+    before all those crasy nonsense came in.
+    I figure it's simplest to just maintain a lookup table.
+   */
   const devMat = (blueprint > 0 || steel < 4500) ? 0 :
     steel < 5500 ? 10 :
     steel < 6500 ? 15 :

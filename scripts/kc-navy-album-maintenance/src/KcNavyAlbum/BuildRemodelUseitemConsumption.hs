@@ -10,8 +10,6 @@ module KcNavyAlbum.BuildRemodelUseitemConsumption
 where
 
 {-
-  TODO:
-
   The useitem here refers to instantBuild and devMat.
 
   In main.js, this piece of information is obtained by:
@@ -32,12 +30,11 @@ where
   have a magic program that takes those input, run the actual function
   and generate a lookup table for us to store as assets.
   This way we avoid having to keep sync-ing with that disgusting piece of code
-  in our own codebas (more specifically computeDevMatCount and computeInstantBuildCount).
+  in our own codebase.
 
   Let's assume there's one program given by REMODEL_COST_CALCULATOR,
   which, when given input from stdin, calculates all those info for us
   and gives as stdout the result.
-
  -}
 
 import Control.Monad

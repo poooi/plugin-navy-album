@@ -25,3 +25,10 @@ Update `selectors/ship-upgrades.es` using info from `kcs2/js/main.js` if needed
 
 Update `ui/ships-album/ship-viewer/gallery-view.es` using info from running `demo scan-special-ship-graphs` if needed
 (note that this sub-command does not run by `def`).
+
+## instant build and dev mat cost
+
+Update asset `assets/remodel-info-useitem.json` if needed.
+
+`stack build && stack exec -- demo build-remodel-useitem-consumption` should get this computed correctly,
+but it'll require an extra tool set as `REMODEL_COST_CALCULATOR` environment variable.
