@@ -55,7 +55,7 @@ import Kantour.Core.KcData.Master.Shipupgrade
 import KcNavyAlbum.CmdCommon
 import System.Exit
 import qualified Turtle.Bytes
-import Turtle.Prelude hiding (die)
+import Turtle.Prelude hiding (die, sortOn)
 
 data RemodelInfoPrepare = RemodelInfoPrepare
   { mstIdBefore :: Int
@@ -138,6 +138,7 @@ subCmdMain CmdCommon {getMasterRoot} _cmdHelpPrefix = do
           guard $ devMatCost == guessDevMat steelCost bpCost
           pure True
       (results1, guessables) = partition (not . isGuessable) results0
+      results2 = sortOn (\RemodelInfoResult {mstIdBefore = v} -> v) results1
   {-
     To keep asset size small, items that are "guessable" are ignored,
     a "guessable" item meets all of the following criteria:
@@ -148,5 +149,5 @@ subCmdMain CmdCommon {getMasterRoot} _cmdHelpPrefix = do
    -}
   putStrLn $
     "Dropped " <> show (length guessables) <> " items from the result (follow default rules)."
-  encodeFile "assets/remodel-info-useitem.json" results1
-  putStrLn $ show (length results1) <> " records written."
+  encodeFile "assets/remodel-info-useitem.json" results2
+  putStrLn $ show (length results2) <> " records written."
