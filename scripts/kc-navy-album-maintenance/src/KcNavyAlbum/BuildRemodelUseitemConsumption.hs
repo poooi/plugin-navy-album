@@ -2,6 +2,7 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TypeApplications #-}
 
 module KcNavyAlbum.BuildRemodelUseitemConsumption
   ( subCmdMain
@@ -42,18 +43,19 @@ where
 import Control.Monad
 import Data.Aeson
 import qualified Data.ByteString.Lazy as BSL
-import qualified Data.Map.Strict as M
+import qualified Data.IntMap.Strict as IM
+import Data.List
 import Data.Maybe
 import qualified Data.Text as T
 import Data.Text.Encoding
-import qualified Data.Text.IO as T
 import GHC.Generics
 import Kantour.Core.KcData.Master.Root
 import Kantour.Core.KcData.Master.Ship
 import Kantour.Core.KcData.Master.Shipupgrade
 import KcNavyAlbum.CmdCommon
+import System.Exit
 import qualified Turtle.Bytes
-import Turtle.Prelude
+import Turtle.Prelude hiding (die)
 
 data RemodelInfoPrepare = RemodelInfoPrepare
   { mstIdBefore :: Int
@@ -62,16 +64,32 @@ data RemodelInfoPrepare = RemodelInfoPrepare
   }
   deriving (Show, Generic)
 
+data RemodelInfoResult = RemodelInfoResult
+  { mstIdBefore :: Int
+  , instantBuildCost :: Int
+  , devMatCost :: Int
+  }
+  deriving (Show, Generic)
+
 instance ToJSON RemodelInfoPrepare
+
+instance ToJSON RemodelInfoResult
+
+instance FromJSON RemodelInfoResult
 
 subCmdMain :: CmdCommon -> String -> IO ()
 subCmdMain CmdCommon {getMasterRoot} _cmdHelpPrefix = do
   MasterRoot {mstShip, mstShipupgrade} <- getMasterRoot
   let upgrades =
-        M.fromList $
+        IM.fromList $
           fmap
             (\u@Shipupgrade {currentShipId} -> (currentShipId, u))
             mstShipupgrade
+      ships =
+        IM.fromList $
+          fmap
+            (\s@Ship {shipId} -> (shipId, s))
+            mstShip
       prepared :: [RemodelInfoPrepare]
       prepared = do
         Ship
@@ -86,12 +104,49 @@ subCmdMain CmdCommon {getMasterRoot} _cmdHelpPrefix = do
             { mstIdBefore
             , steelCost
             , blueprintCost = fromMaybe 0 $ do
-                Shipupgrade {drawingCount} <- upgrades M.!? mstIdBefore
+                Shipupgrade {drawingCount} <- upgrades IM.!? mstIdBefore
                 pure drawingCount
             }
   Just remodelCostCalculator <- need "REMODEL_COST_CALCULATOR"
   (ec, outRaw, errRaw) <-
     Turtle.Bytes.procStrictWithErr remodelCostCalculator [] (pure $ BSL.toStrict $ encode prepared)
-  print ec
-  T.putStrLn (decodeUtf8 outRaw)
-  T.putStrLn (decodeUtf8 errRaw)
+  case ec of
+    ExitFailure {} -> do
+      putStrLn $ "REMODEL_COST_CALCULATOR failed with: " <> show ec
+      die (T.unpack $ decodeUtf8 errRaw)
+    ExitSuccess -> pure ()
+  results0 <- case eitherDecode' @[RemodelInfoResult] (BSL.fromStrict outRaw) of
+    Right v -> pure v
+    Left errMsg -> do
+      die ("JSON parse error: " <> errMsg)
+  let guessDevMat steel bpCost
+        | bpCost > 0 || steel < 4500 = 0
+        | steel < 5500 = 10
+        | steel < 6500 = 15
+        | otherwise = 20
+      isGuessable
+        RemodelInfoResult
+          { mstIdBefore
+          , instantBuildCost
+          , devMatCost
+          } = fromMaybe False $ do
+          guard $ instantBuildCost == 0
+          Ship {afterfuel = Just steelCost} <- ships IM.!? mstIdBefore
+          let bpCost = fromMaybe 0 $ do
+                Shipupgrade {drawingCount = v} <- upgrades IM.!? mstIdBefore
+                pure v
+          guard $ devMatCost == guessDevMat steelCost bpCost
+          pure True
+      (results1, guessables) = partition (not . isGuessable) results0
+  {-
+    To keep asset size small, items that are "guessable" are ignored,
+    a "guessable" item meets all of the following criteria:
+
+    - instantBuildCost is 0
+    - devMatCost can be derived from steel cost and blueprint cost
+      (see `guessDevMat` for that this means)
+   -}
+  putStrLn $
+    "Dropped " <> show (length guessables) <> " items from the result (follow default rules)."
+  encodeFile "assets/remodel-info-useitem.json" results1
+  putStrLn $ show (length results1) <> " records written."
