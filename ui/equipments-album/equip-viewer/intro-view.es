@@ -26,6 +26,12 @@ class IntroViewImpl extends PureComponent {
     }
     const id = x => x
     const mstIdStr = String(mstId).padStart(3,'0')
+    /*
+      TODO: it seems that new source uses `resources/slot/` that we'll need to migrate to
+      at some point in future.
+
+      Reference: SlotLoader.getPath of main.js
+     */
     const prefix = `http://${serverIp}/kcs/resources/image/slotitem/`
 
     return (
