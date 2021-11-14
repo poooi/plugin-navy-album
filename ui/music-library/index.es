@@ -23,7 +23,10 @@ import { MapBgmViewer } from './map-bgm-viewer'
  */
 const mkPlayExclusively = mountPoint => e => {
   const currentAudio = e.target
-  const audioTags = [...mountPoint.querySelectorAll('#poi-plugin-navy-album audio')]
+  const audioTags = [...mountPoint.querySelectorAll('#poi-plugin-navy-album-music-library-root audio')]
+  if (audioTags.length === 0) {
+    console.warn('Cannot find presence of any audio tag.')
+  }
   audioTags.map(aud => {
     if (aud === currentAudio)
       return
@@ -62,6 +65,7 @@ class MusicLibraryImpl extends PureComponent {
       <WindowEnv.Consumer>
         {({mountPoint}) => (
           <Panel
+            id="poi-plugin-navy-album-music-library-root"
             style={{
               height: 'calc(100% - 10px)',
               marginBottom: 10,

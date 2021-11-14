@@ -10,6 +10,8 @@ illustrations, ship and equipment stats, and things beyond.
 - Fix an issue that causes old (cached) ship graphs to show up.
 - Gallery now shows special attack graph for submarine tenders (AS) and Big Sevens.
 - Fix Souya's remodel info.
+- Few UI improvements.
+- Fix an issue so that audios from music library can play exclusively.
 
 ### 1.3.8
 
