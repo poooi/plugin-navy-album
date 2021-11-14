@@ -26,6 +26,7 @@ dependencies:
 - http-types
 - async
 - SafeSemaphore
+- bytestring
 
 library:
   source-dirs: src
