@@ -14,15 +14,16 @@ where
  -}
 
 import Control.Monad
+import qualified Data.Set as S
 import qualified Data.Text as T
 import Filesystem.Path.CurrentOS hiding (null)
+import qualified KcNavyAlbum.BuildRemodelUseitemConsumption
 import KcNavyAlbum.CmdCommon
 import qualified KcNavyAlbum.DefaultDigest
 import qualified KcNavyAlbum.MapBgm
 import qualified KcNavyAlbum.ScanSpecialShipGraphs
 import System.Environment
 import System.Exit
-import qualified Data.Set as S
 import Turtle.Prelude hiding (die)
 import Prelude hiding (FilePath)
 
@@ -59,5 +60,6 @@ main = do
       , ("default-digest", KcNavyAlbum.DefaultDigest.subCmdMain)
       , ("update-kcreplay", \_ _ -> updateKcReplay)
       , ("scan-special-ship-graphs", KcNavyAlbum.ScanSpecialShipGraphs.subCmdMain)
+      , ("build-remodel-useitem-consumption", KcNavyAlbum.BuildRemodelUseitemConsumption.subCmdMain)
       , ("def", runDef)
       ]
