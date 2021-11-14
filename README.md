@@ -12,6 +12,7 @@ illustrations, ship and equipment stats, and things beyond.
 - Fix Souya's remodel info.
 - Few UI improvements.
 - Fix an issue so that audios from music library can play exclusively.
+- Correct instant build and dev mat cost for all ship remodels.
 
 ### 1.3.8
 

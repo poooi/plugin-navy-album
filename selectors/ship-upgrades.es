@@ -1,4 +1,6 @@
 import _ from 'lodash'
+import { readJsonSync } from 'fs-extra'
+import { join } from 'path-extra'
 import { createSelector } from 'reselect'
 
 import {
@@ -27,94 +29,27 @@ const shipUpgradesSelector = createSelector(
   }
 )
 
+const devMatAndInstantBuildCost = (() => {
+  const xs = readJsonSync(join(__dirname, '..', 'assets', 'remodel-info-useitem.json'))
+  return _.keyBy(xs, 'mstIdBefore')
+})()
+
 /*
-   kcs2/js/main.js:
-   - _getRequiredDevkitNum
-   - _getRequiredBuildKitNum
+  Returns {devMat: <number>, instantBuild: <number>}
  */
-const computeDevMatCount = (steel, blueprint, mstIdBefore) => {
-  const specialResults =
-    // Tatsuta K2
-    mstIdBefore === 214 ? 15 :
-    // Saratoga Mk.II, Saratoga Mk.II Mod.2
-    (mstIdBefore === 545 || mstIdBefore === 550) ? 20 :
-    // Zuihou K2, Zuihou K2B
-    (mstIdBefore === 555 || mstIdBefore === 560) ? 5 :
-    // Hamakaze B Kai, Isokaze B Kai, Urakaze D Kai
-    (mstIdBefore === 312 || mstIdBefore === 320 || mstIdBefore === 317) ? 40 :
-    // Kagero K2, Shiranui K2
-    (mstIdBefore === 225 || mstIdBefore === 226) ? 20 :
-    // Ise K2
-    mstIdBefore === 82 ? 80 :
-    // Kuroshio K2
-    mstIdBefore === 227 ? 20 :
-    // Shiratsuyu K2
-    mstIdBefore === 242 ? 15 :
-    // Tenryuu K2
-    mstIdBefore === 213 ? 24 :
-    // Shinyou K2
-    mstIdBefore === 381 ? 40 :
-    // Tanikaze D Kai
-    mstIdBefore === 313 ? 50 :
-    // Johnston Kai
-    mstIdBefore === 562 ? 80 :
-    // Colorado Kai
-    mstIdBefore === 149 ? 300 :
-    // Akagi K2
-    mstIdBefore === 277 ? 100 :
-    // Akaki K2 E & Akagi K2 (back) & Fletcher Kai
-    (mstIdBefore === 594 || mstIdBefore === 599 || mstIdBefore === 596) ? 80 :
-    // Umikaze K2
-    mstIdBefore === 350 ? 30 :
-    // Janus Kai
-    mstIdBefore === 520 ? 90 :
-    null
+const computeDevMatAndInstantBuildCost = (mstIdBefore, blueprint, steel) => {
+  const info = devMatAndInstantBuildCost[mstIdBefore]
+  if (info) {
+    const {devMatCost: devMat, instantBuildCost: instantBuild} = info
+    return {devMat, instantBuild}
+  }
 
-  if (specialResults !== null)
-    return specialResults
-
-
-  const groupB = [
-    // Suzuya Carrier K2
-    503,
-    // Kumano Carrier K2
-    504,
-    // Janus Kai
-    520,
-  ]
-
-  if (blueprint > 0 && !groupB.includes(mstIdBefore))
-    return 0
-  /* eslint-disable indent */
-  return steel < 4500 ? 0 :
+  const devMat = (blueprint > 0 || steel < 4500) ? 0 :
     steel < 5500 ? 10 :
     steel < 6500 ? 15 :
     20
-  /* eslint-enable indent */
+  return {devMat, instantBuild: 0}
 }
-
-const computeInstantBuildCount = mstIdBefore =>
-  // Tatsuta K2
-  mstIdBefore === 214 ? 5 :
-  // Suzuya K2, Kumano K2, Suzuya Carrier K2, Kumano Carrier K2
-  (mstIdBefore === 503 || mstIdBefore === 504 || mstIdBefore === 508 || mstIdBefore === 509) ? 20 :
-  // Saratoga Mk.II, Saratoga Mk.II Mod.2
-  (mstIdBefore === 545 || mstIdBefore === 550) ? 30 :
-  // Zuihou K2, Zuihou K2B
-  (mstIdBefore === 555 || mstIdBefore === 560) ? 20 :
-  // Hamakaze B Kai, Isokaze B Kai, Urakaze D Kai
-  (mstIdBefore === 312 || mstIdBefore === 320 || mstIdBefore === 317) ? 10 :
-  // Tenryuu K2
-  mstIdBefore === 213 ? 8 :
-  // Tanikaze D Kai
-  mstIdBefore === 313 ? 20 :
-  // Johnston Kai
-  mstIdBefore === 562 ? 10 :
-  // Akagi K2 E && Akagi K2 (back)
-  (mstIdBefore === 594 || mstIdBefore === 599) ? 30 :
-  // Fletcher Kai && Janus Kai
-  (mstIdBefore === 596 || mstIdBefore === 520) ? 10 :
-  0
 
 /*
    remodelDetails[mstIdBefore] = {
@@ -170,8 +105,7 @@ const remodelDetailsSelector = createSelector(
         level: $ship.api_afterlv,
         ammo, steel,
         ...extraInfo,
-        devMat: computeDevMatCount(steel, extraInfo.blueprint, mstIdBefore),
-        instantBuild: computeInstantBuildCount(mstIdBefore),
+        ...computeDevMatAndInstantBuildCost(mstIdBefore, extraInfo.blueprint, steel),
       }
     })
     return remodelDetails
