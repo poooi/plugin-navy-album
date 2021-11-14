@@ -5,7 +5,7 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
-### (not yet released)
+### 1.4.0
 
 - Fix an issue that causes old (cached) ship graphs to show up.
 - Gallery now shows special attack graph for submarine tenders (AS) and Big Sevens.
