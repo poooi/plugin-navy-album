@@ -109,7 +109,7 @@ class ShipsAlbumImpl extends Component {
           style={{
             display: 'flex',
             flex: 1,
-            height: '100%',
+            height: 0,
           }}
         >
           <div style={{
