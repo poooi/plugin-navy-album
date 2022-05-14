@@ -28,7 +28,7 @@ mkCmdCommon = do
   getManager <- once (newManager tlsManagerSettings)
   getMasterRoot <- once $ do
     mgr <- getManager
-    req <- parseRequest "https://raw.githubusercontent.com/kcwiki/kancolle-data/master/api/api_start2.json"
+    req <- parseRequest "https://raw.githubusercontent.com/Tibowl/api_start2/master/start2.json"
     resp <- httpLbs req mgr
     case Aeson.eitherDecode @MasterRoot (responseBody resp) of
       Left msg -> die ("parse error: " <> msg)
