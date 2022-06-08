@@ -45,7 +45,6 @@ class InfoRowImpl extends PureComponent {
         </div>
       )
     }
-
     return (
       <ListGroupItem
         style={style}
@@ -71,6 +70,12 @@ class InfoRowImpl extends PureComponent {
         <div style={{display: 'flex', alignItems: 'center'}}>
           {
             _.flatMap(
+              /*
+                TODO: need icon for following stuff:
+                - aviationMat
+                - armsMat
+                - boiler
+               */
               'ammo steel devMat instantBuild blueprint catapult report'
                 .split(' '),
               itemOrResource => {

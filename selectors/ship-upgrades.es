@@ -91,17 +91,23 @@ const remodelDetailsSelector = createSelector(
 
       const $shipUpgrade = $shipUpgrades[mstIdBefore]
       let extraInfo
-      if (! $shipUpgrade) {
+      if (!$shipUpgrade) {
         extraInfo = {
           catapult: 0,
           blueprint: 0,
           report: 0,
+          aviationMat: 0,
+          armsMat: 0,
+          boiler: 0,
         }
       } else {
         extraInfo = {
           catapult: $shipUpgrade.api_catapult_count,
           blueprint: $shipUpgrade.api_drawing_count,
           report: $shipUpgrade.api_report_count,
+          aviationMat: _.get($shipUpgrade, 'api_aviation_mat_count', 0),
+          armsMat: _.get($shipUpgrade, 'api_arms_mat_count', 0),
+          boiler: _.get($shipUpgrade, 'api_boiler_count', 0),
         }
       }
 
