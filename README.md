@@ -8,6 +8,7 @@ illustrations, ship and equipment stats, and things beyond.
 ### Pending
 
 - Update assets
+- Now remodel info displays item consumptions in recent updates (i.e. 新型航空兵装資材 & 新型兵装資材)
 
 ### 1.4.1
 

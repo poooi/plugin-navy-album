@@ -71,12 +71,9 @@ class InfoRowImpl extends PureComponent {
           {
             _.flatMap(
               /*
-                TODO: need icon for following stuff:
-                - aviationMat
-                - armsMat
-                - boiler
+                TODO: need icon for boiler.
                */
-              'ammo steel devMat instantBuild blueprint catapult report'
+              'ammo steel devMat instantBuild blueprint catapult report aviationMat armsMat'
                 .split(' '),
               itemOrResource => {
                 const matIds = {
