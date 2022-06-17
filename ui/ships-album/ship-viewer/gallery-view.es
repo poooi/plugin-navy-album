@@ -34,6 +34,10 @@ const battleShipSpecials = mstId =>
     601,
     // Colorado改: special
     1496,
+    // Maryland: special
+    913,
+    // Maryland改: special
+    918,
   ].indexOf(mstId) !== -1
 
 // TODO: clean up
