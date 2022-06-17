@@ -5,6 +5,11 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 1.5.1
+
+- Update assets
+- Include special gallery for Maryland & Maryland Kai
+
 ### 1.5.0
 
 - Update assets
