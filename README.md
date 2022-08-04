@@ -5,7 +5,7 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
-### Pending
+### 1.5.2
 
 - Update assets
 
