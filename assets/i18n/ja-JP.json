@@ -1,69 +1,69 @@
 {
   "Package": {
-    "Name": "Navy Album",
-    "Desc": "Show illustration album of ships and items."
+    "Name": "艦隊図鑑",
+    "Desc": "艦娘・装備図鑑"
   },
 
-  "Ships": "Ships",
-  "Equipments": "Equipments",
-  "Music": "Music",
-  "GameUpdate": "Game Update",
+  "Ships": "艦娘",
+  "Equipments": "装備",
+  "Music": "音楽",
+  "GameUpdate": "ゲームアップデート",
 
-  "Search...": "Search ...",
+  "Search": "検索...",
 
-  "ShowOpts": "Show options",
-  "HideOpts": "Hide options",
+  "ShowOpts": "オプションを表示",
+  "HideOpts": "オプションを非表示",
 
-  "Friendly": "Friendly",
-  "Abyssal": "Abyssal",
+  "Friendly": "友軍艦隊",
+  "Abyssal": "深海棲艦",
 
   "ShipsTab": {
-    "GroupByShipTypes": "Group by Ship Type",
-    "GroupRemodels": "Group Remodel",
+    "GroupByShipTypes": "艦種で並び替え",
+    "GroupRemodels": "名前で並び替え",
 
-    "WaitingDataFor": "Waiting data for #%s",
-    "Debuff": "(D)",
-    "Info": "Info",
-    "MaxConsump": "Max Consumption",
-    "ScrapValue": "Scrap Value",
-    "Modernization": "Modernization",
-    "DockingTime": "Docking Time",
-    "Remodels": "Remodels",
+    "WaitingDataFor": "#%s を読み込み中",
+    "Debuff": "デバフ",
+    "Info": "情報",
+    "MaxConsump": "最大消費量",
+    "ScrapValue": "解体で得られる資材",
+    "Modernization": "合成素材にした場合の強化値",
+    "DockingTime": "入渠時間",
+    "Remodels": "改造",
 
-    "Gallery": "Gallery",
-    "LastUpdate": "Last Update",
+    "Gallery": "図鑑",
+    "LastUpdate": "最終更新",
 
-    "Voice": "Voice",
-    "ShowWedding": "Show Wedding",
-    "ShowSunk": "Show Sunk"
+    "Voice": "ボイス",
+    "ShowWedding": "ケッコンカッコカリボイスを表示",
+    "ShowSunk": "轟沈ボイスを表示"
   },
 
   "EquipmentsTab": {
-    "GroupByTypes": "Group by Types",
-    "ScrapValue": "Scrap Value",
-    "Distance": "Distance",
-    "Cost": "Cost"
+    "GroupByTypes": "装備種類で並び替え",
+    "ScrapValue": "廃棄で得られる資材",
+    "Distance": "航続距離",
+    "Cost": "消費量"
   },
 
   "MusicLibraryTab": {
-    "PortBGM": "Port BGM",
-    "MapBGM": "Map BGM",
-    "All": "All",
-    "Others": "Others",
+    "PortBGM": "母港BGM",
+    "MapBGM": "出撃BGM",
+    "All": "全て",
+    "Others": "他",
     "Situations": {
-      "moving": "Moving",
-      "normalDay": "Normal Battle (Day)",
-      "normalNight": "Normal Battle (Night)",
-      "bossDay": "Boss Battle (Day)",
-      "bossNight": "Boss Battle (Night)"
+      "moving": "移動",
+      "normalDay": "昼戦",
+      "normalNight": "夜戦",
+      "bossDay": "昼戦(ボス)",
+      "bossNight": "夜戦(ボス)"
     }
   },
 
   "GameUpdateTab": {
-    "NewShips": "New Ships",
-    "NewEquipments": "New Equipments",
-    "UpdatedCGs": "Updated CGs",
-    "GeneralInfo": "General Info",
-    "GeneralInfoDetail": "Ship Count: %s, Equipment Count: %s"
+    "NewShips": "新艦娘/新深海棲艦",
+    "NewEquipments": "新装備",
+    "UpdatedCGs": "新しい立ち絵",
+    "GeneralInfo": "統計情報",
+    "GeneralInfoDetail": "艦娘/深海棲艦数: %s, 装備数: %s"
   }
 }

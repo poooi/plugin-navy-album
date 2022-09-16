@@ -54,7 +54,7 @@ class SearchBar extends Component {
         <FormControl
           style={{flex: 1}}
           type="text"
-          placeholder={__('Search ...')}
+          placeholder={__('Search')}
           value={this.state.value}
           onChange={this.handleChangeValue}
         />
