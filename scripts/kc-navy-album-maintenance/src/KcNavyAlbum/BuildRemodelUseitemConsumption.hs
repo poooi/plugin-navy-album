@@ -46,9 +46,9 @@ import Data.Maybe
 import qualified Data.Text as T
 import Data.Text.Encoding
 import GHC.Generics
-import Kantour.Core.KcData.Master.Root
-import Kantour.Core.KcData.Master.Ship
-import Kantour.Core.KcData.Master.Shipupgrade
+import Kantour.Core.KcData.Master.Direct.Root
+import Kantour.Core.KcData.Master.Direct.Ship
+import Kantour.Core.KcData.Master.Direct.Shipupgrade
 import KcNavyAlbum.CmdCommon
 import System.Exit
 import qualified Turtle.Bytes
@@ -76,7 +76,7 @@ instance FromJSON RemodelInfoResult
 
 subCmdMain :: CmdCommon -> String -> IO ()
 subCmdMain CmdCommon {getMasterRoot} _cmdHelpPrefix = do
-  MasterRoot {mstShip, mstShipupgrade} <- getMasterRoot
+  Root {mstShip, mstShipupgrade} <- getMasterRoot
   let upgrades =
         IM.fromList $
           fmap
@@ -85,12 +85,12 @@ subCmdMain CmdCommon {getMasterRoot} _cmdHelpPrefix = do
       ships =
         IM.fromList $
           fmap
-            (\s@Ship {shipId} -> (shipId, s))
+            (\s@Ship {kcId=shipId} -> (shipId, s))
             mstShip
       prepared :: [RemodelInfoPrepare]
       prepared = do
         Ship
-          { shipId = mstIdBefore
+          { kcId = mstIdBefore
           , afterfuel = Just steelCost
           , aftershipid = Just afterShipId
           } <-

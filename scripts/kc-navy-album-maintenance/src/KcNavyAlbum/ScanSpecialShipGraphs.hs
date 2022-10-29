@@ -13,8 +13,8 @@ import Control.Monad.IO.Class
 import Data.Maybe
 import qualified Data.Text as T
 import Kantour.Core.GameResource.Magic
-import Kantour.Core.KcData.Master.Root
-import Kantour.Core.KcData.Master.Ship
+import Kantour.Core.KcData.Master.Direct.Root
+import Kantour.Core.KcData.Master.Direct.Ship
 import KcNavyAlbum.CmdCommon
 import System.IO
 import Text.Printf
@@ -24,15 +24,15 @@ maxFetchInFlight = 10
 
 subCmdMain :: CmdCommon -> String -> IO ()
 subCmdMain c@CmdCommon {getMasterRoot} _cmdHelpPrefix = do
-  MasterRoot {mstShip} <- getMasterRoot
+  Root {mstShip} <- getMasterRoot
   let shipsToScan = do
-        s@Ship {shipId} <- mstShip
-        guard $ shipId <= 1500
+        s@Ship {kcId} <- mstShip
+        guard $ kcId <= 1500
         pure s
 
   sem <- Sem.new maxFetchInFlight
   hSetBuffering stdout NoBuffering
-  tasks <- forM shipsToScan $ \s@Ship {shipId = mstId} -> async $
+  tasks <- forM shipsToScan $ \s@Ship {kcId = mstId} -> async $
     Sem.with sem $ do
       xs <- liftIO $ putStr "." >> checkSpecialShipGraph c mstId
       pure $
@@ -45,7 +45,7 @@ subCmdMain c@CmdCommon {getMasterRoot} _cmdHelpPrefix = do
     printf "%s: %s\n" name (T.intercalate ", " graphTypes)
   putStrLn "Other than AS:"
   putStrLn "  [ "
-  forM_ (filter (\(Ship {stype}, _) -> stype /= Just 20) results) $ \(Ship {name, shipId}, gts) -> do
+  forM_ (filter (\(Ship {stype}, _) -> stype /= 20) results) $ \(Ship {name, kcId=shipId}, gts) -> do
     printf "    // %s: %s\n" name (T.intercalate ", " gts)
     printf "    %d,\n" shipId
   putStrLn "  ].indexOf(mstId) !== -1"

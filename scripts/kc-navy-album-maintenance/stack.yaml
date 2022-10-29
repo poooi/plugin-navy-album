@@ -1,10 +1,12 @@
-resolver: lts-16.31
+resolver: lts-19.30
 packages:
 - .
 
 extra-deps:
-- deriving-aeson-0.2.7
 - git: https://github.com/Javran/kantour.git
-  commit: ba3b1b028af71171a41441637ca25d628c0f7bc5
+  commit: 0f3543224234d5e3f45b8424ff45856c49b21bed
   subdirs:
     - kantour-core
+- aeson-2.0.3.0
+- git: https://github.com/Javran/aeson-picker.git
+  commit: c5b898e11fb50aeabc1a6fc2ab3ffbfc716a3b15

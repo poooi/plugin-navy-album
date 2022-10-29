@@ -10,7 +10,7 @@ where
 import Control.Once
 import qualified Data.Aeson as Aeson
 import Kantour.Core.GameResource.Magic
-import Kantour.Core.KcData.Master.Root
+import Kantour.Core.KcData.Master.Direct.Root
 import Network.HTTP.Client
 import Network.HTTP.Client.TLS
 import Network.HTTP.Types
@@ -19,7 +19,7 @@ import Text.Printf
 
 data CmdCommon = CmdCommon
   { getManager :: IO Manager
-  , getMasterRoot :: IO MasterRoot
+  , getMasterRoot :: IO Root
   , doesResourceExist :: String -> IO Bool
   }
 
@@ -30,7 +30,7 @@ mkCmdCommon = do
     mgr <- getManager
     req <- parseRequest "https://raw.githubusercontent.com/Tibowl/api_start2/master/start2.json"
     resp <- httpLbs req mgr
-    case Aeson.eitherDecode @MasterRoot (responseBody resp) of
+    case Aeson.eitherDecode @Root (responseBody resp) of
       Left msg -> die ("parse error: " <> msg)
       Right r -> pure r
 
