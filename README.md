@@ -5,6 +5,14 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 1.6.1
+
+- Update assets
+
+### 1.6.0 (retro)
+
+- Japanese translation
+
 ### 1.5.2
 
 - Update assets
