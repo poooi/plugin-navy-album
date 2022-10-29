@@ -5,9 +5,13 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
-### 1.6.1
+### 1.6.2
 
 - Update assets
+
+### 1.6.1 (retro)
+
+- Not sure what the fuck happened here.
 
 ### 1.6.0 (retro)
 
