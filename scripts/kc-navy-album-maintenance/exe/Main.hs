@@ -1,5 +1,5 @@
-module Main
-  ( main
-  ) where
+module Main (
+  main,
+) where
 
 import KcNavyAlbum.Main (main)

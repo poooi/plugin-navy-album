@@ -1,10 +1,6 @@
-{-# LANGUAGE NamedFieldPuns #-}
-{-# LANGUAGE OverloadedStrings #-}
-
-module KcNavyAlbum.ScanSpecialShipGraphs
-  ( subCmdMain
-  )
-where
+module KcNavyAlbum.ScanSpecialShipGraphs (
+  subCmdMain,
+) where
 
 import Control.Concurrent.Async
 import qualified Control.Concurrent.MSem as Sem
@@ -45,7 +41,7 @@ subCmdMain c@CmdCommon {getMasterRoot} _cmdHelpPrefix = do
     printf "%s: %s\n" name (T.intercalate ", " graphTypes)
   putStrLn "Other than AS:"
   putStrLn "  [ "
-  forM_ (filter (\(Ship {stype}, _) -> stype /= 20) results) $ \(Ship {name, kcId=shipId}, gts) -> do
+  forM_ (filter (\(Ship {stype}, _) -> stype /= 20) results) $ \(Ship {name, kcId = shipId}, gts) -> do
     printf "    // %s: %s\n" name (T.intercalate ", " gts)
     printf "    %d,\n" shipId
   putStrLn "  ].indexOf(mstId) !== -1"
@@ -55,7 +51,8 @@ checkSpecialShipGraph CmdCommon {doesResourceExist} mstId =
   concat
     <$> forM
       ["special", "special_dmg"]
-      (\graphType -> do
-         let code = magicCode mstId (T.unpack $ "ship_" <> graphType)
-         b <- doesResourceExist (printf "/kcs2/resources/ship/%s/%04d_%04d.png" graphType mstId code)
-         pure [graphType | b])
+      ( \graphType -> do
+          let code = magicCode mstId (T.unpack $ "ship_" <> graphType)
+          b <- doesResourceExist (printf "/kcs2/resources/ship/%s/%04d_%04d.png" graphType mstId code)
+          pure [graphType | b]
+      )

@@ -8,31 +8,71 @@ copyright: "Copyright: (c) 2019 Javran Cheng"
 
 description: description
 
+ghc-options:
+  - -Wall
+
+default-extensions:
+  - BangPatterns
+  - BinaryLiterals
+  - BlockArguments
+  - ConstraintKinds
+  - DataKinds
+  - DefaultSignatures
+  - DeriveDataTypeable
+  - DeriveFoldable
+  - DeriveFunctor
+  - DeriveGeneric
+  - DeriveTraversable
+  - DerivingVia
+  - EmptyCase
+  - EmptyDataDecls
+  - ExistentialQuantification
+  - FlexibleContexts
+  - FlexibleInstances
+  - FunctionalDependencies
+  - GADTs
+  - GeneralizedNewtypeDeriving
+  - InstanceSigs
+  - KindSignatures
+  - LambdaCase
+  - MultiParamTypeClasses
+  - MultiWayIf
+  - NamedFieldPuns
+  - NoUnicodeSyntax
+  - NumericUnderscores
+  - OverloadedStrings
+  - PartialTypeSignatures
+  - PolyKinds
+  - RankNTypes
+  - ScopedTypeVariables
+  - StandaloneDeriving
+  - TupleSections
+  - TypeApplications
+  - TypeFamilies
+  - TypeSynonymInstances
+
 dependencies:
+- SafeSemaphore
 - aeson
+- async
 - base
+- bytestring
 - containers
 - http-client
 - http-client-tls
 - http-types
+- http-types
+- kantour-core
+- once
 - system-filepath
 - text
 - turtle
+- unordered-containers
 - vector
 - vector-algorithms
-- unordered-containers
-- kantour-core
-- once
-- http-types
-- async
-- SafeSemaphore
-- bytestring
 
 library:
   source-dirs: src
-  ghc-options:
-    - -Wall
-    - -O2
 
 executables:
   demo:
@@ -41,7 +81,6 @@ executables:
     dependencies:
       - kc-navy-album-maintenance
     ghc-options:
-      - -Wall
       - -O2
       - -threaded
       - -rtsopts
@@ -57,7 +96,6 @@ tests:
       - QuickCheck
       - hspec
     ghc-options:
-      - -Wall
       - -O2
       - -threaded
       - -rtsopts

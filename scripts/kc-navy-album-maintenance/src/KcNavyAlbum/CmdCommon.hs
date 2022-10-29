@@ -1,11 +1,7 @@
-{-# LANGUAGE NamedFieldPuns #-}
-{-# LANGUAGE TypeApplications #-}
-
-module KcNavyAlbum.CmdCommon
-  ( CmdCommon (..)
-  , mkCmdCommon
-  )
-where
+module KcNavyAlbum.CmdCommon (
+  CmdCommon (..),
+  mkCmdCommon,
+) where
 
 import Control.Once
 import qualified Data.Aeson as Aeson

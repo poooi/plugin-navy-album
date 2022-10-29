@@ -1,13 +1,9 @@
 {-# LANGUAGE DuplicateRecordFields #-}
-{-# LANGUAGE NamedFieldPuns #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE ScopedTypeVariables #-}
 
 module KcNavyAlbum.DefaultDigest where
 
 import Data.Aeson as Aeson
 import qualified Data.Aeson.KeyMap as KM
-import qualified Data.HashMap.Strict as HM
 import qualified Data.IntMap.Strict as IM
 import Data.List
 import qualified Data.List.NonEmpty as NE
@@ -29,23 +25,26 @@ mkDigest :: Root -> Value
 mkDigest Root {mstSlotitem, mstShipgraph, mstShip} =
   Object $
     KM.fromList
-      [ ( "equipMstIds"
+      [
+        ( "equipMstIds"
         , Array $
             V.fromList $
               fmap (Number . fromIntegral) $
                 sort $ fmap Kantour.Core.KcData.Master.Direct.Slotitem.kcId mstSlotitem
         )
-      , ( "shipDigests"
+      ,
+        ( "shipDigests"
         , Array $
             V.fromList $
               fmap
-                (\shipId ->
-                   Array $
-                     V.fromList
-                       [ Number (fromIntegral shipId)
-                       , String (graphDigestTable IM.! shipId)
-                       ])
-                $ sort $ fmap (\Ship {kcId=shipId} -> shipId) mstShip
+                ( \shipId ->
+                    Array $
+                      V.fromList
+                        [ Number (fromIntegral shipId)
+                        , String (graphDigestTable IM.! shipId)
+                        ]
+                )
+                $ sort $ fmap (\Ship {kcId = shipId} -> shipId) mstShip
         )
       ]
   where

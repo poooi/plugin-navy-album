@@ -1,4 +1,3 @@
-
 module DemoSpec where
 
 import Test.Hspec

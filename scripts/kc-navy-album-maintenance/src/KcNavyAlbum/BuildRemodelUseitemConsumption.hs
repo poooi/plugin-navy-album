@@ -1,13 +1,8 @@
-{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DuplicateRecordFields #-}
-{-# LANGUAGE NamedFieldPuns #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE TypeApplications #-}
 
-module KcNavyAlbum.BuildRemodelUseitemConsumption
-  ( subCmdMain
-  )
-where
+module KcNavyAlbum.BuildRemodelUseitemConsumption (
+  subCmdMain,
+) where
 
 {-
   The useitem here refers to instantBuild and devMat.
@@ -85,7 +80,7 @@ subCmdMain CmdCommon {getMasterRoot} _cmdHelpPrefix = do
       ships =
         IM.fromList $
           fmap
-            (\s@Ship {kcId=shipId} -> (shipId, s))
+            (\s@Ship {kcId = shipId} -> (shipId, s))
             mstShip
       prepared :: [RemodelInfoPrepare]
       prepared = do

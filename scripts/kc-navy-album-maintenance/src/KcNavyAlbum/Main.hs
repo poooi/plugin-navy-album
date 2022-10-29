@@ -1,10 +1,6 @@
-{-# LANGUAGE LambdaCase #-}
-{-# LANGUAGE OverloadedStrings #-}
-
-module KcNavyAlbum.Main
-  ( main
-  )
-where
+module KcNavyAlbum.Main (
+  main,
+) where
 
 {-
   Required environment variables:
