@@ -26,7 +26,7 @@ const allEquipsRawSelector = createSelector(
   ({$equips}) => _.values($equips)
 )
 
-const isAbyssalEq = s => s.api_id > 500
+const isAbyssalEq = s => s.api_id > 1500
 
 const filteredEquipsRawSelector = createSelector(
   searchTextSelector,

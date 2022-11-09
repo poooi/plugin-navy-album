@@ -21,7 +21,7 @@ class IntroViewImpl extends PureComponent {
   render() {
     const {style, $equip, serverIp} = this.props
     const mstId = $equip.api_id
-    if (mstId > 500) {
+    if (mstId > 1500) {
       return <div style={{display: 'none'}} />
     }
     const id = x => x

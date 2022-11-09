@@ -44,7 +44,7 @@ const changedShipMstIdsSelector =
   mkSimpleArrSelector('changedShipMstIds')
 
 const isAbyssalMstId = mstId => mstId > 1500
-const isAbyssalEquipMstId = eMstId => eMstId > 500
+const isAbyssalEquipMstId = eMstId => eMstId > 1500
 
 /*
 
