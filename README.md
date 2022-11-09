@@ -5,6 +5,11 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 1.6.3
+
+- Update assets
+- Account for abyssal equipment id changes
+
 ### 1.6.2
 
 - Update assets
