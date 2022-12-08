@@ -7,7 +7,8 @@ illustrations, ship and equipment stats, and things beyond.
 
 ### Pending
 
-- Update assets
+- Update assets.
+- Fix equipment images.
 
 ### 1.6.3
 

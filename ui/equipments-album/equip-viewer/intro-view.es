@@ -25,7 +25,7 @@ class IntroViewImpl extends PureComponent {
       return <div style={{display: 'none'}} />
     }
     const id = x => x
-    const mstIdStr = String(mstId).padStart(3,'0')
+    const mstIdStr = String(mstId).padStart(4,'0')
     /*
       TODO: it seems that new source uses `resources/slot/` that we'll need to migrate to
       at some point in future.

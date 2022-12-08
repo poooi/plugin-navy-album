@@ -104,7 +104,7 @@ class GameUpdateViewerImpl extends PureComponent {
     const {friendly, abyssal} = addedEquipMstIds
     const length = _.sum(_.values(addedEquipMstIds).map(x => x.length))
     const equipMstIdToSrc = mstId => {
-      const mstIdStr = String(mstId).padStart(3,'0')
+      const mstIdStr = String(mstId).padStart(4,'0')
       const prefix = `http://${serverIp}/kcs/resources/image/slotitem/`
       return `${prefix}card/${mstIdStr}.png`
     }
