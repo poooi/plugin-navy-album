@@ -5,7 +5,7 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
-### Pending
+### 1.6.8
 
 - Level slider now allows Lv. 180.
 
