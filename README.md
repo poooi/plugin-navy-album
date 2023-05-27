@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### Pending
+
+- Level slider now allows Lv. 180.
+
 ### 1.6.7
 
 - Update assets.

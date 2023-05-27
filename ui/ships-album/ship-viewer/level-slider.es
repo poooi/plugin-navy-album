@@ -57,11 +57,11 @@ class LevelSliderImpl extends PureComponent {
           value={level}
           onChange={this.handleChangeLevel}
           min={minLevel}
-          max={175}
+          max={180}
           marks={{
             [minLevel]: `Lv. ${minLevel}`,
             99: 'Lv. 99',
-            175: 'Lv. 175',
+            180: 'Lv. 180',
           }}
         />
       </div>
