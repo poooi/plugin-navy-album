@@ -4,7 +4,7 @@ packages:
 
 extra-deps:
 - git: https://github.com/Javran/kantour.git
-  commit: 0f3543224234d5e3f45b8424ff45856c49b21bed
+  commit: e3ad862bc12501a0575589b136072173a701b147
   subdirs:
     - kantour-core
 - aeson-2.0.3.0

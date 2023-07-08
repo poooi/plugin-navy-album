@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 1.6.10
+
+- Update assets.
+
 ### 1.6.9
 
 - Update assets (including Shigure K3).
