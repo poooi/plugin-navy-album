@@ -26,7 +26,8 @@ const allEquipsRawSelector = createSelector(
   ({$equips}) => _.values($equips)
 )
 
-const isAbyssalEq = s => s.api_id > 1500
+const isAbyssalEquipMstId = v => v > 1500
+const isAbyssalEquip = s => isAbyssalEquipMstId(s.api_id)
 
 const filteredEquipsRawSelector = createSelector(
   searchTextSelector,
@@ -52,9 +53,9 @@ const equipsRawStage1Selector = createSelector(
       return []
     return equipsRaw.filter(
       friendly ?
-        s => !isAbyssalEq(s) :
+        s => !isAbyssalEquip(s) :
         // otherwise it must be the case where
-        isAbyssalEq
+        isAbyssalEquip
     )
   }
 )
@@ -151,6 +152,7 @@ const equipRawInfoSelector = createSelector(
 )
 
 export {
+  isAbyssalEquipMstId,
   listOptionsSelector,
   equipsRawSelectorForView,
   equipViewerSelector,

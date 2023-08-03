@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### Pending
+
+- Fix some cases where new equipment stats are not displayed.
+
 ### 1.6.10
 
 - Update assets.

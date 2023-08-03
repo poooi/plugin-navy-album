@@ -10,6 +10,7 @@ import {
 } from 'subtender'
 
 import {
+  isAbyssalEquipMstId,
   mstIdSelector,
   equipRawInfoSelector,
 } from '../selectors'
@@ -51,7 +52,7 @@ class EquipViewerImpl extends PureComponent {
             >
               <Header {...infoProps} />
               {
-                mstId < 501 && (
+                !isAbyssalEquipMstId(mstId) && (
                   <IntroView style={{}} />
                 )
               }
