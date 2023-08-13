@@ -1,4 +1,7 @@
 import _ from 'lodash'
+import {
+  isAbyssalShipMstId,
+} from './basic'
 
 const shipImgType = [
   'banner',
@@ -137,7 +140,7 @@ window.NavyAlbumGetShipImgPath = getShipImgPath
 
 // for non-abyssal ships only.
 const getAllShipImgPaths = id => {
-  if (id > 1500)
+  if (isAbyssalShipMstId(id))
     throw new Error(`getAllShipImgPaths is for non-abyssal ships only`)
   const inps = [
     ['banner', false], ['banner', true],

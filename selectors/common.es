@@ -10,6 +10,7 @@ import {
 } from 'views/utils/selectors'
 import { toRomaji } from 'wanakana'
 import { initState } from '../store'
+import { isAbyssalShipMstId } from '../game-misc'
 
 const extSelector = createSelector(
   extensionSelectorFactory('poi-plugin-navy-album'),
@@ -109,8 +110,6 @@ const shipsMasterDataSelector = createSelector(
   ({$ships}) => $ships
 )
 
-const isMasterIdAbyssalShip = mstId => mstId > 1500
-
 /*
    returns a function that tests whether a given ship master id is
    for special CG.
@@ -122,7 +121,7 @@ const isMasterIdSpecialCGFuncSelector = createSelector(
     if (!$ships || typeof $ships !== 'object')
       return false
 
-    if (isMasterIdAbyssalShip(mstId))
+    if (isAbyssalShipMstId(mstId))
       return false
     const $ship = $ships[mstId]
     return (!$ship || !('api_sortno' in $ship))

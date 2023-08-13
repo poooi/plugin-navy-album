@@ -8,6 +8,9 @@ import {
 import {
   serverIpSelector,
 } from '../../../selectors'
+import {
+  isAbyssalShipMstId,
+} from '../../../game-misc'
 
 import { PTyp } from '../../../ptyp'
 
@@ -21,7 +24,7 @@ class IntroViewImpl extends PureComponent {
   render() {
     const {style, $equip, serverIp} = this.props
     const mstId = $equip.api_id
-    if (mstId > 1500) {
+    if (isAbyssalShipMstId(mstId)) {
       return <div style={{display: 'none'}} />
     }
     const id = x => x

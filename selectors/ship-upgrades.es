@@ -2,10 +2,11 @@ import _ from 'lodash'
 import { readJsonSync } from 'fs-extra'
 import { join } from 'path-extra'
 import { createSelector } from 'reselect'
-
 import {
   constSelector,
 } from 'views/utils/selectors'
+
+import { isAbyssalShipMstId } from '../game-misc'
 
 const shipUpgradesSelector = createSelector(
   constSelector,
@@ -79,7 +80,7 @@ const remodelDetailsSelector = createSelector(
 
     _.values($ships).map($ship => {
       const mstIdBefore = $ship.api_id
-      if (mstIdBefore >= 1500)
+      if (isAbyssalShipMstId(mstIdBefore))
         return
       const mstIdAfter = Number($ship.api_aftershipid)
       if (mstIdAfter <= 0)

@@ -14,6 +14,9 @@ import {
 import {
   isMasterIdSpecialCGFuncSelector,
 } from '../../../selectors'
+import {
+  isAbyssalShipMstId,
+} from '../../../game-misc'
 import { Header } from './header'
 import { AltFormSwitcher } from './alt-form-switcher'
 import { mapDispatchToProps } from '../../../store'
@@ -53,7 +56,7 @@ class ShipViewerImpl extends Component {
       isMasterIdSpecialCGFunc,
     } = this.props
     const {__} = window.i18n["poi-plugin-navy-album"]
-    const isAbyssalShip = mstId > 1500
+    const isAbyssalShip = isAbyssalShipMstId(mstId)
     const isSpecialCG = isMasterIdSpecialCGFunc(mstId)
     return (
       <Panel

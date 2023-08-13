@@ -3,6 +3,8 @@ import { createSelector } from 'reselect'
 import { projectorToComparator } from 'subtender'
 import { shipRemodelInfoSelector as remodelInfoSelector } from 'subtender/poi'
 
+import { isAbyssalShipMstId } from '../game-misc'
+
 /*
    returns a function:
 
@@ -25,7 +27,7 @@ const sortByRemodelFuncSelector = createSelector(
   ({remodelChains, originMstIdOf}) =>
     shipsInfo => {
       const mstIdToOrigin = mstId =>
-        mstId > 1500 ?
+        isAbyssalShipMstId(mstId) ?
           'abyssal' :
           (
             originMstIdOf[mstId] ||

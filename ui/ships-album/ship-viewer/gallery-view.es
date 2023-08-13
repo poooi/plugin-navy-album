@@ -6,12 +6,14 @@ import {
 import FontAwesome from 'react-fontawesome'
 import { connect } from 'react-redux'
 import { remote } from 'electron'
-import {shipImgType, getShipImgPath} from '../../../game-misc'
-
+import {
+  shipImgType,
+  getShipImgPath,
+  isAbyssalShipMstId,
+} from '../../../game-misc'
 import {
   isMasterIdSpecialCGFuncSelector,
 } from '../../../selectors'
-
 import { PTyp } from '../../../ptyp'
 
 const downloadUrl =
@@ -83,7 +85,7 @@ class GalleryViewImpl extends PureComponent {
   render() {
     const {mstId, serverIp, style, debuffFlag, isSpecialCG} = this.props
     const imgList = isSpecialCG ? imgListSpecialCG :
-      mstId > 1500 ? imgListAbyssal : mkImgListFriendly(mstId)
+      isAbyssalShipMstId(mstId) ? imgListAbyssal : mkImgListFriendly(mstId)
 
     return (
       <ListGroup style={style}>

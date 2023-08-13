@@ -6,6 +6,10 @@ import {
   isMasterIdSpecialCGFuncSelector,
   sortByRemodelFuncSelector,
 } from '../../selectors'
+import {
+  isAbyssalShipMstId,
+  isAbyssalEquipMstId,
+} from '../../game-misc'
 
 const genSummary = () => {
   const {getStore} = window
@@ -43,9 +47,6 @@ const addedShipMstIdsSelector =
 const changedShipMstIdsSelector =
   mkSimpleArrSelector('changedShipMstIds')
 
-const isAbyssalMstId = mstId => mstId > 1500
-const isAbyssalEquipMstId = eMstId => eMstId > 1500
-
 /*
 
    returns a function: mstId => 'abyssal' | 'special' | 'friendly'
@@ -60,7 +61,7 @@ const mstIdToCategoryFuncSelector = createSelector(
   isMstIdSpecialCG => _.memoize(mstId =>
     /* eslint-disable indent */
     isMstIdSpecialCG(mstId) ? 'special' :
-      isAbyssalMstId(mstId) ? 'abyssal' : 'friendly'
+      isAbyssalShipMstId(mstId) ? 'abyssal' : 'friendly'
     /* eslint-enable indent */
   )
 )

@@ -14,6 +14,9 @@ import {
   shipsMasterDataSelector,
   debuffInfoSelector,
 } from '../../selectors'
+import {
+  isAbyssalShipMstId,
+} from '../../game-misc'
 
 const shipsAlbumSelector = createSelector(
   uiSelector,
@@ -22,8 +25,6 @@ const shipsAlbumSelector = createSelector(
 const listOptionsSelector = createSelector(
   shipsAlbumSelector,
   sa => sa.listOptions)
-
-const isAbyssal = s => s.mstId > 1500
 
 const shipViewerSelector = createSelector(
   shipsAlbumSelector,
@@ -83,9 +84,9 @@ const shipsInfoStage1Selector = createSelector(
     // either friendly === true or abyssal === true
     return shipsInfo.filter(
       friendly ?
-        s => !isAbyssal(s) :
+        s => !isAbyssalShipMstId(s.mstId) :
         // otherwise it must be the case where
-        isAbyssal
+        s => isAbyssalShipMstId(s.mstId)
     )
   }
 )

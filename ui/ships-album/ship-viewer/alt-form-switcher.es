@@ -14,7 +14,7 @@ import {
   hasDebuffedGraphsSelector,
 } from '../selectors'
 import { remodelInfoSelector } from '../../../selectors'
-
+import { isAbyssalShipMstId } from '../../../game-misc'
 import { PTyp } from '../../../ptyp'
 import { mapDispatchToProps } from '../../../store'
 
@@ -42,7 +42,7 @@ class AltFormSwitcherImpl extends PureComponent {
 
   tryTouchDebuffGraph(mstId) {
     const {touchDebuffGraph} = this.props
-    if (mstId > 1500)
+    if (isAbyssalShipMstId(mstId))
       touchDebuffGraph(mstId, false)
   }
 
@@ -66,7 +66,7 @@ class AltFormSwitcherImpl extends PureComponent {
     const {mstId} = this.props
     const {__} = window.i18n["poi-plugin-navy-album"]
     const noRender = (<div style={{display: 'none'}} />)
-    if (mstId > 1500) {
+    if (isAbyssalShipMstId(mstId)) {
       const {hasDebuffedGraphs, debuffFlag, $ships} = this.props
       if (!hasDebuffedGraphs)
         return noRender

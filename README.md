@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### Pending
+
+- Some internal cleanups.
+
 ### 1.6.11
 
 - Update assets.

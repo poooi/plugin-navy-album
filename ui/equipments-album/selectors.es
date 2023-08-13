@@ -6,6 +6,9 @@ import { projectorToComparator } from 'subtender'
 import {
   uiSelector,
 } from '../../selectors'
+import {
+  isAbyssalEquipMstId,
+} from '../../game-misc'
 
 const equipmentsAlbumSelector = createSelector(
   uiSelector,
@@ -26,7 +29,6 @@ const allEquipsRawSelector = createSelector(
   ({$equips}) => _.values($equips)
 )
 
-const isAbyssalEquipMstId = v => v > 1500
 const isAbyssalEquip = s => isAbyssalEquipMstId(s.api_id)
 
 const filteredEquipsRawSelector = createSelector(

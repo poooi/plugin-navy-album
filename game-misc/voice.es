@@ -1,5 +1,8 @@
 import _ from 'lodash'
 import { enumFromTo } from 'subtender'
+import {
+  isAbyssalShipMstId,
+} from './basic'
 
 // <Core.swf>/scripts/common/util/SoundUtil.vcKey
 const vcKey = [
@@ -18,7 +21,7 @@ enumFromTo(1,53).map(voiceId => {
 
 // <Core.swf>/scripts/common/util/SoundUtil.createFileName
 const computeVoiceFileName = (mstId, voiceId) => {
-  if (voiceId <= 53 && mstId <= 1500) {
+  if (voiceId <= 53 && !isAbyssalShipMstId(mstId)) {
     return (mstId + 7) * 17 * vcDiff[voiceId] % 99173 + 100000
   } else {
     return voiceId

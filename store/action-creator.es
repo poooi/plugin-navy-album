@@ -4,6 +4,7 @@ import { store } from 'views/create-store'
 import { modifyObject, generalComparator } from 'subtender'
 import { actionCreators as masterAC } from './ext-root/master'
 import { mkTouchDebuffGraph } from './touch-debuff-graph'
+import { isAbyssalShipMstId } from '../game-misc'
 
 const actionCreator = {
   uiReady: newState => ({
@@ -30,7 +31,7 @@ const actionCreator = {
 
               // disallow voice tab for abyssal ships
               const newActiveTab =
-                (mstId > 1500 && sv.activeTab === 'voice') ?
+                (isAbyssalShipMstId(mstId) && sv.activeTab === 'voice') ?
                   'info' : sv.activeTab
 
               return {
@@ -152,7 +153,7 @@ window.navyAlbumPopulateDebuffInfo = () => {
   const {getStore} = window
   const abyssalMstIds = _.flatMap(
     _.values(_.get(getStore(), ['const', '$ships'])),
-    raw => raw.api_id > 1500 ? [raw.api_id] : []
+    raw => isAbyssalShipMstId(raw.api_id) ? [raw.api_id] : []
   )
   const obtainedMstIds = new Set(
     _.keys(
