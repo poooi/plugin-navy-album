@@ -8,6 +8,7 @@ illustrations, ship and equipment stats, and things beyond.
 ### Pending
 
 - Some internal cleanups.
+- Change the way ships are sorted so same-class ships are closer to each other.
 
 ### 1.6.11
 

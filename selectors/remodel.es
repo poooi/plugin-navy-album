@@ -1,9 +1,39 @@
 import _ from 'lodash'
 import { createSelector } from 'reselect'
-import { projectorToComparator } from 'subtender'
+import {
+  projectorToComparator,
+  generalComparator,
+} from 'subtender'
+import { constSelector } from 'views/utils/selectors'
 import { shipRemodelInfoSelector as remodelInfoSelector } from 'subtender/poi'
 
 import { isAbyssalShipMstId } from '../game-misc'
+
+/*
+  Compares ShipInfo utilizing both sortNo and mstId:
+
+  - friendly ships are always in front of abyssals
+  - by using sortNo, ships from same class tends to be organized closer.
+
+ */
+const compareShipNaturalOrder = (l, r) => {
+  const absL = isAbyssalShipMstId(l.mstId)
+  const absR = isAbyssalShipMstId(r.mstId)
+
+  if (absL && absR) {
+    return generalComparator(l.mstId, r.mstId)
+  }
+
+  if (!absL && absR) {
+    return -1
+  }
+
+  if (absL && !absR) {
+    return 1
+  }
+
+  return generalComparator(l.sortNo, r.sortNo)
+}
 
 /*
    returns a function:
@@ -24,7 +54,8 @@ import { isAbyssalShipMstId } from '../game-misc'
  */
 const sortByRemodelFuncSelector = createSelector(
   remodelInfoSelector,
-  ({remodelChains, originMstIdOf}) =>
+  constSelector,
+  ({remodelChains, originMstIdOf},{$ships}) =>
     shipsInfo => {
       const mstIdToOrigin = mstId =>
         isAbyssalShipMstId(mstId) ?
@@ -46,27 +77,29 @@ const sortByRemodelFuncSelector = createSelector(
       const mstIdComparator = projectorToComparator(s => s.mstId)
       const sortedGroupPairs =
         _.toPairs(grouppedShipsInfo).map(([originMstIdStr, inputGroup]) => {
-          let key
-          let group
           if (originMstIdStr === 'abyssal') {
-            key = +Infinity
-            // sort group inplace.
-            group = inputGroup.sort(mstIdComparator)
+            return {
+              key: {mstId: +Infinity, sortNo: undefined},
+              // sort group inplace for abyssal ships
+              group: inputGroup.sort(mstIdComparator),
+            }
           } else {
-            key = Number(originMstIdStr)
-            const originalMstId = key
-            // TODO: figure out how exactly does this happen.
-            const remodelChain = remodelChains[originalMstId] || []
-
-            group = _.compact(
-              remodelChain.map(mstId =>
-                inputGroup.find(s => s.mstId === mstId))
-            )
+            const origMstId = Number(originMstIdStr)
+            const sortNo = _.get($ships, [origMstId, 'api_sort_id'])
+            const key = {mstId: origMstId, sortNo}
+            const remodelChain = remodelChains[origMstId] || []
+            return {
+              key,
+              group: _.compact(
+                remodelChain.map(mstId =>
+                  inputGroup.find(s => s.mstId === mstId))
+              ),
+            }
           }
-          return {key, group}
+          // unreachable
         }).sort(
           // step 3
-          projectorToComparator(({key}) => key)
+          (l, r) => compareShipNaturalOrder(l.key, r.key)
         )
       return _.flatMap(sortedGroupPairs, ({group}) => group)
     }
@@ -75,4 +108,5 @@ const sortByRemodelFuncSelector = createSelector(
 export {
   remodelInfoSelector,
   sortByRemodelFuncSelector,
+  compareShipNaturalOrder,
 }

@@ -13,6 +13,7 @@ import {
   indexedShipGraphsSelector,
   shipsMasterDataSelector,
   debuffInfoSelector,
+  compareShipNaturalOrder,
 } from '../../selectors'
 import {
   isAbyssalShipMstId,
@@ -131,7 +132,7 @@ const shipsInfoStage3Selector = createSelector(
     const sortArray =
       groupRemodels ?
         sortByRemodelFunc :
-        xs => xs.sort(projectorToComparator(s => s.mstId))
+        xs => xs.sort(compareShipNaturalOrder)
 
     /*
        unify two different structures in stage2 to get the
