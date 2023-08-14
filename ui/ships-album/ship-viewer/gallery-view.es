@@ -1,11 +1,15 @@
 import _ from 'lodash'
 import React, { PureComponent } from 'react'
-import {
-  ListGroupItem, ListGroup, Button,
-} from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import { connect } from 'react-redux'
 import { remote } from 'electron'
+
+import {
+  Button,
+  Classes,
+  Card,
+} from '@blueprintjs/core'
+
 import {
   shipImgType,
   getShipImgPath,
@@ -71,7 +75,19 @@ const imgListSpecialCG = [
   {ty: 'character_full', damaged: true},
 ]
 
-class GalleryViewImpl extends PureComponent {
+@connect(
+  (state, props) => {
+    // TODO: use selector
+    const serverIp = _.get(state, ['info', 'server', 'ip'])
+    const {mstId} = props
+    const isMasterIdSpecialCG = isMasterIdSpecialCGFuncSelector(state)
+    return {
+      serverIp,
+      isSpecialCG: isMasterIdSpecialCG(mstId),
+    }
+  }
+)
+class GalleryView extends PureComponent {
   static propTypes = {
     mstId: PTyp.number.isRequired,
     style: PTyp.object.isRequired,
@@ -88,12 +104,15 @@ class GalleryViewImpl extends PureComponent {
       isAbyssalShipMstId(mstId) ? imgListAbyssal : mkImgListFriendly(mstId)
 
     return (
-      <ListGroup style={style}>
+      <div
+        style={style}
+        className={Classes.LIST}
+      >
         {
           imgList.map(x => {
             const url = `http://${serverIp}${getShipImgPath(mstId, x.ty, x.damaged, debuffFlag)}`
             return (
-              <ListGroupItem
+              <Card
                 key={`${mstId},${x.ty},${x.damaged}`}
                 style={{
                   textAlign: 'center',
@@ -107,32 +126,19 @@ class GalleryViewImpl extends PureComponent {
                 />
                 <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
                   <Button
+                    style={{width: 27, height: 27}}
                     onClick={() => downloadUrl(url)}
-                    bsSize="small"
-                  >
-                    <FontAwesome name="save" />
-                  </Button>
+                    small
+                    text={<FontAwesome name="save" />}
+                  />
                 </div>
-              </ListGroupItem>
+              </Card>
             )
           })
         }
-      </ListGroup>
+      </div>
     )
   }
 }
-
-const GalleryView = connect(
-  (state, props) => {
-    // TODO: use selector
-    const serverIp = _.get(state, ['info', 'server', 'ip'])
-    const {mstId} = props
-    const isMasterIdSpecialCG = isMasterIdSpecialCGFuncSelector(state)
-    return {
-      serverIp,
-      isSpecialCG: isMasterIdSpecialCG(mstId),
-    }
-  }
-)(GalleryViewImpl)
 
 export { GalleryView }
