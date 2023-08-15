@@ -9,6 +9,7 @@ illustrations, ship and equipment stats, and things beyond.
 
 - Some internal cleanups.
 - Change the way ships are sorted so same-class ships are closer to each other.
+- WIP: migrate some components to Blueprintjs.
 
 ### 1.6.11
 
