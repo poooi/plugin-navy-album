@@ -5,7 +5,7 @@ import {
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { constSelector } from 'views/utils/selectors'
-import { Label } from 'react-bootstrap'
+import { Tag } from '@blueprintjs/core'
 import { modifyObject } from 'subtender'
 
 import {
@@ -18,7 +18,20 @@ import { isAbyssalShipMstId } from '../../../game-misc'
 import { PTyp } from '../../../ptyp'
 import { mapDispatchToProps } from '../../../store'
 
-class AltFormSwitcherImpl extends PureComponent {
+@connect(
+  createStructuredSelector({
+    mstId: mstIdSelector,
+    debuffFlag: debuffFlagSelector,
+    hasDebuffedGraphs: hasDebuffedGraphsSelector,
+    remodelInfo: remodelInfoSelector,
+    $ships: createSelector(
+      constSelector,
+      ({$ships}) => $ships
+    ),
+  }),
+  mapDispatchToProps,
+)
+class AltFormSwitcher extends PureComponent {
   static propTypes = {
     mstId: PTyp.number.isRequired,
     remodelInfo: PTyp.object.isRequired,
@@ -82,9 +95,9 @@ class AltFormSwitcherImpl extends PureComponent {
         }}>
           {
             [false, true].map((curDebuffFlag,ind) => (
-              <Label
+              <Tag
                 onClick={this.handleChangeDebuffFlag(curDebuffFlag)}
-                bsStyle={curDebuffFlag === debuffFlag ? 'danger' : 'default'}
+                intent={curDebuffFlag === debuffFlag ? 'danger' : 'default'}
                 key={curDebuffFlag ? 'debuffed' : 'normal'}
                 style={{
                   cursor: 'pointer',
@@ -92,7 +105,7 @@ class AltFormSwitcherImpl extends PureComponent {
                   ...(ind === 0 ? {} : {marginLeft: '.4em'}),
                 }}>
                 {`${abyssalName}${curDebuffFlag ? __('ShipsTab.Debuff') : ''}`}
-              </Label>
+              </Tag>
             ))
           }
         </div>
@@ -119,9 +132,9 @@ class AltFormSwitcherImpl extends PureComponent {
       }}>
         {
           remodelChain.map((curMstId,ind) => (
-            <Label
+            <Tag
               onClick={this.handleSwitchShip(curMstId)}
-              bsStyle={curMstId === mstId ? 'primary' : 'default'}
+              intent={curMstId === mstId ? 'primary' : 'default'}
               key={curMstId}
               style={{
                 cursor: 'pointer',
@@ -129,26 +142,12 @@ class AltFormSwitcherImpl extends PureComponent {
                 ...(ind === 0 ? {} : {marginLeft: '.4em'}),
               }}>
               {$ships[curMstId].api_name}
-            </Label>
+            </Tag>
           ))
         }
       </div>
     )
   }
 }
-
-const AltFormSwitcher = connect(
-  createStructuredSelector({
-    mstId: mstIdSelector,
-    debuffFlag: debuffFlagSelector,
-    hasDebuffedGraphs: hasDebuffedGraphsSelector,
-    remodelInfo: remodelInfoSelector,
-    $ships: createSelector(
-      constSelector,
-      ({$ships}) => $ships
-    ),
-  }),
-  mapDispatchToProps,
-)(AltFormSwitcherImpl)
 
 export { AltFormSwitcher }
