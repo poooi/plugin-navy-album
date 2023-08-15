@@ -3,11 +3,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { mergeMapStateToProps, modifyObject, not } from 'subtender'
 import {
-  ListGroup,
-  ListGroupItem,
-  Label,
   Button,
-} from 'react-bootstrap'
+  Card,
+  Tag,
+  Classes,
+} from '@blueprintjs/core'
 
 import {
   voiceListSelector,
@@ -19,7 +19,17 @@ import {
 import { PTyp } from '../../../../ptyp'
 import { mapDispatchToProps } from '../../../../store'
 
-class QuotesViewImpl extends Component {
+@connect(
+  mergeMapStateToProps(
+    createStructuredSelector({
+      voiceList: voiceListSelector,
+      volume: poiVolumeSelector,
+    }),
+    quotesOptionsSelector
+  ),
+  mapDispatchToProps
+)
+class QuotesView extends Component {
   static propTypes = {
     voiceList: PTyp.array.isRequired,
     volume: PTyp.number.isRequired,
@@ -54,29 +64,33 @@ class QuotesViewImpl extends Component {
     }
     const {__} = window.i18n["poi-plugin-navy-album"]
     return (
-      <ListGroup>
-        <ListGroupItem
-          key="control" style={{padding: '5px 10px'}}>
-          <div style={{display: 'flex', alignItems: 'center'}}>
-            <Button
-              bsStyle={showWedding ? 'primary' : 'default'}
-              onClick={this.handleToggleOption('showWedding')}
-              style={optBtnStyle}>
-              {__('ShipsTab.ShowWedding')}
-            </Button>
-            <Button
-              bsStyle={showSunk ? 'primary' : 'default'}
-              onClick={this.handleToggleOption('showSunk')}
-              style={optBtnStyle}>
-              {__('ShipsTab.ShowSunk')}
-            </Button>
-          </div>
-        </ListGroupItem>
+      <ul className={Classes.LIST}>
+        <div
+          key="control"
+          style={{
+            padding: '5px 10px',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <Button
+            intent={showWedding ? 'primary' : 'default'}
+            onClick={this.handleToggleOption('showWedding')}
+            style={optBtnStyle}
+            text={__('ShipsTab.ShowWedding')}
+          />
+          <Button
+            intent={showSunk ? 'primary' : 'default'}
+            onClick={this.handleToggleOption('showSunk')}
+            style={optBtnStyle}
+            text={__('ShipsTab.ShowSunk')}
+          />
+        </div>
         {
           voiceList.map(voice => {
             const {voiceId, situation, url, mstId, line} = voice
             return (
-              <ListGroupItem
+              <Card
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
@@ -84,14 +98,15 @@ class QuotesViewImpl extends Component {
                 }}
                 key={`${mstId}-${voiceId}`}>
                 <div>
-                  <Label
+                  <Tag
                     style={{
-                      minWidth: '10em',
                       fontSize: '1em',
                     }}
-                    bsStyle="primary">
+                    intent="primary"
+                    round
+                  >
                     {situation}
-                  </Label>
+                  </Tag>
                 </div>
                 {
                   line && <p style={{marginTop: '.8em'}}>{line}</p>
@@ -104,24 +119,13 @@ class QuotesViewImpl extends Component {
                   controls="controls">
                   <source src={url} type="audio/mp3" />
                 </audio>
-              </ListGroupItem>
+              </Card>
             )
           })
         }
-      </ListGroup>
+      </ul>
     )
   }
 }
-
-const QuotesView = connect(
-  mergeMapStateToProps(
-    createStructuredSelector({
-      voiceList: voiceListSelector,
-      volume: poiVolumeSelector,
-    }),
-    quotesOptionsSelector
-  ),
-  mapDispatchToProps
-)(QuotesViewImpl)
 
 export { QuotesView }
