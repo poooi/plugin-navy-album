@@ -6,13 +6,21 @@ import {
 import React, { PureComponent } from 'react'
 import FontAwesome from 'react-fontawesome'
 import { connect } from 'react-redux'
-import { Label } from 'react-bootstrap'
+import { Card } from '@blueprintjs/core'
 import { SlotitemIcon } from 'views/components/etc/icon'
 import { constSelector } from 'views/utils/selectors'
 import { PTyp } from '../../../ptyp'
 import { mapDispatchToProps } from '../../../store'
 
-class EquipmentsViewImpl extends PureComponent {
+@connect(
+  createStructuredSelector({
+    $equips: createSelector(
+      constSelector,
+      ({$equips}) => $equips),
+  }),
+  mapDispatchToProps
+)
+class EquipmentsView extends PureComponent {
   static propTypes = {
     slotCount: PTyp.number.isRequired,
     equips: PTyp.array.isRequired,
@@ -88,18 +96,18 @@ class EquipmentsViewImpl extends PureComponent {
               }
             } else {
               return (
-                <Label
+                <Card
                   style={{
                     ...commonStyle,
                     textAlign: 'center',
                   }}
                   key={slotInd}>
                   <FontAwesome name="lock" />
-                </Label>
+                </Card>
               )
             }
             return (
-              <Label
+              <Card
                 key={slotInd}
                 onClick={onClick}
                 style={{
@@ -135,7 +143,7 @@ class EquipmentsViewImpl extends PureComponent {
                   {displayName}
                 </span>
                 {displayStar}
-              </Label>
+              </Card>
             )
           })
         }
@@ -143,14 +151,5 @@ class EquipmentsViewImpl extends PureComponent {
     )
   }
 }
-
-const EquipmentsView = connect(
-  createStructuredSelector({
-    $equips: createSelector(
-      constSelector,
-      ({$equips}) => $equips),
-  }),
-  mapDispatchToProps
-)(EquipmentsViewImpl)
 
 export { EquipmentsView }
