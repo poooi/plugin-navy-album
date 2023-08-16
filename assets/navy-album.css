@@ -82,16 +82,6 @@
     margin-right: .2em;
 }
 
-#na-main-tab .ship-info-view .remodel-info-view > .panel-heading {
-    padding: 10px;
-}
-
-#na-main-tab .ship-info-view .remodel-info-view .material-icon.png,
-#na-main-tab .ship-info-view .remodel-info-view .material-icon.svg {
-    height: 1.4em;
-    width: 1.4em;
-}
-
 #na-main-tab .equip-viewer .header .slotitem-img.png {
     height: 2.5em;
     width: 2.5em;

@@ -2,9 +2,7 @@ import _ from 'lodash'
 import { createStructuredSelector, createSelector } from 'reselect'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import {
-  Panel, ListGroup,
-} from 'react-bootstrap'
+import { H3, Classes } from '@blueprintjs/core'
 import {
   mergeMapStateToProps,
 } from 'subtender'
@@ -29,7 +27,20 @@ const prepareMstIdToDesc = ($ships, $shipTypes) => mstId => {
   }
 }
 
-class RemodelInfoViewImpl extends PureComponent {
+@connect(
+  mergeMapStateToProps(
+    createStructuredSelector({
+      remodelDetails: remodelDetailsSelector,
+      remodelInfo: remodelInfoSelector,
+    }),
+    createSelector(
+      constSelector,
+      ({$ships,$shipTypes}) => ({$ships,$shipTypes})
+    )
+  ),
+  mapDispatchToProps,
+)
+class RemodelInfoView extends PureComponent {
   static propTypes = {
     style: PTyp.object.isRequired,
     mstId: PTyp.number.isRequired,
@@ -65,45 +76,33 @@ class RemodelInfoViewImpl extends PureComponent {
     const mstIdToDesc = prepareMstIdToDesc($ships, $shipTypes)
     const {__} = window.i18n["poi-plugin-navy-album"]
     return (
-      <Panel
-        className="remodel-info-view"
-        style={{
-          ...style,
-        }}>
-        <Panel.Heading>
+      <>
+        <H3>
           <div>{__('ShipsTab.Remodels')}</div>
-        </Panel.Heading>
-        <Panel.Body>
-          <ListGroup>
-            {
-              currentRemodelDetails.map(detail => {
-                const key = detail.mstIdBefore
-                const props = {
-                  style: {padding: '.4em .6em'},
-                  mstId, mstIdToDesc, detail, key,
-                }
-                return (<InfoRow {...props} />)
-              })
-            }
-          </ListGroup>
-        </Panel.Body>
-      </Panel>
+        </H3>
+        <div
+          className={Classes.LIST}
+          style={{
+            padding: '5px 10px',
+            margin: 0,
+            ...style,
+          }}
+        >
+          {
+            currentRemodelDetails.map(detail => {
+              const key = detail.mstIdBefore
+              const props = {
+                style: {padding: '.4em .6em'},
+                mstId, mstIdToDesc, detail, key,
+              }
+              return (<InfoRow {...props} />)
+            })
+          }
+        </div>
+      </>
     )
   }
 }
 
-const RemodelInfoView = connect(
-  mergeMapStateToProps(
-    createStructuredSelector({
-      remodelDetails: remodelDetailsSelector,
-      remodelInfo: remodelInfoSelector,
-    }),
-    createSelector(
-      constSelector,
-      ({$ships,$shipTypes}) => ({$ships,$shipTypes})
-    )
-  ),
-  mapDispatchToProps,
-)(RemodelInfoViewImpl)
 
 export { RemodelInfoView }
