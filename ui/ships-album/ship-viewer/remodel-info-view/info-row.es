@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { ListGroupItem } from 'react-bootstrap'
+import { Card } from '@blueprintjs/core'
 import FontAwesome from 'react-fontawesome'
 import { MaterialIcon } from 'views/components/etc/icon'
 
@@ -9,7 +9,8 @@ import { PTyp } from '../../../../ptyp'
 import { Icon } from '../../../icon'
 import { mapDispatchToProps } from '../../../../store'
 
-class InfoRowImpl extends PureComponent {
+@connect(null,mapDispatchToProps)
+class InfoRow extends PureComponent {
   static propTypes = {
     mstId: PTyp.number.isRequired,
     mstIdToDesc: PTyp.func.isRequired,
@@ -46,7 +47,7 @@ class InfoRowImpl extends PureComponent {
       )
     }
     return (
-      <ListGroupItem
+      <Card
         style={style}
       >
         <div
@@ -115,11 +116,9 @@ class InfoRowImpl extends PureComponent {
             )
           }
         </div>
-      </ListGroupItem>
+      </Card>
     )
   }
 }
-
-const InfoRow = connect(null,mapDispatchToProps)(InfoRowImpl)
 
 export { InfoRow }
