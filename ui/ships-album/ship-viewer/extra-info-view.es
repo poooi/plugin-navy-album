@@ -1,7 +1,6 @@
 import _ from 'lodash'
 import React, { PureComponent } from 'react'
-import { Table } from 'react-bootstrap'
-
+import { HTMLTable } from '@blueprintjs/core'
 import { MaterialIcon } from 'views/components/etc/icon'
 
 import { PTyp } from '../../../ptyp'
@@ -22,13 +21,14 @@ class ExtraInfoView extends PureComponent {
     const {__} = window.i18n["poi-plugin-navy-album"]
 
     return (
-      <Table
+      <HTMLTable
+        bordered compact striped
         className="extra-info-view"
         style={{
           tableLayout: 'fixed',
           ...style,
         }}
-        striped bordered condensed hover>
+      >
         <tbody>
           <tr>
             <td style={{verticalAlign: 'middle'}}>
@@ -102,7 +102,7 @@ class ExtraInfoView extends PureComponent {
             }
           </tr>
         </tbody>
-      </Table>
+      </HTMLTable>
     )
   }
 }
