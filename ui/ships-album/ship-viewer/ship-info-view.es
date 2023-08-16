@@ -174,7 +174,6 @@ class ShipInfoViewImpl extends PureComponent {
               }}
             />
             <StatsView
-              prefix={`ship-info-view-id-${mstId}-`}
               stats={shipStats}
               style={{
                 marginTop: '.8em',
