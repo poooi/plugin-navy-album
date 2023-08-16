@@ -1,9 +1,7 @@
 import _ from 'lodash'
 import React, { PureComponent } from 'react'
-import {
-  Table,
-  OverlayTrigger, Tooltip,
-} from 'react-bootstrap'
+import { HTMLTable } from '@blueprintjs/core'
+import { Tooltip } from 'views/components/etc/overlay'
 
 import { PTyp } from '../../../ptyp'
 import { Icon } from '../../icon'
@@ -18,8 +16,6 @@ class StatsView extends PureComponent {
          it allows an optional "tooltip" to be used as, well, tooltip.
      */
     stats: PTyp.object.isRequired,
-    // prefix for making tooltips, pass an empty one if it's not needed.
-    prefix: PTyp.string.isRequired,
   }
 
   render() {
@@ -39,17 +35,15 @@ class StatsView extends PureComponent {
         objOrValue && typeof objOrValue === 'object' &&
         ('value' in objOrValue) && ('tooltip' in objOrValue)
       ) {
-        const {prefix} = this.props
+        // const {prefix} = this.props
         const {value, tooltip} = objOrValue
         return (
-          <OverlayTrigger
+          <Tooltip
+            content={tooltip}
             placement="right"
-            overlay={(
-              <Tooltip id={`${prefix}${statName}`}>{tooltip}</Tooltip>
-            )}
           >
-            <div>{decorateValue(value)}</div>
-          </OverlayTrigger>
+            {decorateValue(value)}
+          </Tooltip>
         )
       } else {
         return decorateValue(objOrValue)
@@ -68,13 +62,14 @@ class StatsView extends PureComponent {
       verticalAlign: 'middle',
     }
     return (
-      <Table
+      <HTMLTable
+        bordered compact striped
         style={{
           tableLayout: 'fixed',
           marginBottom: 0,
           ...style,
         }}
-        striped bordered condensed hover>
+      >
         <tbody>
           {
             _.chunk(displayStats,2).map((rowStats,ind) => (
@@ -106,7 +101,7 @@ class StatsView extends PureComponent {
             ))
           }
         </tbody>
-      </Table>
+      </HTMLTable>
     )
   }
 }
