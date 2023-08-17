@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { mergeMapStateToProps, modifyObject } from 'subtender'
 import { connect } from 'react-redux'
 import {
-  ListGroup, ListGroupItem,
   Panel,
 } from 'react-bootstrap'
+import { Card } from '@blueprintjs/core'
 import {
   shipsInfoSelectorForView,
   listOptionsSelector,
@@ -15,7 +15,18 @@ import { PTyp } from '../../ptyp'
 import { mapDispatchToProps } from '../../store'
 import { SearchBar } from '../search-bar'
 
-class ShipPickerImpl extends Component {
+@connect(
+  mergeMapStateToProps(
+    shipsInfoSelectorForView,
+    listOptionsSelector,
+    state => ({
+      mstId: mstIdSelector(state),
+      searchText: searchTextSelector(state),
+    })
+  ),
+  mapDispatchToProps,
+)
+class ShipPicker extends Component {
   static propTypes = {
     groupped: PTyp.bool.isRequired,
     wrappedShipsInfo: PTyp.array.isRequired,
@@ -53,10 +64,12 @@ class ShipPickerImpl extends Component {
             value={searchText}
             changeValue={this.handleChangeSearchText}
           />
-          <ListGroup style={{
-            flex: 1,
-            overflowY: 'auto',
-          }}>
+          <div
+            style={{
+              flex: 1,
+              overflowY: 'auto',
+            }}
+          >
             {
               wrappedShipsInfo.map(wrapped => {
                 let key
@@ -75,8 +88,9 @@ class ShipPickerImpl extends Component {
                   needPadding = groupped
                   onClick = this.handleSelectMstId(mstId)
                 }
+                // TODO: do some highlighting on selected.
                 return (
-                  <ListGroupItem
+                  <Card
                     key={key}
                     style={{padding: 0}}
                     onClick={onClick}
@@ -89,27 +103,15 @@ class ShipPickerImpl extends Component {
                     }}>
                       {content}
                     </div>
-                  </ListGroupItem>
+                  </Card>
                 )
               })
             }
-          </ListGroup>
+          </div>
         </Panel.Body>
       </Panel>
     )
   }
 }
-
-const ShipPicker = connect(
-  mergeMapStateToProps(
-    shipsInfoSelectorForView,
-    listOptionsSelector,
-    state => ({
-      mstId: mstIdSelector(state),
-      searchText: searchTextSelector(state),
-    })
-  ),
-  mapDispatchToProps,
-)(ShipPickerImpl)
 
 export { ShipPicker }
