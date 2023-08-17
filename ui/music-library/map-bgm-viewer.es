@@ -3,10 +3,7 @@ import { createStructuredSelector } from 'reselect'
 import React, { PureComponent } from 'react'
 import { modifyObject } from 'subtender'
 import { mapIdToStr } from 'subtender/kc'
-import {
-  ListGroup,
-  ListGroupItem,
-} from 'react-bootstrap'
+import { Card } from '@blueprintjs/core'
 import { connect } from 'react-redux'
 
 import {
@@ -20,7 +17,15 @@ import { PTyp } from '../../ptyp'
 import { mapDispatchToProps } from '../../store'
 import { BgmListItem } from './bgm-list-item'
 
-class MapBgmViewerImpl extends PureComponent {
+@connect(
+  createStructuredSelector({
+    grouppedMapIds: grouppedMapIdsSelector,
+    listInfo: focusedListInfoSelector,
+    useSiteInfo: mapBgmUseSiteInfoSelector,
+  }),
+  mapDispatchToProps,
+)
+class MapBgmViewer extends PureComponent {
   static propTypes = {
     onPlay: PTyp.func.isRequired,
 
@@ -111,7 +116,7 @@ class MapBgmViewerImpl extends PureComponent {
           display: 'flex',
         }}
       >
-        <ListGroup
+        <div
           style={{
             width: '20%',
             maxWidth: '10em',
@@ -120,31 +125,31 @@ class MapBgmViewerImpl extends PureComponent {
             overflowY: 'auto',
           }}
         >
-          <ListGroupItem
+          <Card
             style={itemStyle}
             onClick={this.handleChangeFocus({type: 'all'})}
           >
             {__(`MusicLibraryTab.All`)}
-          </ListGroupItem>
+          </Card>
           {
             grouppedMapIds.map(grp => (
-              <ListGroupItem
+              <Card
                 onClick={this.handleChangeFocus({type: 'world', worldId: grp.area})}
                 style={itemStyle}
                 key={grp.area}
               >
                 World #{grp.area}
-              </ListGroupItem>
+              </Card>
             ))
           }
-          <ListGroupItem
+          <Card
             onClick={this.handleChangeFocus({type: 'others'})}
             style={itemStyle}
           >
             {__(`MusicLibraryTab.Others`)}
-          </ListGroupItem>
-        </ListGroup>
-        <ListGroup
+          </Card>
+        </div>
+        <div
           style={{
             flex: 1,
             height: '100%',
@@ -177,20 +182,11 @@ class MapBgmViewerImpl extends PureComponent {
               </div>
             )
           }
-        </ListGroup>
+        </div>
       </div>
     )
   }
 }
-
-const MapBgmViewer = connect(
-  createStructuredSelector({
-    grouppedMapIds: grouppedMapIdsSelector,
-    listInfo: focusedListInfoSelector,
-    useSiteInfo: mapBgmUseSiteInfoSelector,
-  }),
-  mapDispatchToProps,
-)(MapBgmViewerImpl)
 
 export {
   MapBgmViewer,
