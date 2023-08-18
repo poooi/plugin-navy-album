@@ -1,11 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {
-  Button,
-  ButtonGroup,
-  ButtonToolbar,
-  Panel,
-} from 'react-bootstrap'
+import { Button, ButtonGroup, ButtonToolbar, Panel } from 'react-bootstrap'
 import {
   modifyObject,
   not,
@@ -18,7 +13,11 @@ import { PTyp } from '../../ptyp'
 import { ShipPicker } from './ship-picker'
 import { ShipViewer } from './ship-viewer'
 
-class ShipsAlbumImpl extends Component {
+@connect(
+  listOptionsSelector,
+  mapDispatchToProps,
+)
+class ShipsAlbum extends Component {
   static propTypes = {
     expanded: PTyp.bool.isRequired,
     showSides: PTyp.object.isRequired,
@@ -139,10 +138,5 @@ class ShipsAlbumImpl extends Component {
     )
   }
 }
-
-const ShipsAlbum = connect(
-  listOptionsSelector,
-  mapDispatchToProps,
-)(ShipsAlbumImpl)
 
 export { ShipsAlbum }

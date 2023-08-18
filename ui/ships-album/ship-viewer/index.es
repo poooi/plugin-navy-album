@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
-import {
-  Panel, Tab, Nav, NavItem,
-} from 'react-bootstrap'
+import { Panel, Tab, Nav, NavItem } from 'react-bootstrap'
 import { mergeMapStateToProps, modifyObject } from 'subtender'
 
 import { PTyp } from '../../../ptyp'
@@ -26,7 +24,20 @@ import { GalleryView } from './gallery-view'
 import { QuotesView } from './quotes-view'
 import { ErrorBoundary } from '../../error-boundary'
 
-class ShipViewerImpl extends Component {
+@connect(
+  mergeMapStateToProps(
+    createStructuredSelector({
+      $ship: shipMasterDataSelector,
+      isMasterIdSpecialCGFunc: isMasterIdSpecialCGFuncSelector,
+    }),
+    state => {
+      const shipViewer = shipViewerSelector(state)
+      return {...shipViewer}
+    }
+  ),
+  mapDispatchToProps,
+)
+class ShipViewer extends Component {
   static propTypes = {
     style: PTyp.object.isRequired,
     activeTab: PTyp.string.isRequired,
@@ -145,19 +156,5 @@ class ShipViewerImpl extends Component {
     )
   }
 }
-
-const ShipViewer = connect(
-  mergeMapStateToProps(
-    createStructuredSelector({
-      $ship: shipMasterDataSelector,
-      isMasterIdSpecialCGFunc: isMasterIdSpecialCGFuncSelector,
-    }),
-    state => {
-      const shipViewer = shipViewerSelector(state)
-      return {...shipViewer}
-    }
-  ),
-  mapDispatchToProps,
-)(ShipViewerImpl)
 
 export { ShipViewer }

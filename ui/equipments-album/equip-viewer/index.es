@@ -1,9 +1,7 @@
 import { createStructuredSelector } from 'reselect'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import {
-  Panel,
-} from 'react-bootstrap'
+import { Panel } from 'react-bootstrap'
 
 import {
   mergeMapStateToProps,
@@ -24,7 +22,15 @@ import {
   ExtraInfoView,
 } from './extra-info-view'
 
-class EquipViewerImpl extends PureComponent {
+@connect(
+  mergeMapStateToProps(
+    createStructuredSelector({
+      mstId: mstIdSelector,
+    }),
+    equipRawInfoSelector,
+  )
+)
+class EquipViewer extends PureComponent {
   static propTypes = {
     style: PTyp.object.isRequired,
     mstId: PTyp.number.isRequired,
@@ -93,14 +99,5 @@ class EquipViewerImpl extends PureComponent {
     )
   }
 }
-
-const EquipViewer = connect(
-  mergeMapStateToProps(
-    createStructuredSelector({
-      mstId: mstIdSelector,
-    }),
-    equipRawInfoSelector,
-  )
-)(EquipViewerImpl)
 
 export { EquipViewer }

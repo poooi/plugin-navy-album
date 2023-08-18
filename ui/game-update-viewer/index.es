@@ -6,9 +6,7 @@ import {
 import { mergeMapStateToProps } from 'subtender'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import {
-  Panel, Button,
-} from 'react-bootstrap'
+import { Panel, Button } from 'react-bootstrap'
 import { constSelector } from 'views/utils/selectors'
 import { SlotitemIcon } from 'views/components/etc/icon'
 
@@ -63,7 +61,27 @@ const GrouppedEquipMstIds = PTyp.shape({
   abyssal: PTyp.array.isRequired,
 })
 
-class GameUpdateViewerImpl extends PureComponent {
+@connect(
+  mergeMapStateToProps(
+    state => {
+      const {summary, digest} = gameUpdateSelector(state)
+      return {
+        summaryAvailable: !_.isEmpty(summary),
+        digest,
+      }
+    },
+    createStructuredSelector({
+      rSummary: reorganizedSummarySelector,
+      serverIp: serverIpSelector,
+      $equips: createSelector(
+        constSelector,
+        ({$equips}) => $equips
+      ),
+    })
+  ),
+  mapDispatchToProps,
+)
+class GameUpdateViewer extends PureComponent {
   static propTypes = {
     summaryAvailable: PTyp.bool.isRequired,
     digest: PTyp.object,
@@ -249,26 +267,5 @@ class GameUpdateViewerImpl extends PureComponent {
     )
   }
 }
-
-const GameUpdateViewer = connect(
-  mergeMapStateToProps(
-    state => {
-      const {summary, digest} = gameUpdateSelector(state)
-      return {
-        summaryAvailable: !_.isEmpty(summary),
-        digest,
-      }
-    },
-    createStructuredSelector({
-      rSummary: reorganizedSummarySelector,
-      serverIp: serverIpSelector,
-      $equips: createSelector(
-        constSelector,
-        ({$equips}) => $equips
-      ),
-    })
-  ),
-  mapDispatchToProps,
-)(GameUpdateViewerImpl)
 
 export { GameUpdateViewer }

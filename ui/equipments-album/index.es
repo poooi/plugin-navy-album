@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {
-  Panel,
-  ButtonToolbar, Button, ButtonGroup,
-} from 'react-bootstrap'
+import { Panel, ButtonToolbar, Button, ButtonGroup } from 'react-bootstrap'
 
 import {
   modifyObject,
