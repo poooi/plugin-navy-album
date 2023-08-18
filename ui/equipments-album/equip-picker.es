@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {
-  ListGroup, ListGroupItem,
-  Panel,
-} from 'react-bootstrap'
+import { Panel } from 'react-bootstrap'
+import { Card } from '@blueprintjs/core'
 import { mergeMapStateToProps, modifyObject } from 'subtender'
 import { SlotitemIcon } from 'views/components/etc/icon'
 
@@ -16,7 +14,15 @@ import { PTyp } from '../../ptyp'
 import { mapDispatchToProps } from '../../store'
 import { SearchBar } from '../search-bar'
 
-class EquipPickerImpl extends Component {
+@connect(
+  mergeMapStateToProps(
+    equipsRawSelectorForView,
+    state => ({
+      searchText: searchTextSelector(state),
+    })),
+  mapDispatchToProps,
+)
+class EquipPicker extends Component {
   static propTypes = {
     wrappedEquipsRaw: PTyp.array.isRequired,
     searchText: PTyp.string.isRequired,
@@ -53,7 +59,7 @@ class EquipPickerImpl extends Component {
             value={searchText}
             changeValue={this.handleChangeSearchText}
           />
-          <ListGroup style={{
+          <div style={{
             flex: 1,
             overflowY: 'auto',
           }}>
@@ -84,7 +90,7 @@ class EquipPickerImpl extends Component {
                   onClick = this.handleSelectMstId(mstId)
                 }
                 return (
-                  <ListGroupItem
+                  <Card
                     key={key}
                     style={{padding: 0}}
                     onClick={onClick}
@@ -96,24 +102,15 @@ class EquipPickerImpl extends Component {
                     }}>
                       {content}
                     </div>
-                  </ListGroupItem>
+                  </Card>
                 )
               })
             }
-          </ListGroup>
+          </div>
         </Panel.Body>
       </Panel>
     )
   }
 }
-
-const EquipPicker = connect(
-  mergeMapStateToProps(
-    equipsRawSelectorForView,
-    state => ({
-      searchText: searchTextSelector(state),
-    })),
-  mapDispatchToProps,
-)(EquipPickerImpl)
 
 export { EquipPicker }
