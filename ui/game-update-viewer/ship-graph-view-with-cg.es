@@ -48,22 +48,21 @@ class ShipGraphViewWithCG extends PureComponent {
     const {
       graphSize,
       mstId, graphAttrs,
-      // TODO: prefix no longer used, consider getting rid of it.
-      prefix: _unused,
+      prefix,
     } = this.props
+    const uiKey = `${prefix}ship-cg-${mstId}`
     const cgAvailable = graphAttrs.length > 0
-    const content = (
-      <ShipGraphView
-        style={graphSize}
-        mstId={mstId}
-        debuffFlag={false}
-        graphType="banner"
-      />
-    )
+    const contentProps = {
+      style: graphSize,
+      mstId,
+      debuffFlag: false,
+      graphType: 'banner',
+    }
 
     if (cgAvailable) {
       return (
         <Tooltip
+          key={uiKey}
           content={
             <div style={{display: 'flex', alignItems: 'center'}}>
               {
@@ -81,11 +80,18 @@ class ShipGraphViewWithCG extends PureComponent {
           }
           placement="bottom"
         >
-          {content}
+          <ShipGraphView
+            {...contentProps}
+          />
         </Tooltip>
       )
     } else {
-      return content
+      return (
+        <ShipGraphView
+          key={uiKey}
+          {...contentProps}
+        />
+      )
     }
   }
 }
