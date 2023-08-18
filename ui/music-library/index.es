@@ -4,9 +4,7 @@ import {
 } from 'reselect'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import {
-  Panel, Nav, NavItem, Tab,
-} from 'react-bootstrap'
+import { Panel, Nav, NavItem, Tab } from 'react-bootstrap'
 
 import { WindowEnv } from 'views/components/etc/window-env'
 
@@ -44,7 +42,13 @@ const mkPlayExclusively = mountPoint => e => {
   })
 }
 
-class MusicLibraryImpl extends PureComponent {
+@connect(
+  createStructuredSelector({
+    activeTab: activeTabSelector,
+  }),
+  mapDispatchToProps,
+)
+class MusicLibrary extends PureComponent {
   static propTypes = {
     activeTab: PTyp.string.isRequired,
     uiModify: PTyp.func.isRequired,
@@ -135,12 +139,5 @@ class MusicLibraryImpl extends PureComponent {
     )
   }
 }
-
-const MusicLibrary = connect(
-  createStructuredSelector({
-    activeTab: activeTabSelector,
-  }),
-  mapDispatchToProps,
-)(MusicLibraryImpl)
 
 export { MusicLibrary }

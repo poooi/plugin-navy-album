@@ -1,8 +1,6 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
-import {
-  FormControl, Button,
-} from 'react-bootstrap'
+import { FormControl, Button } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import { PTyp } from '../ptyp'
 

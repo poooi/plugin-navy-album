@@ -1,8 +1,6 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
-import {
-  Tab, Nav, NavItem,
-} from 'react-bootstrap'
+import { Tab, Nav, NavItem } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import {
   createSelector,
@@ -18,7 +16,17 @@ import { EquipmentsAlbum } from './equipments-album'
 import { MusicLibrary } from './music-library'
 import { GameUpdateViewer } from './game-update-viewer'
 
-class NavyAlbumImpl extends Component {
+@connect(
+  createStructuredSelector({
+    activeTab: createSelector(
+      uiSelector,
+      // TODO: figure out why the fork `ui` can be undefined.
+      ui => _.get(ui, 'activeTab', 'ships')),
+    theme: themeSelector,
+  }),
+  mapDispatchToProps,
+)
+class NavyAlbum extends Component {
   static propTypes = {
     activeTab: PTyp.ActiveTab.isRequired,
     theme: PTyp.string.isRequired,
@@ -93,16 +101,5 @@ class NavyAlbumImpl extends Component {
     )
   }
 }
-
-const NavyAlbum = connect(
-  createStructuredSelector({
-    activeTab: createSelector(
-      uiSelector,
-      // TODO: figure out why the fork `ui` can be undefined.
-      ui => _.get(ui, 'activeTab', 'ships')),
-    theme: themeSelector,
-  }),
-  mapDispatchToProps,
-)(NavyAlbumImpl)
 
 export { NavyAlbum }
