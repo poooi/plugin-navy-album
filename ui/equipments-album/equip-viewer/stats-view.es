@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import React, { PureComponent } from 'react'
-import { Table } from 'react-bootstrap'
+import { HTMLTable } from '@blueprintjs/core'
 
 import { PTyp } from '../../../ptyp'
 import { Icon } from '../../icon'
@@ -50,9 +50,10 @@ class StatsView extends PureComponent {
     }
 
     return (
-      <Table
+      <HTMLTable
         style={{
           tableLayout: 'fixed',
+          width: '100%',
           ...style,
         }}
         striped bordered condensed hover>
@@ -96,7 +97,7 @@ class StatsView extends PureComponent {
             ))
           }
         </tbody>
-      </Table>
+      </HTMLTable>
     )
   }
 }
