@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
-import { FormControl, Button } from 'react-bootstrap'
+import { Button as BpButton, InputGroup } from '@blueprintjs/core'
 import FontAwesome from 'react-fontawesome'
 import { PTyp } from '../ptyp'
 
@@ -49,19 +49,20 @@ class SearchBar extends Component {
         alignItems: 'baseline',
         ...style,
       }}>
-        <FormControl
+        <InputGroup
           style={{flex: 1}}
           type="text"
           placeholder={__('Search')}
           value={this.state.value}
           onChange={this.handleChangeValue}
         />
-        <Button
-          style={this.state.value ? {} : {display: 'none'}}
+        <BpButton
+          small minimal
+          style={this.state.value ? {marginLeft: 2} : {display: 'none'}}
           onClick={this.handleClearValue}
-          bsSize="xsmall">
-          <FontAwesome name="close" />
-        </Button>
+          intent="danger"
+          text={<FontAwesome name="close" />}
+        />
       </div>
     )
   }
