@@ -6,7 +6,9 @@ import {
 import { mergeMapStateToProps } from 'subtender'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { Panel, Button } from 'react-bootstrap'
+import { Button } from '@blueprintjs/core'
+import styled from 'styled-components'
+
 import { constSelector } from 'views/utils/selectors'
 import { SlotitemIcon } from 'views/components/etc/icon'
 
@@ -60,6 +62,11 @@ const GrouppedEquipMstIds = PTyp.shape({
   friendly: PTyp.array.isRequired,
   abyssal: PTyp.array.isRequired,
 })
+
+const EqpIcon = styled(SlotitemIcon)`
+  height: 1.4em;
+  width: 1.4em;
+`
 
 @connect(
   mergeMapStateToProps(
@@ -140,7 +147,7 @@ class GameUpdateViewer extends PureComponent {
           <div style={{
             display: 'flex', alignItems: 'center',
           }}>
-            <SlotitemIcon
+            <EqpIcon
               className="slotitem-img"
               slotitemId={iconId}
             />
@@ -229,40 +236,24 @@ class GameUpdateViewer extends PureComponent {
     const {digest, summaryAvailable} = this.props
     return (
       <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
-        <Panel
-          className="game-update-viewer"
-          style={{
-            marginBottom: 8,
-            flex: 1,
-            height: '100%',
-            overflowY: 'auto',
-          }}>
-          <Panel.Body
+        <ErrorBoundary>
+          <div
             style={{
+              marginBottom: 8,
+              flex: 1,
               height: '100%',
-            }}
-          >
-            <ErrorBoundary>
-              <div
-                style={{
-                  overflowX: 'hidden',
-                  overflowY: 'auto',
-                  height: 0,
-                  flex: 1,
-                }}
-              >
-                {
-                  summaryAvailable && _.concat(
-                    this.renderNewShipsPart(),
-                    this.renderNewEquipsPart(),
-                    this.renderUpdatedCGsPart()
-                  )
-                }
-                {digest && this.renderGeneralInfoPart()}
-              </div>
-            </ErrorBoundary>
-          </Panel.Body>
-        </Panel>
+              overflowY: 'auto',
+            }}>
+            {
+              summaryAvailable && _.concat(
+                this.renderNewShipsPart(),
+                this.renderNewEquipsPart(),
+                this.renderUpdatedCGsPart()
+              )
+            }
+            {digest && this.renderGeneralInfoPart()}
+          </div>
+        </ErrorBoundary>
       </div>
     )
   }
