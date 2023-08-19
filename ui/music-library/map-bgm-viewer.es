@@ -112,7 +112,7 @@ class MapBgmViewer extends PureComponent {
     return (
       <div
         style={{
-          height: '100%',
+          height: 'calc(100% - 80px)',
           display: 'flex',
         }}
       >

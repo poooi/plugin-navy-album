@@ -4,8 +4,8 @@ import {
 } from 'reselect'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { Panel, Nav, NavItem, Tab } from 'react-bootstrap'
-
+import styled from 'styled-components'
+import { Tab as BpTab , Tabs } from '@blueprintjs/core'
 import { WindowEnv } from 'views/components/etc/window-env'
 
 import { PTyp } from '../../ptyp'
@@ -16,12 +16,12 @@ import { PortBgmViewer } from './port-bgm-viewer'
 import { MapBgmViewer } from './map-bgm-viewer'
 
 /*
-   pause all audio tags except one that we just started playing,
-   this prevents more than one music to be played at the same time.
+  pause all audio tags except one that we just started playing,
+  this prevents more than one music to be played at the same time.
  */
 const mkPlayExclusively = mountPoint => e => {
   const currentAudio = e.target
-  const audioTags = [...mountPoint.querySelectorAll('#poi-plugin-navy-album-music-library-root audio')]
+  const audioTags = [...mountPoint.querySelectorAll('.musiclib-root-tabs audio')]
   if (audioTags.length === 0) {
     console.warn('Cannot find presence of any audio tag.')
   }
@@ -41,6 +41,28 @@ const mkPlayExclusively = mountPoint => e => {
     }
   })
 }
+
+/*
+  Setting styles on Tabs / Tab does not seem to work
+  (they are probably not being passed down at all),
+  therefore going with styled approach.
+ */
+const MusicLibTabs = styled(Tabs)`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  & .musiclib-port {
+    flex: 1;
+    overflow-y: auto;
+    height: 100%;
+  }
+
+  & .musiclib-map {
+    flex: 1;
+    height: 100%;
+  }
+`
 
 @connect(
   createStructuredSelector({
@@ -68,72 +90,36 @@ class MusicLibrary extends PureComponent {
     return (
       <WindowEnv.Consumer>
         {({mountPoint}) => (
-          <Panel
-            id="poi-plugin-navy-album-music-library-root"
-            style={{
-              height: 'calc(100% - 10px)',
-              marginBottom: 10,
-            }}
-          >
-            <Panel.Body
-              style={{
-                height: '100%',
-                padding: 10,
-              }}
+          <ErrorBoundary>
+            <MusicLibTabs
+              className="musiclib-root-tabs"
+              id="poi-plugin-navy-album-music-library-root"
+              selectedTabId={activeTab}
+              onChange={this.handleSwitchTab}
+              animate={false}
             >
-              <ErrorBoundary>
-                <Tab.Container
-                  style={{
-                    flex: 1,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: '100%',
-                  }}
-                  activeKey={activeTab}
-                  onSelect={this.handleSwitchTab}
-                >
-                  <div>
-                    <div style={{marginBottom: 8}}>
-                      <Nav
-                        bsStyle="tabs"
-                        justified
-                      >
-                        <NavItem eventKey="port">
-                          {__('MusicLibraryTab.PortBGM')}
-                        </NavItem>
-                        <NavItem eventKey="map">
-                          {__('MusicLibraryTab.MapBGM')}
-                        </NavItem>
-                      </Nav>
-                    </div>
-                    <div style={{flex: 1, height: 0, overflowY: 'auto'}}>
-                      <Tab.Content
-                        style={{height: '100%'}}
-                        animation={false}
-                      >
-                        <Tab.Pane
-                          style={{height: '100%'}}
-                          eventKey="port"
-                        >
-                          <PortBgmViewer
-                            onPlay={mkPlayExclusively(mountPoint)}
-                          />
-                        </Tab.Pane>
-                        <Tab.Pane
-                          style={{height: '100%'}}
-                          eventKey="map"
-                        >
-                          <MapBgmViewer
-                            onPlay={mkPlayExclusively(mountPoint)}
-                          />
-                        </Tab.Pane>
-                      </Tab.Content>
-                    </div>
-                  </div>
-                </Tab.Container>
-              </ErrorBoundary>
-            </Panel.Body>
-          </Panel>
+              <BpTab
+                id="port"
+                className="musiclib-port musiclib-tab"
+                title={__('MusicLibraryTab.PortBGM')}
+                panel={
+                  <PortBgmViewer
+                    onPlay={mkPlayExclusively(mountPoint)}
+                  />
+                }
+              />
+              <BpTab
+                id="map"
+                className="musiclib-map musiclib-tab"
+                title={__('MusicLibraryTab.MapBGM')}
+                panel={
+                  <MapBgmViewer
+                    onPlay={mkPlayExclusively(mountPoint)}
+                  />
+                }
+              />
+            </MusicLibTabs>
+          </ErrorBoundary>
         )}
       </WindowEnv.Consumer>
     )
