@@ -101,7 +101,8 @@ module.exports = {
       'semver',
       'i18n-2',
       'wanakana',
-      '@blueprintjs/core'
+      '@blueprintjs/core',
+      'styled-components'
     ],
   },
 }

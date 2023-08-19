@@ -39,8 +39,7 @@ class PortBgmViewer extends PureComponent {
       <div
         style={{
           overflowY: 'auto',
-          height: '100%',
-          marginBottom: 0,
+          height: 'calc(100% - 40px)',
         }}
       >
         {
