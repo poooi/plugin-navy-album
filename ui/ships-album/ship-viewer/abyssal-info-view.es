@@ -39,7 +39,12 @@ const mkStats = (_s, $abyssal) => {
   }
 }
 
-class AbyssalInfoViewImpl extends PureComponent {
+@connect(
+  createStructuredSelector({
+    serverIp: serverIpSelector,
+  })
+)
+class AbyssalInfoView extends PureComponent {
   static propTypes = {
     mstId: PTyp.number.isRequired,
     $ship: PTyp.object.isRequired,
@@ -115,10 +120,5 @@ class AbyssalInfoViewImpl extends PureComponent {
   }
 }
 
-const AbyssalInfoView = connect(
-  createStructuredSelector({
-    serverIp: serverIpSelector,
-  })
-)(AbyssalInfoViewImpl)
 
 export { AbyssalInfoView }

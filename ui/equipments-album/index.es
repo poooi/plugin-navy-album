@@ -13,7 +13,11 @@ import { PTyp } from '../../ptyp'
 import { EquipPicker } from './equip-picker'
 import { EquipViewer } from './equip-viewer'
 
-class EquipmentsAlbumImpl extends Component {
+@connect(
+  listOptionsSelector,
+  mapDispatchToProps,
+)
+class EquipmentsAlbum extends Component {
   static propTypes = {
     expanded: PTyp.bool.isRequired,
     showSides: PTyp.object.isRequired,
@@ -120,10 +124,5 @@ class EquipmentsAlbumImpl extends Component {
     )
   }
 }
-
-const EquipmentsAlbum = connect(
-  listOptionsSelector,
-  mapDispatchToProps,
-)(EquipmentsAlbumImpl)
 
 export { EquipmentsAlbum }

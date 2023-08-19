@@ -14,7 +14,13 @@ import {
 
 import { PTyp } from '../../../ptyp'
 
-class IntroViewImpl extends PureComponent {
+@connect(
+  mergeMapStateToProps(
+    equipRawInfoSelector,
+    state => ({serverIp: serverIpSelector(state)}),
+  )
+)
+class IntroView extends PureComponent {
   static propTypes = {
     style: PTyp.object.isRequired,
     $equip: PTyp.object.isRequired,
@@ -93,12 +99,5 @@ class IntroViewImpl extends PureComponent {
     )
   }
 }
-
-const IntroView = connect(
-  mergeMapStateToProps(
-    equipRawInfoSelector,
-    state => ({serverIp: serverIpSelector(state)}),
-  )
-)(IntroViewImpl)
 
 export { IntroView }
