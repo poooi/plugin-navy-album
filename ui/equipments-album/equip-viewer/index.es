@@ -8,13 +8,13 @@ import {
 } from 'subtender'
 
 import {
-  isAbyssalEquipMstId,
   mstIdSelector,
   equipRawInfoSelector,
 } from '../selectors'
 
 import { PTyp } from '../../../ptyp'
 import { ErrorBoundary } from '../../error-boundary'
+import { isAbyssalEquipMstId } from '../../../game-misc'
 import { Header } from './header'
 import { IntroView } from './intro-view'
 import { StatsView } from './stats-view'
@@ -44,6 +44,7 @@ class EquipViewer extends PureComponent {
       $equip, $equipType,
     } = this.props
     const infoProps = {mstId, $equip, $equipType}
+    const showInfo = !isAbyssalEquipMstId(mstId)
     return (
       <Panel
         className="equip-viewer"
@@ -58,7 +59,7 @@ class EquipViewer extends PureComponent {
             >
               <Header {...infoProps} />
               {
-                !isAbyssalEquipMstId(mstId) && (
+                showInfo && (
                   <IntroView style={{}} />
                 )
               }
@@ -77,7 +78,7 @@ class EquipViewer extends PureComponent {
                   />
                 </div>
                 {
-                  mstId < 501 && (
+                  showInfo && (
                     <div style={{
                       flex: 1,
                       display: 'flex',
