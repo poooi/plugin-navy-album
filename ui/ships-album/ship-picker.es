@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { mergeMapStateToProps, modifyObject } from 'subtender'
 import { connect } from 'react-redux'
-import { Panel } from 'react-bootstrap'
 import { Card } from '@blueprintjs/core'
 import {
   shipsInfoSelectorForView,
@@ -49,65 +48,65 @@ class ShipPicker extends Component {
   render() {
     const {groupped, searchText, wrappedShipsInfo} = this.props
     return (
-      <Panel
+      <div
         className="ship-picker"
         style={{
-          height: 0,
-          flex: 1,
-          marginBottom: 8,
+          margin: 10,
+          display: 'flex',
+          flexDirection: 'column',
+          height: 'calc(100% - 20px)',
         }}>
-        <Panel.Body>
-          <SearchBar
-            style={{marginBottom: 8}}
-            value={searchText}
-            changeValue={this.handleChangeSearchText}
-          />
-          <div
-            style={{
-              flex: 1,
-              overflowY: 'auto',
-            }}
-          >
-            {
-              wrappedShipsInfo.map(wrapped => {
-                let key
-                let content
-                let needPadding
-                let onClick = null
-                if (wrapped.type === 'stype') {
-                  const {typeName, stype} = wrapped
-                  key = `stype-${stype}`
-                  content = `${typeName} (${stype})`
-                  needPadding = false
-                } else {
-                  const {mstId, name, sortNo, yomi} = wrapped.info
-                  key = `mstId-${wrapped.info.mstId}`
-                  content = `${name} ${sortNo ? '' : yomi} (${mstId})`
-                  needPadding = groupped
-                  onClick = this.handleSelectMstId(mstId)
-                }
-                // TODO: do some highlighting on selected.
-                return (
-                  <Card
-                    key={key}
-                    style={{padding: 0}}
-                    onClick={onClick}
-                    className="ship-picker-item">
-                    <div style={{
-                      paddingTop: '.4em',
-                      paddingBottom: '.4em',
-                      paddingLeft: '.4em',
-                      ...(needPadding ? {paddingLeft: '2em'} : {}),
-                    }}>
-                      {content}
-                    </div>
-                  </Card>
-                )
-              })
-            }
-          </div>
-        </Panel.Body>
-      </Panel>
+        <SearchBar
+          style={{marginBottom: 8}}
+          value={searchText}
+          changeValue={this.handleChangeSearchText}
+        />
+        <div
+          style={{
+            flex: 1,
+            overflowY: 'auto',
+            height: '100%',
+          }}
+        >
+          {
+            wrappedShipsInfo.map(wrapped => {
+              let key
+              let content
+              let needPadding
+              let onClick = null
+              if (wrapped.type === 'stype') {
+                const {typeName, stype} = wrapped
+                key = `stype-${stype}`
+                content = `${typeName} (${stype})`
+                needPadding = false
+              } else {
+                const {mstId, name, sortNo, yomi} = wrapped.info
+                key = `mstId-${wrapped.info.mstId}`
+                content = `${name} ${sortNo ? '' : yomi} (${mstId})`
+                needPadding = groupped
+                onClick = this.handleSelectMstId(mstId)
+              }
+              // TODO: do some highlighting on selected.
+              return (
+                <Card
+                  key={key}
+                  style={{padding: 0}}
+                  onClick={onClick}
+                  className="ship-picker-item">
+                  <div style={{
+                    paddingTop: '.4em',
+                    paddingBottom: '.4em',
+                    paddingLeft: '.4em',
+                    ...(needPadding ? {paddingLeft: '2em'} : {}),
+                  }}>
+                    {content}
+                  </div>
+                </Card>
+              )
+            })
+          }
+        </div>
+      </div>
     )
   }
 }

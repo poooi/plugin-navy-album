@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Panel } from 'react-bootstrap'
 import { Card } from '@blueprintjs/core'
 import { mergeMapStateToProps, modifyObject } from 'subtender'
 import { SlotitemIcon } from 'views/components/etc/icon'
@@ -46,69 +45,69 @@ class EquipPicker extends Component {
   render() {
     const {wrappedEquipsRaw,searchText} = this.props
     return (
-      <Panel
+      <div
         className="equip-picker"
         style={{
-          height: 0,
-          flex: 1,
-          marginBottom: 8,
+          margin: 10,
+          display: 'flex',
+          flexDirection: 'column',
+          height: 'calc(100% - 20px)',
         }}>
-        <Panel.Body>
-          <SearchBar
-            style={{marginBottom: 8}}
-            value={searchText}
-            changeValue={this.handleChangeSearchText}
-          />
-          <div style={{
-            flex: 1,
-            overflowY: 'auto',
-          }}>
-            {
-              wrappedEquipsRaw.map(wrapped => {
-                let key
-                let content
-                let onClick = null
-                if (wrapped.type === 'etype') {
-                  const {typeName, etype} = wrapped
-                  key = `etype-${etype}`
-                  content = `${typeName} (${etype})`
-                } else {
-                  const {mstId, name, icon} = wrapped
-                  key = `equip-${mstId}`
-                  content = (
-                    <div
-                      style={{display: 'flex', alignItems: 'center'}}>
-                      <SlotitemIcon
-                        className="slotitem-img"
-                        slotitemId={icon}
-                      />
-                      <span style={{marginLeft: '.2em'}}>
-                        {name} ({mstId})
-                      </span>
-                    </div>
-                  )
-                  onClick = this.handleSelectMstId(mstId)
-                }
-                return (
-                  <Card
-                    key={key}
-                    style={{padding: 0}}
-                    onClick={onClick}
-                    className="equip-picker-item">
-                    <div style={{
-                      paddingTop: '.4em',
-                      paddingBottom: '.4em',
-                      paddingLeft: '.4em',
-                    }}>
-                      {content}
-                    </div>
-                  </Card>
+        <SearchBar
+          style={{marginBottom: 8}}
+          value={searchText}
+          changeValue={this.handleChangeSearchText}
+        />
+        <div style={{
+          flex: 1,
+          overflowY: 'auto',
+          height: '100%',
+        }}>
+          {
+            wrappedEquipsRaw.map(wrapped => {
+              let key
+              let content
+              let onClick = null
+              if (wrapped.type === 'etype') {
+                const {typeName, etype} = wrapped
+                key = `etype-${etype}`
+                content = `${typeName} (${etype})`
+              } else {
+                const {mstId, name, icon} = wrapped
+                key = `equip-${mstId}`
+                content = (
+                  <div
+                    style={{display: 'flex', alignItems: 'center'}}>
+                    <SlotitemIcon
+                      className="slotitem-img"
+                      slotitemId={icon}
+                    />
+                    <span style={{marginLeft: '.2em'}}>
+                      {name} ({mstId})
+                    </span>
+                  </div>
                 )
-              })
-            }
-          </div>
-        </Panel.Body>
-      </Panel>
+                onClick = this.handleSelectMstId(mstId)
+              }
+              return (
+                <Card
+                  key={key}
+                  style={{padding: 0}}
+                  onClick={onClick}
+                  className="equip-picker-item">
+                  <div style={{
+                    paddingTop: '.4em',
+                    paddingBottom: '.4em',
+                    paddingLeft: '.4em',
+                  }}>
+                    {content}
+                  </div>
+                </Card>
+              )
+            })
+          }
+        </div>
+      </div>
     )
   }
 }
