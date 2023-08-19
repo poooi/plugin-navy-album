@@ -11,7 +11,14 @@ import {
 import { PTyp } from '../../../ptyp'
 import { ShipGraphView } from '../../ship-graph-view'
 
-class HeaderImpl extends PureComponent {
+@connect(
+  mergeMapStateToProps(
+    headerInfoSelector,
+    createStructuredSelector({
+      debuffFlag: debuffFlagSelector,
+    }))
+)
+class Header extends PureComponent {
   static propTypes = {
     mstId: PTyp.number.isRequired,
     shipName: PTyp.string.isRequired,
@@ -80,13 +87,5 @@ class HeaderImpl extends PureComponent {
     )
   }
 }
-
-const Header = connect(
-  mergeMapStateToProps(
-    headerInfoSelector,
-    createStructuredSelector({
-      debuffFlag: debuffFlagSelector,
-    }))
-)(HeaderImpl)
 
 export { Header }

@@ -36,7 +36,18 @@ const pprTime = timeInSec => {
   }
 }
 
-class DockingTimeViewImpl extends PureComponent {
+@connect(
+  (state, {mstId}) => {
+    const stype = _.get(state.const,['$ships',mstId,'api_stype'])
+    const nowHp = shipViewerSelector(state).dockingCurrentHp
+    const getDockingFactor = getDockingFactorFuncSelector(state)
+    const computeDockingTimePerHp =
+      computeDockingTimePerHpWith(getDockingFactor)
+    return {stype, nowHp, computeDockingTimePerHp}
+  },
+  mapDispatchToProps
+)
+class DockingTimeView extends PureComponent {
   static propTypes = {
     style: PTyp.object.isRequired,
     stype: PTyp.number.isRequired,
@@ -127,18 +138,6 @@ class DockingTimeViewImpl extends PureComponent {
     )
   }
 }
-
-const DockingTimeView = connect(
-  (state, {mstId}) => {
-    const stype = _.get(state.const,['$ships',mstId,'api_stype'])
-    const nowHp = shipViewerSelector(state).dockingCurrentHp
-    const getDockingFactor = getDockingFactorFuncSelector(state)
-    const computeDockingTimePerHp =
-      computeDockingTimePerHpWith(getDockingFactor)
-    return {stype, nowHp, computeDockingTimePerHp}
-  },
-  mapDispatchToProps
-)(DockingTimeViewImpl)
 
 export {
   DockingTimeView,

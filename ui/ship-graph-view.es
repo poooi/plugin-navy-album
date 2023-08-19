@@ -7,7 +7,18 @@ import {
 } from '../selectors'
 import { getShipImgPath } from '../game-misc'
 
-class ShipGraphViewImpl extends PureComponent {
+@connect(
+  (state, ownProps) => {
+    const {mstId, graphType, damaged, debuffFlag} = ownProps
+    const serverIp = serverIpSelector(state)
+    const path = getShipImgPath(mstId, graphType, damaged, debuffFlag)
+    return {
+      src: `http://${serverIp}${path}`,
+    }
+  },
+  mapDispatchToProps
+)
+class ShipGraphView extends PureComponent {
   static propTypes = {
     // required props
     mstId: PTyp.number.isRequired,
@@ -51,17 +62,5 @@ class ShipGraphViewImpl extends PureComponent {
     )
   }
 }
-
-const ShipGraphView = connect(
-  (state, ownProps) => {
-    const {mstId, graphType, damaged, debuffFlag} = ownProps
-    const serverIp = serverIpSelector(state)
-    const path = getShipImgPath(mstId, graphType, damaged, debuffFlag)
-    return {
-      src: `http://${serverIp}${path}`,
-    }
-  },
-  mapDispatchToProps
-)(ShipGraphViewImpl)
 
 export { ShipGraphView }

@@ -10,7 +10,14 @@ import { mapDispatchToProps } from '../../../store'
 import { levelSelector } from '../selectors'
 import { minLevelSelector } from './selectors'
 
-class LevelSliderImpl extends PureComponent {
+@connect(
+  createStructuredSelector({
+    level: levelSelector,
+    minLevel: minLevelSelector,
+  }),
+  mapDispatchToProps
+)
+class LevelSlider extends PureComponent {
   static propTypes = {
     level: PTyp.number.isRequired,
     minLevel: PTyp.number.isRequired,
@@ -69,12 +76,5 @@ class LevelSliderImpl extends PureComponent {
   }
 }
 
-const LevelSlider = connect(
-  createStructuredSelector({
-    level: levelSelector,
-    minLevel: minLevelSelector,
-  }),
-  mapDispatchToProps
-)(LevelSliderImpl)
 
 export { LevelSlider }

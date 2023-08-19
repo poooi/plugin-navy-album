@@ -91,7 +91,16 @@ const normalizeIntro = text =>
     text.split('<br>').map(xs => xs.trim())
   )
 
-class ShipInfoViewImpl extends PureComponent {
+@connect(
+  createStructuredSelector({
+    level: levelSelector,
+    // Level-dependent stats
+    statsL: statsAtCurrentLevelSelector,
+    wctfShips: wctfShipsSelector,
+    serverIp: serverIpSelector,
+  })
+)
+class ShipInfoView extends PureComponent {
   static propTypes = {
     mstId: PTyp.number.isRequired,
     $ship: PTyp.object.isRequired,
@@ -247,15 +256,5 @@ class ShipInfoViewImpl extends PureComponent {
     )
   }
 }
-
-const ShipInfoView = connect(
-  createStructuredSelector({
-    level: levelSelector,
-    // Level-dependent stats
-    statsL: statsAtCurrentLevelSelector,
-    wctfShips: wctfShipsSelector,
-    serverIp: serverIpSelector,
-  })
-)(ShipInfoViewImpl)
 
 export { ShipInfoView }
