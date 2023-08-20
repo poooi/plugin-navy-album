@@ -5,7 +5,7 @@ import {
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { Tab as BpTab , Tabs } from '@blueprintjs/core'
+import { Tab , Tabs } from '@blueprintjs/core'
 import { WindowEnv } from 'views/components/etc/window-env'
 
 import { PTyp } from '../../ptyp'
@@ -98,7 +98,7 @@ class MusicLibrary extends PureComponent {
               onChange={this.handleSwitchTab}
               animate={false}
             >
-              <BpTab
+              <Tab
                 id="port"
                 className="musiclib-port musiclib-tab"
                 title={__('MusicLibraryTab.PortBGM')}
@@ -108,7 +108,7 @@ class MusicLibrary extends PureComponent {
                   />
                 }
               />
-              <BpTab
+              <Tab
                 id="map"
                 className="musiclib-map musiclib-tab"
                 title={__('MusicLibraryTab.MapBGM')}
