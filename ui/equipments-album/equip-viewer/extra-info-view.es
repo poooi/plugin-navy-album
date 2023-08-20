@@ -1,9 +1,9 @@
 import _ from 'lodash'
 import React, { PureComponent } from 'react'
 import { HTMLTable } from '@blueprintjs/core'
-import { MaterialIcon } from 'views/components/etc/icon'
 
 import { PTyp } from '../../../ptyp'
+import { MatIcon } from '../../common/icon'
 
 class ExtraInfoView extends PureComponent {
   static propTypes = {
@@ -60,10 +60,7 @@ class ExtraInfoView extends PureComponent {
                         <div style={{
                           display: 'flex', alignItems: 'center',
                         }}>
-                          <MaterialIcon
-                            materialId={matId}
-                            className="material-icon"
-                          />
+                          <MatIcon materialId={matId} />
                           <span>{v}</span>
                         </div>
                       </span>

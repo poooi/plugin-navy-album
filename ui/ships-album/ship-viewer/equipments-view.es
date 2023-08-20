@@ -6,11 +6,22 @@ import {
 import React, { PureComponent } from 'react'
 import FontAwesome from 'react-fontawesome'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
 import { Card } from '@blueprintjs/core'
 import { SlotitemIcon } from 'views/components/etc/icon'
 import { constSelector } from 'views/utils/selectors'
 import { PTyp } from '../../../ptyp'
 import { mapDispatchToProps } from '../../../store'
+
+const EqpIcon = styled(SlotitemIcon)`
+  &.svg {
+    height: 1.2em;
+  }
+
+  &.png {
+    height: 1.6em;
+  }
+`
 
 @connect(
   createStructuredSelector({
@@ -67,12 +78,7 @@ class EquipmentsView extends PureComponent {
                 const $equip = $equips[mstId]
                 const iconId = $equip.api_type[3]
                 onClick = () => uiSwitchEquip(mstId)
-                displayIcon = (
-                  <SlotitemIcon
-                    className="slotitem-img"
-                    slotitemId={iconId}
-                  />
-                )
+                displayIcon = (<EqpIcon slotitemId={iconId} />)
                 displayName = $equip.api_name
 
                 // number & greater than 0

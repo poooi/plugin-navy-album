@@ -3,6 +3,8 @@ import { join } from 'path-extra'
 
 import { PTyp } from '../ptyp'
 
+// TODO: move this under ui/common.
+
 /* eslint-disable quote-props */
 const alias = {
   'anti-air': 'antiair',
