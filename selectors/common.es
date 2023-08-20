@@ -93,7 +93,7 @@ const shipsInfoSelector = createSelector(
 
 const themeSelector = createSelector(
   poiConfigSelector,
-  pc => _.get(pc, 'poi.theme', 'paperdark'))
+  pc => _.get(pc, ['poi', 'appearance', 'theme'], 'dark'))
 
 const infoSelector = createSelector(
   poiStateSelector,
