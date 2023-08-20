@@ -1,3 +1,13 @@
+/*
+  TODO:
+
+  - we want to minimize use of this file as it is hard to maintain
+    with styles scattered all over the place.
+  - many of the rules deal with icons, try to have some unification,
+    probably with styled.
+
+ */
+
 *, body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-family: "Ubuntu", "Helvetica Neue", "Helvetica", "Arial",
       "WenQuanYi Micro Hei", "Microsoft YaHei", "Droid Sans Fallback", sans-serif;
