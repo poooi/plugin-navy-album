@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
-import { Button as BpButton, InputGroup } from '@blueprintjs/core'
+import { Button, InputGroup } from '@blueprintjs/core'
 import FontAwesome from 'react-fontawesome'
 import { PTyp } from '../ptyp'
 
@@ -56,7 +56,7 @@ class SearchBar extends Component {
           value={this.state.value}
           onChange={this.handleChangeValue}
         />
-        <BpButton
+        <Button
           small minimal
           style={this.state.value ? {marginLeft: 2} : {display: 'none'}}
           onClick={this.handleClearValue}
