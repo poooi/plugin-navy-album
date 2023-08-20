@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
-import { Tab, Nav, NavItem } from 'react-bootstrap'
+import styled from 'styled-components'
+import { Tab as BpTab, Tabs } from '@blueprintjs/core'
 import { connect } from 'react-redux'
 import {
   createSelector,
@@ -15,6 +16,36 @@ import { ShipsAlbum } from './ships-album'
 import { EquipmentsAlbum } from './equipments-album'
 import { MusicLibrary } from './music-library'
 import { GameUpdateViewer } from './game-update-viewer'
+
+/*
+  TODO:
+  - items in a few places needs fixing, presumably we can
+    get rid of global css rules while we are at it:
+
+    + ship view stock items
+    + item icons in equip picker
+    + icons in equip header
+
+  - scrollbar missing
+
+ */
+
+const NaTabs = styled(Tabs)`
+  flex: 1;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+
+  & .na-tab[role=tab] {
+    flex: 1;
+  }
+
+  & .na-tab[role=tabpanel] {
+    flex: 1;
+    height: 0;
+  }
+
+`
 
 @connect(
   createStructuredSelector({
@@ -42,62 +73,38 @@ class NavyAlbum extends Component {
     const {activeTab, theme} = this.props
     const {__} = window.i18n["poi-plugin-navy-album"]
     return (
-      <Tab.Container
-        id="na-main-tab"
+      <NaTabs
+        id="na-main"
         className={`theme-${theme}`}
-        onSelect={this.handleSwitchTab}
-        style={{
-          height: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-        activeKey={activeTab}>
-        <div>
-          <div style={{
-            marginBottom: 8,
-          }}>
-            <Nav
-              style={{
-                // left & right margin = 1%
-                width: '98vw',
-              }}
-              bsStyle="tabs"
-              className="main-nav">
-              <NavItem eventKey="ships">
-                {__('Ships')}
-              </NavItem>
-              <NavItem eventKey="equipments">
-                {__('Equipments')}
-              </NavItem>
-              <NavItem eventKey="music">
-                {__('Music')}
-              </NavItem>
-              <NavItem eventKey="game-update">
-                {__('GameUpdate')}
-              </NavItem>
-            </Nav>
-          </div>
-          <div style={{flex: 1, height: 0}}>
-            <Tab.Content
-              animation={false}
-              style={{height: '100%'}}
-            >
-              <Tab.Pane eventKey="ships" style={{height: '100%'}}>
-                <ShipsAlbum />
-              </Tab.Pane>
-              <Tab.Pane eventKey="equipments" style={{height: '100%'}}>
-                <EquipmentsAlbum />
-              </Tab.Pane>
-              <Tab.Pane eventKey="music" style={{height: '100%'}}>
-                <MusicLibrary />
-              </Tab.Pane>
-              <Tab.Pane eventKey="game-update" style={{height: '100%'}}>
-                <GameUpdateViewer />
-              </Tab.Pane>
-            </Tab.Content>
-          </div>
-        </div>
-      </Tab.Container>
+        selectedTabId={activeTab}
+        onChange={this.handleSwitchTab}
+        animate={false}
+      >
+        <BpTab
+          className="na-tab"
+          id="ships"
+          title={__('Ships')}
+          panel={<ShipsAlbum />}
+        />
+        <BpTab
+          className="na-tab"
+          id="equipments"
+          title={__('Equipments')}
+          panel={<EquipmentsAlbum />}
+        />
+        <BpTab
+          className="na-tab"
+          id="music"
+          title={__('Music')}
+          panel={<MusicLibrary />}
+        />
+        <BpTab
+          className="na-tab"
+          id="game-update"
+          title={__('GameUpdate')}
+          panel={<GameUpdateViewer />}
+        />
+      </NaTabs>
     )
   }
 }
