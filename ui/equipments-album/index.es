@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { ButtonToolbar, Button, ButtonGroup } from 'react-bootstrap'
+import { Button } from '@blueprintjs/core'
 
 import {
   modifyObject,
@@ -57,7 +57,7 @@ class EquipmentsAlbum extends Component {
 
     const {__} = window.i18n["poi-plugin-navy-album"]
 
-    const boolToBsStyle = v => v ? 'primary' : 'default'
+    const boolToIntent = v => v ? 'primary' : 'default'
     return (
       <div
         style={{
@@ -71,36 +71,33 @@ class EquipmentsAlbum extends Component {
             marginBottom: 8,
             ...(expanded ? {} : {display: 'none'}),
           }}>
-          <ButtonToolbar
-            style={{margin: '10px 20px'}}
+          <div
+            style={{display: 'flex', width: '100%'}}
           >
-            <ButtonGroup>
-              <Button
-                onClick={this.handleToggle('expanded')}
-                style={{width: 200}}>
-                {__('HideOpts')}
-              </Button>
-            </ButtonGroup>
-            <ButtonGroup>
+            <Button
+              onClick={this.handleToggle('expanded')}
+              style={{width: '30%'}}
+              text={__('HideOpts')}
+            />
+            <div style={{marginLeft: 5}}>
               <Button
                 onClick={this.handleToggleSide('friendly')}
-                bsStyle={boolToBsStyle(showSides.friendly)}>
-                {__('Friendly')}
-              </Button>
+                intent={boolToIntent(showSides.friendly)}
+                text={__('Friendly')}
+              />
               <Button
                 onClick={this.handleToggleSide('abyssal')}
-                bsStyle={boolToBsStyle(showSides.abyssal)}>
-                {__('Abyssal')}
-              </Button>
-            </ButtonGroup>
-            <ButtonGroup>
-              <Button
-                onClick={this.handleToggle('groupEquipTypes')}
-                bsStyle={boolToBsStyle(groupEquipTypes)}>
-                {__('EquipmentsTab.GroupByTypes')}
-              </Button>
-            </ButtonGroup>
-          </ButtonToolbar>
+                intent={boolToIntent(showSides.abyssal)}
+                text={__('Abyssal')}
+              />
+            </div>
+            <Button
+              onClick={this.handleToggle('groupEquipTypes')}
+              intent={boolToIntent(groupEquipTypes)}
+              text={__('EquipmentsTab.GroupByTypes')}
+              style={{marginLeft: 5}}
+            />
+          </div>
         </div>
         <div style={{display: 'flex', flex: 1, height: 0}}>
           <div style={{
@@ -116,9 +113,9 @@ class EquipmentsAlbum extends Component {
                 marginLeft: 0,
                 marginBottom: 5,
                 ...(expanded ? {display: 'none'} : {}),
-              }}>
-              {__('ShowOpts')}
-            </Button>
+              }}
+              text={__('ShowOpts')}
+            />
             <EquipPicker />
           </div>
           <EquipViewer style={{
