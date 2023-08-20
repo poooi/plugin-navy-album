@@ -1,7 +1,6 @@
 import { createStructuredSelector } from 'reselect'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { Panel } from 'react-bootstrap'
 
 import {
   mergeMapStateToProps,
@@ -46,57 +45,56 @@ class EquipViewer extends PureComponent {
     const infoProps = {mstId, $equip, $equipType}
     const showInfo = !isAbyssalEquipMstId(mstId)
     return (
-      <Panel
+      <div
         className="equip-viewer"
         style={{
           ...style,
         }}
       >
-        <Panel.Body>
-          <ErrorBoundary>
-            <div
-              style={{flex: 1, height: 0, overflowY: 'auto'}}
-            >
-              <Header {...infoProps} />
+        <ErrorBoundary>
+          <div
+            style={{flex: 1, height: '100%', overflowY: 'auto'}}
+          >
+            <Header {...infoProps} />
+            {
+              showInfo && (
+                <IntroView style={{}} />
+              )
+            }
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+            }}>
+              <div style={{
+                flex: 1,
+                display: 'flex',
+                justifyContent: 'space-around',
+                margin: 20,
+              }}>
+                <StatsView
+                  style={{maxWidth: 380}}
+                  {...infoProps}
+                />
+              </div>
               {
                 showInfo && (
-                  <IntroView style={{}} />
+                  <div style={{
+                    flex: 1,
+                    display: 'flex',
+                    justifyContent: 'space-around',
+                    marginLeft: '1em',
+                  }}>
+                    <ExtraInfoView
+                      style={{}}
+                      {...infoProps}
+                    />
+                  </div>
                 )
               }
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-              }}>
-                <div style={{
-                  flex: 1,
-                  display: 'flex',
-                  justifyContent: 'space-around',
-                }}>
-                  <StatsView
-                    style={{maxWidth: 380}}
-                    {...infoProps}
-                  />
-                </div>
-                {
-                  showInfo && (
-                    <div style={{
-                      flex: 1,
-                      display: 'flex',
-                      justifyContent: 'space-around',
-                      marginLeft: '1em',
-                    }}>
-                      <ExtraInfoView
-                        style={{}}
-                        {...infoProps}
-                      />
-                    </div>
-                  )
-                }
-              </div>
             </div>
-          </ErrorBoundary>
-        </Panel.Body>
-      </Panel>
+          </div>
+        </ErrorBoundary>
+      </div>
     )
   }
 }
