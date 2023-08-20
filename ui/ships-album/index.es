@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Button, ButtonGroup, ButtonToolbar, Panel } from 'react-bootstrap'
+import { Button, ButtonGroup, ButtonToolbar } from 'react-bootstrap'
 import {
   modifyObject,
   not,
@@ -61,49 +61,47 @@ class ShipsAlbum extends Component {
     const boolToBsStyle = v => v ? 'primary' : 'default'
     return (
       <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
-        <Panel
+        <div
           style={{
             marginBottom: 8,
             ...(expanded ? {} : {display: 'none'}),
           }}>
-          <Panel.Body>
-            <ButtonToolbar>
-              <ButtonGroup>
-                <Button
-                  onClick={this.handleToggle('expanded')}
-                  style={{width: 200}}>
-                  {__('HideOpts')}
-                </Button>
-              </ButtonGroup>
-              <ButtonGroup>
-                <Button
-                  onClick={this.handleToggleSide('friendly')}
-                  bsStyle={boolToBsStyle(showSides.friendly)}>
-                  {__('Friendly')}
-                </Button>
-                <Button
-                  onClick={this.handleToggleSide('abyssal')}
-                  bsStyle={boolToBsStyle(showSides.abyssal)}>
-                  {__('Abyssal')}
-                </Button>
-              </ButtonGroup>
-              <ButtonGroup>
-                <Button
-                  onClick={this.handleToggle('groupShipTypes')}
-                  bsStyle={boolToBsStyle(groupShipTypes)}>
-                  {__('ShipsTab.GroupByShipTypes')}
-                </Button>
-              </ButtonGroup>
-              <ButtonGroup>
-                <Button
-                  onClick={this.handleToggle('groupRemodels')}
-                  bsStyle={boolToBsStyle(groupRemodels)}>
-                  {__('ShipsTab.GroupRemodels')}
-                </Button>
-              </ButtonGroup>
-            </ButtonToolbar>
-          </Panel.Body>
-        </Panel>
+          <ButtonToolbar>
+            <ButtonGroup>
+              <Button
+                onClick={this.handleToggle('expanded')}
+                style={{width: 200}}>
+                {__('HideOpts')}
+              </Button>
+            </ButtonGroup>
+            <ButtonGroup>
+              <Button
+                onClick={this.handleToggleSide('friendly')}
+                bsStyle={boolToBsStyle(showSides.friendly)}>
+                {__('Friendly')}
+              </Button>
+              <Button
+                onClick={this.handleToggleSide('abyssal')}
+                bsStyle={boolToBsStyle(showSides.abyssal)}>
+                {__('Abyssal')}
+              </Button>
+            </ButtonGroup>
+            <ButtonGroup>
+              <Button
+                onClick={this.handleToggle('groupShipTypes')}
+                bsStyle={boolToBsStyle(groupShipTypes)}>
+                {__('ShipsTab.GroupByShipTypes')}
+              </Button>
+            </ButtonGroup>
+            <ButtonGroup>
+              <Button
+                onClick={this.handleToggle('groupRemodels')}
+                bsStyle={boolToBsStyle(groupRemodels)}>
+                {__('ShipsTab.GroupRemodels')}
+              </Button>
+            </ButtonGroup>
+          </ButtonToolbar>
+        </div>
         <div
           style={{
             display: 'flex',
