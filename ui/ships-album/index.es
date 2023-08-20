@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Button, ButtonGroup, ButtonToolbar } from 'react-bootstrap'
+import { Button } from '@blueprintjs/core'
 import {
   modifyObject,
   not,
@@ -58,49 +58,52 @@ class ShipsAlbum extends Component {
       groupRemodels,
     } = this.props
     const {__} = window.i18n["poi-plugin-navy-album"]
-    const boolToBsStyle = v => v ? 'primary' : 'default'
+    const boolToIntent = v => v ? 'primary' : 'default'
     return (
-      <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
+      <div
+        style={{
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+        }}>
         <div
           style={{
             marginBottom: 8,
             ...(expanded ? {} : {display: 'none'}),
           }}>
-          <ButtonToolbar>
-            <ButtonGroup>
-              <Button
-                onClick={this.handleToggle('expanded')}
-                style={{width: 200}}>
-                {__('HideOpts')}
-              </Button>
-            </ButtonGroup>
-            <ButtonGroup>
+          <div
+            style={{display: 'flex', width: '100%'}}
+          >
+            <Button
+              onClick={this.handleToggle('expanded')}
+              style={{width: '25%'}}
+              text={__('HideOpts')}
+            />
+            <div style={{marginLeft: 5}}>
               <Button
                 onClick={this.handleToggleSide('friendly')}
-                bsStyle={boolToBsStyle(showSides.friendly)}>
-                {__('Friendly')}
-              </Button>
+                intent={boolToIntent(showSides.friendly)}
+                text={__('Friendly')}
+              />
               <Button
                 onClick={this.handleToggleSide('abyssal')}
-                bsStyle={boolToBsStyle(showSides.abyssal)}>
-                {__('Abyssal')}
-              </Button>
-            </ButtonGroup>
-            <ButtonGroup>
-              <Button
-                onClick={this.handleToggle('groupShipTypes')}
-                bsStyle={boolToBsStyle(groupShipTypes)}>
-                {__('ShipsTab.GroupByShipTypes')}
-              </Button>
-            </ButtonGroup>
-            <ButtonGroup>
-              <Button
-                onClick={this.handleToggle('groupRemodels')}
-                bsStyle={boolToBsStyle(groupRemodels)}>
-                {__('ShipsTab.GroupRemodels')}
-              </Button>
-            </ButtonGroup>
-          </ButtonToolbar>
+                intent={boolToIntent(showSides.abyssal)}
+                text={__('Abyssal')}
+              />
+            </div>
+            <Button
+              style={{marginLeft: 5}}
+              onClick={this.handleToggle('groupShipTypes')}
+              intent={boolToIntent(groupShipTypes)}
+              text={__('ShipsTab.GroupByShipTypes')}
+            />
+            <Button
+              style={{marginLeft: 5}}
+              onClick={this.handleToggle('groupRemodels')}
+              intent={boolToIntent(groupRemodels)}
+              text={__('ShipsTab.GroupRemodels')}
+            />
+          </div>
         </div>
         <div
           style={{
@@ -122,9 +125,9 @@ class ShipsAlbum extends Component {
                 marginLeft: 0,
                 marginBottom: 5,
                 ...(expanded ? {display: 'none'} : {}),
-              }}>
-              {__('ShowOpts')}
-            </Button>
+              }}
+              text={__('ShowOpts')}
+            />
             <ShipPicker />
           </div>
           <ShipViewer style={{
