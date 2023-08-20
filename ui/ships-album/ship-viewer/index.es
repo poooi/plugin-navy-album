@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
-import { Tab, Nav, NavItem } from 'react-bootstrap'
+import styled from 'styled-components'
+import { Tab, Tabs } from '@blueprintjs/core'
 import { mergeMapStateToProps, modifyObject } from 'subtender'
 
 import { PTyp } from '../../../ptyp'
@@ -23,6 +24,18 @@ import { ShipInfoView } from './ship-info-view'
 import { GalleryView } from './gallery-view'
 import { QuotesView } from './quotes-view'
 import { ErrorBoundary } from '../../error-boundary'
+
+const SvTabs = styled(Tabs)`
+  flex: 1;
+  height: 0;
+  display: flex;
+  flex-direction: column;
+
+  & .ships-tab {
+    flex: 1;
+    overflow-y: auto;
+  }
+`
 
 @connect(
   mergeMapStateToProps(
@@ -68,68 +81,54 @@ class ShipViewer extends Component {
     const {__} = window.i18n["poi-plugin-navy-album"]
     const isAbyssalShip = isAbyssalShipMstId(mstId)
     return (
-      <Tab.Container
-        style={{
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          height: 0,
-        }}
-        id="na-ship-viewer-tab"
-        onSelect={this.handleSwitchTab}
-        activeKey={activeTab}>
-        <div>
-          <div style={{marginBottom: 8}}>
-            <Nav
-              bsStyle="tabs"
-              justified className="main-nav">
-              <NavItem eventKey="info">
-                {__('ShipsTab.Info')}
-              </NavItem>
-              <NavItem eventKey="image">
-                {__('ShipsTab.Gallery')}
-              </NavItem>
-              {
-                !isAbyssalShip && (
-                  <NavItem eventKey="voice">
-                    {__('ShipsTab.Voice')}
-                  </NavItem>
-                )
-              }
-            </Nav>
-          </div>
-          <div style={{flex: 1, height: 0, overflowY: 'auto'}}>
-            <Tab.Content animation={false}>
-              <Tab.Pane eventKey="info">
-                {
-                  isAbyssalShip ? (
-                    <AbyssalInfoView
-                      mstId={mstId}
-                      debuffFlag={debuffFlag}
-                      $ship={$ship}
-                    />
-                  ) : (
-                    <ShipInfoView
-                      mstId={mstId}
-                      $ship={$ship}
-                    />
-                  )
-                }
-              </Tab.Pane>
-              <Tab.Pane eventKey="image">
-                <GalleryView
-                  style={{}}
-                  debuffFlag={debuffFlag}
-                  mstId={mstId}
-                />
-              </Tab.Pane>
-              <Tab.Pane eventKey="voice">
-                <QuotesView />
-              </Tab.Pane>
-            </Tab.Content>
-          </div>
-        </div>
-      </Tab.Container>
+      <SvTabs
+        id="ship-viewer"
+        selectedTabId={activeTab}
+        onChange={this.handleSwitchTab}
+        animate={false}
+      >
+        <Tab
+          className="ships-tab"
+          id="info"
+          title={__('ShipsTab.Info')}
+          panel={
+            isAbyssalShip ? (
+              <AbyssalInfoView
+                mstId={mstId}
+                debuffFlag={debuffFlag}
+                $ship={$ship}
+              />
+            ) : (
+              <ShipInfoView
+                mstId={mstId}
+                $ship={$ship}
+              />
+            )
+          }
+        />
+        <Tab
+          className="ships-tab"
+          id="image"
+          title={__('ShipsTab.Gallery')}
+          panel={
+            <GalleryView
+              style={{}}
+              debuffFlag={debuffFlag}
+              mstId={mstId}
+            />
+          }
+        />
+        {
+          !isAbyssalShip && (
+            <Tab
+              className="ships-tab"
+              id="voice"
+              title={__('ShipsTab.Voice')}
+              panel={<QuotesView />}
+            />
+          )
+        }
+      </SvTabs>
     )
   }
 
