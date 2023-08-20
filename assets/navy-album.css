@@ -1,9 +1,3 @@
-/*
-  TODO: we want to minimize use of this file as it is hard to maintain
-  with styles scattered all over the place.
-
- */
-
 *, body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-family: "Ubuntu", "Helvetica Neue", "Helvetica", "Arial",
       "WenQuanYi Micro Hei", "Microsoft YaHei", "Droid Sans Fallback", sans-serif;
@@ -11,50 +5,20 @@
     -webkit-user-drag: none;
 }
 
-@media (min-width: 600px) {
-  .na-main-tab .nav-tabs.nav-justified > li {
-    display: table-cell;
-    width: 1%;
-  }
-  .na-main-tab .nav-tabs.nav-justified > li > a {
-    margin-bottom: 0;
-  }
-}
-
-.na-main-tab li.ship-picker-item:hover {
-    font-weight: bold;
-}
-
-.na-main-tab .ship-picker.panel > .panel-body,
-.na-main-tab .ship-viewer.panel > .panel-body,
-.na-main-tab .equip-viewer.panel > .panel-body,
-.na-main-tab .equip-picker.panel > .panel-body,
-.na-main-tab .game-update-viewer.panel > .panel-body {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.na-main-tab.theme-paperdark ::-webkit-scrollbar {
+.na-main-tab.theme-dark ::-webkit-scrollbar {
     width: 10px;
 }
 
-.na-main-tab.theme-darklykai ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+.na-main-tab.theme-light ::-webkit-scrollbar {
+    width: 10px;
 }
 
-.na-main-tab ul[role="tablist"].nav.nav-tabs {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-}
+.na-main-tab.theme-light ::-webkit-scrollbar-thumb {
+    /*
+      by default the scrollbar is there but somehow
+      has a color matching its background.
 
-.na-main-tab ul[role="tablist"].nav.nav-tabs > li {
-    flex: 1;
-    text-align: center;
-}
-
-.na-main-tab .ship-info-view .custom {
-    font-weight: bold;
+      better be more specific I guess.
+     */
+    background-color: #aaa;
 }
