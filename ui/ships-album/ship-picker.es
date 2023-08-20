@@ -54,7 +54,8 @@ class ShipPicker extends Component {
           margin: 10,
           display: 'flex',
           flexDirection: 'column',
-          height: 'calc(100% - 20px)',
+          flex: 1,
+          height: 0,
         }}>
         <SearchBar
           style={{marginBottom: 8}}

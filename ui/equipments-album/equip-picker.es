@@ -51,7 +51,8 @@ class EquipPicker extends Component {
           margin: 10,
           display: 'flex',
           flexDirection: 'column',
-          height: 'calc(100% - 20px)',
+          height: 0,
+          flex: 1,
         }}>
         <SearchBar
           style={{marginBottom: 8}}
