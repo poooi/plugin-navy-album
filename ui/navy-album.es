@@ -75,7 +75,7 @@ class NavyAlbum extends Component {
     return (
       <NaTabs
         id="na-main"
-        className={`theme-${theme}`}
+        className={`theme-${theme} na-main-tab`}
         selectedTabId={activeTab}
         onChange={this.handleSwitchTab}
         animate={false}
