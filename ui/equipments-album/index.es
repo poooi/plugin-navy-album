@@ -59,7 +59,13 @@ class EquipmentsAlbum extends Component {
 
     const boolToBsStyle = v => v ? 'primary' : 'default'
     return (
-      <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
+      <div
+        style={{
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
         <Panel
           style={{
             marginBottom: 8,
@@ -117,7 +123,7 @@ class EquipmentsAlbum extends Component {
           </div>
           <EquipViewer style={{
             minWidth: 400,
-            flex: 1, marginLeft: 8, marginBottom: 8,
+            flex: 1, margin: '10px 20px',
           }} />
         </div>
       </div>
