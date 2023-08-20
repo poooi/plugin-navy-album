@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Panel, ButtonToolbar, Button, ButtonGroup } from 'react-bootstrap'
+import { ButtonToolbar, Button, ButtonGroup } from 'react-bootstrap'
 
 import {
   modifyObject,
@@ -66,13 +66,13 @@ class EquipmentsAlbum extends Component {
           flexDirection: 'column',
         }}
       >
-        <Panel
+        <div
           style={{
             marginBottom: 8,
             ...(expanded ? {} : {display: 'none'}),
           }}>
           <ButtonToolbar
-            style={{padding: 15}}
+            style={{margin: '10px 20px'}}
           >
             <ButtonGroup>
               <Button
@@ -101,7 +101,7 @@ class EquipmentsAlbum extends Component {
               </Button>
             </ButtonGroup>
           </ButtonToolbar>
-        </Panel>
+        </div>
         <div style={{display: 'flex', flex: 1, height: 0}}>
           <div style={{
             width: '30%',
