@@ -19,11 +19,6 @@
     font-weight: bold;
 }
 
-#na-main-tab .tab-content > .tab-pane > div,
-#na-ship-viewer-tab .tab-content {
-    height: 100%;
-}
-
 #na-main-tab .ship-picker.panel > .panel-body,
 #na-main-tab .ship-viewer.panel > .panel-body,
 #na-main-tab .equip-viewer.panel > .panel-body,
