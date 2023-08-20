@@ -17,19 +17,6 @@ import { EquipmentsAlbum } from './equipments-album'
 import { MusicLibrary } from './music-library'
 import { GameUpdateViewer } from './game-update-viewer'
 
-/*
-  TODO:
-  - items in a few places needs fixing, presumably we can
-    get rid of global css rules while we are at it:
-
-    + ship view stock items
-    + item icons in equip picker
-    + icons in equip header
-
-  - scrollbar missing
-
- */
-
 const NaTabs = styled(Tabs)`
   flex: 1;
   display: flex;

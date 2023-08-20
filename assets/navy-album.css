@@ -1,10 +1,6 @@
 /*
-  TODO:
-
-  - we want to minimize use of this file as it is hard to maintain
-    with styles scattered all over the place.
-  - many of the rules deal with icons, try to have some unification,
-    probably with styled.
+  TODO: we want to minimize use of this file as it is hard to maintain
+  with styles scattered all over the place.
 
  */
 
@@ -59,48 +55,6 @@
     text-align: center;
 }
 
-.na-main-tab .equipments-view .slotitem-img.png {
-    height: 1.6em;
-}
-
-.na-main-tab .equipments-view .slotitem-img.svg {
-    height: 1.2em;
-}
-
-.na-main-tab .equip-picker .slotitem-img.png {
-    height: 2em;
-    margin-right: -0.2em;
-}
-
-.na-main-tab .equip-picker .slotitem-img.svg {
-    height: 1.2em;
-}
-
 .na-main-tab .ship-info-view .custom {
     font-weight: bold;
-}
-
-.na-main-tab .ship-info-view .extra-info-view .material-icon.png,
-.na-main-tab .ship-info-view .extra-info-view .material-icon.svg {
-    height: 1.4em;
-    width: 1.4em;
-    margin-right: .2em;
-}
-
-.na-main-tab .equip-viewer .header .slotitem-img.png {
-    height: 2.5em;
-    width: 2.5em;
-}
-
-.na-main-tab .equip-viewer .header .slotitem-img.svg {
-    height: 1.4em;
-    width: 1.4em;
-    margin-bottom: .4em;
-}
-
-.na-main-tab .equip-viewer .extra-info-view .material-icon.png,
-.na-main-tab .equip-viewer .extra-info-view .material-icon.svg {
-    height: 1.4em;
-    width: 1.4em;
-    margin-right: .2em;
 }

@@ -1,10 +1,10 @@
 import _ from 'lodash'
 import React, { PureComponent } from 'react'
 import { HTMLTable } from '@blueprintjs/core'
-import { MaterialIcon } from 'views/components/etc/icon'
 
 import { PTyp } from '../../../ptyp'
 import { Icon } from '../../icon'
+import { MatIcon } from '../../common/icon'
 
 class ExtraInfoView extends PureComponent {
   static propTypes = {
@@ -41,10 +41,7 @@ class ExtraInfoView extends PureComponent {
               ).map(([v, matId]) => (
                 <td key={matId} style={{width: '18%'}}>
                   <div style={{display: 'flex', alignItems: 'center'}}>
-                    <MaterialIcon
-                      materialId={matId}
-                      className="material-icon"
-                    />
+                    <MatIcon materialId={matId} />
                     <span className={level <= 99 ? '' : 'custom text-primary'}>
                       {v}
                     </span>
@@ -66,10 +63,7 @@ class ExtraInfoView extends PureComponent {
               ).map(([v, matId]) => (
                 <td key={matId}>
                   <div style={{display: 'flex', alignItems: 'center'}}>
-                    <MaterialIcon
-                      materialId={matId}
-                      className="material-icon"
-                    />
+                    <MatIcon materialId={matId} />
                     <span>{v}</span>
                   </div>
                 </td>

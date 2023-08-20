@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
 import { Card } from '@blueprintjs/core'
 import { mergeMapStateToProps, modifyObject } from 'subtender'
 import { SlotitemIcon } from 'views/components/etc/icon'
@@ -12,6 +13,17 @@ import {
 import { PTyp } from '../../ptyp'
 import { mapDispatchToProps } from '../../store'
 import { SearchBar } from '../search-bar'
+
+const EqpIcon = styled(SlotitemIcon)`
+  &.svg {
+    height: 2em;
+  }
+
+  &.png {
+    height: 2em;
+    margin-right: -0.2em;
+  }
+`
 
 @connect(
   mergeMapStateToProps(
@@ -79,10 +91,7 @@ class EquipPicker extends Component {
                 content = (
                   <div
                     style={{display: 'flex', alignItems: 'center'}}>
-                    <SlotitemIcon
-                      className="slotitem-img"
-                      slotitemId={icon}
-                    />
+                    <EqpIcon slotitemId={icon} />
                     <span style={{marginLeft: '.2em'}}>
                       {name} ({mstId})
                     </span>

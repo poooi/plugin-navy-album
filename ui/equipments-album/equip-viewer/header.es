@@ -1,9 +1,23 @@
 import React, { PureComponent } from 'react'
 import { SlotitemIcon } from 'views/components/etc/icon'
 import { enumFromTo } from 'subtender'
+import styled from 'styled-components'
 
 import { PTyp } from '../../../ptyp'
 import { Icon } from '../../icon'
+
+const EqpIcon = styled(SlotitemIcon)`
+  &.svg {
+    height: 2em;
+    width: 2em;
+    margin-bottom: .4em;
+  }
+
+  &.png {
+    height: 2.5em;
+    width: 2.5em;
+  }
+`
 
 class Header extends PureComponent {
   static propTypes = {
@@ -54,10 +68,7 @@ class Header extends PureComponent {
             flexDirection: 'column',
             alignItems: 'flex-end',
           }}>
-          <SlotitemIcon
-            className="slotitem-img"
-            slotitemId={$equip.api_type[3]}
-          />
+          <EqpIcon slotitemId={$equip.api_type[3]} />
           <div style={{display: 'flex', alignItems: 'center', height: '1em'}}>
             {
               enumFromTo(1,$equip.api_rare).map(x => (
