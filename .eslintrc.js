@@ -90,7 +90,6 @@ module.exports = {
       'react-redux',
       'redux-observers',
       'reselect',
-      'react-bootstrap',
       'react-fontawesome',
       'path-extra',
       'fs-extra',

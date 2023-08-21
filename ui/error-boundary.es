@@ -1,5 +1,5 @@
 import React, { PureComponent, Fragment } from 'react'
-import { FormControl, Button } from 'react-bootstrap'
+import { Button, EditableText } from '@blueprintjs/core'
 import { clipboard } from 'electron'
 
 import { PTyp } from '../ptyp'
@@ -15,6 +15,10 @@ class ErrorBoundary extends PureComponent {
   state = {
     // {error, info} if present
     errorContext: null,
+  }
+
+  static getDerivedStateFromError(error) {
+    return {errorContext: {error, info: {componentStack: '<No info.componentStack available>'}}}
   }
 
   componentDidCatch = (error, info) =>
@@ -34,18 +38,18 @@ class ErrorBoundary extends PureComponent {
           }}
         >
           <h1>Error encountered</h1>
-          <FormControl
-            componentClass="textarea"
-            readOnly
+          <EditableText
+            intent="danger"
+            multiline
+            minLines={16}
             value={code}
-            style={{flex: 1, height: 0}}
+            style={{flex: 1}}
           />
           <Button
-            bsStyle="primary"
+            intent="primary"
             onClick={handleCopy(code)}
-          >
-            Copy to clipboard
-          </Button>
+            text="Copy to clipboard"
+          />
         </div>
       )
     }
