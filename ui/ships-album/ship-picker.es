@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { mergeMapStateToProps, modifyObject } from 'subtender'
 import { connect } from 'react-redux'
-import { Card } from '@blueprintjs/core'
+import { Card, Text, Classes } from '@blueprintjs/core'
 import {
   shipsInfoSelectorForView,
   listOptionsSelector,
@@ -11,6 +11,10 @@ import {
 import { PTyp } from '../../ptyp'
 import { mapDispatchToProps } from '../../store'
 import { SearchBar } from '../search-bar'
+
+const highlightProps = {
+  className: `${Classes.CALLOUT} ${Classes.INTENT_PRIMARY}`,
+}
 
 @connect(
   mergeMapStateToProps(
@@ -27,6 +31,7 @@ class ShipPicker extends Component {
   static propTypes = {
     groupped: PTyp.bool.isRequired,
     wrappedShipsInfo: PTyp.array.isRequired,
+    mstId: PTyp.number.isRequired,
     searchText: PTyp.string.isRequired,
     uiSwitchShip: PTyp.func.isRequired,
     uiModify: PTyp.func.isRequired,
@@ -46,7 +51,12 @@ class ShipPicker extends Component {
     )
 
   render() {
-    const {groupped, searchText, wrappedShipsInfo} = this.props
+    const {
+      groupped,
+      searchText,
+      wrappedShipsInfo,
+      mstId: viewingMstId,
+    } = this.props
     return (
       <div
         className="ship-picker"
@@ -75,6 +85,7 @@ class ShipPicker extends Component {
               let content
               let needPadding
               let onClick = null
+              let shouldHighlight = false
               if (wrapped.type === 'stype') {
                 const {typeName, stype} = wrapped
                 key = `stype-${stype}`
@@ -85,23 +96,29 @@ class ShipPicker extends Component {
                 key = `mstId-${wrapped.info.mstId}`
                 content = `${name} ${sortNo ? '' : yomi} (${mstId})`
                 needPadding = groupped
+                if (mstId === viewingMstId) {
+                  shouldHighlight = true
+                }
                 onClick = this.handleSelectMstId(mstId)
               }
-              // TODO: do some highlighting on selected.
               return (
                 <Card
                   key={key}
                   style={{padding: 0}}
                   onClick={onClick}
-                  className="ship-picker-item">
-                  <div style={{
-                    paddingTop: '.4em',
-                    paddingBottom: '.4em',
-                    paddingLeft: '.4em',
-                    ...(needPadding ? {paddingLeft: '2em'} : {}),
-                  }}>
+                  className="ship-picker-item"
+                >
+                  <Text
+                    style={{
+                      paddingTop: '.4em',
+                      paddingBottom: '.4em',
+                      paddingLeft: '.4em',
+                      ...(needPadding ? {paddingLeft: '2em'} : {}),
+                    }}
+                    {...(shouldHighlight ? highlightProps : {})}
+                  >
                     {content}
-                  </div>
+                  </Text>
                 </Card>
               )
             })
