@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { Card } from '@blueprintjs/core'
+import { Card, Text, Classes } from '@blueprintjs/core'
 import { mergeMapStateToProps, modifyObject } from 'subtender'
 import { SlotitemIcon } from 'views/components/etc/icon'
 
 import {
   equipsRawSelectorForView,
   searchTextSelector,
+  mstIdSelector,
 } from './selectors'
 
 import { PTyp } from '../../ptyp'
@@ -25,11 +26,16 @@ const EqpIcon = styled(SlotitemIcon)`
   }
 `
 
+const highlightProps = {
+  className: `${Classes.CALLOUT} ${Classes.INTENT_PRIMARY}`,
+}
+
 @connect(
   mergeMapStateToProps(
     equipsRawSelectorForView,
     state => ({
       searchText: searchTextSelector(state),
+      viewingMstId: mstIdSelector(state),
     })),
   mapDispatchToProps,
 )
@@ -37,6 +43,7 @@ class EquipPicker extends Component {
   static propTypes = {
     wrappedEquipsRaw: PTyp.array.isRequired,
     searchText: PTyp.string.isRequired,
+    viewingMstId: PTyp.number.isRequired,
     uiSwitchEquip: PTyp.func.isRequired,
     uiModify: PTyp.func.isRequired,
   }
@@ -55,7 +62,7 @@ class EquipPicker extends Component {
     )
 
   render() {
-    const {wrappedEquipsRaw,searchText} = this.props
+    const {wrappedEquipsRaw,searchText,viewingMstId} = this.props
     return (
       <div
         className="equip-picker"
@@ -81,6 +88,7 @@ class EquipPicker extends Component {
               let key
               let content
               let onClick = null
+              let shouldHighlight = false
               if (wrapped.type === 'etype') {
                 const {typeName, etype} = wrapped
                 key = `etype-${etype}`
@@ -97,6 +105,9 @@ class EquipPicker extends Component {
                     </span>
                   </div>
                 )
+                if (mstId === viewingMstId) {
+                  shouldHighlight = true
+                }
                 onClick = this.handleSelectMstId(mstId)
               }
               return (
@@ -105,13 +116,16 @@ class EquipPicker extends Component {
                   style={{padding: 0}}
                   onClick={onClick}
                   className="equip-picker-item">
-                  <div style={{
-                    paddingTop: '.4em',
-                    paddingBottom: '.4em',
-                    paddingLeft: '.4em',
-                  }}>
+                  <Text
+                    style={{
+                      paddingTop: '.4em',
+                      paddingBottom: '.4em',
+                      paddingLeft: '.4em',
+                    }}
+                    {...(shouldHighlight ? highlightProps : {})}
+                  >
                     {content}
-                  </div>
+                  </Text>
                 </Card>
               )
             })
