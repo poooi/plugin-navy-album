@@ -6,7 +6,7 @@ import FontAwesome from 'react-fontawesome'
 import { MaterialIcon } from 'views/components/etc/icon'
 
 import { PTyp } from '../../../../ptyp'
-import { Icon } from '../../../icon'
+import { StatIcon } from '../../../common/icon'
 import { mapDispatchToProps } from '../../../../store'
 
 @connect(null,mapDispatchToProps)
@@ -89,7 +89,7 @@ class InfoRow extends PureComponent {
                     className="material-icon"
                   />
                 ) : (
-                  <Icon
+                  <StatIcon
                     style={{width: '1.5em', height: '1.5em'}}
                     name={itemOrResource} />
                 )
