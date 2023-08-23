@@ -12,20 +12,19 @@ import {
 } from '../../selectors'
 import {
   focusedListInfoSelector,
+  focusSelector,
 } from './selectors'
 import { PTyp } from '../../ptyp'
+import { Highlightable } from '../common/highlightable'
 import { mapDispatchToProps } from '../../store'
 import { BgmListItem } from './bgm-list-item'
-
-/*
-  TODO: highlight selected item.
- */
 
 @connect(
   createStructuredSelector({
     grouppedMapIds: grouppedMapIdsSelector,
     listInfo: focusedListInfoSelector,
     useSiteInfo: mapBgmUseSiteInfoSelector,
+    focus: focusSelector,
   }),
   mapDispatchToProps,
 )
@@ -37,6 +36,7 @@ class MapBgmViewer extends PureComponent {
     grouppedMapIds: PTyp.array.isRequired,
     listInfo: PTyp.object.isRequired,
     useSiteInfo: PTyp.object.isRequired,
+    focus: PTyp.object.isRequired,
 
     uiModify: PTyp.func.isRequired,
   }
@@ -110,9 +110,8 @@ class MapBgmViewer extends PureComponent {
   }
 
   render() {
-    const {grouppedMapIds, listInfo} = this.props
+    const {grouppedMapIds, listInfo, focus} = this.props
     const {__} = window.i18n["poi-plugin-navy-album"]
-    const itemStyle = {padding: '8px 10px'}
     return (
       <div
         style={{
@@ -129,29 +128,37 @@ class MapBgmViewer extends PureComponent {
             overflowY: 'auto',
           }}
         >
-          <Card
-            style={itemStyle}
-            onClick={this.handleChangeFocus({type: 'all'})}
-          >
-            {__(`MusicLibraryTab.All`)}
-          </Card>
           {
-            grouppedMapIds.map(grp => (
-              <Card
-                onClick={this.handleChangeFocus({type: 'world', worldId: grp.area})}
-                style={itemStyle}
-                key={grp.area}
-              >
-                World #{grp.area}
-              </Card>
-            ))
+            [
+              {
+                which: {type: 'all'},
+                content: __(`MusicLibraryTab.All`),
+              },
+              ...grouppedMapIds.map(grp => ({
+                which: {type: 'world', worldId: grp.area},
+                content: `World #${grp.area}`,
+              })),
+              {
+                which: {type: 'others'},
+                content: __(`MusicLibraryTab.Others`),
+              },
+            ].map(({which, content}) => {
+              const key = which.type === 'world' ? which.area : which
+              return (
+                <Card
+                  style={{padding: 0}}
+                  key={key}
+                  onClick={this.handleChangeFocus(which)}
+                >
+                  <Highlightable
+                    style={{padding: '8px 10px'}}
+                    highlight={_.isEqual(which, focus)}
+                    content={content}
+                  />
+                </Card>
+              )
+            })
           }
-          <Card
-            onClick={this.handleChangeFocus({type: 'others'})}
-            style={itemStyle}
-          >
-            {__(`MusicLibraryTab.Others`)}
-          </Card>
         </div>
         <div
           style={{
