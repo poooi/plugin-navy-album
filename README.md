@@ -5,11 +5,12 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
-### Pending
+### 1.7.0
 
 - Some internal cleanups.
 - Change the way ships are sorted so same-class ships are closer to each other.
-- WIP: migrate some components to Blueprintjs.
+- Migrate to Blueprintjs.
+- Update assets.
 
 ### 1.6.11
 
