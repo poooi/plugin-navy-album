@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { Card, Text, Classes } from '@blueprintjs/core'
+import { Card } from '@blueprintjs/core'
 import { mergeMapStateToProps, modifyObject } from 'subtender'
 import { SlotitemIcon } from 'views/components/etc/icon'
 
@@ -12,6 +12,7 @@ import {
 } from './selectors'
 
 import { PTyp } from '../../ptyp'
+import { Highlightable } from '../common/highlightable'
 import { mapDispatchToProps } from '../../store'
 import { SearchBar } from '../search-bar'
 
@@ -25,10 +26,6 @@ const EqpIcon = styled(SlotitemIcon)`
     margin-right: -0.2em;
   }
 `
-
-const highlightProps = {
-  className: `${Classes.CALLOUT} ${Classes.INTENT_PRIMARY}`,
-}
 
 @connect(
   mergeMapStateToProps(
@@ -116,16 +113,15 @@ class EquipPicker extends Component {
                   style={{padding: 0}}
                   onClick={onClick}
                   className="equip-picker-item">
-                  <Text
+                  <Highlightable
                     style={{
                       paddingTop: '.4em',
                       paddingBottom: '.4em',
                       paddingLeft: '.4em',
                     }}
-                    {...(shouldHighlight ? highlightProps : {})}
-                  >
-                    {content}
-                  </Text>
+                    highlight={shouldHighlight}
+                    content={content}
+                  />
                 </Card>
               )
             })

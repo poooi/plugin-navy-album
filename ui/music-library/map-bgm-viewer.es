@@ -19,10 +19,6 @@ import { BgmListItem } from './bgm-list-item'
 
 /*
   TODO: highlight selected item.
-
-  TODO: should probably unify all "picker" components
-    so we don't put the hacky stuff everywhere.
-
  */
 
 @connect(
