@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { mergeMapStateToProps, modifyObject } from 'subtender'
 import { connect } from 'react-redux'
-import { Card, Text, Classes } from '@blueprintjs/core'
+import { Card } from '@blueprintjs/core'
 import {
   shipsInfoSelectorForView,
   listOptionsSelector,
@@ -9,12 +9,9 @@ import {
   mstIdSelector,
 } from './selectors'
 import { PTyp } from '../../ptyp'
+import { Highlightable } from '../common/highlightable'
 import { mapDispatchToProps } from '../../store'
 import { SearchBar } from '../search-bar'
-
-const highlightProps = {
-  className: `${Classes.CALLOUT} ${Classes.INTENT_PRIMARY}`,
-}
 
 @connect(
   mergeMapStateToProps(
@@ -108,17 +105,16 @@ class ShipPicker extends Component {
                   onClick={onClick}
                   className="ship-picker-item"
                 >
-                  <Text
+                  <Highlightable
                     style={{
                       paddingTop: '.4em',
                       paddingBottom: '.4em',
                       paddingLeft: '.4em',
                       ...(needPadding ? {paddingLeft: '2em'} : {}),
                     }}
-                    {...(shouldHighlight ? highlightProps : {})}
-                  >
-                    {content}
-                  </Text>
+                    highlight={shouldHighlight}
+                    content={content}
+                  />
                 </Card>
               )
             })
