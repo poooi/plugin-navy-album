@@ -4,7 +4,7 @@ import { enumFromTo } from 'subtender'
 import styled from 'styled-components'
 
 import { PTyp } from '../../../ptyp'
-import { Icon } from '../../icon'
+import { StatIcon } from '../../common/icon'
 
 const EqpIcon = styled(SlotitemIcon)`
   &.svg {
@@ -72,7 +72,7 @@ class Header extends PureComponent {
           <div style={{display: 'flex', alignItems: 'center', height: '1em'}}>
             {
               enumFromTo(1,$equip.api_rare).map(x => (
-                <Icon
+                <StatIcon
                   key={x}
                   style={{height: '1em', width: 'auto'}}
                   name="star"

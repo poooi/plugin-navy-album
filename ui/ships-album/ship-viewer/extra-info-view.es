@@ -3,8 +3,7 @@ import React, { PureComponent } from 'react'
 import { HTMLTable } from '@blueprintjs/core'
 
 import { PTyp } from '../../../ptyp'
-import { Icon } from '../../icon'
-import { MatIcon } from '../../common/icon'
+import { MatIcon, StatIcon } from '../../common/icon'
 
 class ExtraInfoView extends PureComponent {
   static propTypes = {
@@ -81,7 +80,7 @@ class ExtraInfoView extends PureComponent {
               ).map(([v, statName]) => (
                 <td key={statName}>
                   <div style={{display: 'flex', alignItems: 'center'}}>
-                    <Icon
+                    <StatIcon
                       style={{
                         height: '1.4em',
                         width: '1.4em',

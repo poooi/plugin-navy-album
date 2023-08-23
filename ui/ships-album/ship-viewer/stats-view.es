@@ -4,7 +4,7 @@ import { HTMLTable } from '@blueprintjs/core'
 import { Tooltip } from 'views/components/etc/overlay'
 
 import { PTyp } from '../../../ptyp'
-import { Icon } from '../../icon'
+import { StatIcon } from '../../common/icon'
 import { interpretRange, interpretSpeed } from '../../../game-misc'
 
 class StatsView extends PureComponent {
@@ -82,7 +82,7 @@ class StatsView extends PureComponent {
                         ...tdStyle,
                       }}
                       key={`icon-${id(ind2)}`}>
-                      <Icon
+                      <StatIcon
                         style={{height: '1.2em', width: 'auto'}}
                         name={statName}
                       />
