@@ -20,7 +20,6 @@ import { GameUpdateViewer } from './game-update-viewer'
 const NaTabs = styled(Tabs)`
   flex: 1;
   display: flex;
-  height: 100vh;
   flex-direction: column;
 
   & .na-tab[role=tab] {
