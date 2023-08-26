@@ -28,18 +28,27 @@ const asWeCan = mstId => [184, 634, 635, 639, 640].indexOf(mstId) !== -1
 
 // main.js module: CutinSpSSF, look for `preload` or `_ready` function.
 const battleShipSpecials = mstId =>
-  [ // 長門改二: special
-    541,
+  [
     // Nelson: special
     571,
-    // 陸奥改二: special
-    573,
     // Nelson改: special
     576,
+
+    // Rodney: special
+    572,
+    // Rodney改: special
+    577,
+
+    // 長門改二: special
+    541,
+    // 陸奥改二: special
+    573,
+
     // Colorado: special
     601,
     // Colorado改: special
     1496,
+
     // Maryland: special
     913,
     // Maryland改: special
