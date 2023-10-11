@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 1.7.2
+
+- Update assets.
+
 ### 1.7.1
 
 - Update assets.
