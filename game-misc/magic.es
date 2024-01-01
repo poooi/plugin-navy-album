@@ -139,12 +139,21 @@ const getShipImgPath = (id, type, damaged, debuff = false, sgRawInp = null) => {
 window.NavyAlbumGetShipImgPath = getShipImgPath
 
 // Reference: SlotLoader.getPath
-const getEquipImgPath = (id, type) => {
+// TODO: consider this to be a temp fix as no one is giving sgRawInp any value right now.
+const getEquipImgPath = (id, type, $equipsInp = null) => {
   const fullType = `slot_${type}`
   const cip = create(id, fullType)
   const padId = _.padStart(id, 4, '0')
-  // TODO: version missing.
-  const versionPart = ''
+
+  const $equips = (() => {
+    if ($equipsInp)
+      return $equipsInp
+    const {getStore} = window
+    return _.get(getStore(), ['const', '$equips'], {})
+  })()
+
+  const v = _.get($equips, [id, 'api_version'], 1)
+  const versionPart = v !== 1 ? `?version=${v}` : ''
   return `/kcs2/resources/slot/${type}/${padId}_${cip}.png${versionPart}`
 }
 
