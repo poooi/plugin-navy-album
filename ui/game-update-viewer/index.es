@@ -22,6 +22,7 @@ import {
 import { PTyp } from '../../ptyp'
 import { ErrorBoundary } from '../error-boundary'
 import { ShipGraphViewWithCG } from './ship-graph-view-with-cg'
+import { getEquipImgPath } from '../../game-misc'
 import { mapDispatchToProps } from '../../store'
 
 const renderShipGraphRow = (
@@ -128,11 +129,9 @@ class GameUpdateViewer extends PureComponent {
     const {serverIp, rSummary: {addedEquipMstIds}, $equips, uiSwitchEquip} = this.props
     const {friendly, abyssal} = addedEquipMstIds
     const length = _.sum(_.values(addedEquipMstIds).map(x => x.length))
-    const equipMstIdToSrc = mstId => {
-      const mstIdStr = String(mstId).padStart(4,'0')
-      const prefix = `http://${serverIp}/kcs/resources/image/slotitem/`
-      return `${prefix}card/${mstIdStr}.png`
-    }
+    const equipMstIdToSrc = mstId =>
+      `http://${serverIp}${getEquipImgPath(mstId, 'card')}`
+
     const mkSmallEquip = mstId => {
       const $equip = $equips[mstId]
       const iconId = $equip.api_type[3]

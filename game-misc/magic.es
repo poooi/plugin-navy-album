@@ -138,6 +138,18 @@ const getShipImgPath = (id, type, damaged, debuff = false, sgRawInp = null) => {
 
 window.NavyAlbumGetShipImgPath = getShipImgPath
 
+// Reference: SlotLoader.getPath
+const getEquipImgPath = (id, type) => {
+  const fullType = `slot_${type}`
+  const cip = create(id, fullType)
+  const padId = _.padStart(id, 4, '0')
+  // TODO: version missing.
+  const versionPart = ''
+  return `/kcs2/resources/slot/${type}/${padId}_${cip}.png${versionPart}`
+}
+
+window.NavyAlbumGetEquipImgPath = getEquipImgPath
+
 // for non-abyssal ships only.
 const getAllShipImgPaths = id => {
   if (isAbyssalShipMstId(id))
@@ -169,5 +181,6 @@ const getBgm = (id, type) => {
 export {
   shipImgType,
   getShipImgPath,
+  getEquipImgPath,
   getBgm,
 }

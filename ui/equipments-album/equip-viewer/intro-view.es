@@ -10,9 +10,12 @@ import {
 } from '../../../selectors'
 import {
   isAbyssalShipMstId,
+  getEquipImgPath,
 } from '../../../game-misc'
 
 import { PTyp } from '../../../ptyp'
+
+const id = x => x
 
 @connect(
   mergeMapStateToProps(
@@ -33,15 +36,7 @@ class IntroView extends PureComponent {
     if (isAbyssalShipMstId(mstId)) {
       return <div style={{display: 'none'}} />
     }
-    const id = x => x
-    const mstIdStr = String(mstId).padStart(4,'0')
-    /*
-      TODO: it seems that new source uses `resources/slot/` that we'll need to migrate to
-      at some point in future.
-
-      Reference: SlotLoader.getPath of main.js
-     */
-    const prefix = `http://${serverIp}/kcs/resources/image/slotitem/`
+    const prefix = `http://${serverIp}`
 
     return (
       <div style={style}>
@@ -52,7 +47,7 @@ class IntroView extends PureComponent {
           }}>
           <img
             key={`card-${mstId}`}
-            src={`${prefix}card/${mstIdStr}.png`}
+            src={`${prefix}${getEquipImgPath(mstId, 'card')}`}
             alt="equip-img"
             style={{width: 260, height: 260}}
           />
@@ -82,15 +77,15 @@ class IntroView extends PureComponent {
         >
           {
             [
-              `item_character/${mstIdStr}.png`,
-              `item_up/${mstIdStr}.png`,
-              `item_on/${mstIdStr}.png`,
-            ].map((src, ind) => (
+              'item_character',
+              'item_up',
+              'item_on',
+            ].map((which, ind) => (
               <img
                 style={{height: 200, width: 'auto'}}
-                key={src}
+                key={`${which}-${id(ind)}`}
                 alt={`eqp-extra-${ind}`}
-                src={`${prefix}${src}`}
+                src={`${prefix}${getEquipImgPath(mstId, which)}`}
               />
             ))
           }
