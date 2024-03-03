@@ -5,6 +5,11 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 1.7.5
+
+- Heian Maru (and Kai) should have special CGs.
+- Update assets.
+
 ### 1.7.4
 
 - Update assets.
