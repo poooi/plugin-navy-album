@@ -24,7 +24,8 @@ const downloadUrl =
   remote.getCurrentWebContents().downloadURL
 
 // main.js module: CutinSSAttack._getFlagShipPosition
-const asWeCan = mstId => [184, 634, 635, 639, 640].indexOf(mstId) !== -1
+// TODO: we should prob test AS as ship type.
+const asWeCan = mstId => [184, 634, 635, 639, 640, 944, 949].indexOf(mstId) !== -1
 
 // main.js module: CutinSpSSF, look for `preload` or `_ready` function.
 const battleShipSpecials = mstId =>
