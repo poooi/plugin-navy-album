@@ -5,7 +5,8 @@ module KcNavyAlbum.BuildRemodelUseitemConsumption (
 ) where
 
 {-
-  The useitem here refers to instantBuild and devMat.
+  The useitem here refers to instantBuild, devMat, gunMat and screw
+  (and probably more items in the future that can only be extracted from game code).
 
   In main.js, this piece of information is obtained by:
 
@@ -30,6 +31,20 @@ module KcNavyAlbum.BuildRemodelUseitemConsumption (
   Let's assume there's one program given by REMODEL_COST_CALCULATOR,
   which, when given input from stdin, calculates all those info for us
   and gives as stdout the result.
+
+  TODO: there is also some extra bit of logic involved in ShipUpgradeModel.
+
+  In particular:
+
+  - newhokohesosizai (or GunMat):
+    + requires property `mst_id_after` (aka. plain data `api_id`)
+    + requires property `mst_id_before` (aka. plain data `api_current_ship_id`)
+  - revkit (or Screw):
+    + requires property `mst_id_after` (aka. plain data `api_id`)
+
+  In future we should consider passing down raw master data directly instead of
+  current method of manually reconstructing what is being used.
+
  -}
 
 import Control.Monad
@@ -51,6 +66,7 @@ import Turtle.Prelude hiding (die, sortOn)
 
 data RemodelInfoPrepare = RemodelInfoPrepare
   { mstIdBefore :: Int
+  , mstIdAfter :: Int
   , blueprintCost :: Int
   , steelCost :: Int
   }
@@ -60,6 +76,8 @@ data RemodelInfoResult = RemodelInfoResult
   { mstIdBefore :: Int
   , instantBuildCost :: Int
   , devMatCost :: Int
+  , gunMatCost :: Int
+  , screwCost :: Int
   }
   deriving (Show, Generic)
 
@@ -90,10 +108,12 @@ subCmdMain CmdCommon {getMasterRoot} _cmdHelpPrefix = do
           , aftershipid = Just afterShipId
           } <-
           mstShip
-        guard $ read (T.unpack afterShipId) > (0 :: Int)
+        [(afterId, "")] <- pure $ reads @Int (T.unpack afterShipId)
+        guard $ afterId > 0
         pure
           RemodelInfoPrepare
             { mstIdBefore
+            , mstIdAfter = afterId
             , steelCost
             , blueprintCost = fromMaybe 0 $ do
                 Shipupgrade {drawingCount} <- upgrades IM.!? mstIdBefore
@@ -111,6 +131,10 @@ subCmdMain CmdCommon {getMasterRoot} _cmdHelpPrefix = do
     Right v -> pure v
     Left errMsg -> do
       die ("JSON parse error: " <> errMsg)
+  {-
+    TODO: we should probably not guess at all - the reason we want a lookup table is because
+    we don't want those spagetti code in our codebase.
+   -}
   let guessDevMat steel bpCost
         | bpCost > 0 || steel < 4500 = 0
         | steel < 5500 = 10
@@ -121,14 +145,7 @@ subCmdMain CmdCommon {getMasterRoot} _cmdHelpPrefix = do
           { mstIdBefore
           , instantBuildCost
           , devMatCost
-          } = fromMaybe False $ do
-          guard $ instantBuildCost == 0
-          Ship {afterfuel = Just steelCost} <- ships IM.!? mstIdBefore
-          let bpCost = fromMaybe 0 $ do
-                Shipupgrade {drawingCount = v} <- upgrades IM.!? mstIdBefore
-                pure v
-          guard $ devMatCost == guessDevMat steelCost bpCost
-          pure True
+          } = False
       (results1, guessables) = partition (not . isGuessable) results0
       results2 = sortOn (\RemodelInfoResult {mstIdBefore = v} -> v) results1
   {-
