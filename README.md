@@ -5,6 +5,12 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 1.7.7
+
+- Harusame K2 update, add screw as one type of remodel cost.
+- Display Gun Mat cost.
+- Version 1.7.6 is the same as 1.7.5, I probably bumped version twice by mistake.
+
 ### 1.7.5
 
 - Heian Maru (and Kai) should have special CGs.
