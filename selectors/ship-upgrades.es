@@ -30,19 +30,24 @@ const shipUpgradesSelector = createSelector(
   }
 )
 
-const devMatAndInstantBuildCost = (() => {
+const extraCostTable = (() => {
   const xs = readJsonSync(join(__dirname, '..', 'assets', 'remodel-info-useitem.json'))
   return _.keyBy(xs, 'mstIdBefore')
 })()
 
 /*
-  Returns {devMat: <number>, instantBuild: <number>}
+  Returns {devMat: <number>, instantBuild: <number>, gunMat: <number>, screw: <number>}
  */
-const computeDevMatAndInstantBuildCost = (mstIdBefore, blueprint, steel) => {
-  const info = devMatAndInstantBuildCost[mstIdBefore]
+const computeExtraRemodelCost = (mstIdBefore, blueprint, steel) => {
+  const info = extraCostTable[mstIdBefore]
   if (info) {
-    const {devMatCost: devMat, instantBuildCost: instantBuild} = info
-    return {devMat, instantBuild}
+    const {
+      devMatCost: devMat,
+      instantBuildCost: instantBuild,
+      gunMatCost: gunMat,
+      screwCost: screw,
+    } = info
+    return {devMat, instantBuild, gunMat, screw}
   }
 
   /*
@@ -54,7 +59,7 @@ const computeDevMatAndInstantBuildCost = (mstIdBefore, blueprint, steel) => {
     steel < 5500 ? 10 :
     steel < 6500 ? 15 :
     20
-  return {devMat, instantBuild: 0}
+  return {devMat, instantBuild: 0, gunMat: 0, screw: 0}
 }
 
 /*
@@ -117,7 +122,7 @@ const remodelDetailsSelector = createSelector(
         level: $ship.api_afterlv,
         ammo, steel,
         ...extraInfo,
-        ...computeDevMatAndInstantBuildCost(mstIdBefore, extraInfo.blueprint, steel),
+        ...computeExtraRemodelCost(mstIdBefore, extraInfo.blueprint, steel),
       }
     })
     return remodelDetails
