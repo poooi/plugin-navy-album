@@ -12,7 +12,6 @@ module KcNavyAlbum.Main (
 import Control.Monad
 import qualified Data.Set as S
 import qualified Data.Text as T
-import Filesystem.Path.CurrentOS hiding (null)
 import qualified KcNavyAlbum.BuildRemodelUseitemConsumption
 import KcNavyAlbum.CmdCommon
 import qualified KcNavyAlbum.DefaultDigest
@@ -35,7 +34,7 @@ updateKcReplay = do
 main :: IO ()
 main = do
   Just fp <- need "NAVY_ALBUM_REPO"
-  cd (fromText fp)
+  cd (T.unpack fp)
   common <- mkCmdCommon
   getArgs >>= \case
     subCmd : args
