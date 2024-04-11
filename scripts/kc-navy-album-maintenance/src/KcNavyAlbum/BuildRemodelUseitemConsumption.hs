@@ -1,8 +1,8 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 
-module KcNavyAlbum.BuildRemodelUseitemConsumption (
-  subCmdMain,
-) where
+module KcNavyAlbum.BuildRemodelUseitemConsumption
+  ( subCmdMain
+  ) where
 
 {-
   The useitem here refers to instantBuild, devMat, gunMat and screw
@@ -90,35 +90,31 @@ instance FromJSON RemodelInfoResult
 subCmdMain :: CmdCommon -> String -> IO ()
 subCmdMain CmdCommon {getMasterRoot} _cmdHelpPrefix = do
   Root {mstShip, mstShipupgrade} <- getMasterRoot
-  let upgrades =
-        IM.fromList $
-          fmap
-            (\u@Shipupgrade {currentShipId} -> (currentShipId, u))
-            mstShipupgrade
-      ships =
-        IM.fromList $
-          fmap
-            (\s@Ship {kcId = shipId} -> (shipId, s))
-            mstShip
-      prepared :: [RemodelInfoPrepare]
-      prepared = do
-        Ship
-          { kcId = mstIdBefore
-          , afterfuel = Just steelCost
-          , aftershipid = Just afterShipId
-          } <-
-          mstShip
-        [(afterId, "")] <- pure $ reads @Int (T.unpack afterShipId)
-        guard $ afterId > 0
-        pure
-          RemodelInfoPrepare
-            { mstIdBefore
-            , mstIdAfter = afterId
-            , steelCost
-            , blueprintCost = fromMaybe 0 $ do
-                Shipupgrade {drawingCount} <- upgrades IM.!? mstIdBefore
-                pure drawingCount
-            }
+  let
+    upgrades =
+      IM.fromList $
+        fmap
+          (\u@Shipupgrade {currentShipId} -> (currentShipId, u))
+          mstShipupgrade
+    prepared :: [RemodelInfoPrepare]
+    prepared = do
+      Ship
+        { kcId = mstIdBefore
+        , afterfuel = Just steelCost
+        , aftershipid = Just afterShipId
+        } <-
+        mstShip
+      [(afterId, "")] <- pure $ reads @Int (T.unpack afterShipId)
+      guard $ afterId > 0
+      pure
+        RemodelInfoPrepare
+          { mstIdBefore
+          , mstIdAfter = afterId
+          , steelCost
+          , blueprintCost = fromMaybe 0 $ do
+              Shipupgrade {drawingCount} <- upgrades IM.!? mstIdBefore
+              pure drawingCount
+          }
   Just remodelCostCalculator <- need "REMODEL_COST_CALCULATOR"
   (ec, outRaw, errRaw) <-
     Turtle.Bytes.procStrictWithErr remodelCostCalculator [] (pure $ BSL.toStrict $ encode prepared)
@@ -135,19 +131,10 @@ subCmdMain CmdCommon {getMasterRoot} _cmdHelpPrefix = do
     TODO: we should probably not guess at all - the reason we want a lookup table is because
     we don't want those spagetti code in our codebase.
    -}
-  let guessDevMat steel bpCost
-        | bpCost > 0 || steel < 4500 = 0
-        | steel < 5500 = 10
-        | steel < 6500 = 15
-        | otherwise = 20
-      isGuessable
-        RemodelInfoResult
-          { mstIdBefore
-          , instantBuildCost
-          , devMatCost
-          } = False
-      (results1, guessables) = partition (not . isGuessable) results0
-      results2 = sortOn (\RemodelInfoResult {mstIdBefore = v} -> v) results1
+  let
+    isGuessable _ = False
+    (results1, _) = partition (not . isGuessable) results0
+    results2 = sortOn (\RemodelInfoResult {mstIdBefore = v} -> v) results1
   {-
     To keep asset size small, items that are "guessable" are ignored,
     a "guessable" item meets all of the following criteria:
@@ -156,7 +143,5 @@ subCmdMain CmdCommon {getMasterRoot} _cmdHelpPrefix = do
     - devMatCost can be derived from steel cost and blueprint cost
       (see `guessDevMat` for that this means)
    -}
-  putStrLn $
-    "Dropped " <> show (length guessables) <> " items from the result (follow default rules)."
   encodeFile "assets/remodel-info-useitem.json" results2
   putStrLn $ show (length results2) <> " records written."
