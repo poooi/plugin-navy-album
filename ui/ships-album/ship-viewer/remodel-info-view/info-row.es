@@ -71,14 +71,15 @@ class InfoRow extends PureComponent {
         <div style={{display: 'flex', alignItems: 'center'}}>
           {
             _.flatMap(
-              'ammo steel devMat instantBuild blueprint catapult report aviationMat armsMat boiler'
+              'ammo steel devMat instantBuild blueprint catapult report gunMat aviationMat armsMat boiler screw'
                 .split(' '),
               itemOrResource => {
                 const matIds = {
                   ammo: 2,
                   steel: 3,
-                  devMat: 7,
                   instantBuild: 5,
+                  devMat: 7,
+                  screw: 8,
                 }
                 const v = detail[itemOrResource]
                 if (v === 0)
