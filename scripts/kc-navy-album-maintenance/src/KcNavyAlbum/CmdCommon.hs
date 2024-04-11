@@ -1,10 +1,12 @@
-module KcNavyAlbum.CmdCommon (
-  CmdCommon (..),
-  mkCmdCommon,
-) where
+module KcNavyAlbum.CmdCommon
+  ( CmdCommon (..)
+  , mkCmdCommon
+  ) where
 
 import Control.Once
 import qualified Data.Aeson as Aeson
+import qualified Data.ByteString as BS
+import qualified Data.ByteString.Lazy as BSL
 import Kantour.Core.GameResource.Magic
 import Kantour.Core.KcData.Master.Direct.Root
 import Network.HTTP.Client
@@ -19,14 +21,26 @@ data CmdCommon = CmdCommon
   , doesResourceExist :: String -> IO Bool
   }
 
+loadRawMasterDataFromInternet :: IO BS.ByteString
+loadRawMasterDataFromInternet = do
+  getManager <- once (newManager tlsManagerSettings)
+  mgr <- getManager
+  req <- parseRequest "https://raw.githubusercontent.com/Tibowl/api_start2/master/start2.json"
+  resp <- httpLbs req mgr
+  pure $ BSL.toStrict (responseBody resp)
+
+loadRawMasterData :: IO BS.ByteString
+loadRawMasterData =
+  maybe loadRawMasterDataFromInternet BS.readFile localSource
+  where
+    localSource = Nothing -- Just "/tmp/master.json"
+
 mkCmdCommon :: IO CmdCommon
 mkCmdCommon = do
+  raw <- loadRawMasterData
   getManager <- once (newManager tlsManagerSettings)
   getMasterRoot <- once $ do
-    mgr <- getManager
-    req <- parseRequest "https://raw.githubusercontent.com/Tibowl/api_start2/master/start2.json"
-    resp <- httpLbs req mgr
-    case Aeson.eitherDecode @Root (responseBody resp) of
+    case Aeson.eitherDecode @Root (BSL.fromStrict raw) of
       Left msg -> die ("parse error: " <> msg)
       Right r -> pure r
 
