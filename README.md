@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 1.7.8
+
+- Update assets.
+
 ### 1.7.7
 
 - Harusame K2 update, add screw as one type of remodel cost.
