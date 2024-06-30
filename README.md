@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 1.7.9
+
+- Update assets for Hatsuzuki K2.
+
 ### 1.7.8
 
 - Update assets.
