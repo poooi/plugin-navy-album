@@ -105,6 +105,7 @@ const remodelDetailsSelector = createSelector(
           aviationMat: 0,
           armsMat: 0,
           boiler: 0,
+          techMat: 0,
         }
       } else {
         extraInfo = {
@@ -114,6 +115,7 @@ const remodelDetailsSelector = createSelector(
           aviationMat: _.get($shipUpgrade, 'api_aviation_mat_count', 0),
           armsMat: _.get($shipUpgrade, 'api_arms_mat_count', 0),
           boiler: _.get($shipUpgrade, 'api_boiler_count', 0),
+          techMat: _.get($shipUpgrade, 'api_tech_count', 0),
         }
       }
 
