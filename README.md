@@ -5,6 +5,11 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 1.7.10
+
+- Update assets.
+- "Overseas Warship Technology" is now displayed for Richelieu Deux.
+
 ### 1.7.9
 
 - Update assets for Hatsuzuki K2.
