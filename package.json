@@ -61,6 +61,6 @@
   },
   "dependencies": {
     "shallowequal": "^1.0.2",
-    "subtender": "^0.15.0"
+    "subtender": "^0.15.1"
   }
 }
