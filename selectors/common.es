@@ -179,8 +179,11 @@ const getShipImgPathFuncSelector = createSelector(
 const getShipImgSrcFuncSelector = createSelector(
   serverIpSelector,
   getShipImgPathFuncSelector,
-  (serverIp, getShipImgPath) => (...args) =>
-    `http://${serverIp}${getShipImgPath(...args)}`
+  (serverIp, getShipImgPath) => (...args) => {
+    // TODO: hacky
+    const p = getShipImgPath(...args)
+    return _.startsWith(p, 'file:') ? p : `http://${serverIp}${p}`
+  }
 )
 
 export {
