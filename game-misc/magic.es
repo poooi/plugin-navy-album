@@ -1,9 +1,15 @@
 import _ from 'lodash'
+import path from 'path-extra'
+
+import { NavyAlbum } from '../devtools'
+
 import {
   isAbyssalShipMstId,
 } from './basic'
-
-import { NavyAlbum } from '../devtools'
+import {
+  findHackFilePath,
+  pathToFileURL,
+} from './resource-hack'
 
 const shipImgType = [
   'banner',
@@ -88,6 +94,21 @@ const mkVersionUtil = getShipGraphVersion => {
   return VersionUtil
 }
 
+const getHackedResourcePath = p0 => {
+  // Since first character is always `/`
+  const [_ignored, ...pathSegs] = _.split(p0, '/')
+  const p1 = _.join(pathSegs, path.posix.sep)
+  return findHackFilePath(p1)
+}
+
+const getTrueResourcePath = (p, versionPart) => {
+  const hackedPath = getHackedResourcePath(p)
+  if (hackedPath) {
+    return pathToFileURL(hackedPath).href
+  }
+  return p + versionPart
+}
+
 /*
   Caches img path without a version part.
  */
@@ -108,7 +129,7 @@ const getShipImgPathHelper = sgRaw => (id, type, damaged, debuff = false) => {
 
   const mapkey = [id, type, damaged, debuff].toString()
   if (imgPathCache.has(mapkey)) {
-    return imgPathCache.get(mapkey) + versionPart
+    return getTrueResourcePath(imgPathCache.get(mapkey), versionPart)
   }
   if (!shipImgType.includes(type)) {
     console.warn(`unexpected type: ${type}`)
@@ -127,7 +148,7 @@ const getShipImgPathHelper = sgRaw => (id, type, damaged, debuff = false) => {
   }
   const ret = `/kcs2/resources/ship/${ntype}/${padId}${debuffInfix}_${cipherNum}${fcukTanaka}.png`
   imgPathCache.set(mapkey, ret)
-  return ret + versionPart
+  return getTrueResourcePath(ret, versionPart)
 }
 
 NavyAlbum.getShipImgPath = (() => {

@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### Pending
+
+- Resource hack now overrides in-game asset if exists.
+
 ### 1.7.10
 
 - Update assets.
