@@ -88,11 +88,9 @@ const imgListSpecialCG = [
 @connect(
   (state, props) => {
     // TODO: use selector
-    const serverIp = _.get(state, ['info', 'server', 'ip'])
     const {mstId} = props
     const isMasterIdSpecialCG = isMasterIdSpecialCGFuncSelector(state)
     return {
-      serverIp,
       isSpecialCG: isMasterIdSpecialCG(mstId),
       getShipImgSrc: getShipImgSrcFuncSelector(state),
     }
