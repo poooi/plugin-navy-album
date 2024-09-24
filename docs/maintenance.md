@@ -35,3 +35,12 @@ Update asset `assets/remodel-info-useitem.json` if needed.
 
 `stack build && stack exec -- demo build-remodel-useitem-consumption` should get this computed correctly,
 but it'll require an extra tool set as `REMODEL_COST_CALCULATOR` environment variable.
+
+## debuff info
+
+Not critical, this just saves user some time by avoiding probing known info.
+
+Don't run this when an event is only partially implemented for the obvious reason.
+
+See comment of `NavyAlbum.populateDebuffInfo` in `store/action-creator.es`.
+Use resulting content to replace `assets/default-debuff-info.json`
