@@ -16,7 +16,13 @@ const getCachePath = (pathname = '') => {
   return path.join(dir, pathname)
 }
 
+const hackFileCache = new Map()
+
 const findHackFilePath = (pathname = '') => {
+  if (hackFileCache.has(pathname)) {
+    return hackFileCache.get(pathname)
+  }
+
   const originFilePath = getCachePath(path.join('KanColle', pathname))
   const sp = originFilePath.split('.')
   const ext = sp.pop()
@@ -27,12 +33,15 @@ const findHackFilePath = (pathname = '') => {
   const hackedFilePath = sp.join('.')
   try {
     fs.accessSync(hackedFilePath, fs.constants.R_OK)
+    hackFileCache.set(pathname, hackedFilePath)
     return hackedFilePath
   } catch (_e0) {
     try {
       fs.accessSync(originFilePath, fs.constants.R_OK)
+      hackFileCache.set(pathname, originFilePath)
       return originFilePath
     } catch (_e1) {
+      hackFileCache.set(pathname, undefined)
       return undefined
     }
   }
