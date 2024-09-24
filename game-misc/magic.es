@@ -21,8 +21,6 @@ const shipImgType = [
   'album_status',
 ]
 
-const map = new Map()
-
 // Magic of tanaka
 const resource = [
   6657, 5699, 3371, 8909, 7719, 6229, 5449, 8561, 2987, 5501,
@@ -90,6 +88,11 @@ const mkVersionUtil = getShipGraphVersion => {
   return VersionUtil
 }
 
+/*
+  Caches img path without a version part.
+ */
+const imgPathCache = new Map()
+
 const getShipImgPathHelper = sgRaw => (id, type, damaged, debuff = false) => {
   const sgRawInfoInd = sgRaw.findIndex(x => x.api_id === id)
   const VersionUtil = mkVersionUtil(shipId => {
@@ -100,15 +103,12 @@ const getShipImgPathHelper = sgRaw => (id, type, damaged, debuff = false) => {
   /*
     Note that this part is not inside of the cache so that it can update at runtime
     with updates to master data.
-
-    TODO: we'd better wire-in some selector or
-    this ad-hoc caching mechanism gotta fail at some point.
    */
   const versionPart = VersionUtil.getResourceVersion(0, id)
 
   const mapkey = [id, type, damaged, debuff].toString()
-  if (map.has(mapkey)) {
-    return map.get(mapkey) + versionPart
+  if (imgPathCache.has(mapkey)) {
+    return imgPathCache.get(mapkey) + versionPart
   }
   if (!shipImgType.includes(type)) {
     console.warn(`unexpected type: ${type}`)
@@ -126,7 +126,7 @@ const getShipImgPathHelper = sgRaw => (id, type, damaged, debuff = false) => {
     fcukTanaka = `_${sgRaw[sgRawInfoInd].api_filename}`
   }
   const ret = `/kcs2/resources/ship/${ntype}/${padId}${debuffInfix}_${cipherNum}${fcukTanaka}.png`
-  map.set(mapkey, ret)
+  imgPathCache.set(mapkey, ret)
   return ret + versionPart
 }
 
