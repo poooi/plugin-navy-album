@@ -18,14 +18,13 @@ import {
   isMasterIdSpecialCGFuncSelector,
   getShipImgSrcFuncSelector,
 } from '../../../selectors'
+import {
+  submarineTendersSelector,
+} from './selectors'
 import { PTyp } from '../../../ptyp'
 
 const downloadUrl =
   remote.getCurrentWebContents().downloadURL
-
-// main.js module: CutinSSAttack._getFlagShipPosition
-// TODO: we should prob test AS as ship type.
-const asWeCan = mstId => [184, 634, 635, 639, 640, 944, 949].indexOf(mstId) !== -1
 
 // main.js module: CutinSpSSF, look for `preload` or `_ready` function.
 const battleShipSpecials = mstId =>
@@ -57,13 +56,13 @@ const battleShipSpecials = mstId =>
   ].indexOf(mstId) !== -1
 
 // TODO: clean up
-const mkImgListFriendly = mstId => {
+const mkImgListFriendly = (mstId, whales) => {
   const xs = _.flatMap(shipImgType, ty =>
     ty === 'album_status' ?
       [{ty, damaged: false}] :
       [{ty, damaged: false}, {ty, damaged: true}]
   )
-  if (asWeCan(mstId)) {
+  if (whales.includes(mstId)) {
     xs.push({ty: 'special', damaged: false})
     xs.push({ty: 'special', damaged: true})
   }
@@ -93,6 +92,7 @@ const imgListSpecialCG = [
     return {
       isSpecialCG: isMasterIdSpecialCG(mstId),
       getShipImgSrc: getShipImgSrcFuncSelector(state),
+      whales: submarineTendersSelector(state),
     }
   }
 )
@@ -105,15 +105,17 @@ class GalleryView extends PureComponent {
     // connected:
     isSpecialCG: PTyp.bool.isRequired,
     getShipImgSrc: PTyp.func.isRequired,
+    whales: PTyp.array.isRequired,
   }
 
   render() {
     const {
       mstId, style, debuffFlag,
       isSpecialCG, getShipImgSrc,
+      whales,
     } = this.props
     const imgList = isSpecialCG ? imgListSpecialCG :
-      isAbyssalShipMstId(mstId) ? imgListAbyssal : mkImgListFriendly(mstId)
+      isAbyssalShipMstId(mstId) ? imgListAbyssal : mkImgListFriendly(mstId, whales)
 
     return (
       <div

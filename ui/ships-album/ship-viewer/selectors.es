@@ -87,9 +87,24 @@ const minLevelSelector = createSelector(
   }
 )
 
+/*
+  :TaigeiBoing:
+
+  Ref: main.js module: CutinSSAttack._getFlagShipPosition
+
+  Note that while for main.js it is hard-coded,
+  it is reasonable to assume all AS gets this special graph.
+ */
+const submarineTendersSelector = createSelector(
+  constSelector,
+  ({$ships}) =>
+    _.values($ships).flatMap(x => x.api_stype === 20 ? [x.api_id] : [])
+)
+
 export {
   headerInfoSelector,
   activeTabSelector,
   statsAtCurrentLevelSelector,
   minLevelSelector,
+  submarineTendersSelector,
 }
