@@ -23,6 +23,9 @@ Update `selectors/ship-upgrades.es` using info from `kcs2/js/main.js` if needed
 
 ## graphs for special attacks
 
+(Note: skip this step for now - `special` seems to exist for all ships that have special attacks,
+despite some are just using normal CGs)
+
 Update `ui/ships-album/ship-viewer/gallery-view.es` using info from running `demo scan-special-ship-graphs` if needed
 (note that this sub-command does not run by `def`).
 
