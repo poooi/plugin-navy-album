@@ -2,8 +2,7 @@ import { modifyObject } from 'subtender'
 
 import {
   debuffInfoSelector,
-  serverIpSelector,
-  getShipImgPathFuncSelector,
+  getShipImgSrcFuncSelector,
 } from '../selectors'
 
 const testImageAvailability = (url, callback) => {
@@ -21,16 +20,12 @@ const mkTouchDebuffGraph = actionCreator => (mstId, forced) =>
   (dispatch, getState) => setTimeout(() => {
     const poiState = getState()
     const debuffInfo = debuffInfoSelector(poiState)
-    const getShipImgPath = getShipImgPathFuncSelector(poiState)
+    const getShipImgSrc = getShipImgSrcFuncSelector(poiState)
 
     if (!forced) {
       if (mstId in debuffInfo)
         return
     }
-
-    const serverIp = serverIpSelector(poiState)
-    const normalPath = getShipImgPath(mstId, 'banner', false, false)
-    const debuffPath = getShipImgPath(mstId, 'banner', false, true)
 
     /*
        we first check if normal graph is available,
@@ -39,8 +34,8 @@ const mkTouchDebuffGraph = actionCreator => (mstId, forced) =>
        before we try to detect something that might not exist -
        we need to rule out the case in which network is not available.
      */
-    const normalImgUrl = `http://${serverIp}${normalPath}`
-    const debuffImgUrl = `http://${serverIp}${debuffPath}`
+    const normalImgSrc = getShipImgSrc(mstId, 'banner', false, false)
+    const debuffImgSrc = getShipImgSrc(mstId, 'banner', false, true)
 
     const handleDebuffImgAvaResult = isDebuffImgAvailable => {
       dispatch(actionCreator.debuffInfoModify(
@@ -49,11 +44,11 @@ const mkTouchDebuffGraph = actionCreator => (mstId, forced) =>
     }
 
     testImageAvailability(
-      normalImgUrl,
+      normalImgSrc,
       isNormalImgAvailable => {
         if (isNormalImgAvailable) {
           testImageAvailability(
-            debuffImgUrl,
+            debuffImgSrc,
             handleDebuffImgAvaResult
           )
         }

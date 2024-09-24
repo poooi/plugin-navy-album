@@ -3,18 +3,15 @@ import { connect } from 'react-redux'
 import { PTyp } from '../ptyp'
 import { mapDispatchToProps } from '../store'
 import {
-  serverIpSelector,
-  getShipImgPathFuncSelector,
+  getShipImgSrcFuncSelector,
 } from '../selectors'
 
 @connect(
   (state, ownProps) => {
     const {mstId, graphType, damaged, debuffFlag} = ownProps
-    const serverIp = serverIpSelector(state)
-    const getShipImgPath = getShipImgPathFuncSelector(state)
-    const path = getShipImgPath(mstId, graphType, damaged, debuffFlag)
+    const getShipImgSrc = getShipImgSrcFuncSelector(state)
     return {
-      src: `http://${serverIp}${path}`,
+      src: getShipImgSrc(mstId, graphType, damaged, debuffFlag),
     }
   },
   mapDispatchToProps

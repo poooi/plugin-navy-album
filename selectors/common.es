@@ -173,6 +173,16 @@ const getShipImgPathFuncSelector = createSelector(
   sgRaw => getShipImgPathHelper(sgRaw)
 )
 
+/*
+  Selects a function ready for `src` attribute of an `img` HTML tag.
+ */
+const getShipImgSrcFuncSelector = createSelector(
+  serverIpSelector,
+  getShipImgPathFuncSelector,
+  (serverIp, getShipImgPath) => (...args) =>
+    `http://${serverIp}${getShipImgPath(...args)}`
+)
+
 export {
   extSelector,
   uiSelector,
@@ -192,6 +202,6 @@ export {
   masterSelector,
   poiVolumeSelector,
   debuffInfoSelector,
-  getShipImgPathFuncSelector,
+  getShipImgSrcFuncSelector,
 }
 

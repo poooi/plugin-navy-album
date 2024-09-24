@@ -16,7 +16,7 @@ import {
 } from '../../../game-misc'
 import {
   isMasterIdSpecialCGFuncSelector,
-  getShipImgPathFuncSelector,
+  getShipImgSrcFuncSelector,
 } from '../../../selectors'
 import { PTyp } from '../../../ptyp'
 
@@ -94,7 +94,7 @@ const imgListSpecialCG = [
     return {
       serverIp,
       isSpecialCG: isMasterIdSpecialCG(mstId),
-      getShipImgPath: getShipImgPathFuncSelector(state),
+      getShipImgSrc: getShipImgSrcFuncSelector(state),
     }
   }
 )
@@ -105,15 +105,14 @@ class GalleryView extends PureComponent {
     debuffFlag: PTyp.bool.isRequired,
 
     // connected:
-    serverIp: PTyp.string.isRequired,
     isSpecialCG: PTyp.bool.isRequired,
-    getShipImgPath: PTyp.func.isRequired,
+    getShipImgSrc: PTyp.func.isRequired,
   }
 
   render() {
     const {
       mstId, style, debuffFlag,
-      serverIp, isSpecialCG, getShipImgPath,
+      isSpecialCG, getShipImgSrc,
     } = this.props
     const imgList = isSpecialCG ? imgListSpecialCG :
       isAbyssalShipMstId(mstId) ? imgListAbyssal : mkImgListFriendly(mstId)
@@ -125,7 +124,7 @@ class GalleryView extends PureComponent {
       >
         {
           imgList.map(x => {
-            const url = `http://${serverIp}${getShipImgPath(mstId, x.ty, x.damaged, debuffFlag)}`
+            const src = getShipImgSrc(mstId, x.ty, x.damaged, debuffFlag)
             return (
               <Card
                 key={`${mstId},${x.ty},${x.damaged}`}
@@ -135,14 +134,14 @@ class GalleryView extends PureComponent {
               >
                 <img
                   style={{maxWidth: '100%', height: 'auto'}}
-                  src={url}
+                  src={src}
                   alt={`ship=${mstId}, type=${x.ty}, damaged=${x.damaged}`}
                   key={`${mstId},${x.ty},${x.damaged},${debuffFlag}`}
                 />
                 <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
                   <Button
                     style={{width: 27, height: 27}}
-                    onClick={() => downloadUrl(url)}
+                    onClick={() => downloadUrl(src)}
                     small
                     text={<FontAwesome name="save" />}
                   />

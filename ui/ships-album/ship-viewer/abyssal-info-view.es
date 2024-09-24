@@ -8,8 +8,7 @@ import { connect } from 'react-redux'
 import { PTyp } from '../../../ptyp'
 import { EquipmentsView } from './equipments-view'
 import {
-  serverIpSelector,
-  getShipImgPathFuncSelector,
+  getShipImgSrcFuncSelector,
 } from '../../../selectors'
 import { StatsView } from './stats-view'
 
@@ -41,8 +40,7 @@ const mkStats = (_s, $abyssal) => {
 
 @connect(
   createStructuredSelector({
-    serverIp: serverIpSelector,
-    getShipImgPath: getShipImgPathFuncSelector,
+    getShipImgSrc: getShipImgSrcFuncSelector,
   })
 )
 class AbyssalInfoView extends PureComponent {
@@ -52,14 +50,13 @@ class AbyssalInfoView extends PureComponent {
     debuffFlag: PTyp.bool.isRequired,
 
     // connected
-    serverIp: PTyp.string.isRequired,
-    getShipImgPath: PTyp.func.isRequired,
+    getShipImgSrc: PTyp.func.isRequired,
   }
 
   render() {
     const {
       mstId, $ship, debuffFlag,
-      serverIp, getShipImgPath,
+      getShipImgSrc,
     } = this.props
     const $abyssal = abyssalInfo[mstId]
     const {__} = window.i18n["poi-plugin-navy-album"]
@@ -68,12 +65,11 @@ class AbyssalInfoView extends PureComponent {
       Array.isArray($abyssal.EQUIPS) &&
       Array.isArray($abyssal.SLOTS)
 
-    const url = `http://${serverIp}${getShipImgPath(mstId, 'full', false, debuffFlag)}`
     return (
       <div style={{margin: '.2em', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
         <img
           style={{maxWidth: '100%', height: 'auto'}}
-          src={url}
+          src={getShipImgSrc(mstId, 'full', false, debuffFlag)}
           alt={__('ShipsTab.WaitingDataFor',mstId)}
           key={`${mstId},${debuffFlag}`}
         />

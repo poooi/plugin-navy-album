@@ -9,9 +9,8 @@ import {
 } from './selectors'
 import { levelSelector } from '../selectors'
 import {
-  serverIpSelector,
   wctfShipsSelector,
-  getShipImgPathFuncSelector,
+  getShipImgSrcFuncSelector,
 } from '../../../selectors'
 
 import { EquipmentsView } from './equipments-view'
@@ -97,8 +96,7 @@ const normalizeIntro = text =>
     // Level-dependent stats
     statsL: statsAtCurrentLevelSelector,
     wctfShips: wctfShipsSelector,
-    serverIp: serverIpSelector,
-    getShipImgPath: getShipImgPathFuncSelector,
+    getShipImgSrc: getShipImgSrcFuncSelector,
   })
 )
 class ShipInfoView extends PureComponent {
@@ -110,16 +108,14 @@ class ShipInfoView extends PureComponent {
     // connected
     statsL: PTyp.object.isRequired,
     wctfShips: PTyp.object.isRequired,
-    serverIp: PTyp.string.isRequired,
-    getShipImgPath: PTyp.func.isRequired,
+    getShipImgSrc: PTyp.func.isRequired,
   }
 
   render() {
     const {
       mstId, $ship,
       statsL, level, wctfShips,
-      serverIp,
-      getShipImgPath,
+      getShipImgSrc,
     } = this.props
     const wctfShip = _.get(wctfShips,mstId, {})
     // normalize: 'equip' prop can either be a number or an Object of {id, star}
@@ -143,7 +139,6 @@ class ShipInfoView extends PureComponent {
     const {__} = window.i18n["poi-plugin-navy-album"]
     const introMessaage = normalizeIntro($ship.api_getmes)
     const shipStats = mkStats($ship, wctfShip, statsL, level)
-    const url = `http://${serverIp}${getShipImgPath(mstId, 'card', false)}`
     return (
       <div
         className="ship-info-view"
@@ -168,7 +163,7 @@ class ShipInfoView extends PureComponent {
             <img
               key={mstId}
               style={{width: 218, height: 300}}
-              src={url}
+              src={getShipImgSrc(mstId, 'card', false)}
               alt={__('ShipsTab.WaitingDataFor',mstId)}
             />
           </div>
