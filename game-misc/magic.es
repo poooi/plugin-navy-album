@@ -131,7 +131,11 @@ const getShipImgPathHelper = sgRaw => (id, type, damaged, debuff = false) => {
   if (imgPathCache.has(mapkey)) {
     return getTrueResourcePath(imgPathCache.get(mapkey), versionPart)
   }
-  if (!shipImgType.includes(type)) {
+  /*
+    TODO: `shipImgType` is used to populate gallery view,
+    so we can't put `special` in there for now.
+   */
+  if (!shipImgType.includes(type) && type !== 'special') {
     console.warn(`unexpected type: ${type}`)
   }
   if (type === 'album_status' && damaged) {
