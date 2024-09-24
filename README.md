@@ -7,6 +7,7 @@ illustrations, ship and equipment stats, and things beyond.
 
 ### Pending
 
+- Update assets.
 - Resource hack now overrides in-game asset if exists.
 
 ### 1.7.10
