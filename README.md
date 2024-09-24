@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 1.7.12
+
+- Fix broken resource hack path.
+
 ### 1.7.11
 
 - Update assets.
