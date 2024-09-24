@@ -3,6 +3,8 @@ import {
   isAbyssalShipMstId,
 } from './basic'
 
+import { NavyAlbum } from '../devtools'
+
 const shipImgType = [
   'banner',
   /*
@@ -128,7 +130,7 @@ const getShipImgPathHelper = sgRaw => (id, type, damaged, debuff = false) => {
   return ret + versionPart
 }
 
-window.NavyAlbumGetShipImgPath = (() => {
+NavyAlbum.getShipImgPath = (() => {
   // Note: avoiding selector to break circular deps.
   const {getStore} = window
   const sgRaw = _.get(getStore(), ['const', '$shipgraph'], [])
@@ -154,10 +156,10 @@ const getEquipImgPath = (id, type, $equipsInp = null) => {
   return `/kcs2/resources/slot/${type}/${padId}_${cip}.png${versionPart}`
 }
 
-window.NavyAlbumGetEquipImgPath = getEquipImgPath
+NavyAlbum.getEquipImgPath = getEquipImgPath
 
 // for non-abyssal ships only.
-const getAllShipImgPaths = id => {
+NavyAlbum.getAllShipImgPaths = id => {
   const {getStore} = window
   const sgRaw = _.get(getStore(), ['const', '$shipgraph'], [])
   const getShipImgPath = getShipImgPathHelper(sgRaw)
@@ -178,8 +180,6 @@ const getAllShipImgPaths = id => {
 
   return inps.map(([typ,dmg]) => getShipImgPath(id,typ,dmg))
 }
-
-window.getAllShipImgPaths = getAllShipImgPaths
 
 const getBgm = (id, type) => {
   const padId = _.padStart(id, 3, '0')

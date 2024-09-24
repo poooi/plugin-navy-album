@@ -1,6 +1,8 @@
 import _ from 'lodash'
 import { join } from 'path-extra'
 import { readJsonSync } from 'fs-extra'
+
+import {} from './devtools'
 import { NavyAlbumRoot as reactClass } from './ui'
 import { loadPState } from './p-state'
 import { globalSubscribe, globalUnsubscribe } from './observers'

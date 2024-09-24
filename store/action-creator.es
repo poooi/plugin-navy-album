@@ -5,6 +5,7 @@ import { modifyObject, generalComparator } from 'subtender'
 import { actionCreators as masterAC } from './ext-root/master'
 import { mkTouchDebuffGraph } from './touch-debuff-graph'
 import { isAbyssalShipMstId } from '../game-misc'
+import { NavyAlbum } from '../devtools'
 
 const actionCreator = {
   uiReady: newState => ({
@@ -138,7 +139,7 @@ const asyncBoundActionCreator = (func, dispatch=store.dispatch) =>
   dispatch(() => setTimeout(() =>
     withBoundActionCreator(func, dispatch)))
 
-window.navyAlbumBAC = boundActionCreators
+NavyAlbum.boundActionCreators = boundActionCreators
 
 /*
    quick & dirty way to populate debuffInfo so user don't have
@@ -149,7 +150,7 @@ window.navyAlbumBAC = boundActionCreators
 
    then: JSON.stringify(pluginHelper.navyAlbum.getExt().debuffInfo)
  */
-window.navyAlbumPopulateDebuffInfo = () => {
+NavyAlbum.populateDebuffInfo = () => {
   const {getStore} = window
   const abyssalMstIds = _.flatMap(
     _.values(_.get(getStore(), ['const', '$ships'])),
