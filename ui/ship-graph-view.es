@@ -4,13 +4,14 @@ import { PTyp } from '../ptyp'
 import { mapDispatchToProps } from '../store'
 import {
   serverIpSelector,
+  getShipImgPathFuncSelector,
 } from '../selectors'
-import { getShipImgPath } from '../game-misc'
 
 @connect(
   (state, ownProps) => {
     const {mstId, graphType, damaged, debuffFlag} = ownProps
     const serverIp = serverIpSelector(state)
+    const getShipImgPath = getShipImgPathFuncSelector(state)
     const path = getShipImgPath(mstId, graphType, damaged, debuffFlag)
     return {
       src: `http://${serverIp}${path}`,

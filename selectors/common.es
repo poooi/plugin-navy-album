@@ -10,7 +10,10 @@ import {
 } from 'views/utils/selectors'
 import { toRomaji } from 'wanakana'
 import { initState } from '../store'
-import { isAbyssalShipMstId } from '../game-misc'
+import {
+  isAbyssalShipMstId,
+  getShipImgPathHelper,
+} from '../game-misc'
 
 const extSelector = createSelector(
   extensionSelectorFactory('poi-plugin-navy-album'),
@@ -160,6 +163,16 @@ const poiVolumeSelector = createSelector(
   c => _.get(c,'poi.notify.volume',0.8)
 )
 
+const rawShipGraphArrSelector = createSelector(
+  constSelector,
+  s => _.get(s, ['$shipgraph'], [])
+)
+
+const getShipImgPathFuncSelector = createSelector(
+  rawShipGraphArrSelector,
+  sgRaw => getShipImgPathHelper(sgRaw)
+)
+
 export {
   extSelector,
   uiSelector,
@@ -179,4 +192,6 @@ export {
   masterSelector,
   poiVolumeSelector,
   debuffInfoSelector,
+  getShipImgPathFuncSelector,
 }
+

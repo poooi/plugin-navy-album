@@ -1,9 +1,9 @@
 import { modifyObject } from 'subtender'
-import { getShipImgPath } from '../game-misc/magic'
 
 import {
   debuffInfoSelector,
   serverIpSelector,
+  getShipImgPathFuncSelector,
 } from '../selectors'
 
 const testImageAvailability = (url, callback) => {
@@ -21,6 +21,7 @@ const mkTouchDebuffGraph = actionCreator => (mstId, forced) =>
   (dispatch, getState) => setTimeout(() => {
     const poiState = getState()
     const debuffInfo = debuffInfoSelector(poiState)
+    const getShipImgPath = getShipImgPathFuncSelector(poiState)
 
     if (!forced) {
       if (mstId in debuffInfo)

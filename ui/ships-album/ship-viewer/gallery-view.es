@@ -12,11 +12,11 @@ import {
 
 import {
   shipImgType,
-  getShipImgPath,
   isAbyssalShipMstId,
 } from '../../../game-misc'
 import {
   isMasterIdSpecialCGFuncSelector,
+  getShipImgPathFuncSelector,
 } from '../../../selectors'
 import { PTyp } from '../../../ptyp'
 
@@ -94,6 +94,7 @@ const imgListSpecialCG = [
     return {
       serverIp,
       isSpecialCG: isMasterIdSpecialCG(mstId),
+      getShipImgPath: getShipImgPathFuncSelector(state),
     }
   }
 )
@@ -106,10 +107,14 @@ class GalleryView extends PureComponent {
     // connected:
     serverIp: PTyp.string.isRequired,
     isSpecialCG: PTyp.bool.isRequired,
+    getShipImgPath: PTyp.func.isRequired,
   }
 
   render() {
-    const {mstId, serverIp, style, debuffFlag, isSpecialCG} = this.props
+    const {
+      mstId, style, debuffFlag,
+      serverIp, isSpecialCG, getShipImgPath,
+    } = this.props
     const imgList = isSpecialCG ? imgListSpecialCG :
       isAbyssalShipMstId(mstId) ? imgListAbyssal : mkImgListFriendly(mstId)
 

@@ -9,8 +9,8 @@ import { PTyp } from '../../../ptyp'
 import { EquipmentsView } from './equipments-view'
 import {
   serverIpSelector,
+  getShipImgPathFuncSelector,
 } from '../../../selectors'
-import {getShipImgPath} from '../../../game-misc'
 import { StatsView } from './stats-view'
 
 const abyssalInfo = readJsonSync(
@@ -42,6 +42,7 @@ const mkStats = (_s, $abyssal) => {
 @connect(
   createStructuredSelector({
     serverIp: serverIpSelector,
+    getShipImgPath: getShipImgPathFuncSelector,
   })
 )
 class AbyssalInfoView extends PureComponent {
@@ -49,10 +50,17 @@ class AbyssalInfoView extends PureComponent {
     mstId: PTyp.number.isRequired,
     $ship: PTyp.object.isRequired,
     debuffFlag: PTyp.bool.isRequired,
+
+    // connected
     serverIp: PTyp.string.isRequired,
+    getShipImgPath: PTyp.func.isRequired,
   }
+
   render() {
-    const {mstId, $ship, debuffFlag, serverIp} = this.props
+    const {
+      mstId, $ship, debuffFlag,
+      serverIp, getShipImgPath,
+    } = this.props
     const $abyssal = abyssalInfo[mstId]
     const {__} = window.i18n["poi-plugin-navy-album"]
     const hasAbyssalEquipsInfo =

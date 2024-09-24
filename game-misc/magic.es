@@ -88,15 +88,7 @@ const mkVersionUtil = getShipGraphVersion => {
   return VersionUtil
 }
 
-// TODO: consider this to be a temp fix as no one is giving sgRawInp any value right now.
-const getShipImgPath = (id, type, damaged, debuff = false, sgRawInp = null) => {
-  let sgRaw
-  if (sgRawInp === null) {
-    const {getStore} = window
-    sgRaw = _.get(getStore(), ['const', '$shipgraph'], [])
-  } else {
-    sgRaw = sgRawInp
-  }
+const getShipImgPathHelper = sgRaw => (id, type, damaged, debuff = false) => {
   const sgRawInfoInd = sgRaw.findIndex(x => x.api_id === id)
   const VersionUtil = mkVersionUtil(shipId => {
     const i = sgRaw.findIndex(x => x.api_id === shipId)
@@ -136,7 +128,12 @@ const getShipImgPath = (id, type, damaged, debuff = false, sgRawInp = null) => {
   return ret + versionPart
 }
 
-window.NavyAlbumGetShipImgPath = getShipImgPath
+window.NavyAlbumGetShipImgPath = (() => {
+  // Note: avoiding selector to break circular deps.
+  const {getStore} = window
+  const sgRaw = _.get(getStore(), ['const', '$shipgraph'], [])
+  return getShipImgPathHelper(sgRaw)
+})()
 
 // Reference: SlotLoader.getPath
 // TODO: consider this to be a temp fix as no one is giving sgRawInp any value right now.
@@ -161,6 +158,10 @@ window.NavyAlbumGetEquipImgPath = getEquipImgPath
 
 // for non-abyssal ships only.
 const getAllShipImgPaths = id => {
+  const {getStore} = window
+  const sgRaw = _.get(getStore(), ['const', '$shipgraph'], [])
+  const getShipImgPath = getShipImgPathHelper(sgRaw)
+
   if (isAbyssalShipMstId(id))
     throw new Error(`getAllShipImgPaths is for non-abyssal ships only`)
   const inps = [
@@ -178,7 +179,6 @@ const getAllShipImgPaths = id => {
   return inps.map(([typ,dmg]) => getShipImgPath(id,typ,dmg))
 }
 
-window.getShipImgPath = getShipImgPath
 window.getAllShipImgPaths = getAllShipImgPaths
 
 const getBgm = (id, type) => {
@@ -189,7 +189,7 @@ const getBgm = (id, type) => {
 
 export {
   shipImgType,
-  getShipImgPath,
+  getShipImgPathHelper,
   getEquipImgPath,
   getBgm,
 }

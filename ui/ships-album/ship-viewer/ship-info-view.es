@@ -11,8 +11,8 @@ import { levelSelector } from '../selectors'
 import {
   serverIpSelector,
   wctfShipsSelector,
+  getShipImgPathFuncSelector,
 } from '../../../selectors'
-import {getShipImgPath} from '../../../game-misc'
 
 import { EquipmentsView } from './equipments-view'
 import { StatsView } from './stats-view'
@@ -98,6 +98,7 @@ const normalizeIntro = text =>
     statsL: statsAtCurrentLevelSelector,
     wctfShips: wctfShipsSelector,
     serverIp: serverIpSelector,
+    getShipImgPath: getShipImgPathFuncSelector,
   })
 )
 class ShipInfoView extends PureComponent {
@@ -105,9 +106,12 @@ class ShipInfoView extends PureComponent {
     mstId: PTyp.number.isRequired,
     $ship: PTyp.object.isRequired,
     level: PTyp.number.isRequired,
+
+    // connected
     statsL: PTyp.object.isRequired,
     wctfShips: PTyp.object.isRequired,
     serverIp: PTyp.string.isRequired,
+    getShipImgPath: PTyp.func.isRequired,
   }
 
   render() {
@@ -115,6 +119,7 @@ class ShipInfoView extends PureComponent {
       mstId, $ship,
       statsL, level, wctfShips,
       serverIp,
+      getShipImgPath,
     } = this.props
     const wctfShip = _.get(wctfShips,mstId, {})
     // normalize: 'equip' prop can either be a number or an Object of {id, star}
