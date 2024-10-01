@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### (pending)
+
+- Update assets (Kirishima K2C).
+
 ### 1.7.12
 
 - Fix broken resource hack path.
