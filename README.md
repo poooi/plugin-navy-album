@@ -5,7 +5,7 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
-### (pending)
+### 1.7.13
 
 - Update assets (Kirishima K2C).
 
