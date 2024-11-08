@@ -33,7 +33,11 @@ loadRawMasterData :: IO BS.ByteString
 loadRawMasterData =
   maybe loadRawMasterDataFromInternet BS.readFile localSource
   where
-    localSource = Nothing -- Just "/tmp/master.json"
+    useLocalFile = False
+    localSource =
+      if useLocalFile
+        then Just "/tmp/master.json"
+        else Nothing
 
 mkCmdCommon :: IO CmdCommon
 mkCmdCommon = do
