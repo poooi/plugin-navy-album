@@ -7,7 +7,7 @@ illustrations, ship and equipment stats, and things beyond.
 
 ### 1.7.13
 
-- Update assets (Kirishima K2C).
+- Update assets (Kirishima K2C & Kayashimo K2).
 
 ### 1.7.12
 
