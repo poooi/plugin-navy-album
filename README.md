@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 1.7.14
+
+- Update assets (Fujinami K2).
+
 ### 1.7.13
 
 - Update assets (Kirishima K2C & Kayashimo K2).
