@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### Pending
+
+- Update assets (Shirayuki K2).
+
 ### 1.7.14
 
 - Update assets (Fujinami K2).
