@@ -7,7 +7,7 @@ import Control.Once
 import qualified Data.Aeson as Aeson
 import qualified Data.ByteString as BS
 import qualified Data.ByteString.Lazy as BSL
--- import Kantour.Core.GameResource.Magic
+import Kantour.Core.GameResource.Magic
 import Kantour.Core.KcData.Master.Direct.Root
 import Network.HTTP.Client
 import Network.HTTP.Client.TLS
@@ -38,10 +38,6 @@ loadRawMasterData =
       if useLocalFile
         then Just "/tmp/master.json"
         else Nothing
-
--- TODO: fix server addresses from dep
-defaultServer :: String
-defaultServer = "w01y.kancolle-server.com"
 
 mkCmdCommon :: IO CmdCommon
 mkCmdCommon = do
