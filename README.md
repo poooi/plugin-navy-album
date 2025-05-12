@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 1.7.16
+
+- Update assets
+
 ### 1.7.15
 
 - Update assets (Shirayuki K2).
