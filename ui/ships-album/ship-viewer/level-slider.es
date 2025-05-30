@@ -10,6 +10,12 @@ import { mapDispatchToProps } from '../../../store'
 import { levelSelector } from '../selectors'
 import { minLevelSelector } from './selectors'
 
+const MAX_LEVEL = 185
+const FIXED_MARKS = {
+  99: 'Lv. 99',
+  [MAX_LEVEL]: `Lv. ${MAX_LEVEL}`,
+}
+
 @connect(
   createStructuredSelector({
     level: levelSelector,
@@ -64,11 +70,10 @@ class LevelSlider extends PureComponent {
           value={level}
           onChange={this.handleChangeLevel}
           min={minLevel}
-          max={180}
+          max={MAX_LEVEL}
           marks={{
+            ...FIXED_MARKS,
             [minLevel]: `Lv. ${minLevel}`,
-            99: 'Lv. 99',
-            180: 'Lv. 180',
           }}
         />
       </div>

@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 1.7.17
+
+- Supoort level slider up to Lv.185.
+
 ### 1.7.16
 
 - Update assets
