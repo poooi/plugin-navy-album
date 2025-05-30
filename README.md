@@ -8,6 +8,7 @@ illustrations, ship and equipment stats, and things beyond.
 ### 1.7.17
 
 - Supoort level slider up to Lv.185.
+- Update assets, incl. Richard P. Leary remodel cost.
 
 ### 1.7.16
 
