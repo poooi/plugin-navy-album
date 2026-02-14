@@ -4,6 +4,6 @@ packages:
 
 extra-deps:
 - git: https://github.com/Javran/kantour.git
-  commit: 877885a0d8bfa3e18cbce5994e6a81da9cab33a4
+  commit: 0d0911daa4e8e3cbc2b4e61006f2ee4d6334f286
   subdirs:
     - kantour-core
