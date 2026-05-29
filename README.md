@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 1.7.19
+
+- Catch up with recent updates (Fubuku, Naganami, Asashimo, Suzunami).
+
 ### 1.7.18
 
 - Update assets.
