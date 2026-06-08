@@ -94,7 +94,7 @@ subCmdMain CmdCommon {getMasterRoot} _cmdHelpPrefix = do
     upgrades =
       IM.fromList $
         fmap
-          (\u@Shipupgrade {currentShipId} -> (currentShipId, u))
+          (\u -> (u.currentShipId, u))
           mstShipupgrade
     prepared :: [RemodelInfoPrepare]
     prepared = do
@@ -111,9 +111,8 @@ subCmdMain CmdCommon {getMasterRoot} _cmdHelpPrefix = do
           { mstIdBefore
           , mstIdAfter = afterId
           , steelCost
-          , blueprintCost = fromMaybe 0 $ do
-              Shipupgrade {drawingCount} <- upgrades IM.!? mstIdBefore
-              pure drawingCount
+          , blueprintCost = fromMaybe 0 do
+              (.drawingCount) <$> upgrades IM.!? mstIdBefore
           }
   Just remodelCostCalculator <- need "REMODEL_COST_CALCULATOR"
   (ec, outRaw, errRaw) <-
@@ -134,7 +133,7 @@ subCmdMain CmdCommon {getMasterRoot} _cmdHelpPrefix = do
   let
     isGuessable _ = False
     (results1, _) = partition (not . isGuessable) results0
-    results2 = sortOn (\RemodelInfoResult {mstIdBefore = v} -> v) results1
+    results2 = sortOn (.mstIdBefore) results1
   {-
     To keep asset size small, items that are "guessable" are ignored,
     a "guessable" item meets all of the following criteria:

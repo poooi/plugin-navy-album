@@ -30,7 +30,7 @@ mkDigest Root {mstSlotitem, mstShipgraph, mstShip} =
         , Array $
             V.fromList $
               fmap (Number . fromIntegral) $
-                sort $ fmap Kantour.Core.KcData.Master.Direct.Slotitem.kcId mstSlotitem
+                sort $ fmap (.kcId) mstSlotitem
         )
       ,
         ( "shipDigests"
@@ -44,7 +44,7 @@ mkDigest Root {mstSlotitem, mstShipgraph, mstShip} =
                         , String (graphDigestTable IM.! shipId)
                         ]
                 )
-                $ sort $ fmap (\Ship {kcId = shipId} -> shipId) mstShip
+                $ sort $ fmap (.kcId) mstShip
         )
       ]
   where

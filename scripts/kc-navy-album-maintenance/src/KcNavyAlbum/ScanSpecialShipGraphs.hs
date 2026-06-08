@@ -22,28 +22,28 @@ subCmdMain :: CmdCommon -> String -> IO ()
 subCmdMain c@CmdCommon {getMasterRoot} _cmdHelpPrefix = do
   Root {mstShip} <- getMasterRoot
   let shipsToScan = do
-        s@Ship {kcId} <- mstShip
-        guard $ kcId <= 1500
+        s <- mstShip
+        guard $ s.kcId <= 1500
         pure s
 
   sem <- Sem.new maxFetchInFlight
   hSetBuffering stdout NoBuffering
-  tasks <- forM shipsToScan $ \s@Ship {kcId = mstId} -> async $
+  tasks <- forM shipsToScan $ \s -> async $
     Sem.with sem $ do
-      xs <- liftIO $ putStr "." >> checkSpecialShipGraph c mstId
+      xs <- liftIO $ putStr "." >> checkSpecialShipGraph c s.kcId
       pure $
         if null xs
           then Nothing
           else Just (s, xs)
   results <- catMaybes <$> mapM wait tasks
   putStrLn ""
-  forM_ results $ \(Ship {name}, graphTypes) -> do
-    printf "%s: %s\n" name (T.intercalate ", " graphTypes)
+  forM_ results $ \(s, graphTypes) -> do
+    printf "%s: %s\n" s.name (T.intercalate ", " graphTypes)
   putStrLn "Other than AS:"
   putStrLn "  [ "
-  forM_ (filter (\(Ship {stype}, _) -> stype /= 20) results) $ \(Ship {name, kcId = shipId}, gts) -> do
-    printf "    // %s: %s\n" name (T.intercalate ", " gts)
-    printf "    %d,\n" shipId
+  forM_ (filter (\(s, _) -> s.stype /= 20) results) $ \(s, gts) -> do
+    printf "    // %s: %s\n" s.name (T.intercalate ", " gts)
+    printf "    %d,\n" s.kcId
   putStrLn "  ].indexOf(mstId) !== -1"
 
 checkSpecialShipGraph :: CmdCommon -> Int -> IO [T.Text]

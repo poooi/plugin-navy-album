@@ -1,9 +1,13 @@
-resolver: lts-21.25
+resolver: nightly-2025-12-30
 packages:
 - .
 
+allow-newer: true
+
 extra-deps:
+- aeson-picker-0.1.0.6
+- turtle-1.6.2
 - git: https://github.com/Javran/kantour.git
-  commit: a81b63a182c7f233d07305d1db75b7d5b13fb832
+  commit: b3629552375298414b5a9ae63f2ac4de65faa56a
   subdirs:
     - kantour-core
