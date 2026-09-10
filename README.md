@@ -5,6 +5,10 @@ illustrations, ship and equipment stats, and things beyond.
 
 ## Changelog
 
+### 1.7.21
+
+- Post-event asset update, Fusou class k2ho & Kitakami k3
+
 ### 1.7.20
 
 - Corrected devmat and instant build cost on Naganami, Asashimo, Suzunami.

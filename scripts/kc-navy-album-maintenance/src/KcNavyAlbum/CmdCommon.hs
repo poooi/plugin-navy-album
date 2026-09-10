@@ -23,6 +23,7 @@ data CmdCommon = CmdCommon
 
 loadRawMasterDataFromInternet :: IO BS.ByteString
 loadRawMasterDataFromInternet = do
+  -- TODO: should check staleness of the start2 that we are downloading.
   getManager <- once (newManager tlsManagerSettings)
   mgr <- getManager
   req <- parseRequest "https://raw.githubusercontent.com/Tibowl/api_start2/master/start2.json"
